@@ -47,7 +47,7 @@
  {
   "test": "spaced repetition: missed -> box 1, due in ~5 min",
   "pass": true,
-  "info": "{'box': 1, 'right': 0, 'wrong': 1, 'due': 1792270463085, 'seen': 1792270163085}"
+  "info": "{'box': 1, 'right': 0, 'wrong': 1, 'due': 1792270523966, 'seen': 1792270223966}"
  },
  {
   "test": "topic marked for re-learn",
@@ -62,7 +62,7 @@
  {
   "test": "score tracker attempt saved",
   "pass": true,
-  "info": "{'AR': [{'date': '2026-10-17T20:49:27.064Z', 'correct': 4, 'total': 5, 'pct': 80, 'mode': 'practice'}]}"
+  "info": "{'AR': [{'date': '2026-10-17T20:50:27.880Z', 'correct': 4, 'total': 5, 'pct': 80, 'mode': 'practice'}]}"
  },
  {
   "test": "spaced repetition: sure-right -> box 2, due ~1 day",
@@ -157,7 +157,7 @@
  {
   "test": "hands-free: reads, hears \"repeat\", NATO answer, confidence, auto-next",
   "pass": true,
-  "info": "{'qid': 'GS-013', 'correct': True, 'guess': 0, 'topic': 'gs-chemistry', 'conf': 'sure'}"
+  "info": "{'qid': 'GS-056', 'correct': True, 'guess': 2, 'topic': 'gs-human-body', 'conf': 'sure'}"
  },
  {
   "test": "hands-free speaks right/wrong with reason and asks confidence",
@@ -251,7 +251,7 @@
  },
  {
   "test": "no console errors in whole run",
-  "pass": false,
-  "info": "console.error: Failed to load resource: the server responded with a status of 404 ()"
+  "pass": true,
+  "info": ""
  }
 ]
