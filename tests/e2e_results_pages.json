@@ -5,14 +5,29 @@
   "info": ""
  },
  {
-  "test": "five section tiles",
+  "test": "six section tiles incl. Electronics Information",
   "pass": true,
   "info": ""
  },
  {
+  "test": "home IT focus plan lists all 6 IT-formula subtests",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "bank: EI section has 60+ questions, every section 50+",
+  "pass": true,
+  "info": "{'AR': 85, 'WK': 110, 'PC': 73, 'MK': 90, 'GS': 87, 'EI': 92}"
+ },
+ {
+  "test": "EI practice runs with CAT pace (0:40 per question)",
+  "pass": true,
+  "info": "0:40"
+ },
+ {
   "test": "bank size",
   "pass": true,
-  "info": "391"
+  "info": "537"
  },
  {
   "test": "all screens render without errors",
@@ -47,7 +62,7 @@
  {
   "test": "spaced repetition: missed -> box 1, due in ~5 min",
   "pass": true,
-  "info": "{'box': 1, 'right': 0, 'wrong': 1, 'due': 1792270523966, 'seen': 1792270223966}"
+  "info": "{'box': 1, 'right': 0, 'wrong': 1, 'due': 1792272130323, 'seen': 1792271830323}"
  },
  {
   "test": "topic marked for re-learn",
@@ -62,7 +77,7 @@
  {
   "test": "score tracker attempt saved",
   "pass": true,
-  "info": "{'AR': [{'date': '2026-10-17T20:50:27.880Z', 'correct': 4, 'total': 5, 'pct': 80, 'mode': 'practice'}]}"
+  "info": "{'AR': [{'date': '2026-10-17T21:17:14.239Z', 'correct': 4, 'total': 5, 'pct': 80, 'mode': 'practice'}]}"
  },
  {
   "test": "spaced repetition: sure-right -> box 2, due ~1 day",
@@ -157,7 +172,7 @@
  {
   "test": "hands-free: reads, hears \"repeat\", NATO answer, confidence, auto-next",
   "pass": true,
-  "info": "{'qid': 'GS-056', 'correct': True, 'guess': 2, 'topic': 'gs-human-body', 'conf': 'sure'}"
+  "info": "{'qid': 'GS-004', 'correct': True, 'guess': 0, 'topic': 'gs-chemistry', 'conf': 'sure'}"
  },
  {
   "test": "hands-free speaks right/wrong with reason and asks confidence",
@@ -170,9 +185,9 @@
   "info": ""
  },
  {
-  "test": "MEPS table uses official CAT counts/times",
+  "test": "MEPS table uses official CAT counts/times incl. EI 15/10 (total 85 questions, 144 min)",
   "pass": true,
-  "info": ""
+  "info": "MEPS practice test  Six parts, in the real order. Real CAT-ASVAB question counts and time limits.  Part\tQuestions\tMinutes General Science\t15\t12 Arithmetic Reasoning\t15\t55 Word Knowledge\t15\t9 Paragraph Comprehension\t10\t27 Math Knowledge\t15\t31 Electronics Information\t15\t10 Total\t85\t144  Source: offici"
  },
  {
   "test": "MEPS countdown runs (GS 12:00)",
@@ -190,7 +205,37 @@
   "info": ""
  },
  {
+  "test": "MEPS time-out scores unanswered as random guesses (official rule)",
+  "pass": true,
+  "info": "{'right': 0, 'total': 15, 'answered': 1, 'guessed': 3.5}"
+ },
+ {
   "test": "MEPS score report with labeled AFQT estimate",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "MEPS report shows all IT rules (212 / 156 / CT / 214) and EI part",
+  "pass": true,
+  "info": "MEPS practice: score report Test done. You got 46 out of 85. Estimated AFQT: about 84. IT main rule estimate: 238 of 212. This is only an estimate. Read Part\tRight\tPercent\tEst. standard score General "
+ },
+ {
+  "test": "IT estimate: AR50 MK50 EI35 VE50 GS65 -> 185/212 and 165/156",
+  "pass": true,
+  "info": "{'AR': 50, 'WK': 50, 'PC': 50, 'MK': 50, 'GS': 65, 'EI': 35, 'VE': 50}"
+ },
+ {
+  "test": "progress IT panel: progress per rule, focus, AFQT, recruiter label",
+  "pass": true,
+  "info": "Navy IT line scores (from your practice)  You qualify for IT if you meet ANY one rule. Source: MyNavyHR IT rating card.  IT, 4-year (main rule): AR + MK + EI + VE = 212 or more  Your estimate: AR 50 + MK 50 + EI 35 + VE 50 = 185. Need about 27 more points.  Focus: Electronics Information.  IT, 4-yea"
+ },
+ {
+  "test": "home IT focus ranks weakest IT subtest first (EI) with a practice button",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "IT focus button opens that practice",
   "pass": true,
   "info": ""
  },
@@ -222,7 +267,7 @@
  {
   "test": "import restores progress and custom questions",
   "pass": true,
-  "info": "Backup restored. 1 AI questions. 29 misses."
+  "info": "Backup restored. 1 AI questions. 34 misses."
  },
  {
   "test": "service worker controls page and app loads offline",
@@ -233,6 +278,11 @@
   "test": "practice works offline",
   "pass": true,
   "info": ""
+ },
+ {
+  "test": "service worker version bumped (asvab-coach-v2, network-first)",
+  "pass": true,
+  "info": "['asvab-coach-v2']"
  },
  {
   "test": "manifest valid with icons",
