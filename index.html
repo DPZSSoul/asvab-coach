@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ASVAB Coach</title>
+<meta name="theme-color" content="#003A8C">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="top">
+  <span class="brand">ASVAB Coach</span>
+  <span class="streak" id="streak" aria-live="polite"></span>
+  <button class="small" id="homeBtn" onclick="go('home')">Home</button>
+  <button class="small" id="stopTalk" onclick="Speech.stop()">Stop voice</button>
+</header>
+<main id="app" aria-live="polite"></main>
+<script src="questions.js"></script>
+<script src="tutor_rules.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

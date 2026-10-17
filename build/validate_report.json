@@ -1,0 +1,29 @@
+{
+ "counts": {
+  "AR": 85,
+  "WK": 85,
+  "PC": 65,
+  "MK": 85,
+  "GS": 71
+ },
+ "total": 391,
+ "errors": [],
+ "warnings": [],
+ "math_checked": 170,
+ "math_methods": {
+  "arithmetic chain": 107,
+  "independent python (manual table)": 34,
+  "sympy solve": 12,
+  "sympy expand": 7,
+  "sympy factor": 4,
+  "slope formula": 2,
+  "gcd/lcm": 3,
+  "pythagoras": 3,
+  "sympy ineq": 2,
+  "sympy eval": 3,
+  "sympy system": 3,
+  "median": 2,
+  "distance formula": 1
+ },
+ "math_unchecked": []
+}

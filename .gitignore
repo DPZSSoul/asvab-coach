@@ -1,0 +1,4 @@
+build/existing.json
+build/__pycache__/
+tests/shots/
+__pycache__/

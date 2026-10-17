@@ -1,0 +1,257 @@
+[
+ {
+  "test": "home loads",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "five section tiles",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "bank size",
+  "pass": true,
+  "info": "391"
+ },
+ {
+  "test": "all screens render without errors",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "per-question timer counts down (AR pace 3:40)",
+  "pass": true,
+  "info": "3:40 -> 3:38"
+ },
+ {
+  "test": "wrong answer shows feedback + steps",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "localStorage daily count updated",
+  "pass": true,
+  "info": "{'2026-10-17': 1}"
+ },
+ {
+  "test": "error log saved (question, guess, correct, explanation, date, section)",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "re-learn lesson shown after miss",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "spaced repetition: missed -> box 1, due in ~5 min",
+  "pass": true,
+  "info": "{'box': 1, 'right': 0, 'wrong': 1, 'due': 1792270257425, 'seen': 1792269957425}"
+ },
+ {
+  "test": "topic marked for re-learn",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "sure-right -> \"just needs reps\"",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "score tracker attempt saved",
+  "pass": true,
+  "info": "{'AR': [{'date': '2026-10-17T20:46:00.324Z', 'correct': 4, 'total': 5, 'pct': 80, 'mode': 'practice'}]}"
+ },
+ {
+  "test": "spaced repetition: sure-right -> box 2, due ~1 day",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "pre-session shows last misses (skippable)",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "timer off option works",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "adaptive: >80% rolling accuracy bumps WK level to 2",
+  "pass": true,
+  "info": "{'WK': 2}"
+ },
+ {
+  "test": "adaptive: <60% drops WK level back to 1",
+  "pass": true,
+  "info": "{'WK': 1}"
+ },
+ {
+  "test": "progress shows SVG chart and re-learn/reps panels",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "topic lesson opens from panel",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "streak counts back-to-back goal days",
+  "pass": true,
+  "info": "Today 3/10 | Streak 3 days"
+ },
+ {
+  "test": "tutor step 1 + 2 (what/why, tiny example) shown",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "asking early gives a hint, not the answer",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "hint 2 = first step",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "hint 3 = similar worked example",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "reveal only after 3 hints and a try",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "click-to-speak reads passage and highlights words (boundary events)",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "symbols spoken in words",
+  "pass": true,
+  "info": "3 over 4|times|x squared|25 percent"
+ },
+ {
+  "test": "read-along fallback timing highlights without boundary events",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "speech rate setting persists",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "voice parser: letters, NATO, \"option C\", answer text, commands, confidence",
+  "pass": true,
+  "info": "[]"
+ },
+ {
+  "test": "hands-free: reads, hears \"repeat\", NATO answer, confidence, auto-next",
+  "pass": true,
+  "info": "{'qid': 'GS-065', 'correct': True, 'guess': 0, 'topic': 'gs-earth-space', 'conf': 'sure'}"
+ },
+ {
+  "test": "hands-free speaks right/wrong with reason and asks confidence",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "graceful message when recognition is missing",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "MEPS table uses official CAT counts/times",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "MEPS countdown runs (GS 12:00)",
+  "pass": true,
+  "info": "12:00 -> 11:58"
+ },
+ {
+  "test": "MEPS: no hint/tutor buttons",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "MEPS auto-advances when time runs out",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "MEPS score report with labeled AFQT estimate",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "generate: valid question added, bad math + 3-choice rejected",
+  "pass": true,
+  "info": "Added 1 new question.  Rejected 2 that failed the checks:  #2: math check failed: 6 x 12 = 62 (should be 72) #3: needs exactly 4 choices  AI questions can still have mistakes. If one looks wrong, tell"
+ },
+ {
+  "test": "generate: key sent as Bearer header only",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "pasted-question tutor chat uses LLM with tutor-rules system prompt",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "export: questions + custom + progress JSON",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "export never includes the API key",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "import restores progress and custom questions",
+  "pass": true,
+  "info": "Backup restored. 1 AI questions. 28 misses."
+ },
+ {
+  "test": "service worker controls page and app loads offline",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "practice works offline",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "manifest valid with icons",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "single-file asvab-coach.html works from file://",
+  "pass": true,
+  "info": "[]"
+ },
+ {
+  "test": "file:// shows secure-context voice notice",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "no console errors in whole run",
+  "pass": true,
+  "info": ""
+ }
+]

@@ -1,0 +1,14 @@
+{
+  "name": "ASVAB Coach",
+  "short_name": "ASVAB Coach",
+  "description": "Simple ASVAB practice: AR, WK, PC, MK, GS. Read-aloud, voice answers, tutor.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#FFFDF2",
+  "theme_color": "#003A8C",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ]
+}
