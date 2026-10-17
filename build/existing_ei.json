@@ -1,0 +1,1652 @@
+[
+ {
+  "stem": "What unit measures electric current?",
+  "correct": "ampere",
+  "wrongs": [
+   "volt",
+   "ohm",
+   "watt"
+  ],
+  "expl": "Current is measured in amperes (amps).",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "watt",
+   "volt",
+   "ohm",
+   "ampere"
+  ],
+  "ans": "D",
+  "src": "quiz",
+  "idx": 0,
+  "n": 45
+ },
+ {
+  "stem": "A 12 volt battery is connected to a 4 ohm resistor. How much current flows?",
+  "correct": "3 amps",
+  "wrongs": [
+   "8 amps",
+   "16 amps",
+   "48 amps"
+  ],
+  "expl": "I = V / R = 12 / 4 = 3 amps.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "48 amps",
+   "8 amps",
+   "3 amps",
+   "16 amps"
+  ],
+  "ans": "C",
+  "src": "quiz",
+  "idx": 1,
+  "n": 45
+ },
+ {
+  "stem": "A current of 2 amps flows through a 10 ohm resistor. What is the voltage across it?",
+  "correct": "20 volts",
+  "wrongs": [
+   "5 volts",
+   "12 volts",
+   "0.2 volts"
+  ],
+  "expl": "V = I x R = 2 x 10 = 20 volts.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "0.2 volts",
+   "20 volts",
+   "12 volts",
+   "5 volts"
+  ],
+  "ans": "B",
+  "src": "quiz",
+  "idx": 2,
+  "n": 45
+ },
+ {
+  "stem": "A device uses 120 volts and 5 amps. How much power does it use?",
+  "correct": "600 watts",
+  "wrongs": [
+   "24 watts",
+   "125 watts",
+   "115 watts"
+  ],
+  "expl": "P = V x I = 120 x 5 = 600 watts.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "600 watts",
+   "24 watts",
+   "125 watts",
+   "115 watts"
+  ],
+  "ans": "A",
+  "src": "quiz",
+  "idx": 3,
+  "n": 45
+ },
+ {
+  "stem": "Three resistors of 10, 20, and 30 ohms are in series. What is the total resistance?",
+  "correct": "60 ohms",
+  "wrongs": [
+   "5.45 ohms",
+   "20 ohms",
+   "600 ohms"
+  ],
+  "expl": "Series resistances add. 10 + 20 + 30 = 60.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "60 ohms",
+   "600 ohms",
+   "5.45 ohms",
+   "20 ohms"
+  ],
+  "ans": "A",
+  "src": "quiz",
+  "idx": 4,
+  "n": 45
+ },
+ {
+  "stem": "Two 10 ohm resistors are in parallel. What is the total resistance?",
+  "correct": "5 ohms",
+  "wrongs": [
+   "20 ohms",
+   "10 ohms",
+   "100 ohms"
+  ],
+  "expl": "Two equal resistors in parallel: 10 / 2 = 5.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "100 ohms",
+   "20 ohms",
+   "5 ohms",
+   "10 ohms"
+  ],
+  "ans": "C",
+  "src": "quiz",
+  "idx": 5,
+  "n": 45
+ },
+ {
+  "stem": "Which material is a good insulator?",
+  "correct": "rubber",
+  "wrongs": [
+   "copper",
+   "silver",
+   "aluminum"
+  ],
+  "expl": "Rubber does not let current flow easily.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "copper",
+   "aluminum",
+   "silver",
+   "rubber"
+  ],
+  "ans": "D",
+  "src": "quiz",
+  "idx": 6,
+  "n": 45
+ },
+ {
+  "stem": "Which part lets current flow in only one direction?",
+  "correct": "diode",
+  "wrongs": [
+   "resistor",
+   "capacitor",
+   "inductor"
+  ],
+  "expl": "A diode is a one-way valve for current.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "capacitor",
+   "diode",
+   "inductor",
+   "resistor"
+  ],
+  "ans": "B",
+  "src": "quiz",
+  "idx": 7,
+  "n": 45
+ },
+ {
+  "stem": "What does a fuse do?",
+  "correct": "melts and opens the circuit when current is too high",
+  "wrongs": [
+   "raises the voltage",
+   "stores charge",
+   "makes current flow faster"
+  ],
+  "expl": "A fuse is a safety part. It breaks the circuit on overload.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "raises the voltage",
+   "melts and opens the circuit when current is too high",
+   "makes current flow faster",
+   "stores charge"
+  ],
+  "ans": "B",
+  "src": "quiz",
+  "idx": 8,
+  "n": 45
+ },
+ {
+  "stem": "What does AC stand for?",
+  "correct": "alternating current",
+  "wrongs": [
+   "active current",
+   "amplified current",
+   "average current"
+  ],
+  "expl": "AC changes direction over and over.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "alternating current",
+   "active current",
+   "amplified current",
+   "average current"
+  ],
+  "ans": "A",
+  "src": "quiz",
+  "idx": 9,
+  "n": 45
+ },
+ {
+  "stem": "What is the frequency of household AC power in the United States?",
+  "correct": "60 hertz",
+  "wrongs": [
+   "50 hertz",
+   "30 hertz",
+   "120 hertz"
+  ],
+  "expl": "U.S. power is 60 cycles per second.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "120 hertz",
+   "30 hertz",
+   "50 hertz",
+   "60 hertz"
+  ],
+  "ans": "D",
+  "src": "quiz",
+  "idx": 10,
+  "n": 45
+ },
+ {
+  "stem": "What does a transformer do?",
+  "correct": "changes the voltage level of AC",
+  "wrongs": [
+   "changes AC to DC",
+   "stores charge",
+   "makes power"
+  ],
+  "expl": "A transformer steps AC voltage up or down.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "stores charge",
+   "changes AC to DC",
+   "changes the voltage level of AC",
+   "makes power"
+  ],
+  "ans": "C",
+  "src": "quiz",
+  "idx": 11,
+  "n": 45
+ },
+ {
+  "stem": "What does a capacitor store?",
+  "correct": "electric charge",
+  "wrongs": [
+   "magnetic fields",
+   "heat",
+   "current"
+  ],
+  "expl": "A capacitor stores charge between two plates.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "magnetic fields",
+   "heat",
+   "electric charge",
+   "current"
+  ],
+  "ans": "C",
+  "src": "quiz",
+  "idx": 12,
+  "n": 45
+ },
+ {
+  "stem": "Four 1.5 volt batteries are connected in series. What is the total voltage?",
+  "correct": "6 volts",
+  "wrongs": [
+   "1.5 volts",
+   "3 volts",
+   "0.375 volts"
+  ],
+  "expl": "Series voltages add. 4 x 1.5 = 6.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "1.5 volts",
+   "6 volts",
+   "0.375 volts",
+   "3 volts"
+  ],
+  "ans": "B",
+  "src": "quiz",
+  "idx": 13,
+  "n": 45
+ },
+ {
+  "stem": "A 5 ohm resistor carries 3 amps. How much power does it use?",
+  "correct": "45 watts",
+  "wrongs": [
+   "15 watts",
+   "8 watts",
+   "75 watts"
+  ],
+  "expl": "P = I squared x R = 9 x 5 = 45 watts.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "45 watts",
+   "15 watts",
+   "75 watts",
+   "8 watts"
+  ],
+  "ans": "A",
+  "src": "quiz",
+  "idx": 14,
+  "n": 45
+ },
+ {
+  "stem": "What is the unit of resistance?",
+  "correct": "ohm",
+  "wrongs": [
+   "volt",
+   "amp",
+   "farad"
+  ],
+  "expl": "Resistance is measured in ohms.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "amp",
+   "volt",
+   "farad",
+   "ohm"
+  ],
+  "ans": "D",
+  "src": "quiz",
+  "idx": 15,
+  "n": 45
+ },
+ {
+  "stem": "In a series circuit, the current is:",
+  "correct": "the same everywhere",
+  "wrongs": [
+   "highest at the start",
+   "zero in the middle",
+   "split between parts"
+  ],
+  "expl": "There is only one path, so the same current flows through every part.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "zero in the middle",
+   "split between parts",
+   "highest at the start",
+   "the same everywhere"
+  ],
+  "ans": "D",
+  "src": "quiz",
+  "idx": 16,
+  "n": 45
+ },
+ {
+  "stem": "In a parallel circuit, the voltage across each branch is:",
+  "correct": "the same",
+  "wrongs": [
+   "split among branches",
+   "zero",
+   "different in each"
+  ],
+  "expl": "Each branch connects to the same two points.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "the same",
+   "split among branches",
+   "different in each",
+   "zero"
+  ],
+  "ans": "A",
+  "src": "quiz",
+  "idx": 17,
+  "n": 45
+ },
+ {
+  "stem": "An ammeter is connected to a circuit:",
+  "correct": "in series",
+  "wrongs": [
+   "in parallel",
+   "across the battery",
+   "with no wires"
+  ],
+  "expl": "An ammeter must have the current pass through it.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "with no wires",
+   "across the battery",
+   "in series",
+   "in parallel"
+  ],
+  "ans": "C",
+  "src": "quiz",
+  "idx": 18,
+  "n": 45
+ },
+ {
+  "stem": "A voltmeter is connected to a circuit:",
+  "correct": "in parallel",
+  "wrongs": [
+   "in series",
+   "in a loop",
+   "in reverse"
+  ],
+  "expl": "A voltmeter reads the voltage across a part, so it goes across it.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "in series",
+   "in parallel",
+   "in reverse",
+   "in a loop"
+  ],
+  "ans": "B",
+  "src": "quiz",
+  "idx": 19,
+  "n": 45
+ },
+ {
+  "stem": "A resistor has bands brown, black, red. What is its value?",
+  "correct": "1,000 ohms",
+  "wrongs": [
+   "102 ohms",
+   "10 ohms",
+   "100 ohms"
+  ],
+  "expl": "Brown = 1. Black = 0. Red = x100. So 10 x 100 = 1,000 ohms.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "102 ohms",
+   "1,000 ohms",
+   "10 ohms",
+   "100 ohms"
+  ],
+  "ans": "B",
+  "src": "quiz",
+  "idx": 20,
+  "n": 45
+ },
+ {
+  "stem": "A 12 volt battery powers two equal resistors in series. What is the voltage across each?",
+  "correct": "6 volts",
+  "wrongs": [
+   "12 volts",
+   "24 volts",
+   "3 volts"
+  ],
+  "expl": "Equal resistors share the voltage. 12 / 2 = 6.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "6 volts",
+   "3 volts",
+   "12 volts",
+   "24 volts"
+  ],
+  "ans": "A",
+  "src": "quiz",
+  "idx": 21,
+  "n": 45
+ },
+ {
+  "stem": "How many ohms is 4.7 kilohms?",
+  "correct": "4,700 ohms",
+  "wrongs": [
+   "47 ohms",
+   "470 ohms",
+   "47,000 ohms"
+  ],
+  "expl": "Kilo means 1,000. 4.7 x 1,000 = 4,700.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "470 ohms",
+   "47 ohms",
+   "47,000 ohms",
+   "4,700 ohms"
+  ],
+  "ans": "D",
+  "src": "quiz",
+  "idx": 22,
+  "n": 45
+ },
+ {
+  "stem": "What does a rectifier do?",
+  "correct": "changes AC to DC",
+  "wrongs": [
+   "changes DC to AC",
+   "raises voltage",
+   "stores charge"
+  ],
+  "expl": "A rectifier uses diodes to make AC one direction.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "changes DC to AC",
+   "raises voltage",
+   "changes AC to DC",
+   "stores charge"
+  ],
+  "ans": "C",
+  "src": "quiz",
+  "idx": 23,
+  "n": 45
+ },
+ {
+  "stem": "An inductor stores energy in:",
+  "correct": "a magnetic field",
+  "wrongs": [
+   "an electric field",
+   "heat",
+   "a chemical"
+  ],
+  "expl": "A coil stores energy in the magnetic field around it.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "a magnetic field",
+   "a chemical",
+   "an electric field",
+   "heat"
+  ],
+  "ans": "A",
+  "src": "quiz",
+  "idx": 24,
+  "n": 45
+ },
+ {
+  "stem": "What is the unit of capacitance?",
+  "correct": "farad",
+  "wrongs": [
+   "henry",
+   "hertz",
+   "coulomb"
+  ],
+  "expl": "Capacitance is measured in farads.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "coulomb",
+   "farad",
+   "henry",
+   "hertz"
+  ],
+  "ans": "B",
+  "src": "quiz",
+  "idx": 25,
+  "n": 45
+ },
+ {
+  "stem": "Resistance stays the same and voltage doubles. What happens to current?",
+  "correct": "It doubles.",
+  "wrongs": [
+   "It is cut in half.",
+   "It stays the same.",
+   "It drops to zero."
+  ],
+  "expl": "I = V / R. Double V and I doubles.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "It drops to zero.",
+   "It is cut in half.",
+   "It doubles.",
+   "It stays the same."
+  ],
+  "ans": "C",
+  "src": "quiz",
+  "idx": 26,
+  "n": 45
+ },
+ {
+  "stem": "A 2 kilowatt heater runs for 3 hours. How much energy does it use?",
+  "correct": "6 kilowatt-hours",
+  "wrongs": [
+   "1.5 kilowatt-hours",
+   "5 kilowatt-hours",
+   "23 kilowatt-hours"
+  ],
+  "expl": "Energy = power x time = 2 x 3 = 6 kWh.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "23 kilowatt-hours",
+   "5 kilowatt-hours",
+   "1.5 kilowatt-hours",
+   "6 kilowatt-hours"
+  ],
+  "ans": "D",
+  "src": "quiz",
+  "idx": 27,
+  "n": 45
+ },
+ {
+  "stem": "What is the job of a ground wire?",
+  "correct": "give extra current a safe path to earth",
+  "wrongs": [
+   "raise the voltage",
+   "store energy",
+   "speed up current"
+  ],
+  "expl": "A ground wire protects people from shocks.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "store energy",
+   "give extra current a safe path to earth",
+   "speed up current",
+   "raise the voltage"
+  ],
+  "ans": "B",
+  "src": "quiz",
+  "idx": 28,
+  "n": 45
+ },
+ {
+  "stem": "Which part is used to limit the current in a circuit?",
+  "correct": "resistor",
+  "wrongs": [
+   "diode",
+   "switch",
+   "battery"
+  ],
+  "expl": "A resistor limits current flow.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "switch",
+   "battery",
+   "diode",
+   "resistor"
+  ],
+  "ans": "D",
+  "src": "quiz",
+  "idx": 29,
+  "n": 45
+ },
+ {
+  "stem": "What does LED stand for?",
+  "correct": "light emitting diode",
+  "wrongs": [
+   "low energy device",
+   "large electric diode",
+   "linear electric driver"
+  ],
+  "expl": "An LED is a diode that gives off light.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "large electric diode",
+   "low energy device",
+   "light emitting diode",
+   "linear electric driver"
+  ],
+  "ans": "C",
+  "src": "quiz",
+  "idx": 30,
+  "n": 45
+ },
+ {
+  "stem": "What is the unit of frequency?",
+  "correct": "hertz",
+  "wrongs": [
+   "henry",
+   "farad",
+   "watt"
+  ],
+  "expl": "Frequency is measured in hertz (cycles per second).",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "hertz",
+   "henry",
+   "farad",
+   "watt"
+  ],
+  "ans": "A",
+  "src": "quiz",
+  "idx": 31,
+  "n": 45
+ },
+ {
+  "stem": "A 9 volt battery pushes 0.003 amps through a part. What is its resistance?",
+  "correct": "3,000 ohms",
+  "wrongs": [
+   "27 ohms",
+   "300 ohms",
+   "0.0003 ohms"
+  ],
+  "expl": "R = V / I = 9 / 0.003 = 3,000 ohms.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "300 ohms",
+   "0.0003 ohms",
+   "3,000 ohms",
+   "27 ohms"
+  ],
+  "ans": "C",
+  "src": "quiz",
+  "idx": 32,
+  "n": 45
+ },
+ {
+  "stem": "A 6 ohm and a 3 ohm resistor are in parallel. What is the total resistance?",
+  "correct": "2 ohms",
+  "wrongs": [
+   "9 ohms",
+   "4.5 ohms",
+   "18 ohms"
+  ],
+  "expl": "Product over sum: (6 x 3) / (6 + 3) = 18 / 9 = 2.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "9 ohms",
+   "2 ohms",
+   "18 ohms",
+   "4.5 ohms"
+  ],
+  "ans": "B",
+  "src": "quiz",
+  "idx": 33,
+  "n": 45
+ },
+ {
+  "stem": "A 60 watt bulb runs on 120 volts. How much current does it draw?",
+  "correct": "0.5 amp",
+  "wrongs": [
+   "2 amps",
+   "7,200 amps",
+   "60 amps"
+  ],
+  "expl": "I = P / V = 60 / 120 = 0.5 amp.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "0.5 amp",
+   "7,200 amps",
+   "2 amps",
+   "60 amps"
+  ],
+  "ans": "A",
+  "src": "quiz",
+  "idx": 34,
+  "n": 45
+ },
+ {
+  "stem": "Which of these conducts electricity the best?",
+  "correct": "copper wire",
+  "wrongs": [
+   "glass rod",
+   "dry wood",
+   "rubber band"
+  ],
+  "expl": "Metals conduct well. Glass, wood, and rubber are insulators.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "dry wood",
+   "rubber band",
+   "glass rod",
+   "copper wire"
+  ],
+  "ans": "D",
+  "src": "quiz",
+  "idx": 35,
+  "n": 45
+ },
+ {
+  "stem": "A transistor can be used as:",
+  "correct": "a switch or an amplifier",
+  "wrongs": [
+   "a fuse only",
+   "a battery",
+   "a coil only"
+  ],
+  "expl": "Transistors turn signals on and off or make them bigger.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "a coil only",
+   "a switch or an amplifier",
+   "a fuse only",
+   "a battery"
+  ],
+  "ans": "B",
+  "src": "quiz",
+  "idx": 36,
+  "n": 45
+ },
+ {
+  "stem": "What happens when current flows through a coil of wire?",
+  "correct": "It makes a magnetic field.",
+  "wrongs": [
+   "It makes the wire cold.",
+   "It makes the voltage zero.",
+   "It turns AC into light."
+  ],
+  "expl": "This is how an electromagnet works.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "It turns AC into light.",
+   "It makes the voltage zero.",
+   "It makes a magnetic field.",
+   "It makes the wire cold."
+  ],
+  "ans": "C",
+  "src": "quiz",
+  "idx": 37,
+  "n": 45
+ },
+ {
+  "stem": "A battery produces:",
+  "correct": "direct current (DC)",
+  "wrongs": [
+   "alternating current (AC)",
+   "only static charge",
+   "no current"
+  ],
+  "expl": "A battery pushes current one way.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "no current",
+   "alternating current (AC)",
+   "only static charge",
+   "direct current (DC)"
+  ],
+  "ans": "D",
+  "src": "quiz",
+  "idx": 38,
+  "n": 45
+ },
+ {
+  "stem": "A circuit with a break in the wire is called:",
+  "correct": "an open circuit",
+  "wrongs": [
+   "a short circuit",
+   "a parallel circuit",
+   "a closed circuit"
+  ],
+  "expl": "No complete loop means no current flows.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "an open circuit",
+   "a parallel circuit",
+   "a short circuit",
+   "a closed circuit"
+  ],
+  "ans": "A",
+  "src": "quiz",
+  "idx": 39,
+  "n": 45
+ },
+ {
+  "stem": "A 20 volt battery powers a 4 ohm and a 6 ohm resistor in series. What is the current?",
+  "correct": "2 amps",
+  "wrongs": [
+   "5 amps",
+   "0.5 amps",
+   "8 amps"
+  ],
+  "expl": "Total R = 4 + 6 = 10. I = 20 / 10 = 2.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "5 amps",
+   "2 amps",
+   "8 amps",
+   "0.5 amps"
+  ],
+  "ans": "B",
+  "src": "quiz",
+  "idx": 40,
+  "n": 45
+ },
+ {
+  "stem": "250 milliamps equals how many amps?",
+  "correct": "0.25 amps",
+  "wrongs": [
+   "2.5 amps",
+   "25 amps",
+   "0.025 amps"
+  ],
+  "expl": "Milli means 1/1000. 250 / 1000 = 0.25.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "0.25 amps",
+   "25 amps",
+   "2.5 amps",
+   "0.025 amps"
+  ],
+  "ans": "A",
+  "src": "quiz",
+  "idx": 41,
+  "n": 45
+ },
+ {
+  "stem": "What is a short circuit?",
+  "correct": "current takes a very low-resistance path",
+  "wrongs": [
+   "a circuit with no battery",
+   "a circuit with a small bulb",
+   "a circuit that is turned off"
+  ],
+  "expl": "Too much current flows, which can cause heat or fire.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "a circuit with no battery",
+   "a circuit that is turned off",
+   "current takes a very low-resistance path",
+   "a circuit with a small bulb"
+  ],
+  "ans": "C",
+  "src": "quiz",
+  "idx": 42,
+  "n": 45
+ },
+ {
+  "stem": "What is the unit of inductance?",
+  "correct": "henry",
+  "wrongs": [
+   "farad",
+   "ohm",
+   "tesla"
+  ],
+  "expl": "Inductance is measured in henrys.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "tesla",
+   "ohm",
+   "farad",
+   "henry"
+  ],
+  "ans": "D",
+  "src": "quiz",
+  "idx": 43,
+  "n": 45
+ },
+ {
+  "stem": "Two 100 ohm resistors are in parallel across 10 volts. What is the total current?",
+  "correct": "0.2 amps",
+  "wrongs": [
+   "0.1 amps",
+   "1 amp",
+   "20 amps"
+  ],
+  "expl": "Each branch: 10 / 100 = 0.1 amp. Two branches: 0.2 amps.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "0.2 amps",
+   "20 amps",
+   "1 amp",
+   "0.1 amps"
+  ],
+  "ans": "A",
+  "src": "quiz",
+  "idx": 44,
+  "n": 45
+ },
+ {
+  "stem": "Which unit measures voltage?",
+  "correct": "volt",
+  "wrongs": [
+   "ampere",
+   "ohm",
+   "watt"
+  ],
+  "expl": "Voltage is measured in volts.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "ampere",
+   "watt",
+   "ohm",
+   "volt"
+  ],
+  "ans": "D",
+  "src": "practice-EI1",
+  "idx": 0,
+  "n": 10
+ },
+ {
+  "stem": "A 9 volt battery is connected to a 3 ohm resistor. How much current flows?",
+  "correct": "3 amps",
+  "wrongs": [
+   "27 amps",
+   "6 amps",
+   "0.33 amps"
+  ],
+  "expl": "I = V / R = 9 / 3 = 3 amps.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "3 amps",
+   "27 amps",
+   "6 amps",
+   "0.33 amps"
+  ],
+  "ans": "A",
+  "src": "practice-EI1",
+  "idx": 1,
+  "n": 10
+ },
+ {
+  "stem": "On a schematic, a zigzag line stands for a:",
+  "correct": "resistor",
+  "wrongs": [
+   "battery",
+   "switch",
+   "ground"
+  ],
+  "expl": "A zigzag line is the resistor symbol.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "switch",
+   "battery",
+   "resistor",
+   "ground"
+  ],
+  "ans": "C",
+  "src": "practice-EI1",
+  "idx": 2,
+  "n": 10
+ },
+ {
+  "stem": "A device runs on 12 volts and draws 2 amps. What is its power?",
+  "correct": "24 watts",
+  "wrongs": [
+   "6 watts",
+   "14 watts",
+   "10 watts"
+  ],
+  "expl": "P = V x I = 12 x 2 = 24 watts.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "10 watts",
+   "24 watts",
+   "14 watts",
+   "6 watts"
+  ],
+  "ans": "B",
+  "src": "practice-EI1",
+  "idx": 3,
+  "n": 10
+ },
+ {
+  "stem": "Which material is the best conductor?",
+  "correct": "copper",
+  "wrongs": [
+   "glass",
+   "wood",
+   "plastic"
+  ],
+  "expl": "Copper carries current very well.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "glass",
+   "plastic",
+   "wood",
+   "copper"
+  ],
+  "ans": "D",
+  "src": "practice-EI1",
+  "idx": 4,
+  "n": 10
+ },
+ {
+  "stem": "Two 6 ohm resistors are connected in series. What is the total resistance?",
+  "correct": "12 ohms",
+  "wrongs": [
+   "3 ohms",
+   "6 ohms",
+   "36 ohms"
+  ],
+  "expl": "Series resistances add. 6 + 6 = 12.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "36 ohms",
+   "3 ohms",
+   "12 ohms",
+   "6 ohms"
+  ],
+  "ans": "C",
+  "src": "practice-EI1",
+  "idx": 5,
+  "n": 10
+ },
+ {
+  "stem": "A 12 ohm resistor and a 4 ohm resistor are in parallel. What is the total resistance?",
+  "correct": "3 ohms",
+  "wrongs": [
+   "16 ohms",
+   "8 ohms",
+   "48 ohms"
+  ],
+  "expl": "(12 x 4) / (12 + 4) = 48 / 16 = 3.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "48 ohms",
+   "3 ohms",
+   "8 ohms",
+   "16 ohms"
+  ],
+  "ans": "B",
+  "src": "practice-EI1",
+  "idx": 6,
+  "n": 10
+ },
+ {
+  "stem": "When a switch is open, the circuit has:",
+  "correct": "no current flow",
+  "wrongs": [
+   "maximum current",
+   "double voltage",
+   "no resistance"
+  ],
+  "expl": "An open switch breaks the path. No current flows.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "no current flow",
+   "double voltage",
+   "maximum current",
+   "no resistance"
+  ],
+  "ans": "A",
+  "src": "practice-EI1",
+  "idx": 7,
+  "n": 10
+ },
+ {
+  "stem": "A circuit breaker differs from a fuse because it:",
+  "correct": "can be reset after it trips",
+  "wrongs": [
+   "has no wire inside",
+   "raises voltage",
+   "only works on DC"
+  ],
+  "expl": "A breaker can be switched back on. A fuse must be replaced.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "has no wire inside",
+   "can be reset after it trips",
+   "raises voltage",
+   "only works on DC"
+  ],
+  "ans": "B",
+  "src": "practice-EI1",
+  "idx": 8,
+  "n": 10
+ },
+ {
+  "stem": "A 24 volt source powers a 10 ohm and a 20 ohm resistor in series. What is the current?",
+  "correct": "0.8 amps",
+  "wrongs": [
+   "2.4 amps",
+   "1.2 amps",
+   "0.5 amps"
+  ],
+  "expl": "Total R = 30 ohms. I = 24 / 30 = 0.8 amps.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "1.2 amps",
+   "0.5 amps",
+   "0.8 amps",
+   "2.4 amps"
+  ],
+  "ans": "C",
+  "src": "practice-EI1",
+  "idx": 9,
+  "n": 10
+ },
+ {
+  "stem": "Which unit measures electrical power?",
+  "correct": "watt",
+  "wrongs": [
+   "volt",
+   "coulomb",
+   "farad"
+  ],
+  "expl": "Power is measured in watts.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "volt",
+   "farad",
+   "watt",
+   "coulomb"
+  ],
+  "ans": "C",
+  "src": "practice-EI2",
+  "idx": 0,
+  "n": 10
+ },
+ {
+  "stem": "A 30 volt source drives 6 amps through a resistor. What is the resistance?",
+  "correct": "5 ohms",
+  "wrongs": [
+   "180 ohms",
+   "24 ohms",
+   "0.2 ohms"
+  ],
+  "expl": "R = V / I = 30 / 6 = 5 ohms.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "180 ohms",
+   "5 ohms",
+   "24 ohms",
+   "0.2 ohms"
+  ],
+  "ans": "B",
+  "src": "practice-EI2",
+  "idx": 1,
+  "n": 10
+ },
+ {
+  "stem": "A generator changes:",
+  "correct": "mechanical energy into electrical energy",
+  "wrongs": [
+   "electrical energy into heat",
+   "light into sound",
+   "chemical energy into motion"
+  ],
+  "expl": "A generator is turned by motion and makes electricity.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "mechanical energy into electrical energy",
+   "chemical energy into motion",
+   "light into sound",
+   "electrical energy into heat"
+  ],
+  "ans": "A",
+  "src": "practice-EI2",
+  "idx": 2,
+  "n": 10
+ },
+ {
+  "stem": "A 100 ohm and a 150 ohm resistor are in parallel. What is the total resistance?",
+  "correct": "60 ohms",
+  "wrongs": [
+   "250 ohms",
+   "125 ohms",
+   "25 ohms"
+  ],
+  "expl": "(100 x 150) / 250 = 60 ohms.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "125 ohms",
+   "25 ohms",
+   "250 ohms",
+   "60 ohms"
+  ],
+  "ans": "D",
+  "src": "practice-EI2",
+  "idx": 3,
+  "n": 10
+ },
+ {
+  "stem": "An LED is a part that:",
+  "correct": "gives off light when current flows in one direction",
+  "wrongs": [
+   "stores charge",
+   "steps up voltage",
+   "measures current"
+  ],
+  "expl": "LED = light-emitting diode.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "gives off light when current flows in one direction",
+   "steps up voltage",
+   "measures current",
+   "stores charge"
+  ],
+  "ans": "A",
+  "src": "practice-EI2",
+  "idx": 4,
+  "n": 10
+ },
+ {
+  "stem": "A bulb is rated 60 watts at 120 volts. How much current does it draw?",
+  "correct": "0.5 amps",
+  "wrongs": [
+   "2 amps",
+   "7,200 amps",
+   "180 amps"
+  ],
+  "expl": "I = P / V = 60 / 120 = 0.5 amps.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "7,200 amps",
+   "2 amps",
+   "180 amps",
+   "0.5 amps"
+  ],
+  "ans": "D",
+  "src": "practice-EI2",
+  "idx": 5,
+  "n": 10
+ },
+ {
+  "stem": "In direct current (DC), the electrons flow:",
+  "correct": "in one direction only",
+  "wrongs": [
+   "back and forth",
+   "in a circle only",
+   "not at all"
+  ],
+  "expl": "DC flows one way. AC reverses.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "not at all",
+   "in one direction only",
+   "back and forth",
+   "in a circle only"
+  ],
+  "ans": "B",
+  "src": "practice-EI2",
+  "idx": 6,
+  "n": 10
+ },
+ {
+  "stem": "Three 1.5 volt batteries are connected in parallel. What is the output voltage?",
+  "correct": "1.5 volts",
+  "wrongs": [
+   "4.5 volts",
+   "0.5 volts",
+   "3 volts"
+  ],
+  "expl": "Parallel batteries keep the same voltage. They add capacity.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "0.5 volts",
+   "4.5 volts",
+   "1.5 volts",
+   "3 volts"
+  ],
+  "ans": "C",
+  "src": "practice-EI2",
+  "idx": 7,
+  "n": 10
+ },
+ {
+  "stem": "A 100 watt bulb runs for 10 hours. How much energy does it use?",
+  "correct": "1 kilowatt-hour",
+  "wrongs": [
+   "10 kilowatt-hours",
+   "100 kilowatt-hours",
+   "0.1 kilowatt-hours"
+  ],
+  "expl": "100 W x 10 h = 1,000 Wh = 1 kWh.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "0.1 kilowatt-hours",
+   "1 kilowatt-hour",
+   "10 kilowatt-hours",
+   "100 kilowatt-hours"
+  ],
+  "ans": "B",
+  "src": "practice-EI2",
+  "idx": 8,
+  "n": 10
+ },
+ {
+  "stem": "A transformer has 100 turns on the primary and 300 turns on the secondary. The primary is 120 volts AC. What is the secondary voltage?",
+  "correct": "360 volts",
+  "wrongs": [
+   "40 volts",
+   "120 volts",
+   "3,600 volts"
+  ],
+  "expl": "The turns ratio is 3 to 1. 120 x 3 = 360 volts.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "120 volts",
+   "3,600 volts",
+   "360 volts",
+   "40 volts"
+  ],
+  "ans": "C",
+  "src": "practice-EI2",
+  "idx": 9,
+  "n": 10
+ },
+ {
+  "stem": "Which unit measures frequency?",
+  "correct": "hertz",
+  "wrongs": [
+   "henry",
+   "ohm",
+   "joule"
+  ],
+  "expl": "Frequency is measured in hertz (cycles per second).",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "hertz",
+   "henry",
+   "ohm",
+   "joule"
+  ],
+  "ans": "A",
+  "src": "practice-EI3",
+  "idx": 0,
+  "n": 10
+ },
+ {
+  "stem": "Three 4 ohm resistors in series are connected to 24 volts. What is the current?",
+  "correct": "2 amps",
+  "wrongs": [
+   "8 amps",
+   "6 amps",
+   "0.5 amps"
+  ],
+  "expl": "Total R = 12 ohms. I = 24 / 12 = 2 amps.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "6 amps",
+   "8 amps",
+   "0.5 amps",
+   "2 amps"
+  ],
+  "ans": "D",
+  "src": "practice-EI3",
+  "idx": 1,
+  "n": 10
+ },
+ {
+  "stem": "Which instrument measures resistance?",
+  "correct": "ohmmeter",
+  "wrongs": [
+   "voltmeter",
+   "ammeter",
+   "wattmeter"
+  ],
+  "expl": "An ohmmeter reads resistance.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "wattmeter",
+   "voltmeter",
+   "ohmmeter",
+   "ammeter"
+  ],
+  "ans": "C",
+  "src": "practice-EI3",
+  "idx": 2,
+  "n": 10
+ },
+ {
+  "stem": "A 2 amp current flows through an 8 ohm resistor. How much power does the resistor use?",
+  "correct": "32 watts",
+  "wrongs": [
+   "16 watts",
+   "4 watts",
+   "128 watts"
+  ],
+  "expl": "P = I squared x R = 4 x 8 = 32 watts.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "16 watts",
+   "32 watts",
+   "4 watts",
+   "128 watts"
+  ],
+  "ans": "B",
+  "src": "practice-EI3",
+  "idx": 3,
+  "n": 10
+ },
+ {
+  "stem": "Which of these is a source of DC power?",
+  "correct": "a battery",
+  "wrongs": [
+   "a wall outlet",
+   "a power line",
+   "an AC generator"
+  ],
+  "expl": "A battery gives direct current.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "a power line",
+   "a battery",
+   "an AC generator",
+   "a wall outlet"
+  ],
+  "ans": "B",
+  "src": "practice-EI3",
+  "idx": 4,
+  "n": 10
+ },
+ {
+  "stem": "A relay is best described as:",
+  "correct": "a switch operated by an electromagnet",
+  "wrongs": [
+   "a type of battery",
+   "a kind of fuse",
+   "a unit of power"
+  ],
+  "expl": "A small current in a coil moves the switch.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "a unit of power",
+   "a kind of fuse",
+   "a switch operated by an electromagnet",
+   "a type of battery"
+  ],
+  "ans": "C",
+  "src": "practice-EI3",
+  "idx": 5,
+  "n": 10
+ },
+ {
+  "stem": "Several bulbs are wired in parallel. One bulb burns out. The other bulbs:",
+  "correct": "stay lit",
+  "wrongs": [
+   "go out",
+   "get dimmer",
+   "get brighter and burn out"
+  ],
+  "expl": "Each parallel branch has its own path to the source.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "stay lit",
+   "get dimmer",
+   "get brighter and burn out",
+   "go out"
+  ],
+  "ans": "A",
+  "src": "practice-EI3",
+  "idx": 6,
+  "n": 10
+ },
+ {
+  "stem": "A 10 volt source is across a 5 ohm and a 20 ohm resistor in parallel. What is the total current from the source?",
+  "correct": "2.5 amps",
+  "wrongs": [
+   "0.4 amps",
+   "2 amps",
+   "10 amps"
+  ],
+  "expl": "5 ohm branch: 2 A. 20 ohm branch: 0.5 A. Total 2.5 A.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "2 amps",
+   "10 amps",
+   "0.4 amps",
+   "2.5 amps"
+  ],
+  "ans": "D",
+  "src": "practice-EI3",
+  "idx": 7,
+  "n": 10
+ },
+ {
+  "stem": "If a wire is made longer, its resistance:",
+  "correct": "increases",
+  "wrongs": [
+   "decreases",
+   "stays the same",
+   "drops to zero"
+  ],
+  "expl": "A longer path means more resistance.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "stays the same",
+   "drops to zero",
+   "increases",
+   "decreases"
+  ],
+  "ans": "C",
+  "src": "practice-EI3",
+  "idx": 8,
+  "n": 10
+ },
+ {
+  "stem": "A transistor can be used as a:",
+  "correct": "switch or amplifier",
+  "wrongs": [
+   "fuse or battery",
+   "resistor only",
+   "wire only"
+  ],
+  "expl": "A transistor can switch current or boost a signal.",
+  "passage": null,
+  "pid": null,
+  "options": [
+   "fuse or battery",
+   "wire only",
+   "resistor only",
+   "switch or amplifier"
+  ],
+  "ans": "D",
+  "src": "practice-EI3",
+  "idx": 9,
+  "n": 10
+ }
+]

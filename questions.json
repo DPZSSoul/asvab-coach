@@ -1,13 +1,14 @@
 {
- "version": "2026-10-17",
+ "version": "2026-10-17b",
  "title": "ASVAB Coach question bank",
- "note": "Original ASVAB-style practice questions. Not real ASVAB items.",
+ "note": "Original ASVAB-style practice questions written to the official content areas (see build/blueprint.md). Not real ASVAB items.",
  "sections": {
   "AR": "Arithmetic Reasoning",
   "WK": "Word Knowledge",
   "PC": "Paragraph Comprehension",
   "MK": "Math Knowledge",
-  "GS": "General Science"
+  "GS": "General Science",
+  "EI": "Electronics Information"
  },
  "cat": {
   "GS": [
@@ -29,6 +30,10 @@
   "MK": [
    15,
    31
+  ],
+  "EI": [
+   15,
+   10
   ]
  },
  "lessons": {
@@ -760,6 +765,181 @@
     "Step 1: Heat moves through touch.",
     "Step 2: That is conduction."
    ]
+  },
+  "ei-basics": {
+   "section": "EI",
+   "name": "Current, voltage, resistance",
+   "what": [
+    "Voltage is the push. Current is the flow.",
+    "Resistance slows the flow."
+   ],
+   "why": "EI is in the main 4-year IT rule: AR + MK + EI + VE.",
+   "example": [
+    "A garden hose: water pressure is voltage.",
+    "The water flow is current. A kink is resistance."
+   ],
+   "idea": "Volts measure push. Amps measure flow. Ohms measure resistance. Kilo = 1,000. Milli = 1/1,000.",
+   "worked": [
+    "Change 2.2 kilohms to ohms.",
+    "Step 1: Kilo means 1,000.",
+    "Step 2: 2.2 x 1,000 = 2,200 ohms."
+   ]
+  },
+  "ei-ohms-law": {
+   "section": "EI",
+   "name": "Ohm's law",
+   "what": [
+    "Ohm's law links volts, amps, and ohms.",
+    "V = I x R."
+   ],
+   "why": "Ohm's law questions show up on almost every EI test.",
+   "example": [
+    "A 9 volt battery and a 3 ohm part.",
+    "9 divided by 3 = 3 amps of flow."
+   ],
+   "idea": "V = I x R. So I = V / R, and R = V / I.",
+   "worked": [
+    "A 24 volt source and a 6 ohm resistor. Find the current.",
+    "Step 1: I = V / R.",
+    "Step 2: I = 24 / 6.",
+    "Step 3: I = 4 amps."
+   ]
+  },
+  "ei-power": {
+   "section": "EI",
+   "name": "Electric power and energy",
+   "what": [
+    "Power is how fast energy is used.",
+    "Power is measured in watts."
+   ],
+   "why": "Power and energy questions are quick EI points.",
+   "example": [
+    "A 100 watt bulb uses more power than a 10 watt LED.",
+    "Run it 10 hours: 1,000 watt-hours = 1 kWh."
+   ],
+   "idea": "P = V x I. Also P = I x I x R. Energy = power x time.",
+   "worked": [
+    "A 12 volt fan draws 3 amps. Find the power.",
+    "Step 1: P = V x I.",
+    "Step 2: 12 x 3 = 36 watts."
+   ]
+  },
+  "ei-series-parallel": {
+   "section": "EI",
+   "name": "Series and parallel circuits",
+   "what": [
+    "Series: one path. Parallel: many paths."
+   ],
+   "why": "EI asks to add resistors and compare circuits.",
+   "example": [
+    "Old holiday lights were in series. One bulb out, all out.",
+    "House outlets are in parallel. Each works alone."
+   ],
+   "idea": "Series: add the resistors. Parallel: product over sum. Two equal ones: divide by 2.",
+   "worked": [
+    "A 6 ohm and a 12 ohm resistor in parallel.",
+    "Step 1: Product: 6 x 12 = 72.",
+    "Step 2: Sum: 6 + 12 = 18.",
+    "Step 3: 72 / 18 = 4 ohms."
+   ]
+  },
+  "ei-ac-dc": {
+   "section": "EI",
+   "name": "AC and DC",
+   "what": [
+    "DC flows one way, like from a battery.",
+    "AC flips direction many times a second."
+   ],
+   "why": "Know which is which, and what hertz means.",
+   "example": [
+    "A phone battery gives DC.",
+    "A wall outlet gives AC at 60 hertz."
+   ],
+   "idea": "AC = alternating current. DC = direct current. Hertz = cycles per second.",
+   "worked": [
+    "Q: A car battery gives which kind?",
+    "Step 1: Batteries push current one way.",
+    "Step 2: One way means DC."
+   ]
+  },
+  "ei-components": {
+   "section": "EI",
+   "name": "Electronic parts",
+   "what": [
+    "Each part has one main job.",
+    "Resistor limits. Capacitor stores charge. Diode is one-way."
+   ],
+   "why": "EI asks what each part does.",
+   "example": [
+    "A fuse is like a safety valve.",
+    "Too much current melts it and stops the flow."
+   ],
+   "idea": "Resistor: limits current. Capacitor: stores charge. Diode: one way. Transistor: switch or amplifier. Transformer: changes AC voltage.",
+   "worked": [
+    "Q: Which part changes AC to DC?",
+    "Step 1: AC to DC needs one-way flow.",
+    "Step 2: Diodes are one-way.",
+    "Step 3: A rectifier (made of diodes)."
+   ]
+  },
+  "ei-symbols-tools": {
+   "section": "EI",
+   "name": "Meters, symbols, and tools",
+   "what": [
+    "Meters measure the circuit.",
+    "Schematics use symbols for parts."
+   ],
+   "why": "Tools and symbols are an official EI area.",
+   "example": [
+    "A voltmeter is like a pressure gauge.",
+    "It checks the push across a part."
+   ],
+   "idea": "Ammeter: in series. Voltmeter: in parallel. Ohmmeter: resistance. Zigzag: resistor. Long and short lines: battery.",
+   "worked": [
+    "Q: How do you hook up an ammeter?",
+    "Step 1: It measures flow through the wire.",
+    "Step 2: The current must pass through it.",
+    "Step 3: In series."
+   ]
+  },
+  "ei-magnetism": {
+   "section": "EI",
+   "name": "Magnetism, motors, generators",
+   "what": [
+    "Current makes a magnetic field.",
+    "A moving magnet can make current."
+   ],
+   "why": "Motors, generators, relays, and transformers all use magnetism.",
+   "example": [
+    "A fridge magnet sticks to the steel door.",
+    "Like poles push apart. Opposites pull."
+   ],
+   "idea": "Like poles repel. Motor: electricity to motion. Generator: motion to electricity.",
+   "worked": [
+    "Q: What does a generator do?",
+    "Step 1: Something spins it.",
+    "Step 2: Spinning is motion.",
+    "Step 3: It turns motion into electricity."
+   ]
+  },
+  "ei-materials": {
+   "section": "EI",
+   "name": "Conductors and insulators",
+   "what": [
+    "Conductors let current flow. Insulators block it."
+   ],
+   "why": "Safety and wiring questions use this.",
+   "example": [
+    "Copper wire carries the current.",
+    "The plastic cover keeps it from shocking you."
+   ],
+   "idea": "Metals conduct: silver, copper, gold, aluminum. Insulators: rubber, glass, plastic, dry wood. Silicon is a semiconductor.",
+   "worked": [
+    "Q: Which is the best insulator: copper, iron, or glass?",
+    "Step 1: Copper and iron are metals.",
+    "Step 2: Metals conduct.",
+    "Step 3: Glass is the insulator."
+   ]
   }
  },
  "questions": [
@@ -811,7 +991,7 @@
   {
    "id": "AR-003",
    "section": "AR",
-   "stem": "What is 25% of 80?",
+   "stem": "A ship has 80 sailors. 25% of them are on watch. How many sailors are on watch?",
    "choices": [
     "55",
     "200",
@@ -855,7 +1035,7 @@
   {
    "id": "AR-005",
    "section": "AR",
-   "stem": "Find the average of 70, 80, 90, 100, and 60.",
+   "stem": "Five sailors score 70, 80, 90, 100, and 60 on a test. What is their average score?",
    "choices": [
     "85",
     "80",
@@ -966,7 +1146,7 @@
   {
    "id": "AR-010",
    "section": "AR",
-   "stem": "How many minutes are in 3.5 hours?",
+   "stem": "A training class lasts 3.5 hours. How many minutes long is the class?",
    "choices": [
     "350",
     "180",
@@ -1383,7 +1563,7 @@
   {
    "id": "AR-029",
    "section": "AR",
-   "stem": "How many inches are in 2.5 feet?",
+   "stem": "A shelf board is 2.5 feet long. How many inches long is the board?",
    "choices": [
     "24",
     "30",
@@ -1580,7 +1760,7 @@
   {
    "id": "AR-038",
    "section": "AR",
-   "stem": "18 is what percent of 72?",
+   "stem": "A team played 72 games and won 18 of them. What percent of its games did it win?",
    "choices": [
     "25%",
     "4%",
@@ -1667,7 +1847,7 @@
   {
    "id": "AR-042",
    "section": "AR",
-   "stem": "How many pints are in 5 quarts?",
+   "stem": "A cooler holds 5 quarts of water. How many pints of water is that?",
    "choices": [
     "20",
     "2.5",
@@ -2218,7 +2398,7 @@
   {
    "id": "AR-067",
    "section": "AR",
-   "stem": "What is 20% of 150?",
+   "stem": "A truck carries 150 boxes. 20% of the boxes hold food. How many boxes hold food?",
    "choices": [
     "15",
     "20",
@@ -2463,7 +2643,7 @@
   {
    "id": "AR-078",
    "section": "AR",
-   "stem": "How many inches are in 3 yards?",
+   "stem": "A sailor cuts a rope 3 yards long. How many inches long is the rope?",
    "choices": [
     "9",
     "72",
@@ -2639,7 +2819,7 @@
   {
    "id": "WK-001",
    "section": "WK",
-   "stem": "\"The island had ABUNDANT fresh water.\" Here, ABUNDANT most nearly means:",
+   "stem": "ABUNDANT most nearly means:",
    "choices": [
     "dirty",
     "rare",
@@ -2648,9 +2828,9 @@
    ],
    "answer": 3,
    "difficulty": 1,
-   "topic": "wk-context",
+   "topic": "wk-synonym",
    "steps": [
-    "Read the sentence. Look for clues.",
+    "Make your own short sentence with the word.",
     "ABUNDANT means: plentiful; more than enough.",
     "Example: The farm had abundant corn.",
     "Memory hook: A BUN DANCE: buns everywhere, plenty.",
@@ -2664,7 +2844,7 @@
   {
    "id": "WK-002",
    "section": "WK",
-   "stem": "\"Food was SCARCE after the storm.\" Here, SCARCE most nearly means:",
+   "stem": "SCARCE most nearly means:",
    "choices": [
     "rare",
     "wasted",
@@ -2673,9 +2853,9 @@
    ],
    "answer": 0,
    "difficulty": 1,
-   "topic": "wk-context",
+   "topic": "wk-synonym",
    "steps": [
-    "Read the sentence. Look for clues.",
+    "Make your own short sentence with the word.",
     "SCARCE means: hard to find; rare.",
     "Example: Water was scarce in the desert.",
     "Memory hook: SCARE-ce: you are scared there is none left.",
@@ -2689,7 +2869,7 @@
   {
    "id": "WK-003",
    "section": "WK",
-   "stem": "\"She made a RAPID recovery.\" Here, RAPID most nearly means:",
+   "stem": "RAPID most nearly means:",
    "choices": [
     "painful",
     "doubtful",
@@ -2698,9 +2878,9 @@
    ],
    "answer": 2,
    "difficulty": 1,
-   "topic": "wk-context",
+   "topic": "wk-synonym",
    "steps": [
-    "Read the sentence. Look for clues.",
+    "Make your own short sentence with the word.",
     "RAPID means: very fast.",
     "Example: A rapid river rushed past.",
     "Memory hook: RAPIDS in a river.",
@@ -2714,7 +2894,7 @@
   {
    "id": "WK-004",
    "section": "WK",
-   "stem": "\"He gave a CANDID opinion.\" Here, CANDID most nearly means:",
+   "stem": "CANDID most nearly means:",
    "choices": [
     "secret",
     "honest",
@@ -2723,9 +2903,9 @@
    ],
    "answer": 1,
    "difficulty": 1,
-   "topic": "wk-context",
+   "topic": "wk-synonym",
    "steps": [
-    "Read the sentence. Look for clues.",
+    "Make your own short sentence with the word.",
     "CANDID means: honest and open.",
     "Example: She gave a candid answer.",
     "Memory hook: CANDID camera: real, not posed.",
@@ -2739,7 +2919,7 @@
   {
    "id": "WK-005",
    "section": "WK",
-   "stem": "\"A DILIGENT worker checks every detail.\" Here, DILIGENT most nearly means:",
+   "stem": "DILIGENT most nearly means:",
    "choices": [
     "wealthy",
     "careless",
@@ -2748,9 +2928,9 @@
    ],
    "answer": 3,
    "difficulty": 1,
-   "topic": "wk-context",
+   "topic": "wk-synonym",
    "steps": [
-    "Read the sentence. Look for clues.",
+    "Make your own short sentence with the word.",
     "DILIGENT means: hard-working and careful.",
     "Example: A diligent student studies daily.",
     "Memory hook: DILI-GENT: a gent who works DAILY.",
@@ -2764,7 +2944,7 @@
   {
    "id": "WK-006",
    "section": "WK",
-   "stem": "\"The directions were VAGUE.\" Here, VAGUE most nearly means:",
+   "stem": "VAGUE most nearly means:",
    "choices": [
     "unclear",
     "lengthy",
@@ -2773,9 +2953,9 @@
    ],
    "answer": 0,
    "difficulty": 1,
-   "topic": "wk-context",
+   "topic": "wk-synonym",
    "steps": [
-    "Read the sentence. Look for clues.",
+    "Make your own short sentence with the word.",
     "VAGUE means: not clear.",
     "Example: His directions were vague.",
     "Memory hook: VAGUE: vague like fog.",
@@ -2814,7 +2994,7 @@
   {
    "id": "WK-008",
    "section": "WK",
-   "stem": "\"A FRUGAL family saves money.\" Here, FRUGAL most nearly means:",
+   "stem": "FRUGAL most nearly means:",
    "choices": [
     "wealthy",
     "rude",
@@ -2823,9 +3003,9 @@
    ],
    "answer": 2,
    "difficulty": 1,
-   "topic": "wk-context",
+   "topic": "wk-synonym",
    "steps": [
-    "Read the sentence. Look for clues.",
+    "Make your own short sentence with the word.",
     "FRUGAL means: careful with money.",
     "Example: A frugal man saves coins.",
     "Memory hook: FRUGAL: FRUIT-gal buys only cheap fruit.",
@@ -2839,7 +3019,7 @@
   {
    "id": "WK-009",
    "section": "WK",
-   "stem": "\"The old radio is OBSOLETE.\" Here, OBSOLETE most nearly means:",
+   "stem": "OBSOLETE most nearly means:",
    "choices": [
     "outdated",
     "broken",
@@ -2848,9 +3028,9 @@
    ],
    "answer": 0,
    "difficulty": 1,
-   "topic": "wk-context",
+   "topic": "wk-synonym",
    "steps": [
-    "Read the sentence. Look for clues.",
+    "Make your own short sentence with the word.",
     "Obsolete means outdated.",
     "Put \"outdated\" in place of OBSOLETE. It fits.",
     "Answer: outdated."
@@ -2861,7 +3041,7 @@
   {
    "id": "WK-010",
    "section": "WK",
-   "stem": "\"He was RELUCTANT to speak.\" Here, RELUCTANT most nearly means:",
+   "stem": "RELUCTANT most nearly means:",
    "choices": [
     "eager",
     "unwilling",
@@ -2870,9 +3050,9 @@
    ],
    "answer": 1,
    "difficulty": 1,
-   "topic": "wk-context",
+   "topic": "wk-synonym",
    "steps": [
-    "Read the sentence. Look for clues.",
+    "Make your own short sentence with the word.",
     "Reluctant means unwilling.",
     "Put \"unwilling\" in place of RELUCTANT. It fits.",
     "Answer: unwilling."
@@ -2905,7 +3085,7 @@
   {
    "id": "WK-012",
    "section": "WK",
-   "stem": "\"She is METICULOUS about her notes.\" Here, METICULOUS most nearly means:",
+   "stem": "METICULOUS most nearly means:",
    "choices": [
     "lazy",
     "quick",
@@ -2914,9 +3094,9 @@
    ],
    "answer": 2,
    "difficulty": 1,
-   "topic": "wk-context",
+   "topic": "wk-synonym",
    "steps": [
-    "Read the sentence. Look for clues.",
+    "Make your own short sentence with the word.",
     "Meticulous means careful.",
     "Put \"careful\" in place of METICULOUS. It fits.",
     "Answer: careful."
@@ -2927,7 +3107,7 @@
   {
    "id": "WK-013",
    "section": "WK",
-   "stem": "\"He did MUNDANE chores all day.\" Here, MUNDANE most nearly means:",
+   "stem": "MUNDANE most nearly means:",
    "choices": [
     "dangerous",
     "difficult",
@@ -2936,9 +3116,9 @@
    ],
    "answer": 2,
    "difficulty": 1,
-   "topic": "wk-context",
+   "topic": "wk-synonym",
    "steps": [
-    "Read the sentence. Look for clues.",
+    "Make your own short sentence with the word.",
     "Mundane means ordinary.",
     "Put \"ordinary\" in place of MUNDANE. It fits.",
     "Answer: ordinary."
@@ -2949,7 +3129,7 @@
   {
    "id": "WK-014",
    "section": "WK",
-   "stem": "\"A BENEVOLENT king fed the poor.\" Here, BENEVOLENT most nearly means:",
+   "stem": "BENEVOLENT most nearly means:",
    "choices": [
     "kind",
     "cruel",
@@ -2958,9 +3138,9 @@
    ],
    "answer": 0,
    "difficulty": 1,
-   "topic": "wk-context",
+   "topic": "wk-synonym",
    "steps": [
-    "Read the sentence. Look for clues.",
+    "Make your own short sentence with the word.",
     "Benevolent means kind.",
     "Put \"kind\" in place of BENEVOLENT. It fits.",
     "Answer: kind."
@@ -2971,7 +3151,7 @@
   {
    "id": "WK-015",
    "section": "WK",
-   "stem": "\"I CONCUR with your plan.\" Here, CONCUR most nearly means:",
+   "stem": "CONCUR most nearly means:",
    "choices": [
     "doubt",
     "agree",
@@ -2980,9 +3160,9 @@
    ],
    "answer": 1,
    "difficulty": 2,
-   "topic": "wk-context",
+   "topic": "wk-synonym",
    "steps": [
-    "Read the sentence. Look for clues.",
+    "Make your own short sentence with the word.",
     "Concur means agree.",
     "Put \"agree\" in place of CONCUR. It fits.",
     "Answer: agree."
@@ -3015,7 +3195,7 @@
   {
    "id": "WK-017",
    "section": "WK",
-   "stem": "\"The plan is FEASIBLE.\" Here, FEASIBLE most nearly means:",
+   "stem": "FEASIBLE most nearly means:",
    "choices": [
     "possible",
     "illegal",
@@ -3024,9 +3204,9 @@
    ],
    "answer": 0,
    "difficulty": 2,
-   "topic": "wk-context",
+   "topic": "wk-synonym",
    "steps": [
-    "Read the sentence. Look for clues.",
+    "Make your own short sentence with the word.",
     "Feasible means possible.",
     "Put \"possible\" in place of FEASIBLE. It fits.",
     "Answer: possible."
@@ -3037,7 +3217,7 @@
   {
    "id": "WK-018",
    "section": "WK",
-   "stem": "\"He has an INNATE talent for music.\" Here, INNATE most nearly means:",
+   "stem": "INNATE most nearly means:",
    "choices": [
     "learned",
     "rare",
@@ -3046,9 +3226,9 @@
    ],
    "answer": 3,
    "difficulty": 2,
-   "topic": "wk-context",
+   "topic": "wk-synonym",
    "steps": [
-    "Read the sentence. Look for clues.",
+    "Make your own short sentence with the word.",
     "Innate means natural.",
     "Put \"natural\" in place of INNATE. It fits.",
     "Answer: natural."
@@ -3059,7 +3239,7 @@
   {
    "id": "WK-019",
    "section": "WK",
-   "stem": "\"Her explanation was LUCID.\" Here, LUCID most nearly means:",
+   "stem": "LUCID most nearly means:",
    "choices": [
     "rude",
     "clear",
@@ -3068,9 +3248,9 @@
    ],
    "answer": 1,
    "difficulty": 2,
-   "topic": "wk-context",
+   "topic": "wk-synonym",
    "steps": [
-    "Read the sentence. Look for clues.",
+    "Make your own short sentence with the word.",
     "Lucid means clear.",
     "Put \"clear\" in place of LUCID. It fits.",
     "Answer: clear."
@@ -3081,7 +3261,7 @@
   {
    "id": "WK-020",
    "section": "WK",
-   "stem": "\"Sandbags MITIGATE flood damage.\" Here, MITIGATE most nearly means:",
+   "stem": "MITIGATE most nearly means:",
    "choices": [
     "cause",
     "predict",
@@ -3090,9 +3270,9 @@
    ],
    "answer": 2,
    "difficulty": 2,
-   "topic": "wk-context",
+   "topic": "wk-synonym",
    "steps": [
-    "Read the sentence. Look for clues.",
+    "Make your own short sentence with the word.",
     "Mitigate means lessen.",
     "Put \"lessen\" in place of MITIGATE. It fits.",
     "Answer: lessen."
@@ -3103,7 +3283,7 @@
   {
    "id": "WK-021",
    "section": "WK",
-   "stem": "\"The hikers were in PERIL.\" Here, PERIL most nearly means:",
+   "stem": "PERIL most nearly means:",
    "choices": [
     "debt",
     "rest",
@@ -3112,9 +3292,9 @@
    ],
    "answer": 2,
    "difficulty": 2,
-   "topic": "wk-context",
+   "topic": "wk-synonym",
    "steps": [
-    "Read the sentence. Look for clues.",
+    "Make your own short sentence with the word.",
     "Peril means danger.",
     "Put \"danger\" in place of PERIL. It fits.",
     "Answer: danger."
@@ -3125,7 +3305,7 @@
   {
    "id": "WK-022",
    "section": "WK",
-   "stem": "\"It is PRUDENT to check the oil.\" Here, PRUDENT most nearly means:",
+   "stem": "PRUDENT most nearly means:",
    "choices": [
     "costly",
     "wise",
@@ -3134,9 +3314,9 @@
    ],
    "answer": 1,
    "difficulty": 2,
-   "topic": "wk-context",
+   "topic": "wk-synonym",
    "steps": [
-    "Read the sentence. Look for clues.",
+    "Make your own short sentence with the word.",
     "PRUDENT means: wise and careful.",
     "Example: A prudent sailor checks the weather.",
     "Memory hook: PRUDENT: a PRUNE keeps for later.",
@@ -3172,7 +3352,7 @@
   {
    "id": "WK-024",
    "section": "WK",
-   "stem": "\"The task was TEDIOUS.\" Here, TEDIOUS most nearly means:",
+   "stem": "TEDIOUS most nearly means:",
    "choices": [
     "easy",
     "fun",
@@ -3181,9 +3361,9 @@
    ],
    "answer": 3,
    "difficulty": 2,
-   "topic": "wk-context",
+   "topic": "wk-synonym",
    "steps": [
-    "Read the sentence. Look for clues.",
+    "Make your own short sentence with the word.",
     "Tedious means boring.",
     "Put \"boring\" in place of TEDIOUS. It fits.",
     "Answer: boring."
@@ -3216,7 +3396,7 @@
   {
    "id": "WK-026",
    "section": "WK",
-   "stem": "\"The cat was WARY of strangers.\" Here, WARY most nearly means:",
+   "stem": "WARY most nearly means:",
    "choices": [
     "cautious",
     "fond",
@@ -3225,9 +3405,9 @@
    ],
    "answer": 0,
    "difficulty": 2,
-   "topic": "wk-context",
+   "topic": "wk-synonym",
    "steps": [
-    "Read the sentence. Look for clues.",
+    "Make your own short sentence with the word.",
     "Wary means cautious.",
     "Put \"cautious\" in place of WARY. It fits.",
     "Answer: cautious."
@@ -3238,7 +3418,7 @@
   {
    "id": "WK-027",
    "section": "WK",
-   "stem": "\"A ZEALOUS fan came to every game.\" Here, ZEALOUS most nearly means:",
+   "stem": "ZEALOUS most nearly means:",
    "choices": [
     "silent",
     "enthusiastic",
@@ -3247,9 +3427,9 @@
    ],
    "answer": 1,
    "difficulty": 2,
-   "topic": "wk-context",
+   "topic": "wk-synonym",
    "steps": [
-    "Read the sentence. Look for clues.",
+    "Make your own short sentence with the word.",
     "Zealous means enthusiastic.",
     "Put \"enthusiastic\" in place of ZEALOUS. It fits.",
     "Answer: enthusiastic."
@@ -3260,7 +3440,7 @@
   {
    "id": "WK-028",
    "section": "WK",
-   "stem": "\"The bus came to an ABRUPT stop.\" Here, ABRUPT most nearly means:",
+   "stem": "ABRUPT most nearly means:",
    "choices": [
     "gentle",
     "smooth",
@@ -3269,9 +3449,9 @@
    ],
    "answer": 2,
    "difficulty": 3,
-   "topic": "wk-context",
+   "topic": "wk-synonym",
    "steps": [
-    "Read the sentence. Look for clues.",
+    "Make your own short sentence with the word.",
     "Abrupt means sudden.",
     "Put \"sudden\" in place of ABRUPT. It fits.",
     "Answer: sudden."
@@ -3282,7 +3462,7 @@
   {
    "id": "WK-029",
    "section": "WK",
-   "stem": "\"The two rooms are ADJACENT.\" Here, ADJACENT most nearly means:",
+   "stem": "ADJACENT most nearly means:",
    "choices": [
     "alike",
     "far from",
@@ -3291,9 +3471,9 @@
    ],
    "answer": 2,
    "difficulty": 3,
-   "topic": "wk-context",
+   "topic": "wk-synonym",
    "steps": [
-    "Read the sentence. Look for clues.",
+    "Make your own short sentence with the word.",
     "Adjacent means next to.",
     "Put \"next to\" in place of ADJACENT. It fits.",
     "Answer: next to."
@@ -3354,7 +3534,7 @@
   {
    "id": "WK-032",
    "section": "WK",
-   "stem": "\"Defeat seemed INEVITABLE.\" Here, INEVITABLE most nearly means:",
+   "stem": "INEVITABLE most nearly means:",
    "choices": [
     "unavoidable",
     "unlikely",
@@ -3363,9 +3543,9 @@
    ],
    "answer": 0,
    "difficulty": 3,
-   "topic": "wk-context",
+   "topic": "wk-synonym",
    "steps": [
-    "Read the sentence. Look for clues.",
+    "Make your own short sentence with the word.",
     "Inevitable means unavoidable.",
     "Put \"unavoidable\" in place of INEVITABLE. It fits.",
     "Answer: unavoidable."
@@ -3555,7 +3735,7 @@
   {
    "id": "WK-041",
    "section": "WK",
-   "stem": "\"We have AMPLE time to finish.\" Here, AMPLE most nearly means:",
+   "stem": "AMPLE most nearly means:",
    "choices": [
     "enough",
     "late",
@@ -3564,9 +3744,9 @@
    ],
    "answer": 0,
    "difficulty": 1,
-   "topic": "wk-context",
+   "topic": "wk-synonym",
    "steps": [
-    "Read the sentence. Look for clues.",
+    "Make your own short sentence with the word.",
     "AMPLE means: more than enough.",
     "Example: We had ample time to pack.",
     "Memory hook: A big AMPLE plate of food.",
@@ -3718,7 +3898,7 @@
   {
    "id": "WK-048",
    "section": "WK",
-   "stem": "\"He is a GREGARIOUS person.\" Here, GREGARIOUS most nearly means:",
+   "stem": "GREGARIOUS most nearly means:",
    "choices": [
     "angry",
     "lazy",
@@ -3727,9 +3907,9 @@
    ],
    "answer": 2,
    "difficulty": 2,
-   "topic": "wk-context",
+   "topic": "wk-synonym",
    "steps": [
-    "Read the sentence. Look for clues.",
+    "Make your own short sentence with the word.",
     "Gregarious means sociable.",
     "Put \"sociable\" in place of GREGARIOUS. It fits.",
     "Answer: sociable."
@@ -3761,28 +3941,6 @@
    "explanation": "Humble means modest.",
    "source": "study-pack:quiz",
    "theme": "Behavior and Character"
-  },
-  {
-   "id": "WK-050",
-   "section": "WK",
-   "stem": "\"A judge must be IMPARTIAL.\" Here, IMPARTIAL most nearly means:",
-   "choices": [
-    "wise",
-    "fair",
-    "kind",
-    "strict"
-   ],
-   "answer": 1,
-   "difficulty": 2,
-   "topic": "wk-context",
-   "steps": [
-    "Read the sentence. Look for clues.",
-    "Impartial means fair.",
-    "Put \"fair\" in place of IMPARTIAL. It fits.",
-    "Answer: fair."
-   ],
-   "explanation": "Impartial means fair.",
-   "source": "study-pack:quiz"
   },
   {
    "id": "WK-051",
@@ -3990,31 +4148,6 @@
    "explanation": "Anxious means nervous.",
    "source": "study-pack:practice-WK1",
    "theme": "Feelings and Mood"
-  },
-  {
-   "id": "WK-060",
-   "section": "WK",
-   "stem": "\"They tried to CONCEAL the damage.\" Here, CONCEAL most nearly means:",
-   "choices": [
-    "repair",
-    "hide",
-    "report",
-    "measure"
-   ],
-   "answer": 1,
-   "difficulty": 2,
-   "topic": "wk-context",
-   "steps": [
-    "Read the sentence. Look for clues.",
-    "CONCEAL means: hide.",
-    "Example: He tried to conceal the gift.",
-    "Memory hook: CON-SEAL: seal it away.",
-    "Put \"hide\" in place of CONCEAL. It fits.",
-    "Answer: hide."
-   ],
-   "explanation": "Conceal means hide.",
-   "source": "study-pack:practice-WK1",
-   "theme": "Truth, Rules, Law"
   },
   {
    "id": "WK-061",
@@ -4582,6 +4715,609 @@
    "source": "study-pack:practice-WK3"
   },
   {
+   "id": "WK-086",
+   "section": "WK",
+   "stem": "ABATE most nearly means:",
+   "choices": [
+    "begin",
+    "hide",
+    "increase",
+    "lessen"
+   ],
+   "answer": 3,
+   "difficulty": 2,
+   "topic": "wk-synonym",
+   "steps": [
+    "Make your own short sentence with the word.",
+    "Abate means lessen.",
+    "Put \"lessen\" in place of ABATE. It fits.",
+    "Answer: lessen."
+   ],
+   "explanation": "Abate means lessen.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "WK-087",
+   "section": "WK",
+   "stem": "AUGMENT most nearly means:",
+   "choices": [
+    "increase",
+    "delay",
+    "reduce",
+    "explain"
+   ],
+   "answer": 0,
+   "difficulty": 2,
+   "topic": "wk-synonym",
+   "steps": [
+    "Make your own short sentence with the word.",
+    "Augment means increase.",
+    "Put \"increase\" in place of AUGMENT. It fits.",
+    "Answer: increase."
+   ],
+   "explanation": "Augment means increase.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "WK-088",
+   "section": "WK",
+   "stem": "BENIGN most nearly means:",
+   "choices": [
+    "sudden",
+    "angry",
+    "harmless",
+    "broken"
+   ],
+   "answer": 2,
+   "difficulty": 3,
+   "topic": "wk-synonym",
+   "steps": [
+    "Make your own short sentence with the word.",
+    "Benign means harmless.",
+    "Put \"harmless\" in place of BENIGN. It fits.",
+    "Answer: harmless."
+   ],
+   "explanation": "Benign means harmless.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "WK-089",
+   "section": "WK",
+   "stem": "COHERENT most nearly means:",
+   "choices": [
+    "noisy",
+    "loose",
+    "logical",
+    "hidden"
+   ],
+   "answer": 2,
+   "difficulty": 3,
+   "topic": "wk-synonym",
+   "steps": [
+    "Make your own short sentence with the word.",
+    "Coherent means logical.",
+    "Put \"logical\" in place of COHERENT. It fits.",
+    "Answer: logical."
+   ],
+   "explanation": "Coherent means logical.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "WK-090",
+   "section": "WK",
+   "stem": "CURTAIL most nearly means:",
+   "choices": [
+    "shorten",
+    "extend",
+    "repair",
+    "praise"
+   ],
+   "answer": 0,
+   "difficulty": 3,
+   "topic": "wk-synonym",
+   "steps": [
+    "Make your own short sentence with the word.",
+    "Curtail means shorten.",
+    "Put \"shorten\" in place of CURTAIL. It fits.",
+    "Answer: shorten."
+   ],
+   "explanation": "Curtail means shorten.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "WK-091",
+   "section": "WK",
+   "stem": "DEXTEROUS most nearly means:",
+   "choices": [
+    "skillful",
+    "tired",
+    "honest",
+    "clumsy"
+   ],
+   "answer": 0,
+   "difficulty": 3,
+   "topic": "wk-synonym",
+   "steps": [
+    "Make your own short sentence with the word.",
+    "Dexterous means skillful.",
+    "Put \"skillful\" in place of DEXTEROUS. It fits.",
+    "Answer: skillful."
+   ],
+   "explanation": "Dexterous means skillful.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "WK-092",
+   "section": "WK",
+   "stem": "DILEMMA most nearly means:",
+   "choices": [
+    "problem",
+    "reward",
+    "journey",
+    "answer"
+   ],
+   "answer": 0,
+   "difficulty": 1,
+   "topic": "wk-synonym",
+   "steps": [
+    "Make your own short sentence with the word.",
+    "Dilemma means problem.",
+    "Put \"problem\" in place of DILEMMA. It fits.",
+    "Answer: problem."
+   ],
+   "explanation": "Dilemma means problem.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "WK-093",
+   "section": "WK",
+   "stem": "DISCERN most nearly means:",
+   "choices": [
+    "borrow",
+    "ignore",
+    "detect",
+    "damage"
+   ],
+   "answer": 2,
+   "difficulty": 2,
+   "topic": "wk-synonym",
+   "steps": [
+    "Make your own short sentence with the word.",
+    "Discern means detect.",
+    "Put \"detect\" in place of DISCERN. It fits.",
+    "Answer: detect."
+   ],
+   "explanation": "Discern means detect.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "WK-094",
+   "section": "WK",
+   "stem": "EMULATE most nearly means:",
+   "choices": [
+    "imitate",
+    "forget",
+    "avoid",
+    "defeat"
+   ],
+   "answer": 0,
+   "difficulty": 2,
+   "topic": "wk-synonym",
+   "steps": [
+    "Make your own short sentence with the word.",
+    "Emulate means imitate.",
+    "Put \"imitate\" in place of EMULATE. It fits.",
+    "Answer: imitate."
+   ],
+   "explanation": "Emulate means imitate.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "WK-095",
+   "section": "WK",
+   "stem": "FLAGRANT most nearly means:",
+   "choices": [
+    "obvious",
+    "pleasant",
+    "hidden",
+    "minor"
+   ],
+   "answer": 0,
+   "difficulty": 3,
+   "topic": "wk-synonym",
+   "steps": [
+    "Make your own short sentence with the word.",
+    "Flagrant means obvious.",
+    "Put \"obvious\" in place of FLAGRANT. It fits.",
+    "Answer: obvious."
+   ],
+   "explanation": "Flagrant means obvious.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "WK-096",
+   "section": "WK",
+   "stem": "FRIVOLOUS most nearly means:",
+   "choices": [
+    "careful",
+    "silly",
+    "costly",
+    "serious"
+   ],
+   "answer": 1,
+   "difficulty": 2,
+   "topic": "wk-synonym",
+   "steps": [
+    "Make your own short sentence with the word.",
+    "Frivolous means silly.",
+    "Put \"silly\" in place of FRIVOLOUS. It fits.",
+    "Answer: silly."
+   ],
+   "explanation": "Frivolous means silly.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "WK-097",
+   "section": "WK",
+   "stem": "IMMINENT most nearly means:",
+   "choices": [
+    "approaching",
+    "distant",
+    "completed",
+    "famous"
+   ],
+   "answer": 0,
+   "difficulty": 2,
+   "topic": "wk-synonym",
+   "steps": [
+    "Make your own short sentence with the word.",
+    "Imminent means approaching.",
+    "Put \"approaching\" in place of IMMINENT. It fits.",
+    "Answer: approaching."
+   ],
+   "explanation": "Imminent means approaching.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "WK-098",
+   "section": "WK",
+   "stem": "INDIGNANT most nearly means:",
+   "choices": [
+    "angry",
+    "sleepy",
+    "curious",
+    "pleased"
+   ],
+   "answer": 0,
+   "difficulty": 2,
+   "topic": "wk-synonym",
+   "steps": [
+    "Make your own short sentence with the word.",
+    "Indignant means angry.",
+    "Put \"angry\" in place of INDIGNANT. It fits.",
+    "Answer: angry."
+   ],
+   "explanation": "Indignant means angry.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "WK-099",
+   "section": "WK",
+   "stem": "JOVIAL most nearly means:",
+   "choices": [
+    "strict",
+    "quiet",
+    "cheerful",
+    "gloomy"
+   ],
+   "answer": 2,
+   "difficulty": 2,
+   "topic": "wk-synonym",
+   "steps": [
+    "Make your own short sentence with the word.",
+    "Jovial means cheerful.",
+    "Put \"cheerful\" in place of JOVIAL. It fits.",
+    "Answer: cheerful."
+   ],
+   "explanation": "Jovial means cheerful.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "WK-100",
+   "section": "WK",
+   "stem": "LAUD most nearly means:",
+   "choices": [
+    "hear",
+    "praise",
+    "lift",
+    "blame"
+   ],
+   "answer": 1,
+   "difficulty": 3,
+   "topic": "wk-synonym",
+   "steps": [
+    "Make your own short sentence with the word.",
+    "Laud means praise.",
+    "Put \"praise\" in place of LAUD. It fits.",
+    "Answer: praise."
+   ],
+   "explanation": "Laud means praise.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "WK-101",
+   "section": "WK",
+   "stem": "NOVICE most nearly means:",
+   "choices": [
+    "beginner",
+    "judge",
+    "stranger",
+    "expert"
+   ],
+   "answer": 0,
+   "difficulty": 1,
+   "topic": "wk-synonym",
+   "steps": [
+    "Make your own short sentence with the word.",
+    "Novice means beginner.",
+    "Put \"beginner\" in place of NOVICE. It fits.",
+    "Answer: beginner."
+   ],
+   "explanation": "Novice means beginner.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "WK-102",
+   "section": "WK",
+   "stem": "OBSCURE most nearly means:",
+   "choices": [
+    "bright",
+    "famous",
+    "simple",
+    "unclear"
+   ],
+   "answer": 3,
+   "difficulty": 2,
+   "topic": "wk-synonym",
+   "steps": [
+    "Make your own short sentence with the word.",
+    "Obscure means unclear.",
+    "Put \"unclear\" in place of OBSCURE. It fits.",
+    "Answer: unclear."
+   ],
+   "explanation": "Obscure means unclear.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "WK-103",
+   "section": "WK",
+   "stem": "PLACID most nearly means:",
+   "choices": [
+    "stormy",
+    "eager",
+    "fierce",
+    "calm"
+   ],
+   "answer": 3,
+   "difficulty": 2,
+   "topic": "wk-synonym",
+   "steps": [
+    "Make your own short sentence with the word.",
+    "Placid means calm.",
+    "Put \"calm\" in place of PLACID. It fits.",
+    "Answer: calm."
+   ],
+   "explanation": "Placid means calm.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "WK-104",
+   "section": "WK",
+   "stem": "PROFICIENT most nearly means:",
+   "choices": [
+    "skilled",
+    "unable",
+    "careless",
+    "lazy"
+   ],
+   "answer": 0,
+   "difficulty": 1,
+   "topic": "wk-synonym",
+   "steps": [
+    "Make your own short sentence with the word.",
+    "PROFICIENT means: money left after costs.",
+    "Example: The shop made a profit.",
+    "Memory hook: PROFIT: PRO = for gain.",
+    "Put \"skilled\" in place of PROFICIENT. It fits.",
+    "Answer: skilled."
+   ],
+   "explanation": "Proficient means skilled.",
+   "source": "new-original-audit",
+   "theme": "Work, Money, Planning"
+  },
+  {
+   "id": "WK-105",
+   "section": "WK",
+   "stem": "REPLENISH most nearly means:",
+   "choices": [
+    "empty",
+    "waste",
+    "refill",
+    "discover"
+   ],
+   "answer": 2,
+   "difficulty": 1,
+   "topic": "wk-synonym",
+   "steps": [
+    "Make your own short sentence with the word.",
+    "Replenish means refill.",
+    "Put \"refill\" in place of REPLENISH. It fits.",
+    "Answer: refill."
+   ],
+   "explanation": "Replenish means refill.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "WK-106",
+   "section": "WK",
+   "stem": "SALVAGE most nearly means:",
+   "choices": [
+    "sink",
+    "destroy",
+    "save",
+    "sell"
+   ],
+   "answer": 2,
+   "difficulty": 2,
+   "topic": "wk-synonym",
+   "steps": [
+    "Make your own short sentence with the word.",
+    "Salvage means save.",
+    "Put \"save\" in place of SALVAGE. It fits.",
+    "Answer: save."
+   ],
+   "explanation": "Salvage means save.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "WK-107",
+   "section": "WK",
+   "stem": "TACITURN most nearly means:",
+   "choices": [
+    "quiet",
+    "talkative",
+    "rude",
+    "cheerful"
+   ],
+   "answer": 0,
+   "difficulty": 3,
+   "topic": "wk-synonym",
+   "steps": [
+    "Make your own short sentence with the word.",
+    "Taciturn means quiet.",
+    "Put \"quiet\" in place of TACITURN. It fits.",
+    "Answer: quiet."
+   ],
+   "explanation": "Taciturn means quiet.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "WK-108",
+   "section": "WK",
+   "stem": "TRANQUIL most nearly means:",
+   "choices": [
+    "peaceful",
+    "busy",
+    "angry",
+    "noisy"
+   ],
+   "answer": 0,
+   "difficulty": 1,
+   "topic": "wk-synonym",
+   "steps": [
+    "Make your own short sentence with the word.",
+    "Tranquil means peaceful.",
+    "Put \"peaceful\" in place of TRANQUIL. It fits.",
+    "Answer: peaceful."
+   ],
+   "explanation": "Tranquil means peaceful.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "WK-109",
+   "section": "WK",
+   "stem": "VERIFY most nearly means:",
+   "choices": [
+    "change",
+    "confirm",
+    "hide",
+    "doubt"
+   ],
+   "answer": 1,
+   "difficulty": 1,
+   "topic": "wk-synonym",
+   "steps": [
+    "Make your own short sentence with the word.",
+    "VERIFY means: check that it is true.",
+    "Example: Verify the numbers twice.",
+    "Memory hook: VERI = true: very true.",
+    "Put \"confirm\" in place of VERIFY. It fits.",
+    "Answer: confirm."
+   ],
+   "explanation": "Verify means confirm.",
+   "source": "new-original-audit",
+   "theme": "Truth, Rules, Law"
+  },
+  {
+   "id": "WK-110",
+   "section": "WK",
+   "stem": "CONCISE most nearly means:",
+   "choices": [
+    "brief",
+    "unclear",
+    "wordy",
+    "rude"
+   ],
+   "answer": 0,
+   "difficulty": 2,
+   "topic": "wk-synonym",
+   "steps": [
+    "Make your own short sentence with the word.",
+    "CONCISE means: short and clear.",
+    "Example: Give a concise answer.",
+    "Memory hook: CON-CISE: cut with a scissor.",
+    "Put \"brief\" in place of CONCISE. It fits.",
+    "Answer: brief."
+   ],
+   "explanation": "Concise means brief.",
+   "source": "new-original-audit",
+   "theme": "Speaking and Communication"
+  },
+  {
+   "id": "WK-111",
+   "section": "WK",
+   "stem": "ADVERSARY most nearly means:",
+   "choices": [
+    "opponent",
+    "leader",
+    "friend",
+    "helper"
+   ],
+   "answer": 0,
+   "difficulty": 2,
+   "topic": "wk-synonym",
+   "steps": [
+    "Make your own short sentence with the word.",
+    "Adversary means opponent.",
+    "Put \"opponent\" in place of ADVERSARY. It fits.",
+    "Answer: opponent."
+   ],
+   "explanation": "Adversary means opponent.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "WK-112",
+   "section": "WK",
+   "stem": "CANDOR most nearly means:",
+   "choices": [
+    "honesty",
+    "anger",
+    "laziness",
+    "wealth"
+   ],
+   "answer": 0,
+   "difficulty": 3,
+   "topic": "wk-synonym",
+   "steps": [
+    "Make your own short sentence with the word.",
+    "Candor means honesty.",
+    "Put \"honesty\" in place of CANDOR. It fits.",
+    "Answer: honesty."
+   ],
+   "explanation": "Candor means honesty.",
+   "source": "new-original-audit"
+  },
+  {
    "id": "PC-001",
    "section": "PC",
    "stem": "What is the main idea of the passage?",
@@ -4750,30 +5486,6 @@
    "passageId": "P03"
   },
   {
-   "id": "PC-008",
-   "section": "PC",
-   "stem": "How long is a watch, according to the passage?",
-   "choices": [
-    "Usually twelve hours",
-    "Usually four hours",
-    "Usually eight hours",
-    "Usually two hours"
-   ],
-   "answer": 1,
-   "difficulty": 1,
-   "topic": "pc-detail",
-   "steps": [
-    "Read the question first. What type is it? Finding details.",
-    "Find the line in the passage that answers it.",
-    "The second sentence says four hours.",
-    "Answer: Usually four hours."
-   ],
-   "explanation": "The second sentence says four hours.",
-   "source": "study-pack:quiz",
-   "passage": "A ship's crew works in shifts called watches.\nA watch is usually four hours long.\nThis lets the ship run day and night.\nSailors who are off watch rest, train, or do repairs.\nBecause of the shifts, sailors learn to sleep at many different times.",
-   "passageId": "P03"
-  },
-  {
    "id": "PC-009",
    "section": "PC",
    "stem": "What can you infer about sailors' sleep?",
@@ -4817,30 +5529,6 @@
     "Answer: The moon's pull on the oceans."
    ],
    "explanation": "The first sentence names the moon's pull.",
-   "source": "study-pack:quiz",
-   "passage": "Tides are caused mainly by the pull of the moon on the oceans.\nWater bulges on the side of Earth closest to the moon.\nMost coasts have two high tides and two low tides each day.\nSailors check tide tables before they enter shallow harbors.",
-   "passageId": "P04"
-  },
-  {
-   "id": "PC-011",
-   "section": "PC",
-   "stem": "How many high tides do most coasts have each day?",
-   "choices": [
-    "Two",
-    "One",
-    "Four",
-    "Three"
-   ],
-   "answer": 0,
-   "difficulty": 1,
-   "topic": "pc-detail",
-   "steps": [
-    "Read the question first. What type is it? Finding details.",
-    "Find the line in the passage that answers it.",
-    "The passage says two high and two low tides.",
-    "Answer: Two."
-   ],
-   "explanation": "The passage says two high and two low tides.",
    "source": "study-pack:quiz",
    "passage": "Tides are caused mainly by the pull of the moon on the oceans.\nWater bulges on the side of Earth closest to the moon.\nMost coasts have two high tides and two low tides each day.\nSailors check tide tables before they enter shallow harbors.",
    "passageId": "P04"
@@ -4961,30 +5649,6 @@
     "Answer: It works well and costs less than silver."
    ],
    "explanation": "Silver is slightly better, but copper costs much less.",
-   "source": "study-pack:quiz",
-   "passage": "Copper is used in wires because it carries electric current very well.\nIt also bends without breaking.\nSilver carries current slightly better, but it costs much more.\nFor this reason, copper is the usual choice for home wiring.",
-   "passageId": "P06"
-  },
-  {
-   "id": "PC-017",
-   "section": "PC",
-   "stem": "Which metal carries current slightly better than copper?",
-   "choices": [
-    "Lead",
-    "Iron",
-    "Silver",
-    "Tin"
-   ],
-   "answer": 2,
-   "difficulty": 1,
-   "topic": "pc-detail",
-   "steps": [
-    "Read the question first. What type is it? Finding details.",
-    "Find the line in the passage that answers it.",
-    "The second sentence says silver carries current slightly better.",
-    "Answer: Silver."
-   ],
-   "explanation": "The second sentence says silver carries current slightly better.",
    "source": "study-pack:quiz",
    "passage": "Copper is used in wires because it carries electric current very well.\nIt also bends without breaking.\nSilver carries current slightly better, but it costs much more.\nFor this reason, copper is the usual choice for home wiring.",
    "passageId": "P06"
@@ -5182,54 +5846,6 @@
    "passageId": "P09"
   },
   {
-   "id": "PC-026",
-   "section": "PC",
-   "stem": "How could sailors tell lighthouses apart?",
-   "choices": [
-    "Each one had a name sign.",
-    "Each one was a different height.",
-    "Each one had its own color.",
-    "Each one flashed its own pattern."
-   ],
-   "answer": 3,
-   "difficulty": 1,
-   "topic": "pc-detail",
-   "steps": [
-    "Read the question first. What type is it? Finding details.",
-    "Find the line in the passage that answers it.",
-    "The passage says each light flashed in its own pattern.",
-    "Answer: Each one flashed its own pattern."
-   ],
-   "explanation": "The passage says each light flashed in its own pattern.",
-   "source": "study-pack:readiness",
-   "passage": "Long ago, many ships crashed on rocky shores at night.\nLighthouses were built to warn them.\nEach light flashed in its own pattern, so sailors could tell which lighthouse they saw.\nToday, GPS has replaced most lighthouses, but a few still guide small boats.",
-   "passageId": "P09"
-  },
-  {
-   "id": "PC-027",
-   "section": "PC",
-   "stem": "What has replaced most lighthouses?",
-   "choices": [
-    "Flags",
-    "GPS",
-    "Maps",
-    "Radio"
-   ],
-   "answer": 1,
-   "difficulty": 1,
-   "topic": "pc-detail",
-   "steps": [
-    "Read the question first. What type is it? Finding details.",
-    "Find the line in the passage that answers it.",
-    "The passage says GPS has replaced most lighthouses.",
-    "Answer: GPS."
-   ],
-   "explanation": "The passage says GPS has replaced most lighthouses.",
-   "source": "study-pack:readiness",
-   "passage": "Long ago, many ships crashed on rocky shores at night.\nLighthouses were built to warn them.\nEach light flashed in its own pattern, so sailors could tell which lighthouse they saw.\nToday, GPS has replaced most lighthouses, but a few still guide small boats.",
-   "passageId": "P09"
-  },
-  {
    "id": "PC-028",
    "section": "PC",
    "stem": "What does a fuse do when too much current flows?",
@@ -5278,30 +5894,6 @@
    "passageId": "P10"
   },
   {
-   "id": "PC-030",
-   "section": "PC",
-   "stem": "What must be done after a fuse blows?",
-   "choices": [
-    "Add a second fuse.",
-    "Replace it after fixing the problem.",
-    "Ignore it.",
-    "Bend the wire back."
-   ],
-   "answer": 1,
-   "difficulty": 1,
-   "topic": "pc-detail",
-   "steps": [
-    "Read the question first. What type is it? Finding details.",
-    "Find the line in the passage that answers it.",
-    "The last sentence says this.",
-    "Answer: Replace it after fixing the problem."
-   ],
-   "explanation": "The last sentence says this.",
-   "source": "study-pack:readiness",
-   "passage": "A fuse protects a circuit.\nIt has a thin wire that melts when too much current flows.\nWhen it melts, the circuit opens and the current stops.\nThis keeps the wires from overheating.\nA blown fuse must be replaced after the problem is fixed.",
-   "passageId": "P10"
-  },
-  {
    "id": "PC-031",
    "section": "PC",
    "stem": "How did Ana feel by lunch?",
@@ -5312,39 +5904,15 @@
     "Angry"
    ],
    "answer": 0,
-   "difficulty": 2,
-   "topic": "pc-author",
+   "difficulty": 1,
+   "topic": "pc-detail",
    "steps": [
-    "Read the question first. What type is it? Author view, tone, and purpose.",
+    "Read the question first. What type is it? Finding details.",
     "Find the line in the passage that answers it.",
     "The last sentence says she felt much calmer.",
     "Answer: Much calmer."
    ],
    "explanation": "The last sentence says she felt much calmer.",
-   "source": "study-pack:readiness",
-   "passage": "Ana was nervous before her first day on the job.\nShe had practiced her greeting in the mirror twice.\nWhen she arrived, a coworker smiled and showed her around.\nBy lunch, she felt much calmer.",
-   "passageId": "P11"
-  },
-  {
-   "id": "PC-032",
-   "section": "PC",
-   "stem": "What helped Ana feel better?",
-   "choices": [
-    "A new uniform",
-    "A long break",
-    "A friendly coworker",
-    "A phone call"
-   ],
-   "answer": 2,
-   "difficulty": 2,
-   "topic": "pc-author",
-   "steps": [
-    "Read the question first. What type is it? Author view, tone, and purpose.",
-    "Find the line in the passage that answers it.",
-    "A coworker smiled and showed her around.",
-    "Answer: A friendly coworker."
-   ],
-   "explanation": "A coworker smiled and showed her around.",
    "source": "study-pack:readiness",
    "passage": "Ana was nervous before her first day on the job.\nShe had practiced her greeting in the mirror twice.\nWhen she arrived, a coworker smiled and showed her around.\nBy lunch, she felt much calmer.",
    "passageId": "P11"
@@ -5441,30 +6009,6 @@
     "Answer: By tracing it by hand."
    ],
    "explanation": "The passage says the tech must trace it by hand.",
-   "source": "study-pack:practice-PC1",
-   "passage": "Labeling cables takes a little time. But it saves much more time later. A technician who finds an unmarked cable must trace it by hand. This can take an hour in a crowded room. A clear label at each end shows where the cable goes in seconds.",
-   "passageId": "P13"
-  },
-  {
-   "id": "PC-037",
-   "section": "PC",
-   "stem": "Why does the passage mention a label at each end?",
-   "choices": [
-    "Labels are cheap.",
-    "Cables are long.",
-    "Either end can show where the cable goes.",
-    "Cables often break."
-   ],
-   "answer": 2,
-   "difficulty": 1,
-   "topic": "pc-detail",
-   "steps": [
-    "Read the question first. What type is it? Finding details.",
-    "Find the line in the passage that answers it.",
-    "A label at each end shows where it goes in seconds.",
-    "Answer: Either end can show where the cable goes."
-   ],
-   "explanation": "A label at each end shows where it goes in seconds.",
    "source": "study-pack:practice-PC1",
    "passage": "Labeling cables takes a little time. But it saves much more time later. A technician who finds an unmarked cable must trace it by hand. This can take an hour in a crowded room. A clear label at each end shows where the cable goes in seconds.",
    "passageId": "P13"
@@ -5614,30 +6158,6 @@
    "passageId": "P16"
   },
   {
-   "id": "PC-044",
-   "section": "PC",
-   "stem": "The marks along the tube are used to:",
-   "choices": [
-    "cool the tube",
-    "read the temperature",
-    "add liquid",
-    "tell the time"
-   ],
-   "answer": 1,
-   "difficulty": 1,
-   "topic": "pc-detail",
-   "steps": [
-    "Read the question first. What type is it? Finding details.",
-    "Find the line in the passage that answers it.",
-    "The last sentence says the marks let people read the temperature.",
-    "Answer: read the temperature."
-   ],
-   "explanation": "The last sentence says the marks let people read the temperature.",
-   "source": "study-pack:practice-PC2",
-   "passage": "A thermometer measures temperature. Most home thermometers use a thin tube of liquid. When heat rises, the liquid expands and climbs the tube. When it cools, the liquid shrinks and falls. Marks along the tube let people read the temperature.",
-   "passageId": "P16"
-  },
-  {
    "id": "PC-045",
    "section": "PC",
    "stem": "What is the main idea of the passage?",
@@ -5756,6 +6276,798 @@
    "source": "study-pack:practice-PC3",
    "passage": "Most batteries slowly lose power when they sit in storage. Heat makes this loss worse. For this reason, spare batteries should be kept in a cool, dry place. Before using a spare, check the date printed on the package.",
    "passageId": "P18"
+  },
+  {
+   "id": "PC-050",
+   "section": "PC",
+   "stem": "What is the main idea of the passage?",
+   "choices": [
+    "Good backups protect data from loss.",
+    "Viruses cannot harm backups.",
+    "Fires are the main cause of lost files.",
+    "Offices should stop using computers."
+   ],
+   "answer": 0,
+   "difficulty": 2,
+   "topic": "pc-main-idea",
+   "steps": [
+    "Read the question first. What type is it? Main idea.",
+    "Find the line in the passage that answers it.",
+    "Every line is about backups and keeping data safe.",
+    "Answer: Good backups protect data from loss."
+   ],
+   "explanation": "Every line is about backups and keeping data safe.",
+   "source": "new-original",
+   "passage": "Many offices lose files because no one makes backups. A backup is a copy of data kept in a second place. Experts suggest the 3-2-1 rule. Keep three copies of important data, on two kinds of storage, with one copy off site. If a fire or a virus hits the office, the off-site copy is still safe. A backup only helps if it works. So technicians should test it by restoring a few files each month.",
+   "passageId": "P19"
+  },
+  {
+   "id": "PC-052",
+   "section": "PC",
+   "stem": "Why should one copy be kept off site?",
+   "choices": [
+    "So it opens faster.",
+    "So it stays safe if the office is damaged.",
+    "So it costs less.",
+    "So no one has to test it."
+   ],
+   "answer": 1,
+   "difficulty": 2,
+   "topic": "pc-detail",
+   "steps": [
+    "Read the question first. What type is it? Finding details.",
+    "Find the line in the passage that answers it.",
+    "The passage says the off-site copy is safe from a fire or virus at the office.",
+    "Answer: So it stays safe if the office is damaged."
+   ],
+   "explanation": "The passage says the off-site copy is safe from a fire or virus at the office.",
+   "source": "new-original",
+   "passage": "Many offices lose files because no one makes backups. A backup is a copy of data kept in a second place. Experts suggest the 3-2-1 rule. Keep three copies of important data, on two kinds of storage, with one copy off site. If a fire or a virus hits the office, the off-site copy is still safe. A backup only helps if it works. So technicians should test it by restoring a few files each month.",
+   "passageId": "P19"
+  },
+  {
+   "id": "PC-054",
+   "section": "PC",
+   "stem": "The passage mainly describes:",
+   "choices": [
+    "how bees build a hive",
+    "why bees sting",
+    "how flowers make honey",
+    "how bees share where food is"
+   ],
+   "answer": 3,
+   "difficulty": 2,
+   "topic": "pc-main-idea",
+   "steps": [
+    "Read the question first. What type is it? Main idea.",
+    "Find the line in the passage that answers it.",
+    "The whole passage explains the dance that shows other bees where food is.",
+    "Answer: how bees share where food is."
+   ],
+   "explanation": "The whole passage explains the dance that shows other bees where food is.",
+   "source": "new-original",
+   "passage": "Honeybees tell each other where to find food by dancing. When a worker bee finds flowers, it returns to the hive. Then it moves in a figure-eight pattern and waggles its body. The direction of the dance points toward the food. The longer the bee waggles, the farther away the flowers are. Other bees watch the dance and then fly to the spot.",
+   "passageId": "P20"
+  },
+  {
+   "id": "PC-055",
+   "section": "PC",
+   "stem": "A bee that waggles for a long time is most likely showing that the flowers are:",
+   "choices": [
+    "almost gone",
+    "far away",
+    "a new color",
+    "close by"
+   ],
+   "answer": 1,
+   "difficulty": 3,
+   "topic": "pc-inference",
+   "steps": [
+    "Read the question first. What type is it? Inference (reading between lines).",
+    "Find the line in the passage that answers it.",
+    "The passage says a longer waggle means the flowers are farther away.",
+    "Answer: far away."
+   ],
+   "explanation": "The passage says a longer waggle means the flowers are farther away.",
+   "source": "new-original",
+   "passage": "Honeybees tell each other where to find food by dancing. When a worker bee finds flowers, it returns to the hive. Then it moves in a figure-eight pattern and waggles its body. The direction of the dance points toward the food. The longer the bee waggles, the farther away the flowers are. Other bees watch the dance and then fly to the spot.",
+   "passageId": "P20"
+  },
+  {
+   "id": "PC-056",
+   "section": "PC",
+   "stem": "What does the direction of the dance show?",
+   "choices": [
+    "Which way the food is",
+    "How much honey is left",
+    "How many bees should go",
+    "What time it is"
+   ],
+   "answer": 0,
+   "difficulty": 1,
+   "topic": "pc-detail",
+   "steps": [
+    "Read the question first. What type is it? Finding details.",
+    "Find the line in the passage that answers it.",
+    "The passage says the direction of the dance points toward the food.",
+    "Answer: Which way the food is."
+   ],
+   "explanation": "The passage says the direction of the dance points toward the food.",
+   "source": "new-original",
+   "passage": "Honeybees tell each other where to find food by dancing. When a worker bee finds flowers, it returns to the hive. Then it moves in a figure-eight pattern and waggles its body. The direction of the dance points toward the food. The longer the bee waggles, the farther away the flowers are. Other bees watch the dance and then fly to the spot.",
+   "passageId": "P20"
+  },
+  {
+   "id": "PC-057",
+   "section": "PC",
+   "stem": "What is the author's main point?",
+   "choices": [
+    "Sailors should work alone.",
+    "Pumps fail often at sea.",
+    "Strong people never need help.",
+    "Asking for help early makes a team stronger."
+   ],
+   "answer": 3,
+   "difficulty": 2,
+   "topic": "pc-main-idea",
+   "steps": [
+    "Read the question first. What type is it? Main idea.",
+    "Find the line in the passage that answers it.",
+    "The author says asking for help is not weak. It helps the team fix problems early.",
+    "Answer: Asking for help early makes a team stronger."
+   ],
+   "explanation": "The author says asking for help is not weak. It helps the team fix problems early.",
+   "source": "new-original",
+   "passage": "Some people think asking for help is a sign of weakness. In fact, the opposite is often true. Strong teams depend on members who speak up when they are stuck. A sailor who hides a problem with a pump may cause a bigger failure later. A sailor who asks early lets the team fix it while it is still small.",
+   "passageId": "P21"
+  },
+  {
+   "id": "PC-058",
+   "section": "PC",
+   "stem": "In the passage, the word DEPEND most nearly means:",
+   "choices": [
+    "leave",
+    "wait",
+    "rely",
+    "argue"
+   ],
+   "answer": 2,
+   "difficulty": 2,
+   "topic": "pc-vocab",
+   "steps": [
+    "Read the question first. What type is it? Word meaning in a passage.",
+    "Find the line in the passage that answers it.",
+    "Strong teams rely on members who speak up. Rely fits the sentence.",
+    "Answer: rely."
+   ],
+   "explanation": "Strong teams rely on members who speak up. Rely fits the sentence.",
+   "source": "new-original",
+   "passage": "Some people think asking for help is a sign of weakness. In fact, the opposite is often true. Strong teams depend on members who speak up when they are stuck. A sailor who hides a problem with a pump may cause a bigger failure later. A sailor who asks early lets the team fix it while it is still small.",
+   "passageId": "P21"
+  },
+  {
+   "id": "PC-059",
+   "section": "PC",
+   "stem": "If a sailor hides a pump problem, what will most likely happen?",
+   "choices": [
+    "The pump will fix itself.",
+    "Nothing will change.",
+    "A bigger failure could happen later.",
+    "The team will work faster."
+   ],
+   "answer": 2,
+   "difficulty": 2,
+   "topic": "pc-inference",
+   "steps": [
+    "Read the question first. What type is it? Inference (reading between lines).",
+    "Find the line in the passage that answers it.",
+    "The passage says hiding a problem may cause a bigger failure later.",
+    "Answer: A bigger failure could happen later."
+   ],
+   "explanation": "The passage says hiding a problem may cause a bigger failure later.",
+   "source": "new-original",
+   "passage": "Some people think asking for help is a sign of weakness. In fact, the opposite is often true. Strong teams depend on members who speak up when they are stuck. A sailor who hides a problem with a pump may cause a bigger failure later. A sailor who asks early lets the team fix it while it is still small.",
+   "passageId": "P21"
+  },
+  {
+   "id": "PC-060",
+   "section": "PC",
+   "stem": "What should be done right after shutting down the laptop?",
+   "choices": [
+    "Charge the battery.",
+    "Remove the screws.",
+    "Lift out the old battery.",
+    "Unplug the power cord and cables."
+   ],
+   "answer": 3,
+   "difficulty": 1,
+   "topic": "pc-sequence",
+   "steps": [
+    "Read the question first. What type is it? Steps in order.",
+    "Find the line in the passage that answers it.",
+    "The word Next comes right after shutting down. It says to unplug the cord and cables.",
+    "Answer: Unplug the power cord and cables."
+   ],
+   "explanation": "The word Next comes right after shutting down. It says to unplug the cord and cables.",
+   "source": "new-original",
+   "passage": "Before you replace a laptop battery, shut the computer down fully. Next, unplug the power cord and any cables. Then turn the laptop over and remove the screws on the battery cover. Lift out the old battery and set the new one in place. Finally, replace the cover. Charge the new battery for several hours before first use.",
+   "passageId": "P22"
+  },
+  {
+   "id": "PC-061",
+   "section": "PC",
+   "stem": "What is the last step in the passage?",
+   "choices": [
+    "Turn the laptop over.",
+    "Remove the screws.",
+    "Charge the new battery for several hours.",
+    "Shut the computer down."
+   ],
+   "answer": 2,
+   "difficulty": 1,
+   "topic": "pc-sequence",
+   "steps": [
+    "Read the question first. What type is it? Steps in order.",
+    "Find the line in the passage that answers it.",
+    "The final sentence says to charge the new battery before first use.",
+    "Answer: Charge the new battery for several hours."
+   ],
+   "explanation": "The final sentence says to charge the new battery before first use.",
+   "source": "new-original",
+   "passage": "Before you replace a laptop battery, shut the computer down fully. Next, unplug the power cord and any cables. Then turn the laptop over and remove the screws on the battery cover. Lift out the old battery and set the new one in place. Finally, replace the cover. Charge the new battery for several hours before first use.",
+   "passageId": "P22"
+  },
+  {
+   "id": "PC-062",
+   "section": "PC",
+   "stem": "The purpose of this passage is to:",
+   "choices": [
+    "warn about old computers",
+    "sell a new laptop",
+    "give steps for replacing a battery",
+    "explain how batteries are made"
+   ],
+   "answer": 2,
+   "difficulty": 2,
+   "topic": "pc-author",
+   "steps": [
+    "Read the question first. What type is it? Author view, tone, and purpose.",
+    "Find the line in the passage that answers it.",
+    "The passage is a set of steps in order: first, next, then, finally.",
+    "Answer: give steps for replacing a battery."
+   ],
+   "explanation": "The passage is a set of steps in order: first, next, then, finally.",
+   "source": "new-original",
+   "passage": "Before you replace a laptop battery, shut the computer down fully. Next, unplug the power cord and any cables. Then turn the laptop over and remove the screws on the battery cover. Lift out the old battery and set the new one in place. Finally, replace the cover. Charge the new battery for several hours before first use.",
+   "passageId": "P22"
+  },
+  {
+   "id": "PC-063",
+   "section": "PC",
+   "stem": "According to the passage, Naval Station Norfolk is:",
+   "choices": [
+    "a small training school",
+    "a base for only aircraft",
+    "the largest naval base in the world",
+    "the oldest city in Virginia"
+   ],
+   "answer": 2,
+   "difficulty": 1,
+   "topic": "pc-detail",
+   "steps": [
+    "Read the question first. What type is it? Finding details.",
+    "Find the line in the passage that answers it.",
+    "The first sentence says it is the largest naval base in the world.",
+    "Answer: the largest naval base in the world."
+   ],
+   "explanation": "The first sentence says it is the largest naval base in the world.",
+   "source": "new-original",
+   "passage": "Norfolk, Virginia, is home to the largest naval base in the world. Naval Station Norfolk supports dozens of ships and many aircraft squadrons. Tens of thousands of sailors and civilians work there. Because the base is so big, the city's shops, schools, and roads are planned around it.",
+   "passageId": "P23"
+  },
+  {
+   "id": "PC-064",
+   "section": "PC",
+   "stem": "In the passage, the word SUPPORTS most nearly means:",
+   "choices": [
+    "holds up",
+    "pays for",
+    "takes care of",
+    "argues for"
+   ],
+   "answer": 2,
+   "difficulty": 3,
+   "topic": "pc-vocab",
+   "steps": [
+    "Read the question first. What type is it? Word meaning in a passage.",
+    "Find the line in the passage that answers it.",
+    "The base serves and takes care of ships. Holds up is the everyday meaning, but it does not fit here.",
+    "Answer: takes care of."
+   ],
+   "explanation": "The base serves and takes care of ships. Holds up is the everyday meaning, but it does not fit here.",
+   "source": "new-original",
+   "passage": "Norfolk, Virginia, is home to the largest naval base in the world. Naval Station Norfolk supports dozens of ships and many aircraft squadrons. Tens of thousands of sailors and civilians work there. Because the base is so big, the city's shops, schools, and roads are planned around it.",
+   "passageId": "P23"
+  },
+  {
+   "id": "PC-065",
+   "section": "PC",
+   "stem": "What can you infer from the passage?",
+   "choices": [
+    "The base has a big effect on life in the city.",
+    "Few people live in Norfolk.",
+    "Ships cannot dock in Norfolk.",
+    "The base will close soon."
+   ],
+   "answer": 0,
+   "difficulty": 2,
+   "topic": "pc-inference",
+   "steps": [
+    "Read the question first. What type is it? Inference (reading between lines).",
+    "Find the line in the passage that answers it.",
+    "Shops, schools, and roads are planned around the base. So it shapes city life.",
+    "Answer: The base has a big effect on life in the city."
+   ],
+   "explanation": "Shops, schools, and roads are planned around the base. So it shapes city life.",
+   "source": "new-original",
+   "passage": "Norfolk, Virginia, is home to the largest naval base in the world. Naval Station Norfolk supports dozens of ships and many aircraft squadrons. Tens of thousands of sailors and civilians work there. Because the base is so big, the city's shops, schools, and roads are planned around it.",
+   "passageId": "P23"
+  },
+  {
+   "id": "PC-066",
+   "section": "PC",
+   "stem": "The author's main purpose in this passage is to",
+   "choices": [
+    "criticize ship captains",
+    "persuade readers to stop using satellites",
+    "inform readers about an important but little-known system",
+    "explain how to repair a cable"
+   ],
+   "answer": 2,
+   "difficulty": 3,
+   "topic": "pc-author",
+   "steps": [
+    "Read the question first. What type is it? Author view, tone, and purpose.",
+    "Find the line in the passage that answers it.",
+    "The passage gives facts about undersea cables. It does not argue or give repair steps.",
+    "Answer: inform readers about an important but little-known system."
+   ],
+   "explanation": "The passage gives facts about undersea cables. It does not argue or give repair steps.",
+   "source": "new-original-audit",
+   "passage": "Nearly all the data that crosses the oceans travels not through satellites but through cables on the sea floor. These cables, often no thicker than a garden hose, carry phone calls, bank transfers, and video between continents. Repair ships wait in ports around the world, because one anchor dragged by a careless ship can cut a line and slow internet service for a whole region.",
+   "passageId": "P24"
+  },
+  {
+   "id": "PC-067",
+   "section": "PC",
+   "stem": "It can be inferred from the passage that undersea cables",
+   "choices": [
+    "cannot be damaged by ships",
+    "are important enough that breaks are fixed quickly",
+    "are thicker than most pipes",
+    "are rarely used today"
+   ],
+   "answer": 1,
+   "difficulty": 3,
+   "topic": "pc-inference",
+   "steps": [
+    "Read the question first. What type is it? Inference (reading between lines).",
+    "Find the line in the passage that answers it.",
+    "Repair ships wait in ports so cuts can be fixed fast. That shows the cables matter.",
+    "Answer: are important enough that breaks are fixed quickly."
+   ],
+   "explanation": "Repair ships wait in ports so cuts can be fixed fast. That shows the cables matter.",
+   "source": "new-original-audit",
+   "passage": "Nearly all the data that crosses the oceans travels not through satellites but through cables on the sea floor. These cables, often no thicker than a garden hose, carry phone calls, bank transfers, and video between continents. Repair ships wait in ports around the world, because one anchor dragged by a careless ship can cut a line and slow internet service for a whole region.",
+   "passageId": "P24"
+  },
+  {
+   "id": "PC-068",
+   "section": "PC",
+   "stem": "The author's attitude toward the bridge is best described as",
+   "choices": [
+    "neutral",
+    "doubtful",
+    "approving",
+    "angry"
+   ],
+   "answer": 2,
+   "difficulty": 2,
+   "topic": "pc-author",
+   "steps": [
+    "Read the question first. What type is it? Author view, tone, and purpose.",
+    "Find the line in the passage that answers it.",
+    "The author says traffic moves better and calls the bridge a necessity. That is approval.",
+    "Answer: approving."
+   ],
+   "explanation": "The author says traffic moves better and calls the bridge a necessity. That is approval.",
+   "source": "new-original-audit",
+   "passage": "Critics called the new bridge a waste of money when it was first proposed. Ten years later, the same critics drive across it every morning, and traffic downtown has never moved more smoothly. The bridge, it turns out, was not a luxury but a necessity.",
+   "passageId": "P25"
+  },
+  {
+   "id": "PC-069",
+   "section": "PC",
+   "stem": "As used in the passage, LUXURY means something that is",
+   "choices": [
+    "dangerous to use",
+    "nice to have but not needed",
+    "costly to repair",
+    "required by law"
+   ],
+   "answer": 1,
+   "difficulty": 3,
+   "topic": "pc-vocab",
+   "steps": [
+    "Read the question first. What type is it? Word meaning in a passage.",
+    "Find the line in the passage that answers it.",
+    "Luxury is set against necessity. So it means something extra, not needed.",
+    "Answer: nice to have but not needed."
+   ],
+   "explanation": "Luxury is set against necessity. So it means something extra, not needed.",
+   "source": "new-original-audit",
+   "passage": "Critics called the new bridge a waste of money when it was first proposed. Ten years later, the same critics drive across it every morning, and traffic downtown has never moved more smoothly. The bridge, it turns out, was not a luxury but a necessity.",
+   "passageId": "P25"
+  },
+  {
+   "id": "PC-070",
+   "section": "PC",
+   "stem": "What do sailors do right after hearing the announcement?",
+   "choices": [
+    "Leave the ship",
+    "Take a head count",
+    "Go to their assigned stations",
+    "Begin their tasks"
+   ],
+   "answer": 2,
+   "difficulty": 1,
+   "topic": "pc-sequence",
+   "steps": [
+    "Read the question first. What type is it? Steps in order.",
+    "Find the line in the passage that answers it.",
+    "The word then comes after the announcement. Sailors go to their stations.",
+    "Answer: Go to their assigned stations."
+   ],
+   "explanation": "The word then comes after the announcement. Sailors go to their stations.",
+   "source": "new-original-audit",
+   "passage": "When the general alarm sounds, sailors first stop what they are doing and listen for the announcement. The announcement gives the type and place of the emergency. Sailors then go to their assigned stations by the fastest safe route. Once there, they report to the section leader, who takes a head count. Only after every sailor is accounted for does the team begin its tasks.",
+   "passageId": "P26"
+  },
+  {
+   "id": "PC-071",
+   "section": "PC",
+   "stem": "What must happen before the team begins its tasks?",
+   "choices": [
+    "The leader must write a report.",
+    "Every sailor must be accounted for.",
+    "The ship must reach port.",
+    "The alarm must stop."
+   ],
+   "answer": 1,
+   "difficulty": 2,
+   "topic": "pc-sequence",
+   "steps": [
+    "Read the question first. What type is it? Steps in order.",
+    "Find the line in the passage that answers it.",
+    "The last sentence says tasks begin only after everyone is accounted for.",
+    "Answer: Every sailor must be accounted for."
+   ],
+   "explanation": "The last sentence says tasks begin only after everyone is accounted for.",
+   "source": "new-original-audit",
+   "passage": "When the general alarm sounds, sailors first stop what they are doing and listen for the announcement. The announcement gives the type and place of the emergency. Sailors then go to their assigned stations by the fastest safe route. Once there, they report to the section leader, who takes a head count. Only after every sailor is accounted for does the team begin its tasks.",
+   "passageId": "P26"
+  },
+  {
+   "id": "PC-072",
+   "section": "PC",
+   "stem": "The head count is most likely done to",
+   "choices": [
+    "choose a new leader",
+    "make sure no one is missing",
+    "decide the emergency type",
+    "time the drill"
+   ],
+   "answer": 1,
+   "difficulty": 2,
+   "topic": "pc-inference",
+   "steps": [
+    "Read the question first. What type is it? Inference (reading between lines).",
+    "Find the line in the passage that answers it.",
+    "Counting heads shows if anyone is missing or hurt.",
+    "Answer: make sure no one is missing."
+   ],
+   "explanation": "Counting heads shows if anyone is missing or hurt.",
+   "source": "new-original-audit",
+   "passage": "When the general alarm sounds, sailors first stop what they are doing and listen for the announcement. The announcement gives the type and place of the emergency. Sailors then go to their assigned stations by the fastest safe route. Once there, they report to the section leader, who takes a head count. Only after every sailor is accounted for does the team begin its tasks.",
+   "passageId": "P26"
+  },
+  {
+   "id": "PC-073",
+   "section": "PC",
+   "stem": "The author's purpose is to",
+   "choices": [
+    "persuade readers that swimming is an important skill",
+    "compare different swim strokes",
+    "explain how rescues are planned",
+    "describe how ships are built"
+   ],
+   "answer": 0,
+   "difficulty": 2,
+   "topic": "pc-author",
+   "steps": [
+    "Read the question first. What type is it? Author view, tone, and purpose.",
+    "Find the line in the passage that answers it.",
+    "The author says sailors should learn to swim and gives reasons. That is persuasion.",
+    "Answer: persuade readers that swimming is an important skill."
+   ],
+   "explanation": "The author says sailors should learn to swim and gives reasons. That is persuasion.",
+   "source": "new-original-audit",
+   "passage": "Every sailor should learn to swim well before joining the fleet. Ships are safe, but accidents at sea happen fast. A strong swimmer has more time to wait for rescue. Swim training costs little, and it could save a life.",
+   "passageId": "P27"
+  },
+  {
+   "id": "PC-074",
+   "section": "PC",
+   "stem": "The tone of the passage is best described as",
+   "choices": [
+    "bitter",
+    "uncertain",
+    "humorous",
+    "serious"
+   ],
+   "answer": 3,
+   "difficulty": 2,
+   "topic": "pc-author",
+   "steps": [
+    "Read the question first. What type is it? Author view, tone, and purpose.",
+    "Find the line in the passage that answers it.",
+    "The author talks about safety and saving lives in a serious way.",
+    "Answer: serious."
+   ],
+   "explanation": "The author talks about safety and saving lives in a serious way.",
+   "source": "new-original-audit",
+   "passage": "Every sailor should learn to swim well before joining the fleet. Ships are safe, but accidents at sea happen fast. A strong swimmer has more time to wait for rescue. Swim training costs little, and it could save a life.",
+   "passageId": "P27"
+  },
+  {
+   "id": "PC-075",
+   "section": "PC",
+   "stem": "As used in the passage, WILLINGLY most nearly means",
+   "choices": [
+    "quickly",
+    "by choice",
+    "angrily",
+    "by accident"
+   ],
+   "answer": 1,
+   "difficulty": 2,
+   "topic": "pc-vocab",
+   "steps": [
+    "Read the question first. What type is it? Word meaning in a passage.",
+    "Find the line in the passage that answers it.",
+    "The user chooses to open the file. Willingly means by choice.",
+    "Answer: by choice."
+   ],
+   "explanation": "The user chooses to open the file. Willingly means by choice.",
+   "source": "new-original-audit",
+   "passage": "A firewall acts like a guard at the gate of a network. It checks each piece of incoming data against a set of rules and blocks anything that breaks them. A well-set firewall stops many attacks before they start. But it cannot protect against a user who willingly opens a harmful attachment. For that reason, training people is as important as installing equipment.",
+   "passageId": "P28"
+  },
+  {
+   "id": "PC-076",
+   "section": "PC",
+   "stem": "Which statement best expresses the main idea of the passage?",
+   "choices": [
+    "Firewalls stop every attack.",
+    "Firewalls help, but people must also be trained.",
+    "Attachments are always harmful.",
+    "Guards should watch network gates."
+   ],
+   "answer": 1,
+   "difficulty": 2,
+   "topic": "pc-main-idea",
+   "steps": [
+    "Read the question first. What type is it? Main idea.",
+    "Find the line in the passage that answers it.",
+    "The passage praises firewalls, then says training people matters just as much.",
+    "Answer: Firewalls help, but people must also be trained."
+   ],
+   "explanation": "The passage praises firewalls, then says training people matters just as much.",
+   "source": "new-original-audit",
+   "passage": "A firewall acts like a guard at the gate of a network. It checks each piece of incoming data against a set of rules and blocks anything that breaks them. A well-set firewall stops many attacks before they start. But it cannot protect against a user who willingly opens a harmful attachment. For that reason, training people is as important as installing equipment.",
+   "passageId": "P28"
+  },
+  {
+   "id": "PC-077",
+   "section": "PC",
+   "stem": "The author would most likely agree that",
+   "choices": [
+    "no single tool can keep a network fully safe",
+    "users never cause problems",
+    "training is less important than equipment",
+    "firewalls are a waste of money"
+   ],
+   "answer": 0,
+   "difficulty": 3,
+   "topic": "pc-inference",
+   "steps": [
+    "Read the question first. What type is it? Inference (reading between lines).",
+    "Find the line in the passage that answers it.",
+    "The firewall cannot stop a user's choice. So one tool is not enough.",
+    "Answer: no single tool can keep a network fully safe."
+   ],
+   "explanation": "The firewall cannot stop a user's choice. So one tool is not enough.",
+   "source": "new-original-audit",
+   "passage": "A firewall acts like a guard at the gate of a network. It checks each piece of incoming data against a set of rules and blocks anything that breaks them. A well-set firewall stops many attacks before they start. But it cannot protect against a user who willingly opens a harmful attachment. For that reason, training people is as important as installing equipment.",
+   "passageId": "P28"
+  },
+  {
+   "id": "PC-078",
+   "section": "PC",
+   "stem": "The author compares a firewall to a guard at a gate in order to",
+   "choices": [
+    "describe a real gate",
+    "prove that guards are not needed",
+    "explain an idea using something familiar",
+    "show that firewalls are people"
+   ],
+   "answer": 2,
+   "difficulty": 3,
+   "topic": "pc-author",
+   "steps": [
+    "Read the question first. What type is it? Author view, tone, and purpose.",
+    "Find the line in the passage that answers it.",
+    "A guard is easy to picture. The comparison helps explain what a firewall does.",
+    "Answer: explain an idea using something familiar."
+   ],
+   "explanation": "A guard is easy to picture. The comparison helps explain what a firewall does.",
+   "source": "new-original-audit",
+   "passage": "A firewall acts like a guard at the gate of a network. It checks each piece of incoming data against a set of rules and blocks anything that breaks them. A well-set firewall stops many attacks before they start. But it cannot protect against a user who willingly opens a harmful attachment. For that reason, training people is as important as installing equipment.",
+   "passageId": "P28"
+  },
+  {
+   "id": "PC-079",
+   "section": "PC",
+   "stem": "The phrase \"crystal clear\" suggests that his messages were",
+   "choices": [
+    "very loud",
+    "hard to hear",
+    "made of glass",
+    "easy to understand"
+   ],
+   "answer": 3,
+   "difficulty": 2,
+   "topic": "pc-vocab",
+   "steps": [
+    "Read the question first. What type is it? Word meaning in a passage.",
+    "Find the line in the passage that answers it.",
+    "Crystal clear is a figure of speech. It means very easy to understand.",
+    "Answer: easy to understand."
+   ],
+   "explanation": "Crystal clear is a figure of speech. It means very easy to understand.",
+   "source": "new-original-audit",
+   "passage": "The old radio operator had a voice like gravel, but his messages were always crystal clear. Young sailors who doubted him soon learned to copy his slow, careful way of speaking.",
+   "passageId": "P29"
+  },
+  {
+   "id": "PC-080",
+   "section": "PC",
+   "stem": "Why did many code talkers not talk about their work until 1968?",
+   "choices": [
+    "They were not allowed to speak Navajo.",
+    "They forgot what they did.",
+    "The program was kept secret until then.",
+    "The code was broken in 1968."
+   ],
+   "answer": 2,
+   "difficulty": 2,
+   "topic": "pc-inference",
+   "steps": [
+    "Read the question first. What type is it? Inference (reading between lines).",
+    "Find the line in the passage that answers it.",
+    "Declassified means no longer secret. So it was secret before 1968.",
+    "Answer: The program was kept secret until then."
+   ],
+   "explanation": "Declassified means no longer secret. So it was secret before 1968.",
+   "source": "new-original-audit",
+   "passage": "In 1942, the Marine Corps began training Navajo speakers to send messages in a code based on their language. The code was never broken during the war. Many of the code talkers did not speak publicly about their work until the program was declassified in 1968.",
+   "passageId": "P30"
+  },
+  {
+   "id": "PC-081",
+   "section": "PC",
+   "stem": "The passage is mainly written to",
+   "choices": [
+    "argue that codes are useless",
+    "teach readers the Navajo language",
+    "describe a little-known part of history",
+    "explain how radios work"
+   ],
+   "answer": 2,
+   "difficulty": 2,
+   "topic": "pc-author",
+   "steps": [
+    "Read the question first. What type is it? Author view, tone, and purpose.",
+    "Find the line in the passage that answers it.",
+    "The passage tells a true story from the war. Its purpose is to inform about history.",
+    "Answer: describe a little-known part of history."
+   ],
+   "explanation": "The passage tells a true story from the war. Its purpose is to inform about history.",
+   "source": "new-original-audit",
+   "passage": "In 1942, the Marine Corps began training Navajo speakers to send messages in a code based on their language. The code was never broken during the war. Many of the code talkers did not speak publicly about their work until the program was declassified in 1968.",
+   "passageId": "P30"
+  },
+  {
+   "id": "PC-082",
+   "section": "PC",
+   "stem": "The passage mainly compares",
+   "choices": [
+    "summer and winter weather",
+    "solar power and wind power",
+    "the costs of different houses",
+    "two ways of mounting solar panels"
+   ],
+   "answer": 3,
+   "difficulty": 2,
+   "topic": "pc-main-idea",
+   "steps": [
+    "Read the question first. What type is it? Main idea.",
+    "Find the line in the passage that answers it.",
+    "The passage compares tilting panels and fixed panels.",
+    "Answer: two ways of mounting solar panels."
+   ],
+   "explanation": "The passage compares tilting panels and fixed panels.",
+   "source": "new-original-audit",
+   "passage": "Solar panels make the most power when sunlight strikes them directly. Because the sun's angle changes with the seasons, some panels are mounted on frames that tilt. Others are fixed in place at an angle chosen to give the best result over the whole year. Fixed panels cost less to install, while tilting panels produce more power over a year.",
+   "passageId": "P31"
+  },
+  {
+   "id": "PC-083",
+   "section": "PC",
+   "stem": "A buyer with a small budget would most likely choose",
+   "choices": [
+    "tilting panels",
+    "fixed panels",
+    "no panels at all",
+    "panels that face away from the sun"
+   ],
+   "answer": 1,
+   "difficulty": 2,
+   "topic": "pc-inference",
+   "steps": [
+    "Read the question first. What type is it? Inference (reading between lines).",
+    "Find the line in the passage that answers it.",
+    "The passage says fixed panels cost less to install.",
+    "Answer: fixed panels."
+   ],
+   "explanation": "The passage says fixed panels cost less to install.",
+   "source": "new-original-audit",
+   "passage": "Solar panels make the most power when sunlight strikes them directly. Because the sun's angle changes with the seasons, some panels are mounted on frames that tilt. Others are fixed in place at an angle chosen to give the best result over the whole year. Fixed panels cost less to install, while tilting panels produce more power over a year.",
+   "passageId": "P31"
+  },
+  {
+   "id": "PC-084",
+   "section": "PC",
+   "stem": "When should the lug nuts first be loosened?",
+   "choices": [
+    "Before parking the car",
+    "After the tire is removed",
+    "After the new tire is on",
+    "Before the car is raised"
+   ],
+   "answer": 3,
+   "difficulty": 2,
+   "topic": "pc-sequence",
+   "steps": [
+    "Read the question first. What type is it? Steps in order.",
+    "Find the line in the passage that answers it.",
+    "The passage says to loosen them while the tire is still on the ground, before the jack.",
+    "Answer: Before the car is raised."
+   ],
+   "explanation": "The passage says to loosen them while the tire is still on the ground, before the jack.",
+   "source": "new-original-audit",
+   "passage": "To change a flat tire, first park on level ground and set the brake. Next, loosen the lug nuts slightly while the tire is still on the ground. Then raise the car with the jack, remove the nuts, and swap the tire.",
+   "passageId": "P32"
   },
   {
    "id": "MK-001",
@@ -7633,6 +8945,120 @@
    "source": "study-pack:practice-MK3"
   },
   {
+   "id": "MK-086",
+   "section": "MK",
+   "stem": "Simplify the ratio 28 : 42.",
+   "choices": [
+    "2 : 3",
+    "7 : 6",
+    "3 : 2",
+    "4 : 7"
+   ],
+   "answer": 0,
+   "difficulty": 1,
+   "topic": "mk-number",
+   "steps": [
+    "The idea: Order of operations: parentheses, exponents, times and divide, then plus and minus.",
+    "Divide both by 14.",
+    "28 / 14 = 2.",
+    "42 / 14 = 3.",
+    "So 2 : 3.",
+    "Answer: 2 : 3."
+   ],
+   "explanation": "Divide both by 14. 28 / 14 = 2. 42 / 14 = 3. So 2 : 3.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "MK-087",
+   "section": "MK",
+   "stem": "A fair number cube is rolled. What is the probability of rolling an even number?",
+   "choices": [
+    "1/2",
+    "2/3",
+    "1/6",
+    "1/3"
+   ],
+   "answer": 0,
+   "difficulty": 1,
+   "topic": "mk-probability",
+   "steps": [
+    "The idea: Count the good outcomes. Divide by all outcomes. For two events in a row, multiply.",
+    "Even numbers: 2, 4, 6.",
+    "That is 3 of 6.",
+    "3/6 = 1/2.",
+    "Answer: 1/2."
+   ],
+   "explanation": "Even numbers: 2, 4, 6. That is 3 of 6. 3/6 = 1/2.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "MK-088",
+   "section": "MK",
+   "stem": "A spinner has 8 equal parts. 3 are red. What is the probability of NOT landing on red?",
+   "choices": [
+    "1/8",
+    "5/8",
+    "3/5",
+    "3/8"
+   ],
+   "answer": 1,
+   "difficulty": 2,
+   "topic": "mk-probability",
+   "steps": [
+    "The idea: Count the good outcomes. Divide by all outcomes. For two events in a row, multiply.",
+    "8 - 3 = 5 parts are not red.",
+    "So 5/8.",
+    "Answer: 5/8."
+   ],
+   "explanation": "8 - 3 = 5 parts are not red. So 5/8.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "MK-089",
+   "section": "MK",
+   "stem": "Two fair coins are flipped. What is the probability that both land heads?",
+   "choices": [
+    "1/3",
+    "1/2",
+    "1/4",
+    "3/4"
+   ],
+   "answer": 2,
+   "difficulty": 2,
+   "topic": "mk-probability",
+   "steps": [
+    "The idea: Count the good outcomes. Divide by all outcomes. For two events in a row, multiply.",
+    "Each coin is 1/2.",
+    "Multiply: 1/2 x 1/2 = 1/4.",
+    "Answer: 1/4."
+   ],
+   "explanation": "Each coin is 1/2. Multiply: 1/2 x 1/2 = 1/4.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "MK-090",
+   "section": "MK",
+   "stem": "Simplify: (x^2 - 16)/(x - 4)",
+   "choices": [
+    "x + 4",
+    "x + 16",
+    "x^2 + 4",
+    "x - 4"
+   ],
+   "answer": 0,
+   "difficulty": 3,
+   "topic": "mk-polynomials",
+   "steps": [
+    "The idea: Multiply each term by each term (FOIL). To factor, find two numbers that multiply and add.",
+    "Factor the top: (x - 4)(x + 4).",
+    "Cancel (x - 4).",
+    "Answer x + 4 (when x is not 4).",
+    "Answer: x + 4."
+   ],
+   "explanation": "Factor the top: (x - 4)(x + 4). Cancel (x - 4). Answer x + 4 (when x is not 4).",
+   "source": "new-original-audit"
+  },
+  {
    "id": "GS-001",
    "section": "GS",
    "stem": "Which part of a cell holds the DNA?",
@@ -8438,27 +9864,6 @@
    "source": "study-pack:quiz"
   },
   {
-   "id": "GS-039",
-   "section": "GS",
-   "stem": "Besides sugar, what do plants make in photosynthesis?",
-   "choices": [
-    "oxygen",
-    "nitrogen",
-    "salt",
-    "methane"
-   ],
-   "answer": 0,
-   "difficulty": 3,
-   "topic": "gs-cells-life",
-   "steps": [
-    "Topic: Cells, plants, and living things.",
-    "Plants release oxygen as a product.",
-    "Answer: oxygen."
-   ],
-   "explanation": "Plants release oxygen as a product.",
-   "source": "study-pack:quiz"
-  },
-  {
    "id": "GS-040",
    "section": "GS",
    "stem": "Which animal is a vertebrate?",
@@ -9141,388 +10546,2335 @@
    "source": "study-pack:practice-GS3"
   },
   {
-   "id": "PC-050",
-   "section": "PC",
-   "stem": "What is the main idea of the passage?",
+   "id": "GS-072",
+   "section": "GS",
+   "stem": "Most of Earth's surface is covered by",
    "choices": [
-    "Good backups protect data from loss.",
-    "Viruses cannot harm backups.",
-    "Fires are the main cause of lost files.",
-    "Offices should stop using computers."
+    "deserts",
+    "ice sheets",
+    "oceans",
+    "forests"
+   ],
+   "answer": 2,
+   "difficulty": 1,
+   "topic": "gs-earth-space",
+   "steps": [
+    "Topic: Earth and space.",
+    "About 71 percent of Earth's surface is ocean.",
+    "Answer: oceans."
+   ],
+   "explanation": "About 71 percent of Earth's surface is ocean.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "GS-073",
+   "section": "GS",
+   "stem": "Ocean water is salty mainly because it contains",
+   "choices": [
+    "melted ice",
+    "gases from the air",
+    "sand from beaches",
+    "minerals washed from the land"
+   ],
+   "answer": 3,
+   "difficulty": 2,
+   "topic": "gs-earth-space",
+   "steps": [
+    "Topic: Earth and space.",
+    "Rivers carry dissolved minerals and salts from rocks into the sea.",
+    "Answer: minerals washed from the land."
+   ],
+   "explanation": "Rivers carry dissolved minerals and salts from rocks into the sea.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "GS-074",
+   "section": "GS",
+   "stem": "Deep ocean currents are driven mainly by differences in water",
+   "choices": [
+    "light",
+    "color",
+    "temperature and salt content",
+    "sound"
+   ],
+   "answer": 2,
+   "difficulty": 3,
+   "topic": "gs-earth-space",
+   "steps": [
+    "Topic: Earth and space.",
+    "Cold, salty water is denser and sinks.",
+    "This drives deep currents.",
+    "Answer: temperature and salt content."
+   ],
+   "explanation": "Cold, salty water is denser and sinks. This drives deep currents.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "GS-075",
+   "section": "GS",
+   "stem": "A barometer measures",
+   "choices": [
+    "rainfall",
+    "humidity",
+    "air pressure",
+    "wind speed"
+   ],
+   "answer": 2,
+   "difficulty": 2,
+   "topic": "gs-earth-space",
+   "steps": [
+    "Topic: Earth and space.",
+    "Baro means pressure.",
+    "A barometer measures air pressure.",
+    "Answer: air pressure."
+   ],
+   "explanation": "Baro means pressure. A barometer measures air pressure.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "GS-076",
+   "section": "GS",
+   "stem": "Falling air pressure usually means the weather will",
+   "choices": [
+    "become clear and dry",
+    "have no wind",
+    "turn stormy",
+    "stay the same for weeks"
+   ],
+   "answer": 2,
+   "difficulty": 3,
+   "topic": "gs-earth-space",
+   "steps": [
+    "Topic: Earth and space.",
+    "Low pressure brings clouds and storms.",
+    "High pressure brings fair weather.",
+    "Answer: turn stormy."
+   ],
+   "explanation": "Low pressure brings clouds and storms. High pressure brings fair weather.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "GS-077",
+   "section": "GS",
+   "stem": "Clouds form when water vapor in rising air",
+   "choices": [
+    "heats and expands",
+    "turns into oxygen",
+    "sinks to the ground",
+    "cools and condenses"
+   ],
+   "answer": 3,
+   "difficulty": 2,
+   "topic": "gs-earth-space",
+   "steps": [
+    "Topic: Earth and space.",
+    "Rising air cools.",
+    "The water vapor condenses into tiny drops.",
+    "Answer: cools and condenses."
+   ],
+   "explanation": "Rising air cools. The water vapor condenses into tiny drops.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "GS-078",
+   "section": "GS",
+   "stem": "The Sun is a",
+   "choices": [
+    "planet",
+    "moon",
+    "star",
+    "comet"
+   ],
+   "answer": 2,
+   "difficulty": 1,
+   "topic": "gs-earth-space",
+   "steps": [
+    "Topic: Earth and space.",
+    "The Sun is a medium-sized star.",
+    "Answer: star."
+   ],
+   "explanation": "The Sun is a medium-sized star.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "GS-079",
+   "section": "GS",
+   "stem": "The largest planet in our solar system is",
+   "choices": [
+    "Jupiter",
+    "Neptune",
+    "Saturn",
+    "Earth"
+   ],
+   "answer": 0,
+   "difficulty": 1,
+   "topic": "gs-earth-space",
+   "steps": [
+    "Topic: Earth and space.",
+    "Jupiter is the largest planet.",
+    "Answer: Jupiter."
+   ],
+   "explanation": "Jupiter is the largest planet.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "GS-080",
+   "section": "GS",
+   "stem": "A light-year is a measure of",
+   "choices": [
+    "speed",
+    "distance",
+    "brightness",
+    "time"
+   ],
+   "answer": 1,
+   "difficulty": 3,
+   "topic": "gs-earth-space",
+   "steps": [
+    "Topic: Earth and space.",
+    "A light-year is how far light travels in one year.",
+    "It is a distance.",
+    "Answer: distance."
+   ],
+   "explanation": "A light-year is how far light travels in one year. It is a distance.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "GS-081",
+   "section": "GS",
+   "stem": "Organisms that break down dead plants and animals are called",
+   "choices": [
+    "decomposers",
+    "herbivores",
+    "predators",
+    "producers"
    ],
    "answer": 0,
    "difficulty": 2,
-   "topic": "pc-main-idea",
+   "topic": "gs-cells-life",
    "steps": [
-    "Read the question first. What type is it? Main idea.",
-    "Find the line in the passage that answers it.",
-    "Every line is about backups and keeping data safe.",
-    "Answer: Good backups protect data from loss."
+    "Topic: Cells, plants, and living things.",
+    "Decomposers, like fungi and bacteria, break down dead matter.",
+    "Answer: decomposers."
    ],
-   "explanation": "Every line is about backups and keeping data safe.",
-   "source": "new-original",
-   "passage": "Many offices lose files because no one makes backups. A backup is a copy of data kept in a second place. Experts suggest the 3-2-1 rule. Keep three copies of important data, on two kinds of storage, with one copy off site. If a fire or a virus hits the office, the off-site copy is still safe. A backup only helps if it works. So technicians should test it by restoring a few files each month.",
-   "passageId": "P19"
+   "explanation": "Decomposers, like fungi and bacteria, break down dead matter.",
+   "source": "new-original-audit"
   },
   {
-   "id": "PC-051",
-   "section": "PC",
-   "stem": "Under the 3-2-1 rule, how many copies of data should be kept?",
+   "id": "GS-082",
+   "section": "GS",
+   "stem": "The green pigment in plants that captures light is",
    "choices": [
-    "One",
-    "Three",
-    "Two",
-    "Four"
+    "chlorophyll",
+    "keratin",
+    "hemoglobin",
+    "melanin"
+   ],
+   "answer": 0,
+   "difficulty": 2,
+   "topic": "gs-cells-life",
+   "steps": [
+    "Topic: Cells, plants, and living things.",
+    "Chlorophyll absorbs light for photosynthesis.",
+    "Answer: chlorophyll."
+   ],
+   "explanation": "Chlorophyll absorbs light for photosynthesis.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "GS-083",
+   "section": "GS",
+   "stem": "Traits are passed from parents to offspring through",
+   "choices": [
+    "habits",
+    "genes",
+    "vitamins",
+    "muscles"
+   ],
+   "answer": 1,
+   "difficulty": 2,
+   "topic": "gs-cells-life",
+   "steps": [
+    "Topic: Cells, plants, and living things.",
+    "Genes are pieces of DNA that carry traits.",
+    "Answer: genes."
+   ],
+   "explanation": "Genes are pieces of DNA that carry traits.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "GS-084",
+   "section": "GS",
+   "stem": "Snakes and lizards are cold-blooded animals with dry scales. They are",
+   "choices": [
+    "birds",
+    "amphibians",
+    "reptiles",
+    "mammals"
+   ],
+   "answer": 2,
+   "difficulty": 2,
+   "topic": "gs-cells-life",
+   "steps": [
+    "Topic: Cells, plants, and living things.",
+    "Reptiles are cold-blooded and have dry, scaly skin.",
+    "Answer: reptiles."
+   ],
+   "explanation": "Reptiles are cold-blooded and have dry, scaly skin.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "GS-085",
+   "section": "GS",
+   "stem": "A frog starts life in water and later lives on land. It is an",
+   "choices": [
+    "amphibian",
+    "reptile",
+    "mammal",
+    "insect"
+   ],
+   "answer": 0,
+   "difficulty": 2,
+   "topic": "gs-cells-life",
+   "steps": [
+    "Topic: Cells, plants, and living things.",
+    "Amphibians live part of life in water and part on land.",
+    "Answer: amphibian."
+   ],
+   "explanation": "Amphibians live part of life in water and part on land.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "GS-086",
+   "section": "GS",
+   "stem": "An object floats in water when it is",
+   "choices": [
+    "less dense than water",
+    "more dense than water",
+    "colder than water",
+    "made of metal"
+   ],
+   "answer": 0,
+   "difficulty": 2,
+   "topic": "gs-physics",
+   "steps": [
+    "Topic: Force, energy, heat, sound, light.",
+    "Things less dense than water float.",
+    "Denser things sink.",
+    "Answer: less dense than water."
+   ],
+   "explanation": "Things less dense than water float. Denser things sink.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "GS-087",
+   "section": "GS",
+   "stem": "Water pressure on a diver increases as the diver",
+   "choices": [
+    "goes deeper",
+    "holds a breath",
+    "rises to the surface",
+    "swims faster"
+   ],
+   "answer": 0,
+   "difficulty": 1,
+   "topic": "gs-physics",
+   "steps": [
+    "Topic: Force, energy, heat, sound, light.",
+    "More water above you means more pressure.",
+    "Answer: goes deeper."
+   ],
+   "explanation": "More water above you means more pressure.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "GS-088",
+   "section": "GS",
+   "stem": "A ship floats because the water it pushes aside weighs as much as the ship. This idea is",
+   "choices": [
+    "Newton's first law",
+    "Archimedes' principle",
+    "Boyle's law",
+    "Ohm's law"
+   ],
+   "answer": 1,
+   "difficulty": 3,
+   "topic": "gs-physics",
+   "steps": [
+    "Topic: Force, energy, heat, sound, light.",
+    "Archimedes' principle: the buoyant force equals the weight of fluid pushed aside.",
+    "Answer: Archimedes' principle."
+   ],
+   "explanation": "Archimedes' principle: the buoyant force equals the weight of fluid pushed aside.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "EI-001",
+   "section": "EI",
+   "stem": "What unit measures electric current?",
+   "choices": [
+    "watt",
+    "volt",
+    "ohm",
+    "ampere"
+   ],
+   "answer": 3,
+   "difficulty": 1,
+   "topic": "ei-basics",
+   "steps": [
+    "Topic: Current, voltage, resistance.",
+    "Current is measured in amperes (amps).",
+    "Answer: ampere."
+   ],
+   "explanation": "Current is measured in amperes (amps).",
+   "source": "study-pack:quiz"
+  },
+  {
+   "id": "EI-002",
+   "section": "EI",
+   "stem": "A 12 volt battery is connected to a 4 ohm resistor. How much current flows?",
+   "choices": [
+    "48 amps",
+    "8 amps",
+    "3 amps",
+    "16 amps"
+   ],
+   "answer": 2,
+   "difficulty": 1,
+   "topic": "ei-ohms-law",
+   "steps": [
+    "The idea: V = I x R. So I = V / R, and R = V / I.",
+    "I = V / R = 12 / 4 = 3 amps.",
+    "Answer: 3 amps."
+   ],
+   "explanation": "I = V / R = 12 / 4 = 3 amps.",
+   "source": "study-pack:quiz"
+  },
+  {
+   "id": "EI-003",
+   "section": "EI",
+   "stem": "A current of 2 amps flows through a 10 ohm resistor. What is the voltage across it?",
+   "choices": [
+    "0.2 volts",
+    "20 volts",
+    "12 volts",
+    "5 volts"
    ],
    "answer": 1,
    "difficulty": 1,
-   "topic": "pc-detail",
+   "topic": "ei-ohms-law",
    "steps": [
-    "Read the question first. What type is it? Finding details.",
-    "Find the line in the passage that answers it.",
-    "The passage says: keep three copies of important data.",
-    "Answer: Three."
+    "The idea: V = I x R. So I = V / R, and R = V / I.",
+    "V = I x R = 2 x 10 = 20 volts.",
+    "Answer: 20 volts."
    ],
-   "explanation": "The passage says: keep three copies of important data.",
-   "source": "new-original",
-   "passage": "Many offices lose files because no one makes backups. A backup is a copy of data kept in a second place. Experts suggest the 3-2-1 rule. Keep three copies of important data, on two kinds of storage, with one copy off site. If a fire or a virus hits the office, the off-site copy is still safe. A backup only helps if it works. So technicians should test it by restoring a few files each month.",
-   "passageId": "P19"
+   "explanation": "V = I x R = 2 x 10 = 20 volts.",
+   "source": "study-pack:quiz"
   },
   {
-   "id": "PC-052",
-   "section": "PC",
-   "stem": "Why should one copy be kept off site?",
+   "id": "EI-004",
+   "section": "EI",
+   "stem": "A device uses 120 volts and 5 amps. How much power does it use?",
    "choices": [
-    "So it opens faster.",
-    "So it costs less.",
-    "So no one has to test it.",
-    "So it stays safe if the office is damaged."
+    "600 watts",
+    "24 watts",
+    "125 watts",
+    "115 watts"
+   ],
+   "answer": 0,
+   "difficulty": 1,
+   "topic": "ei-power",
+   "steps": [
+    "The idea: P = V x I. Also P = I x I x R. Energy = power x time.",
+    "P = V x I = 120 x 5 = 600 watts.",
+    "Answer: 600 watts."
+   ],
+   "explanation": "P = V x I = 120 x 5 = 600 watts.",
+   "source": "study-pack:quiz"
+  },
+  {
+   "id": "EI-005",
+   "section": "EI",
+   "stem": "Three resistors of 10, 20, and 30 ohms are in series. What is the total resistance?",
+   "choices": [
+    "60 ohms",
+    "600 ohms",
+    "5.45 ohms",
+    "20 ohms"
+   ],
+   "answer": 0,
+   "difficulty": 1,
+   "topic": "ei-series-parallel",
+   "steps": [
+    "The idea: Series: add the resistors. Parallel: product over sum. Two equal ones: divide by 2.",
+    "Series resistances add.",
+    "10 + 20 + 30 = 60.",
+    "Answer: 60 ohms."
+   ],
+   "explanation": "Series resistances add. 10 + 20 + 30 = 60.",
+   "source": "study-pack:quiz"
+  },
+  {
+   "id": "EI-006",
+   "section": "EI",
+   "stem": "Two 10 ohm resistors are in parallel. What is the total resistance?",
+   "choices": [
+    "100 ohms",
+    "20 ohms",
+    "5 ohms",
+    "10 ohms"
+   ],
+   "answer": 2,
+   "difficulty": 1,
+   "topic": "ei-series-parallel",
+   "steps": [
+    "The idea: Series: add the resistors. Parallel: product over sum. Two equal ones: divide by 2.",
+    "Two equal resistors in parallel: 10 / 2 = 5.",
+    "Answer: 5 ohms."
+   ],
+   "explanation": "Two equal resistors in parallel: 10 / 2 = 5.",
+   "source": "study-pack:quiz"
+  },
+  {
+   "id": "EI-007",
+   "section": "EI",
+   "stem": "Which material is a good insulator?",
+   "choices": [
+    "copper",
+    "aluminum",
+    "silver",
+    "rubber"
    ],
    "answer": 3,
-   "difficulty": 2,
-   "topic": "pc-detail",
+   "difficulty": 1,
+   "topic": "ei-materials",
    "steps": [
-    "Read the question first. What type is it? Finding details.",
-    "Find the line in the passage that answers it.",
-    "The passage says the off-site copy is safe from a fire or virus at the office.",
-    "Answer: So it stays safe if the office is damaged."
+    "Topic: Conductors and insulators.",
+    "Rubber does not let current flow easily.",
+    "Answer: rubber."
    ],
-   "explanation": "The passage says the off-site copy is safe from a fire or virus at the office.",
-   "source": "new-original",
-   "passage": "Many offices lose files because no one makes backups. A backup is a copy of data kept in a second place. Experts suggest the 3-2-1 rule. Keep three copies of important data, on two kinds of storage, with one copy off site. If a fire or a virus hits the office, the off-site copy is still safe. A backup only helps if it works. So technicians should test it by restoring a few files each month.",
-   "passageId": "P19"
+   "explanation": "Rubber does not let current flow easily.",
+   "source": "study-pack:quiz"
   },
   {
-   "id": "PC-053",
-   "section": "PC",
-   "stem": "What should technicians do each month?",
+   "id": "EI-008",
+   "section": "EI",
+   "stem": "Which part lets current flow in only one direction?",
    "choices": [
-    "Buy new storage.",
-    "Restore a few files to test the backup.",
-    "Move every file off site.",
-    "Delete old backups."
+    "capacitor",
+    "diode",
+    "inductor",
+    "resistor"
    ],
    "answer": 1,
    "difficulty": 1,
-   "topic": "pc-detail",
+   "topic": "ei-components",
    "steps": [
-    "Read the question first. What type is it? Finding details.",
-    "Find the line in the passage that answers it.",
-    "The last sentence says to test by restoring a few files each month.",
-    "Answer: Restore a few files to test the backup."
+    "Topic: Electronic parts.",
+    "A diode is a one-way valve for current.",
+    "Answer: diode."
    ],
-   "explanation": "The last sentence says to test by restoring a few files each month.",
-   "source": "new-original",
-   "passage": "Many offices lose files because no one makes backups. A backup is a copy of data kept in a second place. Experts suggest the 3-2-1 rule. Keep three copies of important data, on two kinds of storage, with one copy off site. If a fire or a virus hits the office, the off-site copy is still safe. A backup only helps if it works. So technicians should test it by restoring a few files each month.",
-   "passageId": "P19"
+   "explanation": "A diode is a one-way valve for current.",
+   "source": "study-pack:quiz"
   },
   {
-   "id": "PC-054",
-   "section": "PC",
-   "stem": "The passage mainly describes:",
+   "id": "EI-009",
+   "section": "EI",
+   "stem": "What does a fuse do?",
    "choices": [
-    "how bees share where food is",
-    "how flowers make honey",
-    "how bees build a hive",
-    "why bees sting"
+    "raises the voltage",
+    "melts and opens the circuit when current is too high",
+    "makes current flow faster",
+    "stores charge"
+   ],
+   "answer": 1,
+   "difficulty": 1,
+   "topic": "ei-components",
+   "steps": [
+    "Topic: Electronic parts.",
+    "A fuse is a safety part.",
+    "It breaks the circuit on overload.",
+    "Answer: melts and opens the circuit when current is too high."
+   ],
+   "explanation": "A fuse is a safety part. It breaks the circuit on overload.",
+   "source": "study-pack:quiz"
+  },
+  {
+   "id": "EI-010",
+   "section": "EI",
+   "stem": "What does AC stand for?",
+   "choices": [
+    "alternating current",
+    "active current",
+    "amplified current",
+    "average current"
+   ],
+   "answer": 0,
+   "difficulty": 1,
+   "topic": "ei-ac-dc",
+   "steps": [
+    "Topic: AC and DC.",
+    "AC changes direction over and over.",
+    "Answer: alternating current."
+   ],
+   "explanation": "AC changes direction over and over.",
+   "source": "study-pack:quiz"
+  },
+  {
+   "id": "EI-011",
+   "section": "EI",
+   "stem": "What is the frequency of household AC power in the United States?",
+   "choices": [
+    "120 hertz",
+    "30 hertz",
+    "50 hertz",
+    "60 hertz"
+   ],
+   "answer": 3,
+   "difficulty": 1,
+   "topic": "ei-ac-dc",
+   "steps": [
+    "Topic: AC and DC.",
+    "U.S. power is 60 cycles per second.",
+    "Answer: 60 hertz."
+   ],
+   "explanation": "U.S. power is 60 cycles per second.",
+   "source": "study-pack:quiz"
+  },
+  {
+   "id": "EI-012",
+   "section": "EI",
+   "stem": "What does a transformer do?",
+   "choices": [
+    "stores charge",
+    "changes AC to DC",
+    "changes the voltage level of AC",
+    "makes power"
+   ],
+   "answer": 2,
+   "difficulty": 1,
+   "topic": "ei-components",
+   "steps": [
+    "Topic: Electronic parts.",
+    "A transformer steps AC voltage up or down.",
+    "Answer: changes the voltage level of AC."
+   ],
+   "explanation": "A transformer steps AC voltage up or down.",
+   "source": "study-pack:quiz"
+  },
+  {
+   "id": "EI-013",
+   "section": "EI",
+   "stem": "What does a capacitor store?",
+   "choices": [
+    "magnetic fields",
+    "heat",
+    "electric charge",
+    "current"
+   ],
+   "answer": 2,
+   "difficulty": 1,
+   "topic": "ei-components",
+   "steps": [
+    "Topic: Electronic parts.",
+    "A capacitor stores charge between two plates.",
+    "Answer: electric charge."
+   ],
+   "explanation": "A capacitor stores charge between two plates.",
+   "source": "study-pack:quiz"
+  },
+  {
+   "id": "EI-014",
+   "section": "EI",
+   "stem": "Four 1.5 volt batteries are connected in series. What is the total voltage?",
+   "choices": [
+    "1.5 volts",
+    "6 volts",
+    "0.375 volts",
+    "3 volts"
+   ],
+   "answer": 1,
+   "difficulty": 1,
+   "topic": "ei-series-parallel",
+   "steps": [
+    "The idea: Series: add the resistors. Parallel: product over sum. Two equal ones: divide by 2.",
+    "Series voltages add.",
+    "4 x 1.5 = 6.",
+    "Answer: 6 volts."
+   ],
+   "explanation": "Series voltages add. 4 x 1.5 = 6.",
+   "source": "study-pack:quiz"
+  },
+  {
+   "id": "EI-015",
+   "section": "EI",
+   "stem": "A 5 ohm resistor carries 3 amps. How much power does it use?",
+   "choices": [
+    "45 watts",
+    "15 watts",
+    "75 watts",
+    "8 watts"
+   ],
+   "answer": 0,
+   "difficulty": 1,
+   "topic": "ei-power",
+   "steps": [
+    "The idea: P = V x I. Also P = I x I x R. Energy = power x time.",
+    "P = I squared x R = 9 x 5 = 45 watts.",
+    "Answer: 45 watts."
+   ],
+   "explanation": "P = I squared x R = 9 x 5 = 45 watts.",
+   "source": "study-pack:quiz"
+  },
+  {
+   "id": "EI-016",
+   "section": "EI",
+   "stem": "What is the unit of resistance?",
+   "choices": [
+    "amp",
+    "volt",
+    "farad",
+    "ohm"
+   ],
+   "answer": 3,
+   "difficulty": 1,
+   "topic": "ei-basics",
+   "steps": [
+    "Topic: Current, voltage, resistance.",
+    "Resistance is measured in ohms.",
+    "Answer: ohm."
+   ],
+   "explanation": "Resistance is measured in ohms.",
+   "source": "study-pack:quiz"
+  },
+  {
+   "id": "EI-017",
+   "section": "EI",
+   "stem": "In a series circuit, the current is:",
+   "choices": [
+    "zero in the middle",
+    "split between parts",
+    "highest at the start",
+    "the same everywhere"
+   ],
+   "answer": 3,
+   "difficulty": 2,
+   "topic": "ei-series-parallel",
+   "steps": [
+    "Topic: Series and parallel circuits.",
+    "There is only one path, so the same current flows through every part.",
+    "Answer: the same everywhere."
+   ],
+   "explanation": "There is only one path, so the same current flows through every part.",
+   "source": "study-pack:quiz"
+  },
+  {
+   "id": "EI-018",
+   "section": "EI",
+   "stem": "In a parallel circuit, the voltage across each branch is:",
+   "choices": [
+    "the same",
+    "split among branches",
+    "different in each",
+    "zero"
    ],
    "answer": 0,
    "difficulty": 2,
-   "topic": "pc-main-idea",
+   "topic": "ei-series-parallel",
    "steps": [
-    "Read the question first. What type is it? Main idea.",
-    "Find the line in the passage that answers it.",
-    "The whole passage explains the dance that shows other bees where food is.",
-    "Answer: how bees share where food is."
+    "Topic: Series and parallel circuits.",
+    "Each branch connects to the same two points.",
+    "Answer: the same."
    ],
-   "explanation": "The whole passage explains the dance that shows other bees where food is.",
-   "source": "new-original",
-   "passage": "Honeybees tell each other where to find food by dancing. When a worker bee finds flowers, it returns to the hive. Then it moves in a figure-eight pattern and waggles its body. The direction of the dance points toward the food. The longer the bee waggles, the farther away the flowers are. Other bees watch the dance and then fly to the spot.",
-   "passageId": "P20"
+   "explanation": "Each branch connects to the same two points.",
+   "source": "study-pack:quiz"
   },
   {
-   "id": "PC-055",
-   "section": "PC",
-   "stem": "A bee that waggles for a long time is most likely showing that the flowers are:",
+   "id": "EI-019",
+   "section": "EI",
+   "stem": "An ammeter is connected to a circuit:",
    "choices": [
-    "a new color",
-    "almost gone",
-    "close by",
-    "far away"
+    "with no wires",
+    "across the battery",
+    "in series",
+    "in parallel"
+   ],
+   "answer": 2,
+   "difficulty": 2,
+   "topic": "ei-symbols-tools",
+   "steps": [
+    "Topic: Meters, symbols, and tools.",
+    "An ammeter must have the current pass through it.",
+    "Answer: in series."
+   ],
+   "explanation": "An ammeter must have the current pass through it.",
+   "source": "study-pack:quiz"
+  },
+  {
+   "id": "EI-020",
+   "section": "EI",
+   "stem": "A voltmeter is connected to a circuit:",
+   "choices": [
+    "in series",
+    "in parallel",
+    "in reverse",
+    "in a loop"
+   ],
+   "answer": 1,
+   "difficulty": 2,
+   "topic": "ei-symbols-tools",
+   "steps": [
+    "Topic: Meters, symbols, and tools.",
+    "A voltmeter reads the voltage across a part, so it goes across it.",
+    "Answer: in parallel."
+   ],
+   "explanation": "A voltmeter reads the voltage across a part, so it goes across it.",
+   "source": "study-pack:quiz"
+  },
+  {
+   "id": "EI-021",
+   "section": "EI",
+   "stem": "A resistor has bands brown, black, red. What is its value?",
+   "choices": [
+    "102 ohms",
+    "1,000 ohms",
+    "10 ohms",
+    "100 ohms"
+   ],
+   "answer": 1,
+   "difficulty": 2,
+   "topic": "ei-symbols-tools",
+   "steps": [
+    "Topic: Meters, symbols, and tools.",
+    "Brown = 1.",
+    "Black = 0.",
+    "Red = x100.",
+    "So 10 x 100 = 1,000 ohms.",
+    "Answer: 1,000 ohms."
+   ],
+   "explanation": "Brown = 1. Black = 0. Red = x100. So 10 x 100 = 1,000 ohms.",
+   "source": "study-pack:quiz"
+  },
+  {
+   "id": "EI-022",
+   "section": "EI",
+   "stem": "A 12 volt battery powers two equal resistors in series. What is the voltage across each?",
+   "choices": [
+    "6 volts",
+    "3 volts",
+    "12 volts",
+    "24 volts"
+   ],
+   "answer": 0,
+   "difficulty": 2,
+   "topic": "ei-series-parallel",
+   "steps": [
+    "The idea: Series: add the resistors. Parallel: product over sum. Two equal ones: divide by 2.",
+    "Equal resistors share the voltage.",
+    "12 / 2 = 6.",
+    "Answer: 6 volts."
+   ],
+   "explanation": "Equal resistors share the voltage. 12 / 2 = 6.",
+   "source": "study-pack:quiz"
+  },
+  {
+   "id": "EI-023",
+   "section": "EI",
+   "stem": "How many ohms is 4.7 kilohms?",
+   "choices": [
+    "470 ohms",
+    "47 ohms",
+    "47,000 ohms",
+    "4,700 ohms"
+   ],
+   "answer": 3,
+   "difficulty": 2,
+   "topic": "ei-basics",
+   "steps": [
+    "The idea: Volts measure push. Amps measure flow. Ohms measure resistance. Kilo = 1,000. Milli = 1/1,000.",
+    "Kilo means 1,000.",
+    "4.7 x 1,000 = 4,700.",
+    "Answer: 4,700 ohms."
+   ],
+   "explanation": "Kilo means 1,000. 4.7 x 1,000 = 4,700.",
+   "source": "study-pack:quiz"
+  },
+  {
+   "id": "EI-024",
+   "section": "EI",
+   "stem": "What does a rectifier do?",
+   "choices": [
+    "changes DC to AC",
+    "raises voltage",
+    "changes AC to DC",
+    "stores charge"
+   ],
+   "answer": 2,
+   "difficulty": 2,
+   "topic": "ei-components",
+   "steps": [
+    "Topic: Electronic parts.",
+    "A rectifier uses diodes to make AC one direction.",
+    "Answer: changes AC to DC."
+   ],
+   "explanation": "A rectifier uses diodes to make AC one direction.",
+   "source": "study-pack:quiz"
+  },
+  {
+   "id": "EI-025",
+   "section": "EI",
+   "stem": "An inductor stores energy in:",
+   "choices": [
+    "a magnetic field",
+    "a chemical",
+    "an electric field",
+    "heat"
+   ],
+   "answer": 0,
+   "difficulty": 2,
+   "topic": "ei-components",
+   "steps": [
+    "Topic: Electronic parts.",
+    "A coil stores energy in the magnetic field around it.",
+    "Answer: a magnetic field."
+   ],
+   "explanation": "A coil stores energy in the magnetic field around it.",
+   "source": "study-pack:quiz"
+  },
+  {
+   "id": "EI-026",
+   "section": "EI",
+   "stem": "What is the unit of capacitance?",
+   "choices": [
+    "coulomb",
+    "farad",
+    "henry",
+    "hertz"
+   ],
+   "answer": 1,
+   "difficulty": 2,
+   "topic": "ei-basics",
+   "steps": [
+    "Topic: Current, voltage, resistance.",
+    "Capacitance is measured in farads.",
+    "Answer: farad."
+   ],
+   "explanation": "Capacitance is measured in farads.",
+   "source": "study-pack:quiz"
+  },
+  {
+   "id": "EI-027",
+   "section": "EI",
+   "stem": "Resistance stays the same and voltage doubles. What happens to current?",
+   "choices": [
+    "It drops to zero.",
+    "It is cut in half.",
+    "It doubles.",
+    "It stays the same."
+   ],
+   "answer": 2,
+   "difficulty": 2,
+   "topic": "ei-basics",
+   "steps": [
+    "Topic: Current, voltage, resistance.",
+    "I = V / R.",
+    "Double V and I doubles.",
+    "Answer: It doubles."
+   ],
+   "explanation": "I = V / R. Double V and I doubles.",
+   "source": "study-pack:quiz"
+  },
+  {
+   "id": "EI-028",
+   "section": "EI",
+   "stem": "A 2 kilowatt heater runs for 3 hours. How much energy does it use?",
+   "choices": [
+    "23 kilowatt-hours",
+    "5 kilowatt-hours",
+    "1.5 kilowatt-hours",
+    "6 kilowatt-hours"
+   ],
+   "answer": 3,
+   "difficulty": 2,
+   "topic": "ei-power",
+   "steps": [
+    "The idea: P = V x I. Also P = I x I x R. Energy = power x time.",
+    "Energy = power x time = 2 x 3 = 6 kWh.",
+    "Answer: 6 kilowatt-hours."
+   ],
+   "explanation": "Energy = power x time = 2 x 3 = 6 kWh.",
+   "source": "study-pack:quiz"
+  },
+  {
+   "id": "EI-029",
+   "section": "EI",
+   "stem": "What is the job of a ground wire?",
+   "choices": [
+    "store energy",
+    "give extra current a safe path to earth",
+    "speed up current",
+    "raise the voltage"
+   ],
+   "answer": 1,
+   "difficulty": 2,
+   "topic": "ei-basics",
+   "steps": [
+    "Topic: Current, voltage, resistance.",
+    "A ground wire protects people from shocks.",
+    "Answer: give extra current a safe path to earth."
+   ],
+   "explanation": "A ground wire protects people from shocks.",
+   "source": "study-pack:quiz"
+  },
+  {
+   "id": "EI-030",
+   "section": "EI",
+   "stem": "Which part is used to limit the current in a circuit?",
+   "choices": [
+    "switch",
+    "battery",
+    "diode",
+    "resistor"
+   ],
+   "answer": 3,
+   "difficulty": 2,
+   "topic": "ei-components",
+   "steps": [
+    "Topic: Electronic parts.",
+    "A resistor limits current flow.",
+    "Answer: resistor."
+   ],
+   "explanation": "A resistor limits current flow.",
+   "source": "study-pack:quiz"
+  },
+  {
+   "id": "EI-031",
+   "section": "EI",
+   "stem": "What is the unit of frequency?",
+   "choices": [
+    "hertz",
+    "henry",
+    "farad",
+    "watt"
+   ],
+   "answer": 0,
+   "difficulty": 3,
+   "topic": "ei-ac-dc",
+   "steps": [
+    "Topic: AC and DC.",
+    "Frequency is measured in hertz (cycles per second).",
+    "Answer: hertz."
+   ],
+   "explanation": "Frequency is measured in hertz (cycles per second).",
+   "source": "study-pack:quiz"
+  },
+  {
+   "id": "EI-032",
+   "section": "EI",
+   "stem": "A 9 volt battery pushes 0.003 amps through a part. What is its resistance?",
+   "choices": [
+    "300 ohms",
+    "0.0003 ohms",
+    "3,000 ohms",
+    "27 ohms"
+   ],
+   "answer": 2,
+   "difficulty": 3,
+   "topic": "ei-ohms-law",
+   "steps": [
+    "The idea: V = I x R. So I = V / R, and R = V / I.",
+    "R = V / I = 9 / 0.003 = 3,000 ohms.",
+    "Answer: 3,000 ohms."
+   ],
+   "explanation": "R = V / I = 9 / 0.003 = 3,000 ohms.",
+   "source": "study-pack:quiz"
+  },
+  {
+   "id": "EI-033",
+   "section": "EI",
+   "stem": "A 6 ohm and a 3 ohm resistor are in parallel. What is the total resistance?",
+   "choices": [
+    "9 ohms",
+    "2 ohms",
+    "18 ohms",
+    "4.5 ohms"
+   ],
+   "answer": 1,
+   "difficulty": 3,
+   "topic": "ei-series-parallel",
+   "steps": [
+    "The idea: Series: add the resistors. Parallel: product over sum. Two equal ones: divide by 2.",
+    "Product over sum: (6 x 3) / (6 + 3) = 18 / 9 = 2.",
+    "Answer: 2 ohms."
+   ],
+   "explanation": "Product over sum: (6 x 3) / (6 + 3) = 18 / 9 = 2.",
+   "source": "study-pack:quiz"
+  },
+  {
+   "id": "EI-034",
+   "section": "EI",
+   "stem": "A 60 watt bulb runs on 120 volts. How much current does it draw?",
+   "choices": [
+    "0.5 amp",
+    "7,200 amps",
+    "2 amps",
+    "60 amps"
+   ],
+   "answer": 0,
+   "difficulty": 3,
+   "topic": "ei-power",
+   "steps": [
+    "The idea: P = V x I. Also P = I x I x R. Energy = power x time.",
+    "I = P / V = 60 / 120 = 0.5 amp.",
+    "Answer: 0.5 amp."
+   ],
+   "explanation": "I = P / V = 60 / 120 = 0.5 amp.",
+   "source": "study-pack:quiz"
+  },
+  {
+   "id": "EI-035",
+   "section": "EI",
+   "stem": "Which of these conducts electricity the best?",
+   "choices": [
+    "dry wood",
+    "rubber band",
+    "glass rod",
+    "copper wire"
    ],
    "answer": 3,
    "difficulty": 3,
-   "topic": "pc-inference",
+   "topic": "ei-materials",
    "steps": [
-    "Read the question first. What type is it? Inference (reading between lines).",
-    "Find the line in the passage that answers it.",
-    "The passage says a longer waggle means the flowers are farther away.",
-    "Answer: far away."
+    "Topic: Conductors and insulators.",
+    "Metals conduct well.",
+    "Glass, wood, and rubber are insulators.",
+    "Answer: copper wire."
    ],
-   "explanation": "The passage says a longer waggle means the flowers are farther away.",
-   "source": "new-original",
-   "passage": "Honeybees tell each other where to find food by dancing. When a worker bee finds flowers, it returns to the hive. Then it moves in a figure-eight pattern and waggles its body. The direction of the dance points toward the food. The longer the bee waggles, the farther away the flowers are. Other bees watch the dance and then fly to the spot.",
-   "passageId": "P20"
+   "explanation": "Metals conduct well. Glass, wood, and rubber are insulators.",
+   "source": "study-pack:quiz"
   },
   {
-   "id": "PC-056",
-   "section": "PC",
-   "stem": "What does the direction of the dance show?",
+   "id": "EI-036",
+   "section": "EI",
+   "stem": "A transistor can be used as:",
    "choices": [
-    "How much honey is left",
-    "What time it is",
-    "Which way the food is",
-    "How many bees should go"
+    "a coil only",
+    "a switch or an amplifier",
+    "a fuse only",
+    "a battery"
+   ],
+   "answer": 1,
+   "difficulty": 3,
+   "topic": "ei-components",
+   "steps": [
+    "Topic: Electronic parts.",
+    "Transistors turn signals on and off or make them bigger.",
+    "Answer: a switch or an amplifier."
+   ],
+   "explanation": "Transistors turn signals on and off or make them bigger.",
+   "source": "study-pack:quiz"
+  },
+  {
+   "id": "EI-037",
+   "section": "EI",
+   "stem": "What happens when current flows through a coil of wire?",
+   "choices": [
+    "It turns AC into light.",
+    "It makes the voltage zero.",
+    "It makes a magnetic field.",
+    "It makes the wire cold."
    ],
    "answer": 2,
-   "difficulty": 1,
-   "topic": "pc-detail",
+   "difficulty": 3,
+   "topic": "ei-magnetism",
    "steps": [
-    "Read the question first. What type is it? Finding details.",
-    "Find the line in the passage that answers it.",
-    "The passage says the direction of the dance points toward the food.",
-    "Answer: Which way the food is."
+    "Topic: Magnetism, motors, generators.",
+    "This is how an electromagnet works.",
+    "Answer: It makes a magnetic field."
    ],
-   "explanation": "The passage says the direction of the dance points toward the food.",
-   "source": "new-original",
-   "passage": "Honeybees tell each other where to find food by dancing. When a worker bee finds flowers, it returns to the hive. Then it moves in a figure-eight pattern and waggles its body. The direction of the dance points toward the food. The longer the bee waggles, the farther away the flowers are. Other bees watch the dance and then fly to the spot.",
-   "passageId": "P20"
+   "explanation": "This is how an electromagnet works.",
+   "source": "study-pack:quiz"
   },
   {
-   "id": "PC-057",
-   "section": "PC",
-   "stem": "What is the author's main point?",
+   "id": "EI-038",
+   "section": "EI",
+   "stem": "A battery produces:",
    "choices": [
-    "Strong people never need help.",
-    "Sailors should work alone.",
-    "Asking for help early makes a team stronger.",
-    "Pumps fail often at sea."
-   ],
-   "answer": 2,
-   "difficulty": 2,
-   "topic": "pc-main-idea",
-   "steps": [
-    "Read the question first. What type is it? Main idea.",
-    "Find the line in the passage that answers it.",
-    "The author says asking for help is not weak. It helps the team fix problems early.",
-    "Answer: Asking for help early makes a team stronger."
-   ],
-   "explanation": "The author says asking for help is not weak. It helps the team fix problems early.",
-   "source": "new-original",
-   "passage": "Some people think asking for help is a sign of weakness. In fact, the opposite is often true. Strong teams depend on members who speak up when they are stuck. A sailor who hides a problem with a pump may cause a bigger failure later. A sailor who asks early lets the team fix it while it is still small.",
-   "passageId": "P21"
-  },
-  {
-   "id": "PC-058",
-   "section": "PC",
-   "stem": "In the passage, the word DEPEND most nearly means:",
-   "choices": [
-    "wait",
-    "argue",
-    "leave",
-    "rely"
+    "no current",
+    "alternating current (AC)",
+    "only static charge",
+    "direct current (DC)"
    ],
    "answer": 3,
-   "difficulty": 2,
-   "topic": "pc-vocab",
+   "difficulty": 3,
+   "topic": "ei-ac-dc",
    "steps": [
-    "Read the question first. What type is it? Word meaning in a passage.",
-    "Find the line in the passage that answers it.",
-    "Strong teams rely on members who speak up. Rely fits the sentence.",
-    "Answer: rely."
+    "Topic: AC and DC.",
+    "A battery pushes current one way.",
+    "Answer: direct current (DC)."
    ],
-   "explanation": "Strong teams rely on members who speak up. Rely fits the sentence.",
-   "source": "new-original",
-   "passage": "Some people think asking for help is a sign of weakness. In fact, the opposite is often true. Strong teams depend on members who speak up when they are stuck. A sailor who hides a problem with a pump may cause a bigger failure later. A sailor who asks early lets the team fix it while it is still small.",
-   "passageId": "P21"
+   "explanation": "A battery pushes current one way.",
+   "source": "study-pack:quiz"
   },
   {
-   "id": "PC-059",
-   "section": "PC",
-   "stem": "If a sailor hides a pump problem, what will most likely happen?",
+   "id": "EI-039",
+   "section": "EI",
+   "stem": "A circuit with a break in the wire is called:",
    "choices": [
-    "Nothing will change.",
-    "The team will work faster.",
-    "A bigger failure could happen later.",
-    "The pump will fix itself."
-   ],
-   "answer": 2,
-   "difficulty": 2,
-   "topic": "pc-inference",
-   "steps": [
-    "Read the question first. What type is it? Inference (reading between lines).",
-    "Find the line in the passage that answers it.",
-    "The passage says hiding a problem may cause a bigger failure later.",
-    "Answer: A bigger failure could happen later."
-   ],
-   "explanation": "The passage says hiding a problem may cause a bigger failure later.",
-   "source": "new-original",
-   "passage": "Some people think asking for help is a sign of weakness. In fact, the opposite is often true. Strong teams depend on members who speak up when they are stuck. A sailor who hides a problem with a pump may cause a bigger failure later. A sailor who asks early lets the team fix it while it is still small.",
-   "passageId": "P21"
-  },
-  {
-   "id": "PC-060",
-   "section": "PC",
-   "stem": "What should be done right after shutting down the laptop?",
-   "choices": [
-    "Lift out the old battery.",
-    "Remove the screws.",
-    "Unplug the power cord and cables.",
-    "Charge the battery."
-   ],
-   "answer": 2,
-   "difficulty": 1,
-   "topic": "pc-sequence",
-   "steps": [
-    "Read the question first. What type is it? Steps in order.",
-    "Find the line in the passage that answers it.",
-    "The word Next comes right after shutting down. It says to unplug the cord and cables.",
-    "Answer: Unplug the power cord and cables."
-   ],
-   "explanation": "The word Next comes right after shutting down. It says to unplug the cord and cables.",
-   "source": "new-original",
-   "passage": "Before you replace a laptop battery, shut the computer down fully. Next, unplug the power cord and any cables. Then turn the laptop over and remove the screws on the battery cover. Lift out the old battery and set the new one in place. Finally, replace the cover. Charge the new battery for several hours before first use.",
-   "passageId": "P22"
-  },
-  {
-   "id": "PC-061",
-   "section": "PC",
-   "stem": "What is the last step in the passage?",
-   "choices": [
-    "Turn the laptop over.",
-    "Remove the screws.",
-    "Charge the new battery for several hours.",
-    "Shut the computer down."
-   ],
-   "answer": 2,
-   "difficulty": 1,
-   "topic": "pc-sequence",
-   "steps": [
-    "Read the question first. What type is it? Steps in order.",
-    "Find the line in the passage that answers it.",
-    "The final sentence says to charge the new battery before first use.",
-    "Answer: Charge the new battery for several hours."
-   ],
-   "explanation": "The final sentence says to charge the new battery before first use.",
-   "source": "new-original",
-   "passage": "Before you replace a laptop battery, shut the computer down fully. Next, unplug the power cord and any cables. Then turn the laptop over and remove the screws on the battery cover. Lift out the old battery and set the new one in place. Finally, replace the cover. Charge the new battery for several hours before first use.",
-   "passageId": "P22"
-  },
-  {
-   "id": "PC-062",
-   "section": "PC",
-   "stem": "The purpose of this passage is to:",
-   "choices": [
-    "sell a new laptop",
-    "warn about old computers",
-    "give steps for replacing a battery",
-    "explain how batteries are made"
-   ],
-   "answer": 2,
-   "difficulty": 2,
-   "topic": "pc-author",
-   "steps": [
-    "Read the question first. What type is it? Author view, tone, and purpose.",
-    "Find the line in the passage that answers it.",
-    "The passage is a set of steps in order: first, next, then, finally.",
-    "Answer: give steps for replacing a battery."
-   ],
-   "explanation": "The passage is a set of steps in order: first, next, then, finally.",
-   "source": "new-original",
-   "passage": "Before you replace a laptop battery, shut the computer down fully. Next, unplug the power cord and any cables. Then turn the laptop over and remove the screws on the battery cover. Lift out the old battery and set the new one in place. Finally, replace the cover. Charge the new battery for several hours before first use.",
-   "passageId": "P22"
-  },
-  {
-   "id": "PC-063",
-   "section": "PC",
-   "stem": "According to the passage, Naval Station Norfolk is:",
-   "choices": [
-    "the largest naval base in the world",
-    "the oldest city in Virginia",
-    "a small training school",
-    "a base for only aircraft"
-   ],
-   "answer": 0,
-   "difficulty": 1,
-   "topic": "pc-detail",
-   "steps": [
-    "Read the question first. What type is it? Finding details.",
-    "Find the line in the passage that answers it.",
-    "The first sentence says it is the largest naval base in the world.",
-    "Answer: the largest naval base in the world."
-   ],
-   "explanation": "The first sentence says it is the largest naval base in the world.",
-   "source": "new-original",
-   "passage": "Norfolk, Virginia, is home to the largest naval base in the world. Naval Station Norfolk supports dozens of ships and many aircraft squadrons. Tens of thousands of sailors and civilians work there. Because the base is so big, the city's shops, schools, and roads are planned around it.",
-   "passageId": "P23"
-  },
-  {
-   "id": "PC-064",
-   "section": "PC",
-   "stem": "In the passage, the word SUPPORTS most nearly means:",
-   "choices": [
-    "takes care of",
-    "holds up",
-    "pays for",
-    "argues for"
+    "an open circuit",
+    "a parallel circuit",
+    "a short circuit",
+    "a closed circuit"
    ],
    "answer": 0,
    "difficulty": 3,
-   "topic": "pc-vocab",
+   "topic": "ei-basics",
    "steps": [
-    "Read the question first. What type is it? Word meaning in a passage.",
-    "Find the line in the passage that answers it.",
-    "The base serves and takes care of ships. Holds up is the everyday meaning, but it does not fit here.",
-    "Answer: takes care of."
+    "Topic: Current, voltage, resistance.",
+    "No complete loop means no current flows.",
+    "Answer: an open circuit."
    ],
-   "explanation": "The base serves and takes care of ships. Holds up is the everyday meaning, but it does not fit here.",
-   "source": "new-original",
-   "passage": "Norfolk, Virginia, is home to the largest naval base in the world. Naval Station Norfolk supports dozens of ships and many aircraft squadrons. Tens of thousands of sailors and civilians work there. Because the base is so big, the city's shops, schools, and roads are planned around it.",
-   "passageId": "P23"
+   "explanation": "No complete loop means no current flows.",
+   "source": "study-pack:quiz"
   },
   {
-   "id": "PC-065",
-   "section": "PC",
-   "stem": "What can you infer from the passage?",
+   "id": "EI-040",
+   "section": "EI",
+   "stem": "A 20 volt battery powers a 4 ohm and a 6 ohm resistor in series. What is the current?",
    "choices": [
-    "Few people live in Norfolk.",
-    "The base will close soon.",
-    "Ships cannot dock in Norfolk.",
-    "The base has a big effect on life in the city."
+    "5 amps",
+    "2 amps",
+    "8 amps",
+    "0.5 amps"
+   ],
+   "answer": 1,
+   "difficulty": 3,
+   "topic": "ei-series-parallel",
+   "steps": [
+    "The idea: Series: add the resistors. Parallel: product over sum. Two equal ones: divide by 2.",
+    "Total R = 4 + 6 = 10.",
+    "I = 20 / 10 = 2.",
+    "Answer: 2 amps."
+   ],
+   "explanation": "Total R = 4 + 6 = 10. I = 20 / 10 = 2.",
+   "source": "study-pack:quiz"
+  },
+  {
+   "id": "EI-041",
+   "section": "EI",
+   "stem": "250 milliamps equals how many amps?",
+   "choices": [
+    "0.25 amps",
+    "25 amps",
+    "2.5 amps",
+    "0.025 amps"
+   ],
+   "answer": 0,
+   "difficulty": 3,
+   "topic": "ei-basics",
+   "steps": [
+    "The idea: Volts measure push. Amps measure flow. Ohms measure resistance. Kilo = 1,000. Milli = 1/1,000.",
+    "Milli means 1/1000.",
+    "250 / 1000 = 0.25.",
+    "Answer: 0.25 amps."
+   ],
+   "explanation": "Milli means 1/1000. 250 / 1000 = 0.25.",
+   "source": "study-pack:quiz"
+  },
+  {
+   "id": "EI-042",
+   "section": "EI",
+   "stem": "What is a short circuit?",
+   "choices": [
+    "a circuit with no battery",
+    "a circuit that is turned off",
+    "current takes a very low-resistance path",
+    "a circuit with a small bulb"
+   ],
+   "answer": 2,
+   "difficulty": 3,
+   "topic": "ei-basics",
+   "steps": [
+    "Topic: Current, voltage, resistance.",
+    "Too much current flows, which can cause heat or fire.",
+    "Answer: current takes a very low-resistance path."
+   ],
+   "explanation": "Too much current flows, which can cause heat or fire.",
+   "source": "study-pack:quiz"
+  },
+  {
+   "id": "EI-043",
+   "section": "EI",
+   "stem": "What is the unit of inductance?",
+   "choices": [
+    "tesla",
+    "ohm",
+    "farad",
+    "henry"
+   ],
+   "answer": 3,
+   "difficulty": 3,
+   "topic": "ei-basics",
+   "steps": [
+    "Topic: Current, voltage, resistance.",
+    "Inductance is measured in henrys.",
+    "Answer: henry."
+   ],
+   "explanation": "Inductance is measured in henrys.",
+   "source": "study-pack:quiz"
+  },
+  {
+   "id": "EI-044",
+   "section": "EI",
+   "stem": "Two 100 ohm resistors are in parallel across 10 volts. What is the total current?",
+   "choices": [
+    "0.2 amps",
+    "20 amps",
+    "1 amp",
+    "0.1 amps"
+   ],
+   "answer": 0,
+   "difficulty": 3,
+   "topic": "ei-series-parallel",
+   "steps": [
+    "The idea: Series: add the resistors. Parallel: product over sum. Two equal ones: divide by 2.",
+    "Each branch: 10 / 100 = 0.1 amp.",
+    "Two branches: 0.2 amps.",
+    "Answer: 0.2 amps."
+   ],
+   "explanation": "Each branch: 10 / 100 = 0.1 amp. Two branches: 0.2 amps.",
+   "source": "study-pack:quiz"
+  },
+  {
+   "id": "EI-045",
+   "section": "EI",
+   "stem": "Which unit measures voltage?",
+   "choices": [
+    "ampere",
+    "watt",
+    "ohm",
+    "volt"
+   ],
+   "answer": 3,
+   "difficulty": 1,
+   "topic": "ei-basics",
+   "steps": [
+    "Topic: Current, voltage, resistance.",
+    "Voltage is measured in volts.",
+    "Answer: volt."
+   ],
+   "explanation": "Voltage is measured in volts.",
+   "source": "study-pack:practice-EI1"
+  },
+  {
+   "id": "EI-046",
+   "section": "EI",
+   "stem": "A 9 volt battery is connected to a 3 ohm resistor. How much current flows?",
+   "choices": [
+    "3 amps",
+    "27 amps",
+    "6 amps",
+    "0.33 amps"
+   ],
+   "answer": 0,
+   "difficulty": 1,
+   "topic": "ei-ohms-law",
+   "steps": [
+    "The idea: V = I x R. So I = V / R, and R = V / I.",
+    "I = V / R = 9 / 3 = 3 amps.",
+    "Answer: 3 amps."
+   ],
+   "explanation": "I = V / R = 9 / 3 = 3 amps.",
+   "source": "study-pack:practice-EI1"
+  },
+  {
+   "id": "EI-047",
+   "section": "EI",
+   "stem": "On a schematic, a zigzag line stands for a:",
+   "choices": [
+    "switch",
+    "battery",
+    "resistor",
+    "ground"
+   ],
+   "answer": 2,
+   "difficulty": 1,
+   "topic": "ei-symbols-tools",
+   "steps": [
+    "Topic: Meters, symbols, and tools.",
+    "A zigzag line is the resistor symbol.",
+    "Answer: resistor."
+   ],
+   "explanation": "A zigzag line is the resistor symbol.",
+   "source": "study-pack:practice-EI1"
+  },
+  {
+   "id": "EI-048",
+   "section": "EI",
+   "stem": "A device runs on 12 volts and draws 2 amps. What is its power?",
+   "choices": [
+    "10 watts",
+    "24 watts",
+    "14 watts",
+    "6 watts"
+   ],
+   "answer": 1,
+   "difficulty": 1,
+   "topic": "ei-power",
+   "steps": [
+    "The idea: P = V x I. Also P = I x I x R. Energy = power x time.",
+    "P = V x I = 12 x 2 = 24 watts.",
+    "Answer: 24 watts."
+   ],
+   "explanation": "P = V x I = 12 x 2 = 24 watts.",
+   "source": "study-pack:practice-EI1"
+  },
+  {
+   "id": "EI-049",
+   "section": "EI",
+   "stem": "Two 6 ohm resistors are connected in series. What is the total resistance?",
+   "choices": [
+    "36 ohms",
+    "3 ohms",
+    "12 ohms",
+    "6 ohms"
+   ],
+   "answer": 2,
+   "difficulty": 2,
+   "topic": "ei-series-parallel",
+   "steps": [
+    "The idea: Series: add the resistors. Parallel: product over sum. Two equal ones: divide by 2.",
+    "Series resistances add.",
+    "6 + 6 = 12.",
+    "Answer: 12 ohms."
+   ],
+   "explanation": "Series resistances add. 6 + 6 = 12.",
+   "source": "study-pack:practice-EI1"
+  },
+  {
+   "id": "EI-050",
+   "section": "EI",
+   "stem": "A 12 ohm resistor and a 4 ohm resistor are in parallel. What is the total resistance?",
+   "choices": [
+    "48 ohms",
+    "3 ohms",
+    "8 ohms",
+    "16 ohms"
+   ],
+   "answer": 1,
+   "difficulty": 2,
+   "topic": "ei-series-parallel",
+   "steps": [
+    "The idea: Series: add the resistors. Parallel: product over sum. Two equal ones: divide by 2.",
+    "(12 x 4) / (12 + 4) = 48 / 16 = 3.",
+    "Answer: 3 ohms."
+   ],
+   "explanation": "(12 x 4) / (12 + 4) = 48 / 16 = 3.",
+   "source": "study-pack:practice-EI1"
+  },
+  {
+   "id": "EI-051",
+   "section": "EI",
+   "stem": "When a switch is open, the circuit has:",
+   "choices": [
+    "no current flow",
+    "double voltage",
+    "maximum current",
+    "no resistance"
+   ],
+   "answer": 0,
+   "difficulty": 3,
+   "topic": "ei-basics",
+   "steps": [
+    "Topic: Current, voltage, resistance.",
+    "An open switch breaks the path.",
+    "No current flows.",
+    "Answer: no current flow."
+   ],
+   "explanation": "An open switch breaks the path. No current flows.",
+   "source": "study-pack:practice-EI1"
+  },
+  {
+   "id": "EI-052",
+   "section": "EI",
+   "stem": "A circuit breaker differs from a fuse because it:",
+   "choices": [
+    "has no wire inside",
+    "can be reset after it trips",
+    "raises voltage",
+    "only works on DC"
+   ],
+   "answer": 1,
+   "difficulty": 3,
+   "topic": "ei-components",
+   "steps": [
+    "Topic: Electronic parts.",
+    "A breaker can be switched back on.",
+    "A fuse must be replaced.",
+    "Answer: can be reset after it trips."
+   ],
+   "explanation": "A breaker can be switched back on. A fuse must be replaced.",
+   "source": "study-pack:practice-EI1"
+  },
+  {
+   "id": "EI-053",
+   "section": "EI",
+   "stem": "A 24 volt source powers a 10 ohm and a 20 ohm resistor in series. What is the current?",
+   "choices": [
+    "1.2 amps",
+    "0.5 amps",
+    "0.8 amps",
+    "2.4 amps"
+   ],
+   "answer": 2,
+   "difficulty": 3,
+   "topic": "ei-series-parallel",
+   "steps": [
+    "The idea: Series: add the resistors. Parallel: product over sum. Two equal ones: divide by 2.",
+    "Total R = 30 ohms.",
+    "I = 24 / 30 = 0.8 amps.",
+    "Answer: 0.8 amps."
+   ],
+   "explanation": "Total R = 30 ohms. I = 24 / 30 = 0.8 amps.",
+   "source": "study-pack:practice-EI1"
+  },
+  {
+   "id": "EI-054",
+   "section": "EI",
+   "stem": "Which unit measures electrical power?",
+   "choices": [
+    "volt",
+    "farad",
+    "watt",
+    "coulomb"
+   ],
+   "answer": 2,
+   "difficulty": 1,
+   "topic": "ei-power",
+   "steps": [
+    "Topic: Electric power and energy.",
+    "Power is measured in watts.",
+    "Answer: watt."
+   ],
+   "explanation": "Power is measured in watts.",
+   "source": "study-pack:practice-EI2"
+  },
+  {
+   "id": "EI-055",
+   "section": "EI",
+   "stem": "A 30 volt source drives 6 amps through a resistor. What is the resistance?",
+   "choices": [
+    "180 ohms",
+    "5 ohms",
+    "24 ohms",
+    "0.2 ohms"
+   ],
+   "answer": 1,
+   "difficulty": 1,
+   "topic": "ei-ohms-law",
+   "steps": [
+    "The idea: V = I x R. So I = V / R, and R = V / I.",
+    "R = V / I = 30 / 6 = 5 ohms.",
+    "Answer: 5 ohms."
+   ],
+   "explanation": "R = V / I = 30 / 6 = 5 ohms.",
+   "source": "study-pack:practice-EI2"
+  },
+  {
+   "id": "EI-056",
+   "section": "EI",
+   "stem": "A generator changes:",
+   "choices": [
+    "mechanical energy into electrical energy",
+    "chemical energy into motion",
+    "light into sound",
+    "electrical energy into heat"
+   ],
+   "answer": 0,
+   "difficulty": 1,
+   "topic": "ei-magnetism",
+   "steps": [
+    "Topic: Magnetism, motors, generators.",
+    "A generator is turned by motion and makes electricity.",
+    "Answer: mechanical energy into electrical energy."
+   ],
+   "explanation": "A generator is turned by motion and makes electricity.",
+   "source": "study-pack:practice-EI2"
+  },
+  {
+   "id": "EI-057",
+   "section": "EI",
+   "stem": "A 100 ohm and a 150 ohm resistor are in parallel. What is the total resistance?",
+   "choices": [
+    "125 ohms",
+    "25 ohms",
+    "250 ohms",
+    "60 ohms"
+   ],
+   "answer": 3,
+   "difficulty": 1,
+   "topic": "ei-series-parallel",
+   "steps": [
+    "The idea: Series: add the resistors. Parallel: product over sum. Two equal ones: divide by 2.",
+    "(100 x 150) / 250 = 60 ohms.",
+    "Answer: 60 ohms."
+   ],
+   "explanation": "(100 x 150) / 250 = 60 ohms.",
+   "source": "study-pack:practice-EI2"
+  },
+  {
+   "id": "EI-058",
+   "section": "EI",
+   "stem": "An LED is a part that:",
+   "choices": [
+    "gives off light when current flows in one direction",
+    "steps up voltage",
+    "measures current",
+    "stores charge"
+   ],
+   "answer": 0,
+   "difficulty": 2,
+   "topic": "ei-components",
+   "steps": [
+    "Topic: Electronic parts.",
+    "LED = light-emitting diode.",
+    "Answer: gives off light when current flows in one direction."
+   ],
+   "explanation": "LED = light-emitting diode.",
+   "source": "study-pack:practice-EI2"
+  },
+  {
+   "id": "EI-059",
+   "section": "EI",
+   "stem": "In direct current (DC), the electrons flow:",
+   "choices": [
+    "not at all",
+    "in one direction only",
+    "back and forth",
+    "in a circle only"
+   ],
+   "answer": 1,
+   "difficulty": 2,
+   "topic": "ei-ac-dc",
+   "steps": [
+    "Topic: AC and DC.",
+    "DC flows one way.",
+    "AC reverses.",
+    "Answer: in one direction only."
+   ],
+   "explanation": "DC flows one way. AC reverses.",
+   "source": "study-pack:practice-EI2"
+  },
+  {
+   "id": "EI-060",
+   "section": "EI",
+   "stem": "Three 1.5 volt batteries are connected in parallel. What is the output voltage?",
+   "choices": [
+    "0.5 volts",
+    "4.5 volts",
+    "1.5 volts",
+    "3 volts"
+   ],
+   "answer": 2,
+   "difficulty": 3,
+   "topic": "ei-series-parallel",
+   "steps": [
+    "The idea: Series: add the resistors. Parallel: product over sum. Two equal ones: divide by 2.",
+    "Parallel batteries keep the same voltage.",
+    "They add capacity.",
+    "Answer: 1.5 volts."
+   ],
+   "explanation": "Parallel batteries keep the same voltage. They add capacity.",
+   "source": "study-pack:practice-EI2"
+  },
+  {
+   "id": "EI-061",
+   "section": "EI",
+   "stem": "A 100 watt bulb runs for 10 hours. How much energy does it use?",
+   "choices": [
+    "0.1 kilowatt-hours",
+    "1 kilowatt-hour",
+    "10 kilowatt-hours",
+    "100 kilowatt-hours"
+   ],
+   "answer": 1,
+   "difficulty": 3,
+   "topic": "ei-power",
+   "steps": [
+    "The idea: P = V x I. Also P = I x I x R. Energy = power x time.",
+    "100 W x 10 h = 1,000 Wh = 1 kWh.",
+    "Answer: 1 kilowatt-hour."
+   ],
+   "explanation": "100 W x 10 h = 1,000 Wh = 1 kWh.",
+   "source": "study-pack:practice-EI2"
+  },
+  {
+   "id": "EI-062",
+   "section": "EI",
+   "stem": "A transformer has 100 turns on the primary and 300 turns on the secondary. The primary is 120 volts AC. What is the secondary voltage?",
+   "choices": [
+    "120 volts",
+    "3,600 volts",
+    "360 volts",
+    "40 volts"
+   ],
+   "answer": 2,
+   "difficulty": 3,
+   "topic": "ei-components",
+   "steps": [
+    "The idea: Resistor: limits current. Capacitor: stores charge. Diode: one way. Transistor: switch or amplifier. Transformer: changes AC voltage.",
+    "The turns ratio is 3 to 1.",
+    "120 x 3 = 360 volts.",
+    "Answer: 360 volts."
+   ],
+   "explanation": "The turns ratio is 3 to 1. 120 x 3 = 360 volts.",
+   "source": "study-pack:practice-EI2"
+  },
+  {
+   "id": "EI-063",
+   "section": "EI",
+   "stem": "Three 4 ohm resistors in series are connected to 24 volts. What is the current?",
+   "choices": [
+    "6 amps",
+    "8 amps",
+    "0.5 amps",
+    "2 amps"
+   ],
+   "answer": 3,
+   "difficulty": 1,
+   "topic": "ei-series-parallel",
+   "steps": [
+    "The idea: Series: add the resistors. Parallel: product over sum. Two equal ones: divide by 2.",
+    "Total R = 12 ohms.",
+    "I = 24 / 12 = 2 amps.",
+    "Answer: 2 amps."
+   ],
+   "explanation": "Total R = 12 ohms. I = 24 / 12 = 2 amps.",
+   "source": "study-pack:practice-EI3"
+  },
+  {
+   "id": "EI-064",
+   "section": "EI",
+   "stem": "Which instrument measures resistance?",
+   "choices": [
+    "wattmeter",
+    "voltmeter",
+    "ohmmeter",
+    "ammeter"
+   ],
+   "answer": 2,
+   "difficulty": 1,
+   "topic": "ei-symbols-tools",
+   "steps": [
+    "Topic: Meters, symbols, and tools.",
+    "An ohmmeter reads resistance.",
+    "Answer: ohmmeter."
+   ],
+   "explanation": "An ohmmeter reads resistance.",
+   "source": "study-pack:practice-EI3"
+  },
+  {
+   "id": "EI-065",
+   "section": "EI",
+   "stem": "A 2 amp current flows through an 8 ohm resistor. How much power does the resistor use?",
+   "choices": [
+    "16 watts",
+    "32 watts",
+    "4 watts",
+    "128 watts"
+   ],
+   "answer": 1,
+   "difficulty": 1,
+   "topic": "ei-power",
+   "steps": [
+    "The idea: P = V x I. Also P = I x I x R. Energy = power x time.",
+    "P = I squared x R = 4 x 8 = 32 watts.",
+    "Answer: 32 watts."
+   ],
+   "explanation": "P = I squared x R = 4 x 8 = 32 watts.",
+   "source": "study-pack:practice-EI3"
+  },
+  {
+   "id": "EI-066",
+   "section": "EI",
+   "stem": "Which of these is a source of DC power?",
+   "choices": [
+    "a power line",
+    "a battery",
+    "an AC generator",
+    "a wall outlet"
+   ],
+   "answer": 1,
+   "difficulty": 2,
+   "topic": "ei-ac-dc",
+   "steps": [
+    "Topic: AC and DC.",
+    "A battery gives direct current.",
+    "Answer: a battery."
+   ],
+   "explanation": "A battery gives direct current.",
+   "source": "study-pack:practice-EI3"
+  },
+  {
+   "id": "EI-067",
+   "section": "EI",
+   "stem": "A relay is best described as:",
+   "choices": [
+    "a unit of power",
+    "a kind of fuse",
+    "a switch operated by an electromagnet",
+    "a type of battery"
+   ],
+   "answer": 2,
+   "difficulty": 2,
+   "topic": "ei-components",
+   "steps": [
+    "Topic: Electronic parts.",
+    "A small current in a coil moves the switch.",
+    "Answer: a switch operated by an electromagnet."
+   ],
+   "explanation": "A small current in a coil moves the switch.",
+   "source": "study-pack:practice-EI3"
+  },
+  {
+   "id": "EI-068",
+   "section": "EI",
+   "stem": "Several bulbs are wired in parallel. One bulb burns out. The other bulbs:",
+   "choices": [
+    "stay lit",
+    "get dimmer",
+    "get brighter and burn out",
+    "go out"
+   ],
+   "answer": 0,
+   "difficulty": 2,
+   "topic": "ei-series-parallel",
+   "steps": [
+    "Topic: Series and parallel circuits.",
+    "Each parallel branch has its own path to the source.",
+    "Answer: stay lit."
+   ],
+   "explanation": "Each parallel branch has its own path to the source.",
+   "source": "study-pack:practice-EI3"
+  },
+  {
+   "id": "EI-069",
+   "section": "EI",
+   "stem": "A 10 volt source is across a 5 ohm and a 20 ohm resistor in parallel. What is the total current from the source?",
+   "choices": [
+    "2 amps",
+    "10 amps",
+    "0.4 amps",
+    "2.5 amps"
+   ],
+   "answer": 3,
+   "difficulty": 3,
+   "topic": "ei-series-parallel",
+   "steps": [
+    "The idea: Series: add the resistors. Parallel: product over sum. Two equal ones: divide by 2.",
+    "5 ohm branch: 2 A.",
+    "20 ohm branch: 0.5 A.",
+    "Total 2.5 A.",
+    "Answer: 2.5 amps."
+   ],
+   "explanation": "5 ohm branch: 2 A. 20 ohm branch: 0.5 A. Total 2.5 A.",
+   "source": "study-pack:practice-EI3"
+  },
+  {
+   "id": "EI-070",
+   "section": "EI",
+   "stem": "If a wire is made longer, its resistance:",
+   "choices": [
+    "stays the same",
+    "drops to zero",
+    "increases",
+    "decreases"
+   ],
+   "answer": 2,
+   "difficulty": 3,
+   "topic": "ei-materials",
+   "steps": [
+    "Topic: Conductors and insulators.",
+    "A longer path means more resistance.",
+    "Answer: increases."
+   ],
+   "explanation": "A longer path means more resistance.",
+   "source": "study-pack:practice-EI3"
+  },
+  {
+   "id": "EI-071",
+   "section": "EI",
+   "stem": "On a schematic, one long line next to one short line stands for a",
+   "choices": [
+    "switch",
+    "resistor",
+    "lamp",
+    "battery cell"
    ],
    "answer": 3,
    "difficulty": 2,
-   "topic": "pc-inference",
+   "topic": "ei-symbols-tools",
    "steps": [
-    "Read the question first. What type is it? Inference (reading between lines).",
-    "Find the line in the passage that answers it.",
-    "Shops, schools, and roads are planned around the base. So it shapes city life.",
-    "Answer: The base has a big effect on life in the city."
+    "Topic: Meters, symbols, and tools.",
+    "A cell is drawn as a long line (plus side) and a short line (minus side).",
+    "Answer: battery cell."
    ],
-   "explanation": "Shops, schools, and roads are planned around the base. So it shapes city life.",
-   "source": "new-original",
-   "passage": "Norfolk, Virginia, is home to the largest naval base in the world. Naval Station Norfolk supports dozens of ships and many aircraft squadrons. Tens of thousands of sailors and civilians work there. Because the base is so big, the city's shops, schools, and roads are planned around it.",
-   "passageId": "P23"
+   "explanation": "A cell is drawn as a long line (plus side) and a short line (minus side).",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "EI-072",
+   "section": "EI",
+   "stem": "On a schematic, three short flat lines that get smaller, like an upside-down triangle, stand for",
+   "choices": [
+    "a battery",
+    "ground",
+    "a fuse",
+    "a capacitor"
+   ],
+   "answer": 1,
+   "difficulty": 2,
+   "topic": "ei-symbols-tools",
+   "steps": [
+    "Topic: Meters, symbols, and tools.",
+    "The ground symbol is lines that get shorter as they go down.",
+    "Answer: ground."
+   ],
+   "explanation": "The ground symbol is lines that get shorter as they go down.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "EI-073",
+   "section": "EI",
+   "stem": "On a schematic, two equal parallel lines with a small gap between them stand for a",
+   "choices": [
+    "resistor",
+    "capacitor",
+    "diode",
+    "transformer"
+   ],
+   "answer": 1,
+   "difficulty": 3,
+   "topic": "ei-symbols-tools",
+   "steps": [
+    "Topic: Meters, symbols, and tools.",
+    "A capacitor is two plates with a gap.",
+    "It is drawn as two parallel lines.",
+    "Answer: capacitor."
+   ],
+   "explanation": "A capacitor is two plates with a gap. It is drawn as two parallel lines.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "EI-074",
+   "section": "EI",
+   "stem": "On a schematic, a triangle pointing at a short bar stands for a",
+   "choices": [
+    "fuse",
+    "resistor",
+    "diode",
+    "capacitor"
+   ],
+   "answer": 2,
+   "difficulty": 3,
+   "topic": "ei-symbols-tools",
+   "steps": [
+    "Topic: Meters, symbols, and tools.",
+    "The triangle points the way current flows.",
+    "The bar blocks the other way.",
+    "That is a diode.",
+    "Answer: diode."
+   ],
+   "explanation": "The triangle points the way current flows. The bar blocks the other way. That is a diode.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "EI-075",
+   "section": "EI",
+   "stem": "A multimeter can measure",
+   "choices": [
+    "only power",
+    "voltage, current, and resistance",
+    "only temperature",
+    "only frequency"
+   ],
+   "answer": 1,
+   "difficulty": 1,
+   "topic": "ei-symbols-tools",
+   "steps": [
+    "Topic: Meters, symbols, and tools.",
+    "A multimeter combines a voltmeter, an ammeter, and an ohmmeter.",
+    "Answer: voltage, current, and resistance."
+   ],
+   "explanation": "A multimeter combines a voltmeter, an ammeter, and an ohmmeter.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "EI-076",
+   "section": "EI",
+   "stem": "A tool that joins wires with melted metal is a",
+   "choices": [
+    "multimeter",
+    "wire stripper",
+    "fuse puller",
+    "soldering iron"
+   ],
+   "answer": 3,
+   "difficulty": 2,
+   "topic": "ei-symbols-tools",
+   "steps": [
+    "Topic: Meters, symbols, and tools.",
+    "A soldering iron melts solder to join wires.",
+    "Answer: soldering iron."
+   ],
+   "explanation": "A soldering iron melts solder to join wires.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "EI-077",
+   "section": "EI",
+   "stem": "The north poles of two magnets are pushed close together. They",
+   "choices": [
+    "lose their magnetism",
+    "pull together",
+    "become south poles",
+    "push apart"
+   ],
+   "answer": 3,
+   "difficulty": 1,
+   "topic": "ei-magnetism",
+   "steps": [
+    "Topic: Magnetism, motors, generators.",
+    "Like poles repel.",
+    "Opposite poles attract.",
+    "Answer: push apart."
+   ],
+   "explanation": "Like poles repel. Opposite poles attract.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "EI-078",
+   "section": "EI",
+   "stem": "An electric motor changes",
+   "choices": [
+    "motion into electrical energy",
+    "electrical energy into motion",
+    "heat into light",
+    "sound into electrical energy"
+   ],
+   "answer": 1,
+   "difficulty": 2,
+   "topic": "ei-magnetism",
+   "steps": [
+    "Topic: Magnetism, motors, generators.",
+    "A motor uses electricity and magnets to make motion.",
+    "A generator does the reverse.",
+    "Answer: electrical energy into motion."
+   ],
+   "explanation": "A motor uses electricity and magnets to make motion. A generator does the reverse.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "EI-079",
+   "section": "EI",
+   "stem": "Moving a magnet in and out of a coil of wire",
+   "choices": [
+    "melts the wire",
+    "has no effect on the wire",
+    "makes a current flow in the wire",
+    "turns the magnet into copper"
+   ],
+   "answer": 2,
+   "difficulty": 3,
+   "topic": "ei-magnetism",
+   "steps": [
+    "Topic: Magnetism, motors, generators.",
+    "A changing magnetic field makes current in a wire.",
+    "This is induction.",
+    "Answer: makes a current flow in the wire."
+   ],
+   "explanation": "A changing magnetic field makes current in a wire. This is induction.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "EI-080",
+   "section": "EI",
+   "stem": "Which metal is strongly attracted to a magnet?",
+   "choices": [
+    "copper",
+    "iron",
+    "aluminum",
+    "gold"
+   ],
+   "answer": 1,
+   "difficulty": 1,
+   "topic": "ei-magnetism",
+   "steps": [
+    "Topic: Magnetism, motors, generators.",
+    "Iron is magnetic.",
+    "Copper, aluminum, and gold are not.",
+    "Answer: iron."
+   ],
+   "explanation": "Iron is magnetic. Copper, aluminum, and gold are not.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "EI-081",
+   "section": "EI",
+   "stem": "Silicon, used to make computer chips, is a",
+   "choices": [
+    "insulator",
+    "semiconductor",
+    "magnet",
+    "perfect conductor"
+   ],
+   "answer": 1,
+   "difficulty": 2,
+   "topic": "ei-materials",
+   "steps": [
+    "Topic: Conductors and insulators.",
+    "Silicon conducts better than an insulator but not as well as a metal.",
+    "It is a semiconductor.",
+    "Answer: semiconductor."
+   ],
+   "explanation": "Silicon conducts better than an insulator but not as well as a metal. It is a semiconductor.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "EI-082",
+   "section": "EI",
+   "stem": "Electrical wires are covered with plastic because plastic is",
+   "choices": [
+    "a semiconductor",
+    "an insulator",
+    "a magnet",
+    "a conductor"
+   ],
+   "answer": 1,
+   "difficulty": 1,
+   "topic": "ei-materials",
+   "steps": [
+    "Topic: Conductors and insulators.",
+    "Plastic blocks current.",
+    "It keeps the current inside the wire.",
+    "Answer: an insulator."
+   ],
+   "explanation": "Plastic blocks current. It keeps the current inside the wire.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "EI-083",
+   "section": "EI",
+   "stem": "Which change lowers the resistance of a copper wire?",
+   "choices": [
+    "making the wire longer",
+    "making the wire thicker",
+    "coating the wire in rubber",
+    "heating the wire"
+   ],
+   "answer": 1,
+   "difficulty": 3,
+   "topic": "ei-materials",
+   "steps": [
+    "Topic: Conductors and insulators.",
+    "A thicker wire gives current more room.",
+    "Longer or hotter wire has more resistance.",
+    "Answer: making the wire thicker."
+   ],
+   "explanation": "A thicker wire gives current more room. Longer or hotter wire has more resistance.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "EI-084",
+   "section": "EI",
+   "stem": "Standard wall outlets in U.S. homes supply about",
+   "choices": [
+    "12 volts DC",
+    "1,000 volts AC",
+    "120 volts AC",
+    "1.5 volts DC"
+   ],
+   "answer": 2,
+   "difficulty": 2,
+   "topic": "ei-ac-dc",
+   "steps": [
+    "Topic: AC and DC.",
+    "U.S. homes use about 120 volts AC at 60 hertz.",
+    "Answer: 120 volts AC."
+   ],
+   "explanation": "U.S. homes use about 120 volts AC at 60 hertz.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "EI-085",
+   "section": "EI",
+   "stem": "A transformer works with AC but not with steady DC because it needs",
+   "choices": [
+    "a ground wire",
+    "a changing magnetic field",
+    "a high resistance",
+    "a diode"
+   ],
+   "answer": 1,
+   "difficulty": 3,
+   "topic": "ei-ac-dc",
+   "steps": [
+    "Topic: AC and DC.",
+    "Transformers work by induction.",
+    "Induction needs a changing current, like AC.",
+    "Answer: a changing magnetic field."
+   ],
+   "explanation": "Transformers work by induction. Induction needs a changing current, like AC.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "EI-086",
+   "section": "EI",
+   "stem": "The number of complete AC cycles in one second is its",
+   "choices": [
+    "wattage",
+    "resistance",
+    "capacitance",
+    "frequency"
+   ],
+   "answer": 3,
+   "difficulty": 2,
+   "topic": "ei-ac-dc",
+   "steps": [
+    "Topic: AC and DC.",
+    "Frequency is cycles per second, measured in hertz.",
+    "Answer: frequency."
+   ],
+   "explanation": "Frequency is cycles per second, measured in hertz.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "EI-087",
+   "section": "EI",
+   "stem": "A 120 volt circuit has a 15 amp breaker. What is the most power it can supply before the breaker trips?",
+   "choices": [
+    "18,000 watts",
+    "8 watts",
+    "1,800 watts",
+    "135 watts"
+   ],
+   "answer": 2,
+   "difficulty": 2,
+   "topic": "ei-power",
+   "steps": [
+    "The idea: P = V x I. Also P = I x I x R. Energy = power x time.",
+    "P = V x I = 120 x 15 = 1800 watts.",
+    "Answer: 1,800 watts."
+   ],
+   "explanation": "P = V x I = 120 x 15 = 1800 watts.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "EI-088",
+   "section": "EI",
+   "stem": "A 48 ohm heater is connected to 120 volts. How much current does it draw?",
+   "choices": [
+    "2.5 amps",
+    "0.4 amps",
+    "5,760 amps",
+    "72 amps"
+   ],
+   "answer": 0,
+   "difficulty": 2,
+   "topic": "ei-ohms-law",
+   "steps": [
+    "The idea: V = I x R. So I = V / R, and R = V / I.",
+    "I = V / R = 120 / 48 = 2.5 amps.",
+    "Answer: 2.5 amps."
+   ],
+   "explanation": "I = V / R = 120 / 48 = 2.5 amps.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "EI-089",
+   "section": "EI",
+   "stem": "A 4 ohm resistor is in series with two 8 ohm resistors that are in parallel with each other. What is the total resistance?",
+   "choices": [
+    "20 ohms",
+    "12 ohms",
+    "2 ohms",
+    "8 ohms"
+   ],
+   "answer": 3,
+   "difficulty": 3,
+   "topic": "ei-series-parallel",
+   "steps": [
+    "The idea: Series: add the resistors. Parallel: product over sum. Two equal ones: divide by 2.",
+    "Two 8 ohm in parallel = 8 / 2 = 4 ohms.",
+    "Add the series 4 ohms: 4 + 4 = 8 ohms.",
+    "Answer: 8 ohms."
+   ],
+   "explanation": "Two 8 ohm in parallel = 8 / 2 = 4 ohms. Add the series 4 ohms: 4 + 4 = 8 ohms.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "EI-090",
+   "section": "EI",
+   "stem": "A flashlight bulb has 6 ohms of resistance and draws 0.5 amps. What voltage does the battery supply?",
+   "choices": [
+    "0.08 volts",
+    "6.5 volts",
+    "12 volts",
+    "3 volts"
+   ],
+   "answer": 3,
+   "difficulty": 2,
+   "topic": "ei-ohms-law",
+   "steps": [
+    "The idea: V = I x R. So I = V / R, and R = V / I.",
+    "V = I x R = 0.5 x 6 = 3 volts.",
+    "Answer: 3 volts."
+   ],
+   "explanation": "V = I x R = 0.5 x 6 = 3 volts.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "EI-091",
+   "section": "EI",
+   "stem": "A 120 volt lamp draws 0.25 amps. What is its resistance?",
+   "choices": [
+    "30 ohms",
+    "0.002 ohms",
+    "480 ohms",
+    "120 ohms"
+   ],
+   "answer": 2,
+   "difficulty": 3,
+   "topic": "ei-ohms-law",
+   "steps": [
+    "The idea: V = I x R. So I = V / R, and R = V / I.",
+    "R = V / I = 120 / 0.25 = 480 ohms.",
+    "Answer: 480 ohms."
+   ],
+   "explanation": "R = V / I = 120 / 0.25 = 480 ohms.",
+   "source": "new-original-audit"
+  },
+  {
+   "id": "EI-092",
+   "section": "EI",
+   "stem": "The voltage across a resistor stays the same, but its resistance is doubled. What happens to the current?",
+   "choices": [
+    "It becomes four times larger.",
+    "It stays the same.",
+    "It doubles.",
+    "It is cut in half."
+   ],
+   "answer": 3,
+   "difficulty": 2,
+   "topic": "ei-ohms-law",
+   "steps": [
+    "Topic: Ohm's law.",
+    "I = V / R.",
+    "Twice the resistance means half the current.",
+    "Answer: It is cut in half."
+   ],
+   "explanation": "I = V / R. Twice the resistance means half the current.",
+   "source": "new-original-audit"
   }
  ]
 }

@@ -72,3 +72,6 @@ table{ border-collapse:collapse; width:100%; } td,th{ border:2px solid var(--lin
 @keyframes pulse{ 50%{ opacity:.25; } }
 .hidden{ display:none !important; }
 svg text{ font-family: Verdana, "DejaVu Sans", Arial, sans-serif; fill:var(--text); }
+.it-rule{border-top:2px solid #003A8C;padding-top:8px;margin-top:10px}
+.it-rule h3{font-size:1.05rem;margin:4px 0}
+.focus-list li{margin:6px 0;line-height:1.5}

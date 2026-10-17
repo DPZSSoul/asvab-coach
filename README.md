@@ -1,7 +1,8 @@
 # ASVAB Coach
 
 A simple, dyslexia-friendly ASVAB study app: Arithmetic Reasoning, Word Knowledge,
-Paragraph Comprehension, Math Knowledge, General Science.
+Paragraph Comprehension, Math Knowledge, General Science, Electronics Information.
+Built around the Navy IT line scores (AR+MK+EI+VE 212, VE+MK+GS 156, or the CT rule).
 
 Big buttons. High contrast. Large sans-serif text. No italics. Read-aloud on every
 question, passage, and choice, with words lit up as they are read.
@@ -14,7 +15,12 @@ question, passage, and choice, with words lit up as they are read.
 
 ## Features
 
-- 391 original ASVAB-style questions (A-D), each with difficulty 1-3, a topic, and step-by-step explanation.
+- 537 original ASVAB-style questions (A-D): AR 85, WK 110, PC 73, MK 90, GS 87, EI 92. Each has difficulty 1-3,
+  a topic from the official content areas, and a step-by-step explanation. See `build/blueprint.md` for the
+  official sources, formats, timing, and the app's topic-share targets (the DoD does not publish shares).
+- IT focus plan on the home screen and an IT line-score panel (estimate only, confirm with a recruiter).
+- MEPS mode: 6 parts in the real order with official CAT counts and minutes; unanswered items at time-out
+  are scored as random guesses, like the real test.
   `questions.json` (also embedded as `questions.js` so it works from file://).
 - Practice per section, with a per-question timer at real CAT-ASVAB pace (or off).
 - Hands-free voice loop: reads the question, listens for "A", "Bravo", "option C", the answer words,

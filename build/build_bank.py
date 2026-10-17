@@ -93,68 +93,114 @@ def diff_pos(it):
     return 1 if f<0.34 else (2 if f<0.67 else 3)
 
 out=[]; pass_ids={}
+import new_items as N
+OLD=json.load(open('questions_v1.json'))['questions']   # keep ids stable for saved progress
+OLDID={(q['section'],q['stem'],q.get('passage','')):q['id'] for q in OLD}
+used_ids=set(OLDID.values())
+D['EI']=json.load(open('existing_ei.json'))
 DROP={"Which planet is called the Red Planet?","Most weather happens in which layer of the atmosphere?","Water boils at what temperature on the Celsius scale (at sea level)?","Which of these is a vertebrate?"}
+DROP|=set(N.WK_DROP)|set(N.GS_DROP)|set(N.PC_DROP)|set(N.EI_DROP)
+def tag_ei(s,c):
+    s2=(s+' '+c).lower()
+    if re.search(r'ammeter|voltmeter|ohmmeter|multimeter|schematic|bands|instrument|solder',s2): return 'ei-symbols-tools'
+    if re.search(r'\bseries\b|\bparallel\b',s2): return 'ei-series-parallel'
+    if re.search(r'transformer|rectifier|diode|capacitor|transistor|fuse|breaker|relay|\bled\b|inductor|part is used|which part',s2): return 'ei-components'
+    if re.search(r'watt|power',s2) and re.search(r'\d',s): return 'ei-power'
+    if re.search(r'\d',s) and re.search(r'volt|ohm|amp',s2) and not re.search(r'kilohm|milliamp',s2): return 'ei-ohms-law'
+    if re.search(r'\bac\b|\bdc\b|alternating|direct current|frequency|hertz',s2): return 'ei-ac-dc'
+    if re.search(r'magnet|coil|generator|motor',s2): return 'ei-magnetism'
+    if re.search(r'insulator|conduct|copper|semiconductor|longer',s2): return 'ei-materials'
+    if re.search(r'watt|power',s2): return 'ei-power'
+    return 'ei-basics'
 def pid_for(passage):
     if passage not in pass_ids: pass_ids[passage]=f"P{len(pass_ids)+1:02d}"
     return pass_ids[passage]
-def add(sec, stem, choices, ans, topic, diff, steps, expl, passage=None, src='', extra=None):
-    q=dict(id=f"{sec}-{sum(1 for x in out if x['section']==sec)+1:03d}", section=sec, stem=stem, choices=choices, answer=ans,
+def new_id(sec):
+    k=1
+    while f"{sec}-{k:03d}" in used_ids: k+=1
+    used_ids.add(f"{sec}-{k:03d}"); return f"{sec}-{k:03d}"
+def add(sec, stem, choices, ans, topic, diff, steps, expl, passage=None, src='', extra=None, oldkey=None):
+    qid=OLDID.get(oldkey or (sec,stem,passage or '')) or new_id(sec)
+    q=dict(id=qid, section=sec, stem=stem, choices=choices, answer=ans,
            difficulty=diff, topic=topic, steps=steps, explanation=expl, source=src)
     if passage: q['passage']=passage; q['passageId']=pid_for(passage)
     if extra: q.update(extra)
     out.append(q)
+def math_steps(topic, expl, cor): return ['The idea: '+L[topic]['idea']]+sentences(expl)+[A(cor)]
+def wk_steps(stem, topic, cor, fallback):
+    m=re.search(r'([A-Z]{3,})',stem); w=m.group(1).lower() if m else ''
+    v=VOC.get(w) or next((VOC[k] for k in VOC if w.startswith(k[:5]) and len(k)>4), None)
+    steps=['Read the sentence. Look for clues.' if topic=='wk-context' else 'Make your own short sentence with the word.']
+    ex=None
+    if v:
+        steps+= [f"{w.upper()} means: {v['meaning']}.", f"Example: {v['example']}", f"Memory hook: {v['hook']}"]; ex={'theme':v['theme']}
+    else: steps.append(fallback)
+    steps+= [f"Put \"{cor}\" in place of {w.upper()}. It fits.", A(cor)]
+    return steps, ex
+balance=random.Random(77)
+def place(cor, wr):
+    p=balance.randrange(4); ch=wr[:]; balance.shuffle(ch); ch.insert(p,cor); return ch,p
 
-for sec in ['AR','WK','PC','MK','GS']:
+for sec in ['AR','WK','PC','MK','GS','EI']:
     for it in D[sec]:
         if it['stem'] in DROP: continue
         stem,ch,ans,expl=it['stem'],it['options'],LET.index(it['ans']),it['expl']
-        ex=None
-        if sec=='AR': topic=tag_ar(stem)
+        oldkey=(sec,stem,it.get('passage') or '')
+        tsec=sec; ex=None
+        if sec=='AR' and stem in N.AR_TO_MK: tsec='MK'; topic='mk-probability'
+        elif sec=='AR': topic=tag_ar(stem); stem=N.AR_REWRITE.get(stem,stem)
         elif sec=='MK': topic=tag_mk(stem)
         elif sec=='GS': topic=tag_gs(stem,it['correct'])
-        elif sec=='PC': topic=tag_pc(stem)
-        else: topic='wk-context' if stem.startswith('"') else 'wk-synonym'
-        diff=DIFF_PC[topic] if sec=='PC' else diff_pos(it)
-        lesson=L[topic]
-        if sec in ('AR','MK'):
-            steps=['The idea: '+lesson['idea']]+sentences(expl)+[A(it['correct'])]
-        elif sec=='WK':
-            m=re.search(r'([A-Z]{3,})',stem); w=m.group(1).lower() if m else ''
-            v=VOC.get(w) or next((VOC[k] for k in VOC if w.startswith(k[:5]) and len(k)>4), None)
-            steps=[]
-            if topic=='wk-context': steps.append('Read the sentence. Look for clues.')
-            else: steps.append('Make your own short sentence with the word.')
-            if v:
-                steps.append(f"{w.upper()} means: {v['meaning']}.")
-                steps.append(f"Example: {v['example']}")
-                steps.append(f"Memory hook: {v['hook']}")
-                ex={'theme':v['theme']}
-            else:
-                steps.append(expl)
-            steps.append(f"Put \"{it['correct']}\" in place of {w.upper()}. It fits.")
-            steps.append(A(it['correct']))
-        elif sec=='PC':
-            steps=['Read the question first. What type is it? '+lesson['name']+'.','Find the line in the passage that answers it.']+sentences(expl)+[A(it['correct'])]
+        elif sec=='PC': topic=N.PC_RETAG.get(stem) or tag_pc(stem)
+        elif sec=='EI': topic=tag_ei(stem,it['correct'])
         else:
-            steps=[f"Topic: {lesson['name']}."]+sentences(expl)+[A(it['correct'])]
-        add(sec,stem,ch,ans,topic,diff,steps,expl,it.get('passage'),'study-pack:'+it['src'],ex)
+            topic='wk-context' if stem.startswith('"') else 'wk-synonym'
+            m=re.search(r'([A-Z]{3,})',stem)
+            if topic=='wk-context' and m and m.group(1).lower() in N.WK_TO_STANDALONE:
+                topic='wk-synonym'; stem=f"{m.group(1)} most nearly means:"
+        diff=DIFF_PC[topic] if sec=='PC' else diff_pos(it)
+        if tsec in ('AR','MK') or (tsec=='EI' and re.search(r'\d',it['stem'])): steps=math_steps(topic,expl,it['correct'])
+        elif tsec=='WK': steps,ex=wk_steps(stem,topic,it['correct'],expl)
+        elif tsec=='PC': steps=['Read the question first. What type is it? '+L[topic]['name']+'.','Find the line in the passage that answers it.']+sentences(expl)+[A(it['correct'])]
+        else: steps=[f"Topic: {L[topic]['name']}."]+sentences(expl)+[A(it['correct'])]
+        add(tsec,stem,ch,ans,topic,diff,steps,expl,it.get('passage'),'study-pack:'+it['src'],ex,oldkey=oldkey)
 
-# new PC
+# new PC (first audit pass + realism audit)
 for passage,qs in NEW_PC:
     for stem,cor,wr,topic,diff,why in qs:
+        if stem in DROP: continue
         p=rng.randrange(4); ch=wr[:]; rng.shuffle(ch); ch.insert(p,cor)
         steps=['Read the question first. What type is it? '+L[topic]['name']+'.','Find the line in the passage that answers it.',why,A(cor)]
         add('PC',stem,ch,p,topic,diff,steps,why,passage,'new-original')
+for passage,qs in N.PC_NEW:
+    for stem,cor,wr,topic,diff,why in qs:
+        ch,p=place(cor,wr)
+        steps=['Read the question first. What type is it? '+L[topic]['name']+'.','Find the line in the passage that answers it.',why,A(cor)]
+        add('PC',stem,ch,p,topic,diff,steps,why,passage,'new-original-audit')
+for word,cor,wr,diff in N.WK_NEW:
+    stem=f"{word} most nearly means:"; ch,p=place(cor,wr)
+    steps,ex=wk_steps(stem,'wk-synonym',cor,f"{word.capitalize()} means {cor}.")
+    add('WK',stem,ch,p,'wk-synonym',diff,steps,f"{word.capitalize()} means {cor}.",None,'new-original-audit',ex)
+for stem,cor,wr,topic,diff,why in N.GS_NEW:
+    ch,p=place(cor,wr); add('GS',stem,ch,p,topic,diff,[f"Topic: {L[topic]['name']}."]+sentences(why)+[A(cor)],why,None,'new-original-audit')
+for stem,cor,wr,topic,diff,why in N.MK_NEW:
+    ch,p=place(cor,wr); add('MK',stem,ch,p,topic,diff,math_steps(topic,why,cor),why,None,'new-original-audit')
+for stem,cor,wr,topic,diff,why in N.EI_NEW:
+    ch,p=place(cor,wr)
+    steps=math_steps(topic,why,cor) if re.search(r'\d',stem) else [f"Topic: {L[topic]['name']}."]+sentences(why)+[A(cor)]
+    add('EI',stem,ch,p,topic,diff,steps,why,None,'new-original-audit')
 
-bank=dict(version='2026-10-17', title='ASVAB Coach question bank',
-  note='Original ASVAB-style practice questions. Not real ASVAB items.',
-  sections={'AR':'Arithmetic Reasoning','WK':'Word Knowledge','PC':'Paragraph Comprehension','MK':'Math Knowledge','GS':'General Science'},
-  cat={'GS':[15,12],'AR':[15,55],'WK':[15,9],'PC':[10,27],'MK':[15,31]},
+SECTION_NAMES={'AR':'Arithmetic Reasoning','WK':'Word Knowledge','PC':'Paragraph Comprehension','MK':'Math Knowledge','GS':'General Science','EI':'Electronics Information'}
+out.sort(key=lambda q:(list(SECTION_NAMES).index(q['section']), q['id']))
+bank=dict(version='2026-10-17b', title='ASVAB Coach question bank',
+  note='Original ASVAB-style practice questions written to the official content areas (see build/blueprint.md). Not real ASVAB items.',
+  sections=SECTION_NAMES,
+  cat={'GS':[15,12],'AR':[15,55],'WK':[15,9],'PC':[10,27],'MK':[15,31],'EI':[15,10]},
   lessons=L, questions=out)
 json.dump(bank,open('../questions.json','w'),indent=1,ensure_ascii=False)
 open('../questions.js','w').write('window.ASVAB_BANK='+json.dumps(bank,ensure_ascii=False)+';\n')
 from collections import Counter
 print(Counter(q['section'] for q in out))
 for sec in bank['sections']:
-    print(sec, Counter(q['topic'] for q in out if q['section']==sec), Counter(q['difficulty'] for q in out if q['section']==sec))
-print('WK no vocab:',sum(1 for q in out if q['section']=='WK' and 'theme' not in q))
+    c=Counter(q['topic'] for q in out if q['section']==sec); n=sum(c.values())
+    print(sec, n, {k:f"{v} ({100*v/n:.0f}%)" for k,v in sorted(c.items())}, dict(Counter(q['difficulty'] for q in out if q['section']==sec)))

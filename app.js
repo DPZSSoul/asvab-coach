@@ -2,8 +2,9 @@
 'use strict';
 const BANK = window.ASVAB_BANK;
 const SECTIONS = BANK.sections;               // {AR:'Arithmetic Reasoning', ...}
-const SEC_ORDER = ['AR','WK','PC','MK','GS'];
-const MEPS_ORDER = ['GS','AR','WK','PC','MK'];   // real CAT-ASVAB order
+const APP_VERSION = '2.0.0 (bank '+BANK.version+')';
+const SEC_ORDER = ['AR','WK','PC','MK','GS','EI'];
+const MEPS_ORDER = ['GS','AR','WK','PC','MK','EI'];   // real CAT-ASVAB order (officialasvab.com)
 const CAT = BANK.cat;                          // {GS:[15,12], ...} questions, minutes (officialasvab.com, no tryout items)
 const LESSONS = BANK.lessons;
 const DAILY_GOAL = 10;
@@ -59,7 +60,10 @@ function srsUpdate(qid, correct, conf){
   const ms = c.box === 1 ? 5*60*1000 : BOX_DAYS[c.box]*86400000;
   c.due = Date.now() + (correct && conf==='guessed' ? 86400000 : ms);
   c.seen = Date.now(); srs[qid] = c; Store.set('srs', srs);
+  const q = qById(qid); if (q && SECTIONS[q.section]) histRecord(q.section, correct);
 }
+/* per-section rolling accuracy (last 50 answers), used by the score estimate and IT focus plan */
+function histRecord(sec, ok){ const h = Store.get('hist', {}); h[sec] = (h[sec] || []).concat(ok ? 1 : 0).slice(-50); Store.set('hist', h); }
 function dueList(sec){ const srs = Store.get('srs', {}); const now = Date.now();
   return sectionPool(sec).filter(q => srs[q.id] && srs[q.id].due <= now).sort((a,b) => srs[a.id].box - srs[b.id].box || srs[a.id].due - srs[b.id].due); }
 
@@ -357,12 +361,22 @@ function go(name, arg){
 }
 const SCREENS = {};
 
+function itFocusHTML(){
+  const e = practiceEstimates(); const f = itFocus(e); const top = f.slice(0, 2);
+  const rule = e.S.AR != null && e.S.MK != null && e.S.EI != null && e.S.VE != null ? `Main IT rule estimate: AR + MK + EI + VE = ${e.S.AR + e.S.MK + e.S.EI + e.S.VE} (need 212).` : 'Main IT rule: AR + MK + EI + VE = 212 or more.';
+  return `<div class="card" id="itFocus"><h2>IT focus for today</h2><p>${rule}</p>
+    <ol class="focus-list">${f.map(o => `<li data-sec="${o.k}"><strong>${SECTIONS[o.k]}</strong>${o.v != null ? ` (est. ${o.v})` : ''}: ${o.why}</li>`).join('')}</ol>
+    <p>Today: practice your top two.</p>
+    <div class="row">${top.map((o,i) => { const t = weakTopic(o.k); return `<button class="${i===0?'primary':''}" data-focus="${o.k}">Practice ${SECTIONS[o.k]}</button>${t ? `<button class="small" data-flesson="${t}">Lesson: ${esc(LESSONS[t].name)}</button>` : ''}`; }).join('')}</div>
+    <p><small>Estimate only, confirm with a recruiter. Based on your last 50 answers in each part.</small></p></div>`;
+}
 SCREENS.home = () => {
   const s = streakInfo(); const errs = Store.get('errors', []);
   app().innerHTML = `<h1>Hi. Ready to study?</h1>
   <div class="card"><div class="big-word">Today: ${s.todayCount} of ${DAILY_GOAL} questions</div>
     <div class="bar" aria-hidden="true"><div style="width:${Math.min(100, s.todayCount*10)}%"></div></div>
     <p>${s.goalMet ? 'Goal done for today. Great work.' : `Do ${DAILY_GOAL - s.todayCount} more to keep your streak.`} Streak: ${s.streak} day${s.streak===1?'':'s'}.</p></div>
+  ${itFocusHTML()}
   <h2>Practice a section</h2>
   <div class="grid">${SEC_ORDER.map(k => `<button class="tile" onclick="go('practice','${k}')">${SECTIONS[k]}<small>Level ${level(k)} of 3 | ${dueList(k).length} due</small></button>`).join('')}</div>
   <h2>More</h2>
@@ -371,9 +385,12 @@ SCREENS.home = () => {
     <button class="tile" onclick="go('tutor')">Tutor<small>Get help on a question.</small></button>
     <button class="tile" onclick="go('review')">My misses<small>${errs.length} saved</small></button>
     <button class="tile" onclick="go('progress')">My progress<small>Scores and topics</small></button>
-    <button class="tile" onclick="go('meps')">MEPS practice test<small>Real time limits</small></button>
+    <button class="tile" onclick="go('meps')">MEPS practice test<small>6 parts, real time limits</small></button>
     <button class="tile" onclick="go('settings')">Settings<small>Voice, AI key, backup</small></button>
-  </div>`;
+  </div>
+  <p><small>App version ${esc(APP_VERSION)}</small></p>`;
+  $$('[data-focus]').forEach(b => b.onclick = () => go('practice', b.dataset.focus));
+  $$('[data-flesson]').forEach(b => b.onclick = () => go('lesson', b.dataset.flesson));
 };
 
 SCREENS.practice = (sec) => {
@@ -699,6 +716,7 @@ SCREENS.progress = () => {
   const reps = Object.entries(topics).filter(([k,v]) => !v.relearn && LESSONS[k]);
   const meps = Store.get('meps', []);
   app().innerHTML = `<h1>My progress</h1>
+  ${itPanelHTML(practiceEstimates(), 'from your practice')}
   <div class="two-col">
     <div class="card"><h2>Topics to re-learn</h2><p>Missed, or right but not sure.</p>${relearn.length ? relearn.map(([k,v]) => `<button class="small" style="width:100%;margin:4px 0" data-l="${k}">${esc(LESSONS[k].name)} (${SECTIONS[LESSONS[k].section] ? LESSONS[k].section : ''})</button>`).join('') : '<p>None right now.</p>'}</div>
     <div class="card"><h2>Just needs reps</h2><p>You were right and sure.</p>${reps.length ? reps.map(([k,v]) => `<button class="small" style="width:100%;margin:4px 0" data-l="${k}">${esc(LESSONS[k].name)} (${LESSONS[k].section})</button>`).join('') : '<p>None yet.</p>'}</div>
@@ -720,16 +738,16 @@ SCREENS.lesson = (topic) => {
 SCREENS.meps = () => {
   const total = MEPS_ORDER.reduce((a,k) => a + CAT[k][1], 0);
   app().innerHTML = `<h1>MEPS practice test</h1>
-  <div class="card"><p>Five parts, in the real order. Real CAT-ASVAB time limits.</p>
+  <div class="card"><p>Six parts, in the real order. Real CAT-ASVAB question counts and time limits.</p>
   <table><tr><th>Part</th><th>Questions</th><th>Minutes</th></tr>${MEPS_ORDER.map(k => `<tr><td>${SECTIONS[k]}</td><td>${CAT[k][0]}</td><td>${CAT[k][1]}</td></tr>`).join('')}<tr><td><strong>Total</strong></td><td>${MEPS_ORDER.reduce((a,k)=>a+CAT[k][0],0)}</td><td>${total}</td></tr></table>
   <p>Source: officialasvab.com (proctored CAT-ASVAB, scored questions, no tryout items).</p></div>
-  <div class="card"><p>No hints. No tutor. No going back.</p><p>The clock is on screen. When time runs out, the next part starts.</p><p>On the real test, try to answer every question. Unanswered ones hurt your score.</p></div>
+  <div class="card"><p>No hints. No tutor. No going back.</p><p>The clock is on screen. When time runs out, the next part starts.</p><p>No going back to change an answer. That is the real rule too.</p><p>If time runs out, the real test scores the rest as random guesses. That costs points. So answer every question. Guess if you must.</p></div>
   <div class="row"><button class="primary" id="mStart">Start the test</button><button onclick="go('home')">Not now</button></div>`;
   $('#mStart').onclick = () => { M = { running:true, part:0, res:{}, log:[] }; mepsIntro(); };
 };
 function mepsIntro(){
   if (!M || !M.running) return; Speech.stop(); const k = MEPS_ORDER[M.part]; const [n, min] = CAT[k]; let wait = 20;
-  app().innerHTML = `<h1>Part ${M.part+1} of 5: ${SECTIONS[k]}</h1><div class="card"><p class="big-word">${n} questions. ${min} minutes.</p>
+  app().innerHTML = `<h1>Part ${M.part+1} of ${MEPS_ORDER.length}: ${SECTIONS[k]}</h1><div class="card"><p class="big-word">${n} questions. ${min} minutes.</p>
     <p>Starts by itself in <span id="mWait">${wait}</span> seconds.</p></div><div class="row"><button class="primary" id="mBegin">Begin now</button><button id="mQuit">Quit test</button></div>`;
   M.timer = setInterval(() => { wait--; const e = $('#mWait'); if (e) e.textContent = wait; if (wait <= 0){ clearInterval(M.timer); mepsBegin(); } }, 1000);
   $('#mBegin').onclick = () => { clearInterval(M.timer); mepsBegin(); };
@@ -765,35 +783,86 @@ function mepsAnswer(i){
   mepsNextQ();
 }
 function mepsFinishPart(){
-  if (!M || !M.running) return; clearInterval(M.timer); const r = M.res[M.sec]; saveAttempt(M.sec, r.right, r.total, 'meps');
+  if (!M || !M.running) return; clearInterval(M.timer); const r = M.res[M.sec];
+  // Official rule: unfinished items are scored as though answered at random (1 in 4 chance each).
+  r.guessed = (r.total - r.answered) * 0.25;
+  saveAttempt(M.sec, r.right, r.total, 'meps');
   M.part++; if (M.part < MEPS_ORDER.length) mepsIntro(); else mepsReport();
 }
 function normCdf(z){ const t = 1/(1+0.2316419*Math.abs(z)); const d = 0.3989423*Math.exp(-z*z/2); const p = d*t*(0.3193815+t*(-0.3565638+t*(1.781478+t*(-1.821256+t*1.330274)))); return z > 0 ? 1-p : p; }
 function estimates(res){
   // ESTIMATE ONLY. Real ASVAB scoring uses item response theory and norm tables we do not have.
-  // Here: standard score ~ 20 + 60 x (fraction right), so 50% right is about 50 (the average).
-  const ss = p => Math.round(20 + 60*p); const frac = k => res[k] ? res[k].right / res[k].total : 0;
-  const S = {}; MEPS_ORDER.forEach(k => S[k] = ss(frac(k)));
-  const ve = ss(((res.WK?.right||0) + (res.PC?.right||0)) / ((res.WK?.total||1) + (res.PC?.total||1)));
-  const comp = 2*ve + S.AR + S.MK;                 // AFQT composite = 2VE + AR + MK
-  const afqt = Math.max(1, Math.min(99, Math.round(100*normCdf((comp - 200)/36))));
-  return { S, ve, afqt, line: ve + S.MK + S.GS };
+  // Here: standard score ~ 20 + 60 x (fraction right), so 50% right is about 50 (the official average).
+  const ss = p => Math.round(20 + 60*p);
+  const frac = k => res[k] && res[k].total ? (res[k].right + (res[k].guessed||0)) / res[k].total : null;
+  const S = {}; SEC_ORDER.forEach(k => { const f = frac(k); S[k] = f == null ? null : ss(f); });
+  const w = res.WK && res.PC ? ((res.WK.right+(res.WK.guessed||0)) + (res.PC.right+(res.PC.guessed||0))) / (res.WK.total + res.PC.total) : null;
+  S.VE = w == null ? null : ss(w);       // VE comes from WK + PC (exact DoD formula is not public)
+  const have = (...k) => k.every(z => S[z] != null);
+  const comp = have('VE','AR','MK') ? 2*S.VE + S.AR + S.MK : null;   // AFQT composite = 2VE + AR + MK
+  const afqt = comp == null ? null : Math.max(1, Math.min(99, Math.round(100*normCdf((comp - 200)/36))));
+  return { S, ve:S.VE, afqt, line: have('VE','MK','GS') ? S.VE + S.MK + S.GS : null };
+}
+/* estimate from everyday practice: last 50 answers per section, needs 10+ to count */
+function practiceEstimates(){
+  const h = Store.get('hist', {}); const res = {};
+  SEC_ORDER.forEach(k => { const a = h[k] || []; if (a.length >= 10) res[k] = { right: a.reduce((x,y)=>x+y,0), total: a.length }; });
+  const e = estimates(res); e.counts = Object.fromEntries(SEC_ORDER.map(k => [k, (h[k]||[]).length])); return e;
+}
+function afqtCategory(p){ return p >= 93 ? 'I' : p >= 65 ? 'II' : p >= 50 ? 'IIIA' : p >= 31 ? 'IIIB' : p >= 21 ? 'IVA' : p >= 16 ? 'IVB' : p >= 10 ? 'IVC' : 'V'; }
+/* Navy IT line score rules (MyNavyHR, IT rating card). CT is a separate test given at MEPS, so the app cannot estimate it. */
+const IT_RULES = [
+  { id:'sg1', name:'IT, 4-year (main rule)', parts:['AR','MK','EI','VE'], min:212 },
+  { id:'sg2', name:'IT, 4-year (other rule)', parts:['VE','MK','GS'], min:156 },
+  { id:'atf', name:'IT, 6-year (ATF) rule', parts:['VE','AR','MK','GS'], min:214 },
+];
+const PART_NAME = { VE:'Verbal (WK + PC)', AR:'Arithmetic Reasoning', MK:'Math Knowledge', EI:'Electronics Information', GS:'General Science', WK:'Word Knowledge', PC:'Paragraph Comprehension' };
+/* rank the IT-formula subtests from weakest to strongest. MK and VE count in every rule. */
+function itFocus(e){
+  const weight = { AR:2, MK:3, EI:1, GS:2, WK:3, PC:3 };
+  const list = SEC_ORDER.map(k => {
+    const v = e.S[k]; const need = 56;   // about 56 in each part clears 212 / 156 / 214 with a small cushion
+    const prio = v == null ? 100 + weight[k] : weight[k] * (need - v);
+    return { k, v, prio, why: v == null ? 'Not enough data yet. Do 10 or more.' : v < need ? `About ${need - v} points below a safe level.` : 'On track. Keep it fresh.' };
+  });
+  return list.sort((a,b) => b.prio - a.prio);
+}
+function weakTopic(sec){
+  const t = Store.get('topics', {}); const tops = Object.keys(LESSONS).filter(z => LESSONS[z].section === sec);
+  const scored = tops.map(z => ({ z, r: t[z] })).filter(o => o.r);
+  const bad = scored.filter(o => o.r.relearn).sort((a,b) => b.r.misses - a.r.misses);
+  if (bad.length) return bad[0].z;
+  const unseen = tops.filter(z => !t[z]); return unseen.length ? unseen[0] : null;
+}
+function itPanelHTML(e, where){
+  const S = e.S; const bar = (v, max) => `<div class="bar" aria-hidden="true"><div style="width:${Math.max(0,Math.min(100, Math.round(100*v/max)))}%"></div></div>`;
+  const rows = IT_RULES.map(r => {
+    const vals = r.parts.map(p => S[p]); const ok = vals.every(v => v != null); const sum = ok ? vals.reduce((a,b)=>a+b,0) : null;
+    const weakest = ok ? r.parts.slice().sort((a,b) => S[a]-S[b])[0] : r.parts.find(p => S[p] == null);
+    return `<div class="it-rule" data-rule="${r.id}"><h3>${r.name}: ${r.parts.join(' + ')} = ${r.min} or more</h3>
+      ${ok ? `<p>Your estimate: ${r.parts.map(p => `${p} ${S[p]}`).join(' + ')} = <strong>${sum}</strong>. ${sum >= r.min ? 'Meets the line. Keep a cushion.' : `Need about ${r.min - sum} more points.`}</p>${bar(sum, r.min)}
+      <p>Focus: ${PART_NAME[weakest]}.</p>` : `<p>Not enough data yet. Practice ${r.parts.filter(p => S[p] == null).map(p => PART_NAME[p]).join(', ')}.</p>`}</div>`;
+  }).join('');
+  const ct = S.VE != null && S.MK != null ? `Your VE + MK is about ${S.VE + S.MK}. With this rule, CT must be at least ${Math.max(60, 156 - S.VE - S.MK)}.` : '';
+  return `<div class="card" id="itPanel"><h2>Navy IT line scores (${where})</h2>
+    <p>You qualify for IT if you meet ANY one rule. Source: MyNavyHR IT rating card.</p>${rows}
+    <div class="it-rule" data-rule="ct"><h3>Cyber test rule: CT + MK + VE = 156 or more, AND CT 60 or more</h3><p>CT is the Cyber Test. It is a separate test, often given at MEPS. This app cannot estimate it. Ask your recruiter about it. ${ct}</p></div>
+    <h3>AFQT estimate</h3>${e.afqt == null ? '<p>Not enough data yet. Practice AR, MK, WK, and PC.</p>' :
+      `<p>AFQT = 2 x VE + AR + MK. Your estimate: about <strong>${e.afqt}</strong> (category ${afqtCategory(e.afqt)}). The Navy minimum is 31. ${e.afqt >= 31 ? 'Above the minimum.' : 'Below 31. Make AR, MK, WK, and PC your first focus.'}</p>${bar(e.afqt, 99)}`}
+    <div class="notice"><strong>Estimate only, confirm with a recruiter.</strong> This is NOT an official score. The real CAT-ASVAB adapts to you and uses norm tables. Rules can change.</div></div>`;
 }
 function mepsReport(){
   M.running = false; const res = M.res; const e = estimates(res);
   const right = Object.values(res).reduce((a,r) => a + r.right, 0), total = Object.values(res).reduce((a,r) => a + r.total, 0);
   const hist = Store.get('meps', []); hist.push({ date:new Date().toISOString(), res, afqt:e.afqt, right, total }); Store.set('meps', hist);
-  const sum = speakable(`Test done. You got ${right} out of ${total}. Estimated AFQT: about ${e.afqt}. This is only an estimate.`);
+  const it1 = e.S.AR + e.S.MK + e.S.EI + e.S.VE;
+  const sum = speakable(`Test done. You got ${right} out of ${total}. Estimated AFQT: about ${e.afqt}. IT main rule estimate: ${it1} of 212. This is only an estimate.`);
   app().innerHTML = `<h1>MEPS practice: score report</h1>
   <div class="card"><div class="row"><div class="big-word" style="flex:1">${sum.html}</div>${sayBtn('#'+sum.id)}</div></div>
   <div class="card"><table><tr><th>Part</th><th>Right</th><th>Percent</th><th>Est. standard score</th></tr>
-  ${MEPS_ORDER.map(k => `<tr><td>${SECTIONS[k]}</td><td>${res[k].right} of ${res[k].total}${res[k].answered < res[k].total ? ` (${res[k].total - res[k].answered} not answered)` : ''}</td><td>${Math.round(100*res[k].right/res[k].total)}%</td><td>${e.S[k]}</td></tr>`).join('')}
+  ${MEPS_ORDER.map(k => `<tr><td>${SECTIONS[k]}</td><td>${res[k].right} of ${res[k].total}${res[k].answered < res[k].total ? ` (${res[k].total - res[k].answered} not answered, scored as random guesses)` : ''}</td><td>${Math.round(100*res[k].right/res[k].total)}%</td><td>${e.S[k]}</td></tr>`).join('')}
   <tr><td>VE (WK + PC)</td><td colspan="2"></td><td>${e.ve}</td></tr></table></div>
-  <div class="card"><h2>Estimated AFQT: about ${e.afqt}</h2>
-  <p>AFQT uses AR + MK + 2 x VE. The Navy minimum is 31 with a diploma.</p>
-  <h3>Navy IT line score check (estimate)</h3><p>VE + MK + GS = ${e.ve} + ${e.S.MK} + ${e.S.GS} = <strong>${e.line}</strong>. Target: 156 or more (older rule: 162). ${e.line >= 162 ? 'On track.' : e.line >= 156 ? 'Close. Meets the newer number.' : 'Not there yet. Keep going.'}</p>
-  <p>The other IT route (AR + MK + EI + VE) needs EI, which this test does not cover.</p></div>
-  <div class="notice"><strong>Estimate only.</strong> This is NOT an official score. The real CAT-ASVAB adapts to you and uses norm tables. These numbers come from a simple formula on practice questions. Use them to see the trend, not as a prediction. Check line score rules with your recruiter.</div>
+  ${itPanelHTML(e, 'from this test')}
   <div class="row"><button class="primary" onclick="go('review')">Go over my misses</button><button onclick="go('progress')">My progress</button><button onclick="go('home')">Home</button></div>`;
   M = null;
 }
@@ -896,7 +965,7 @@ SCREENS.settings = () => {
   <div class="card"><h2>Backup</h2><p>Save everything to a file: the questions, AI questions (${custom.length}), and your progress.</p>
     <div class="row"><button class="primary" id="exportBtn">Download question bank</button><label class="btn" for="importFile" style="margin:0;display:inline-flex;align-items:center">Import a backup</label><input type="file" id="importFile" accept="application/json,.json" class="hidden"></div><div id="ioOut"></div></div>
   <div class="card"><h2>Clean up</h2><div class="row"><button id="clearCustom">Delete AI questions (${custom.length})</button><button id="resetAll">Reset all progress</button></div></div>
-  <p>Questions are original ASVAB-style practice items, not real ASVAB questions. Bank version ${esc(BANK.version)}.</p>`;
+  <p>Questions are original ASVAB-style practice items, not real ASVAB questions. App version ${esc(APP_VERSION)}.</p>`;
   const sel = $('#voiceSel'); fillVoices(sel); sel.onchange = () => { settings.voiceURI = sel.value; saveSettings(); };
   $('#rate').oninput = e => { settings.rate = +e.target.value; $('#rateVal').textContent = settings.rate; saveSettings(); };
   $('#testVoice').onclick = () => Speech.speakEl($('#sample'));
@@ -939,7 +1008,10 @@ function boot(){
   const [name, arg] = (location.hash.slice(1) || 'home').split('/');
   go(['home','practice','handsfree','tutor','review','progress','meps','settings','lesson'].includes(name) ? name : 'home', arg);
   if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol) && !window.ASVAB_SINGLE_FILE)
-    navigator.serviceWorker.register('sw.js').catch(err => console.warn('Service worker not registered:', err.message));
+  { navigator.serviceWorker.register('sw.js').then(r => r.update && r.update()).catch(err => console.warn('Service worker not registered:', err.message));
+    // When a new version takes over, reload once so old installs get the new app.
+    let reloaded = false; const hadController = !!navigator.serviceWorker.controller;
+    navigator.serviceWorker.addEventListener('controllerchange', () => { if (hadController && !reloaded && !(M && M.running)){ reloaded = true; location.reload(); } }); }
 }
 window.addEventListener('keydown', e => {   // keyboard: 1-4 or A-D to answer, N for next
   if (/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) return;

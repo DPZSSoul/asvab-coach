@@ -22,7 +22,14 @@ with sync_playwright() as pw:
     p = new_page(ctx, errors)
     p.goto(BASE + 'index.html'); p.wait_for_selector('h1')
     ok('home loads', 'Ready to study' in p.inner_text('h1'))
-    ok('five section tiles', all(p.locator(f"button.tile:has-text('{n}')").count() for n in ['Arithmetic Reasoning','Word Knowledge','Paragraph Comprehension','Math Knowledge','General Science']))
+    ok('six section tiles incl. Electronics Information', all(p.locator(f"button.tile:has-text('{n}')").count() for n in ['Arithmetic Reasoning','Word Knowledge','Paragraph Comprehension','Math Knowledge','General Science','Electronics Information']))
+    ok('home IT focus plan lists all 6 IT-formula subtests', p.locator('#itFocus li[data-sec]').count() == 6 and '212' in p.inner_text('#itFocus') and p.locator('#itFocus [data-focus]').count() == 2)
+    ok('bank: EI section has 60+ questions, every section 50+', p.evaluate("Object.keys(BANK.sections).every(k => sectionPool(k).length >= 50) && sectionPool('EI').length >= 60"), p.evaluate("Object.fromEntries(Object.keys(BANK.sections).map(k=>[k,sectionPool(k).length]))"))
+    p.evaluate("go('practice','EI')"); p.click('#startBtn')
+    if p.locator('#skipBtn').count(): p.click('#skipBtn')
+    p.wait_for_selector('.choice'); et = p.inner_text('#tmr')
+    ok('EI practice runs with CAT pace (0:40 per question)', '0:4' in et or '0:3' in et, et)
+    p.evaluate("go('home')")
     ok('bank size', p.evaluate('BANK.questions.length') >= 250, p.evaluate('BANK.questions.length'))
     # every screen renders
     for s in ['handsfree','tutor','review','progress','meps','settings','practice']:
@@ -136,22 +143,35 @@ with sync_playwright() as pw:
 
     # ---- MEPS ----
     p.evaluate("go('meps')"); txt = p.inner_text('main')
-    ok('MEPS table uses official CAT counts/times', all(s in txt for s in ['15\t12','15\t55','15\t9','10\t27','15\t31']) or 'General Science' in txt, '')
+    ok('MEPS table uses official CAT counts/times incl. EI 15/10 (total 85 questions, 144 min)', all(s in txt for s in ['15\t12','15\t55','15\t9','10\t27','15\t31','15\t10','85\t144']) or ('Electronics Information' in txt and '144' in txt), txt[:300].replace('\n',' '))
     p.click('#mStart'); p.wait_for_selector('#mBegin'); p.click('#mBegin'); p.wait_for_selector('#mClock')
     c1 = p.inner_text('#mClock'); time.sleep(2.2); c2 = p.inner_text('#mClock')
     ok('MEPS countdown runs (GS 12:00)', c1 != c2 and c1.startswith('1'), f'{c1} -> {c2}')
     ok('MEPS: no hint/tutor buttons', p.locator('#hintBtn, #tutorBtn, #tShow').count() == 0)
     p.locator('.choice').first.click()
-    p.evaluate('M.end = Date.now()'); p.wait_for_selector("h1:has-text('Part 2 of 5')", timeout=5000)
+    p.evaluate('M.end = Date.now()'); p.wait_for_selector("h1:has-text('Part 2 of 6')", timeout=5000)
     ok('MEPS auto-advances when time runs out', 'Arithmetic Reasoning' in p.inner_text('h1'))
-    for k in range(4):
+    gs = p.evaluate('M.res.GS')
+    ok('MEPS time-out scores unanswered as random guesses (official rule)', gs['answered'] == 1 and abs(gs['guessed'] - 14*0.25) < 1e-9, gs)
+    for k in range(5):
         p.wait_for_selector('#mBegin'); p.click('#mBegin'); p.wait_for_selector('#mClock')
         n = p.evaluate('M.n')
         for j in range(n):
             a = p.evaluate('M.q.answer'); p.click(f'.choice[data-i="{a if j%3 else (a+1)%4}"]')
     p.wait_for_selector("h1:has-text('score report')")
     rep = p.inner_text('main')
-    ok('MEPS score report with labeled AFQT estimate', 'Estimated AFQT' in rep and 'Estimate only' in rep and 'NOT an official score' in rep)
+    ok('MEPS score report with labeled AFQT estimate', 'Estimated AFQT' in rep and 'Estimate only, confirm with a recruiter' in rep and 'NOT an official score' in rep and 'Navy minimum is 31' in rep)
+    ok('MEPS report shows all IT rules (212 / 156 / CT / 214) and EI part', all(t in rep for t in ['AR + MK + EI + VE = 212','VE + MK + GS = 156','CT + MK + VE = 156','214','Electronics Information','scored as random guesses']), rep[:200].replace('\n',' '))
+    # ---- IT estimate math from practice history ----
+    hist = {'AR':[1,0]*10,'MK':[1,0]*10,'EI':[1,0,0,0]*5,'WK':[1,0]*10,'PC':[1,0]*10,'GS':[1,1,1,0]*5}
+    p.evaluate(f"localStorage.setItem('asvab.hist', JSON.stringify({json.dumps(hist)}))")
+    est = p.evaluate('practiceEstimates()')
+    ok('IT estimate: AR50 MK50 EI35 VE50 GS65 -> 185/212 and 165/156', est['S']['EI'] == 35 and est['S']['VE'] == 50 and est['S']['AR']+est['S']['MK']+est['S']['EI']+est['S']['VE'] == 185 and est['line'] == 165, est['S'])
+    p.evaluate("go('progress')"); pr = p.inner_text('#itPanel')
+    ok('progress IT panel: progress per rule, focus, AFQT, recruiter label', '= 185' in pr and 'Need about 27 more points' in pr and '= 165' in pr and 'Meets the line' in pr and 'Focus: Electronics Information' in pr and 'AFQT = 2 x VE + AR + MK' in pr and 'Estimate only, confirm with a recruiter' in pr, pr[:300].replace('\n',' '))
+    p.evaluate("go('home')")
+    ok('home IT focus ranks weakest IT subtest first (EI) with a practice button', p.locator('#itFocus li[data-sec]').first.get_attribute('data-sec') == 'EI' and p.locator('#itFocus [data-focus]').first.get_attribute('data-focus') == 'EI')
+    p.click('#itFocus [data-focus="EI"]'); ok('IT focus button opens that practice', 'Electronics Information' in p.inner_text('h1'))
 
     # ---- AI generation (mocked OpenAI-compatible endpoint, direct key path) ----
     calls = []
@@ -197,6 +217,8 @@ with sync_playwright() as pw:
     if p.locator('#skipBtn').count(): p.click('#skipBtn')
     ok('practice works offline', p.locator('.choice').count() == 4)
     ctx.set_offline(False)
+    swt = p.evaluate("fetch('sw.js',{cache:'no-store'}).then(r=>r.text())"); keys = p.evaluate('caches.keys()')
+    ok('service worker version bumped (asvab-coach-v2, network-first)', "asvab-coach-v2" in swt and 'network-first' in swt and 'asvab-coach-v2' in keys and 'asvab-coach-v1' not in keys, keys)
     man = p.evaluate("fetch('manifest.webmanifest').then(r=>r.json())"); ok('manifest valid with icons', man['name'] == 'ASVAB Coach' and len(man['icons']) == 2)
 
     # ---- single self-contained file over file:// ----

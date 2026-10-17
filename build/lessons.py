@@ -232,3 +232,58 @@ t('gs-physics','GS','Force, energy, heat, sound, light',
   ['Pushing a cart: the harder you push, the faster it goes.','That is force.'],
   'Know Newton\'s three laws and how heat moves: conduction, convection, radiation.',
   ['Q: A pan handle gets hot on the stove. Why?','Step 1: Heat moves through touch.','Step 2: That is conduction.'])
+# ---------------- EI ----------------
+t('ei-basics','EI','Current, voltage, resistance',
+  ['Voltage is the push. Current is the flow.','Resistance slows the flow.'],
+  'EI is in the main 4-year IT rule: AR + MK + EI + VE.',
+  ['A garden hose: water pressure is voltage.','The water flow is current. A kink is resistance.'],
+  'Volts measure push. Amps measure flow. Ohms measure resistance. Kilo = 1,000. Milli = 1/1,000.',
+  ['Change 2.2 kilohms to ohms.','Step 1: Kilo means 1,000.','Step 2: 2.2 x 1,000 = 2,200 ohms.'])
+t('ei-ohms-law','EI',"Ohm's law",
+  ['Ohm\'s law links volts, amps, and ohms.','V = I x R.'],
+  'Ohm\'s law questions show up on almost every EI test.',
+  ['A 9 volt battery and a 3 ohm part.','9 divided by 3 = 3 amps of flow.'],
+  'V = I x R. So I = V / R, and R = V / I.',
+  ['A 24 volt source and a 6 ohm resistor. Find the current.','Step 1: I = V / R.','Step 2: I = 24 / 6.','Step 3: I = 4 amps.'])
+t('ei-power','EI','Electric power and energy',
+  ['Power is how fast energy is used.','Power is measured in watts.'],
+  'Power and energy questions are quick EI points.',
+  ['A 100 watt bulb uses more power than a 10 watt LED.','Run it 10 hours: 1,000 watt-hours = 1 kWh.'],
+  'P = V x I. Also P = I x I x R. Energy = power x time.',
+  ['A 12 volt fan draws 3 amps. Find the power.','Step 1: P = V x I.','Step 2: 12 x 3 = 36 watts.'])
+t('ei-series-parallel','EI','Series and parallel circuits',
+  ['Series: one path. Parallel: many paths.'],
+  'EI asks to add resistors and compare circuits.',
+  ['Old holiday lights were in series. One bulb out, all out.','House outlets are in parallel. Each works alone.'],
+  'Series: add the resistors. Parallel: product over sum. Two equal ones: divide by 2.',
+  ['A 6 ohm and a 12 ohm resistor in parallel.','Step 1: Product: 6 x 12 = 72.','Step 2: Sum: 6 + 12 = 18.','Step 3: 72 / 18 = 4 ohms.'])
+t('ei-ac-dc','EI','AC and DC',
+  ['DC flows one way, like from a battery.','AC flips direction many times a second.'],
+  'Know which is which, and what hertz means.',
+  ['A phone battery gives DC.','A wall outlet gives AC at 60 hertz.'],
+  'AC = alternating current. DC = direct current. Hertz = cycles per second.',
+  ['Q: A car battery gives which kind?','Step 1: Batteries push current one way.','Step 2: One way means DC.'])
+t('ei-components','EI','Electronic parts',
+  ['Each part has one main job.','Resistor limits. Capacitor stores charge. Diode is one-way.'],
+  'EI asks what each part does.',
+  ['A fuse is like a safety valve.','Too much current melts it and stops the flow.'],
+  'Resistor: limits current. Capacitor: stores charge. Diode: one way. Transistor: switch or amplifier. Transformer: changes AC voltage.',
+  ['Q: Which part changes AC to DC?','Step 1: AC to DC needs one-way flow.','Step 2: Diodes are one-way.','Step 3: A rectifier (made of diodes).'])
+t('ei-symbols-tools','EI','Meters, symbols, and tools',
+  ['Meters measure the circuit.','Schematics use symbols for parts.'],
+  'Tools and symbols are an official EI area.',
+  ['A voltmeter is like a pressure gauge.','It checks the push across a part.'],
+  'Ammeter: in series. Voltmeter: in parallel. Ohmmeter: resistance. Zigzag: resistor. Long and short lines: battery.',
+  ['Q: How do you hook up an ammeter?','Step 1: It measures flow through the wire.','Step 2: The current must pass through it.','Step 3: In series.'])
+t('ei-magnetism','EI','Magnetism, motors, generators',
+  ['Current makes a magnetic field.','A moving magnet can make current.'],
+  'Motors, generators, relays, and transformers all use magnetism.',
+  ['A fridge magnet sticks to the steel door.','Like poles push apart. Opposites pull.'],
+  'Like poles repel. Motor: electricity to motion. Generator: motion to electricity.',
+  ['Q: What does a generator do?','Step 1: Something spins it.','Step 2: Spinning is motion.','Step 3: It turns motion into electricity.'])
+t('ei-materials','EI','Conductors and insulators',
+  ['Conductors let current flow. Insulators block it.'],
+  'Safety and wiring questions use this.',
+  ['Copper wire carries the current.','The plastic cover keeps it from shocking you.'],
+  'Metals conduct: silver, copper, gold, aluminum. Insulators: rubber, glass, plastic, dry wood. Silicon is a semiconductor.',
+  ['Q: Which is the best insulator: copper, iron, or glass?','Step 1: Copper and iron are metals.','Step 2: Metals conduct.','Step 3: Glass is the insulator.'])
