@@ -38,7 +38,7 @@ with sync_playwright() as pw:
     ok('all screens render without errors', not errors, '; '.join(errors[:3]))
 
     # ---- practice with timer ----
-    p.evaluate("go('practice','AR')"); p.click('#cntRow button[data-c="5"]'); p.click('#startBtn')
+    p.evaluate("openRealAR()"); p.click('#cntRow button[data-c="5"]'); p.click('#startBtn')
     p.wait_for_selector('.choice')
     t1 = p.inner_text('#tmr'); time.sleep(2.2); t2 = p.inner_text('#tmr')
     ok('per-question timer counts down (AR pace 3:40)', t1 != t2 and t1.startswith('3:'), f'{t1} -> {t2}')
@@ -106,7 +106,7 @@ with sync_playwright() as pw:
     p.wait_for_selector('.choice'); p.locator('.say').first.click(); time.sleep(0.5)
     ok('click-to-speak reads passage and highlights words (boundary events)', p.locator('.w.hl').count() == 1 and len(p.evaluate('window.__spoken')) >= 1)
     spoken_symbols = p.evaluate("sayable('3/4') + '|' + sayable('x','3','4') + '|' + sayable('x^2') + '|' + sayable('25%')")
-    ok('symbols spoken in words', spoken_symbols == '3 over 4|times|x squared|25 percent', spoken_symbols)
+    ok('symbols spoken in words', spoken_symbols == '3 fourths|times|x squared|25 percent', spoken_symbols)
     p2 = new_page(ctx, errors); p2.goto(BASE + 'index.html?boundary=0#practice/GS'); p2.wait_for_selector('#startBtn'); p2.click('#startBtn')
     if p2.locator('#skipBtn').count(): p2.click('#skipBtn')
     p2.wait_for_selector('.choice'); p2.locator('.say').first.click(); time.sleep(1.0)
@@ -143,14 +143,24 @@ with sync_playwright() as pw:
     ok('graceful message when recognition is missing', 'need Chrome or Edge' in p3.inner_text('main'))
     p3.close()
 
-    # ---- math ladder (touch) ----
-    p.evaluate("go('ladder')"); ok('math ladder screen: 15 levels, starts at level 1', p.locator('[data-lv]').count() == 15 and 'level 1 of 15' in p.inner_text('#ladStatus'))
+    # ---- Arithmetic Reasoning = catch-up track (touch) ----
+    p.evaluate("go('practice','AR')"); p.wait_for_selector('#arHead')
+    ok('opening Arithmetic Reasoning goes to the catch-up track with the AR header', p.inner_text('#arHead') == 'Arithmetic Reasoning: Level 1 of 27, Adding and Subtracting in Your Head' and p.locator('[data-lv]').count() == 27, p.inner_text('#arHead'))
+    p.evaluate("go('home')"); p.click('#arTile'); p.wait_for_selector('#arHead')
+    ok('home AR tile shows the catch-up level and opens the track', '#ladder' in p.url)
+    p.evaluate("go('home')"); p.click("button.tile:has-text('Math ladder')"); p.wait_for_selector('#arHead')
+    ok('"Math ladder" tile is an alias for the same place', '#ladder' in p.url and 'Level 1 of 27' in p.inner_text('#arHead'))
+    real_lbl = p.inner_text("#arReal"); p.click('#arReal'); p.wait_for_selector('#startBtn')
+    ok('"Real test questions" opens the 85 real AR items', p.locator('#arRealNote').count() == 1 and p.evaluate("arRealCount()") == 85 and '85' in real_lbl, [real_lbl, p.locator('#arRealNote').count(), p.evaluate("arRealCount()"), p.url])
+    p.click('#startBtn')
+    if p.locator('#skipBtn').count(): p.click('#skipBtn')
+    p.wait_for_selector('.choice'); ok('real AR practice uses AR bank items', p.evaluate("S.qs.every(q => q.section === 'AR')"))
+    p.evaluate("go('home')"); p.evaluate("go('practice','AR')"); ok('after home, AR goes back to the track', '#ladder' in p.url)
     p.click('#ladPlace'); p.wait_for_selector('.choice')
-    for k in range(15):
-        a = p.evaluate('LR.qs[LR.i].answer'); lvq = p.evaluate('LR.qs[LR.i].level')
-        p.click(f'.choice[data-i="{a if k < 4 else (a+1)%4}"]'); p.click('#nextBtn')
+    for k in range(5):
+        a = p.evaluate('LR.qs[LR.i].answer'); p.click(f'.choice[data-i="{a if k < 4 else (a+1)%4}"]'); p.click('#nextBtn')
     st = ls(p, 'ladder')
-    ok('placement: first miss on question 5 puts him on level 5', st['level'] == 5 and st['placed'] and 'level 5' in p.inner_text('main'), st)
+    ok('placement stops at the first miss (question 5 -> level 5)', st['level'] == 5 and st['placed'] and 'level 5' in p.inner_text('main') and 'Placement done' in p.inner_text('h1'), st)
     p.evaluate("ladStart(5)")
     for k in range(10):
         a = p.evaluate('LR.qs[LR.i].answer'); p.click(f'.choice[data-i="{(a+1)%4 if k < 3 else a}"]'); p.click('#nextBtn')
@@ -162,10 +172,42 @@ with sync_playwright() as pw:
     st = ls(p, 'ladder'); ok('ladder: second miss in a row sends him back one level', st['level'] == 4, st)
     p.evaluate("ladStart(4)")
     for k in range(10):
-        a = p.evaluate('LR.qs[LR.i].answer'); p.click(f'.choice[data-i="{a}"]'); p.click('#nextBtn')
-    st = ls(p, 'ladder'); ok('ladder: 8+ of 10 passes and moves up', st['passed'].get('4') and st['level'] == 5, st)
-    ok('ladder bank: 15 levels x 4 sets x 10 + 15 placement items', p.evaluate("LADDER.levels.length === 15 && LADDER.levels.every(l => l.sets.length === 4 && l.sets.every(s => s.length === 10)) && LADDER.placement.length === 15"))
-    p.evaluate("go('ladlesson','6')"); ok('ladder lesson renders with read-aloud', 'Fractions' in p.inner_text('h1') and p.locator('#ladLessonBody .w').count() > 50)
+        a = p.evaluate('LR.qs[LR.i].answer'); p.click(f'.choice[data-i="{a}"]')
+        if k == 0:
+            n0 = p.evaluate('LR.qs.length'); p.click('#ladMore'); ok('"Another one like this" adds an extra, uncounted question', p.evaluate('LR.qs.length') == n0 + 1 and p.evaluate('LR.qs[LR.i].extra'))
+            a = p.evaluate('LR.qs[LR.i].answer'); p.click(f'.choice[data-i="{a}"]')
+        p.click('#nextBtn')
+    st = ls(p, 'ladder'); ok('ladder: 8+ of 10 passes and moves up', st['passed'].get('4') and st['level'] == 5 and st['best']['4'] == 10, st)
+    ok('track: 27 levels x 4 sets x 10 + 27 placement; levels 1-26 spoken answers, 27 = A-D bridge', p.evaluate("LADDER.levels.length === 27 && LADDER.levels.every(l => l.sets.length === 4 && l.sets.every(s => s.length === 10)) && LADDER.placement.length === 27 && LADDER.levels.slice(0,26).every(l => l.mode === 'say' && l.sets.every(s => s.every(q => q.mode === 'say'))) && LADDER.levels[26].mode === 'mc'"))
+    ok('fraction + algebra steps present (meaning ... words to an equation)', p.evaluate("['What a Fraction Means','Halves and Quarters','Same Fraction, Different Names','Simplifying Fractions','Comparing Fractions','Adding Fractions, Same Bottom','Adding Fractions, Different Bottoms','Multiplying Fractions','Dividing Fractions','Mixed Numbers','Fraction of a Number','Fraction Word Problems','The Mystery Number in a Box','One-Step Equations','Two-Step Equations','Words to an Equation'].every(t => LADDER.levels.some(l => l.title === t))"))
+    p.evaluate("ladStart(7)"); a = p.evaluate("LR.qs.findIndex(q => q.form === 'simplest')")
+    ok('typed/spoken "6 eighths" for a simplify item is not counted (must be simplest)', p.evaluate("(() => { LR.i = LR.qs.findIndex(q => q.form === 'simplest'); ladRender(); const q = LR.qs[LR.i]; const [n,d] = q.value.split('/'); ladAnswerSaid((n*2)+' over '+(d*2)); return LR.results.slice(-1)[0].ok === false && /simpler/.test(document.querySelector('#ladWhy').innerText); })()"))
+    p.evaluate("go('ladlesson','4')"); ok('spoken lesson renders with quick checks', 'Fraction' in p.inner_text('h1') and p.locator('.lad-check').count() >= 2 and p.locator('#ladLessonBody .w').count() > 50)
+    # migration from the old 15-level ladder: never moves him up past what he showed
+    p.evaluate("localStorage.setItem('asvab.ladder', JSON.stringify({level:8, placed:true, passed:{1:true,2:true,3:true,4:true,5:true,6:true,7:true}, tries:{}, best:{}, log:[]}))")
+    st = p.evaluate('ladState()'); ok('old 15-level progress is moved to the first new small step he has not done', st['v'] == 3 and st['level'] == 5 and st['migrated'], st)
+    # finishing the last level unlocks the real questions
+    p.evaluate("(() => { const s = ladState(); s.passed[27] = true; s.level = 27; ladSave(s); })()"); p.evaluate("go('practice','AR')")
+    ok('after the bridge level is passed, AR uses the real questions (adaptive practice)', p.locator('#startBtn').count() == 1 and p.locator('#arBack').count() == 1 and '#practice/AR' in p.url)
+    p.evaluate("go('home')"); ok('home AR tile shows the normal level once the track is done', 'of 3' in p.inner_text("button.tile:has-text('Arithmetic Reasoning')"))
+    p.evaluate("localStorage.removeItem('asvab.ladder')")
+    # ---- learn by ear (touch) ----
+    for scr in ['audio', 'drill', 'vocab', 'readalong']:
+        p.evaluate(f"go('{scr}')"); p.wait_for_selector('h1')
+    ok('learn-by-ear screens render (audio lessons, drills, vocab, read along)', not errors, '; '.join(errors[:3]))
+    p.evaluate("voiceLog({text:'hey', alts:['hey','a','eh']}); go('settings')")
+    ok('Settings shows the voice debug log (transcript + other guesses)', p.locator('#vlog li').count() >= 1 and 'hey' in p.inner_text('#vlog') and 'eh' in p.inner_text('#vlog'), p.inner_text('#vlog')[:120])
+    p.click('#vlogClear'); ok('voice debug log can be cleared', 'Nothing yet' in p.inner_text('#vlog'))
+    p.evaluate("Store.set('reading', [{date:'2026-10-18T10:00:00Z', id:'t', words:20, correct:18, acc:90, wcpm:55}]); go('progress')")
+    ok('progress shows catch-up level, reading WCPM, and drills', 'Arithmetic Reasoning: Level' in p.inner_text('#earProg') and '55 words correct per minute' in p.inner_text('#earProg'), p.inner_text('#earProg')[:160])
+    p.evaluate("Store.set('reading', [])")
+    p.evaluate("go('audio')"); ok('audio playlist starts at his level and includes vocab review', p.evaluate("AL.list[0].title.startsWith('Level ') && AL.list.some(x => x.title === 'Vocab review')"))
+    sc = p.evaluate("readScore('The ship left the dock at dawn', 'the ship left dock at dawn', 6000)")
+    ok('read-along scoring: words correct, accuracy, words correct per minute', sc['correct'] == 6 and sc['acc'] == 86 and sc['wcpm'] == 60, sc)
+    p.evaluate("go('drill','times')"); p.wait_for_selector('#drIn')
+    for k in range(10):
+        p.wait_for_function(f"DR && DR.i === {k} && !DR.answered"); a = p.evaluate('DR.qs[DR.i].a'); p.fill('#drIn', str(a)); p.click('#drGo')
+    p.wait_for_selector('#drSum'); ok('typed speed drill: 10 of 10 saved', '10 of 10' in p.inner_text('#drSum') and ls(p, 'drill')['best']['times'] == 10)
 
     # ---- MEPS ----
     p.evaluate("go('meps')"); txt = p.inner_text('main')
@@ -214,7 +256,7 @@ with sync_playwright() as pw:
         route.fulfill(status=200, content_type='application/json', headers={'Access-Control-Allow-Origin':'*'}, body=json.dumps({"choices":[{"message":{"content":content}}]}))
     ctx.route('https://mock-llm.test/v1/chat/completions', handle)
     p.evaluate("settings.apiKey='test-key-not-real'; settings.apiBase='https://mock-llm.test/v1'; saveSettings()")
-    p.evaluate("go('practice','AR')"); p.click('#genBtn'); p.wait_for_selector('#genOut .card', timeout=15000)
+    p.evaluate("openRealAR()"); p.click('#genBtn'); p.wait_for_selector('#genOut .card', timeout=15000)
     out = p.inner_text('#genOut'); custom = ls(p, 'custom')
     ok('generate: valid question added, bad math + 3-choice rejected', 'Added 1' in out and 'Rejected 2' in out and len(custom) == 1, out.replace('\n',' ')[:200])
     ok('generate: key sent as Bearer header only', calls and calls[0].headers.get('authorization') == 'Bearer test-key-not-real')
@@ -244,7 +286,7 @@ with sync_playwright() as pw:
     ok('practice works offline', p.locator('.choice').count() == 4)
     ctx.set_offline(False)
     swt = p.evaluate("fetch('sw.js',{cache:'no-store'}).then(r=>r.text())"); keys = p.evaluate('caches.keys()')
-    ok('service worker version bumped (asvab-coach-v3, network-first)', "asvab-coach-v3" in swt and 'network-first' in swt and 'asvab-coach-v3' in keys and 'asvab-coach-v2' not in keys, keys)
+    ok('service worker version bumped (asvab-coach-v4, network-first)', "asvab-coach-v4" in swt and 'network-first' in swt and 'asvab-coach-v4' in keys and 'asvab-coach-v3' not in keys, keys)
     man = p.evaluate("fetch('manifest.webmanifest').then(r=>r.json())"); ok('manifest valid with icons', man['name'] == 'ASVAB Coach' and len(man['icons']) == 2)
 
     # ---- single self-contained file over file:// ----

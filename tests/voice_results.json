@@ -20,29 +20,29 @@
   "info": ""
  },
  {
-  "test": "unknown speech -> \"I didn't catch that\"",
+  "test": "unknown speech -> short \"did not get that\" line (no command words to echo)",
   "pass": true,
   "info": ""
  },
  {
-  "test": "fuzzy section name \"arithmatic\" opens Arithmetic Reasoning",
+  "test": "fuzzy section name \"math knowlege\" opens Math Knowledge",
   "pass": true,
   "info": ""
  },
  {
   "test": "\"start\" begins a voice session and reads the question",
   "pass": true,
-  "info": "How many are NOT green? | A. 33 | B. 24 | C. 18 | D. 12 | Your answer?"
+  "info": "6x minus 4 equals 20 | A. 24 | B. 16 | C. 4 | D. 2.67 | Your answer?"
  },
  {
   "test": "NATO answer + feedback + confidence prompt",
   "pass": true,
-  "info": "B. 24 | C. 18 | D. 12 | Your answer? | Right! 1 over 3 of 36 equals 12 green. | How sure were you?"
+  "info": "C. 4 | D. 2.67 | Your answer? | Right! Add 4: | 6x equals 24. | How sure were you?"
  },
  {
   "test": "confidence by voice, then waits for \"next\"",
   "pass": true,
-  "info": "Right! 1 over 3 of 36 equals 12 green. | How sure were you? | Say sure, shaky, or guessed. | Nice. You knew it. | This topic just needs reps. | Say next, or explain."
+  "info": "6x equals 24. | How sure were you? | Say sure, shaky, or guessed. | Nice. You knew it. | This topic just needs reps. | Say next, or explain."
  },
  {
   "test": "\"next\" moves on",
@@ -57,7 +57,7 @@
  {
   "test": "answer by saying the choice text (wrong on purpose)",
   "pass": true,
-  "info": "144 feet"
+  "info": "49\u03c0"
  },
  {
   "test": "\"explain\" reads the steps",
@@ -107,7 +107,72 @@
  {
   "test": "pre-session review is read aloud and \"skip review\" starts",
   "pass": true,
-  "info": "Question. rapid most nearly means: | A. painful | B. doubtful | C. quick | D. partial | Your answer?"
+  "info": "Here, sturdy most nearly means: | A. tall | B. plain | C. strong | D. small | Your answer?"
+ },
+ {
+  "test": "lone letter heard as \"see\" is accepted",
+  "pass": true,
+  "info": "B. plain | C. strong | D. small | Your answer? | Right! Sturdy means strong. | How sure were you?"
+ },
+ {
+  "test": "stray \"hey\" at the confidence prompt -> one short re-prompt",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "second miss at the confidence prompt marks it shaky and moves on (no loop)",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "letter with a period / sound-alike \"dee\" is accepted",
+  "pass": true,
+  "info": "B. ignore | C. solve fast | D. think about | Your answer? | Right! Ponder means think about. | How sure were you?"
+ },
+ {
+  "test": "second recognition alternative is used (\"kate||d\")",
+  "pass": true,
+  "info": "B. angry | C. hungry | D. tired | Your answer? | Right! Weary means tired. | How sure were you?"
+ },
+ {
+  "test": "interim-only result is used (\"ay\")",
+  "pass": true,
+  "info": "B. busy | C. angry | D. noisy | Your answer? | Right! Tranquil means peaceful. | How sure were you?"
+ },
+ {
+  "test": "ordinal \"fourth\" is accepted",
+  "pass": true,
+  "info": "B. proud | C. angry | D. nervous | Your answer? | Right! Anxious means nervous. | How sure were you?"
+ },
+ {
+  "test": "empty transcript -> short re-prompt (not the whole question)",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "the app hearing its own voice is ignored",
+  "pass": true,
+  "info": "1"
+ },
+ {
+  "test": "second miss says what it heard and reads the choices once",
+  "pass": true,
+  "info": "Say Alpha, Bravo, Charlie, or Delta, or say the answer. | I heard \"banana split\". | That is not one of the choices. | A. problem. | B. reward. | C. journey. | D. answer. | Say the letter or the answer."
+ },
+ {
+  "test": "third miss stays quiet: it never loops",
+  "pass": true,
+  "info": "That is not one of the choices. | A. problem. | B. reward. | C. journey. | D. answer. | Say the letter or the answer."
+ },
+ {
+  "test": "\"letter X\" then works",
+  "pass": true,
+  "info": "B. reward. | C. journey. | D. answer. | Say the letter or the answer. | Right! Dilemma means problem. | How sure were you?"
+ },
+ {
+  "test": "\"what did you hear\" reads the transcript log",
+  "pass": true,
+  "info": ""
  },
  {
   "test": "\"start MEPS mode\" opens MEPS and reads the rules",
@@ -155,14 +220,19 @@
   "info": ""
  },
  {
-  "test": "\"math ladder\" opens the ladder and reads the level",
+  "test": "\"arithmatic\" opens the AR catch-up track at his level",
+  "pass": true,
+  "info": "Arithmetic Reasoning: Level 1 of 27, Adding and Subtracting in Your Head"
+ },
+ {
+  "test": "\"math ladder\" is an alias for the same place",
   "pass": true,
   "info": ""
  },
  {
-  "test": "\"go to fractions\" opens level 6",
+  "test": "\"go to fractions\" opens level 4, What a Fraction Means",
   "pass": true,
-  "info": "Or say start, lesson, or help. | On the math ladder you are on level 1 of 15: | Numbers, Place Value, Add and Subtract. | You passed 0 levels. | You are looking at level 6: | Fractions 1: What They Are."
+  "info": "Arithmetic Reasoning: Level 1 of 27, Adding and Subtracting in Your Head. | In Arithmetic Reasoning you are on level 1 of 27: | Adding and Subtracting in Your Head. | You passed 0 levels. | You are looking at level 4: | What a Fraction Means."
  },
  {
   "test": "\"what level am I\" answers",
@@ -175,24 +245,149 @@
   "info": ""
  },
  {
-  "test": "\"lesson\" reads the level lesson",
+  "test": "spoken lesson: picture + quick check asked out loud",
+  "pass": true,
+  "info": "You eat 1. | That's one fourth. | The bottom number says how many equal slices the whole is cut into. | The top number says how many you have. | One fourth is written 1 over 4. | Quick check. A pizza is cut into 4 slices."
+ },
+ {
+  "test": "quick check answered \"three fourths\" -> Yes",
+  "pass": true,
+  "info": "Yes! 4 slices is the bottom. | 3 eaten is the top. | Three fourths. | If you eat all 4 slices, you ate 4 fourths. | That is 1 whole pizza. | Quick check. A pie is cut into 6 slices."
+ },
+ {
+  "test": "quick check answered \"one sixth\" (as \"1/6\") -> Yes, lesson ends",
+  "pass": true,
+  "info": "What fraction did you eat? | Yes! 6 slices, 1 eaten. | One sixth. | Bigger bottom number means smaller slices. | A pizza cut into 8 has smaller slices than one cut into 4. | That is the lesson."
+ },
+ {
+  "test": "\"start\" begins a set of spoken questions (no letters read)",
   "pass": true,
   "info": ""
  },
  {
-  "test": "\"start\" begins a ladder set",
+  "test": "a non-number twice: short line, then what it heard + the question once (no loop)",
+  "pass": true,
+  "info": "You eat 3. | What fraction of the pizza did you eat? | Say the answer. | Say the answer as a number, like 3 fourths or 12. | I heard \"purple\". | I need a number."
+ },
+ {
+  "test": "\"explain again slower\" re-reads the steps slowly",
   "pass": true,
   "info": ""
  },
  {
-  "test": "ladder set by voice: 10 of 10 passes level 6 and moves to 7",
-  "pass": true,
-  "info": "{'level': 7, 'placed': False, 'passed': {'6': True}, 'tries': {'6': 0}, 'best': {'6': 10}, 'log': [{'date': '2026-10-18T14:40:47.986Z', 'level': 6, 'right': 10, 'total': 10}]}"
- },
- {
-  "test": "\"what level am I\" now says level 7",
+  "test": "\"another one like this\" adds an extra question that does not count",
   "pass": true,
   "info": ""
+ },
+ {
+  "test": "spoken answers (\"three fourths\", \"3/4\", \"um ...\") pass level 4 and move to 5",
+  "pass": true,
+  "info": "[{'v': 3, 'level': 5, 'placed': False, 'passed': {'4': True}, 'tries': {'4': 0}, 'best': {'4': 10}, 'log': [{'date': '2026-10-18T15:54:50.298Z', 'level': 4, 'right': 10, 'total': 10}]}, 'So the answer is 1 fifth. | Say next to see your score, explain again slower, or another one like this. | You got 10 of 10. | You passed level 4! | Next: level 5, Halves and Quarters. | Say start for level 5, lesson, or home.']"
+ },
+ {
+  "test": "\"what level am I\" now says level 5",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"real test questions\" opens the 85 real AR questions",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"speed drills\" opens drills",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"times tables\" starts and reads a fact",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "drill: a wrong answer gets a short reason",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "drill: no answer -> \"Time.\" and the reason (answer timer)",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "drill: 8 of 10 by voice",
+  "pass": true,
+  "info": "Right. | 6 times 5? | Right. | 7 times 12? | Right. | You got 8 of 10."
+ },
+ {
+  "test": "drill: 10 fast -> the timer gets a little faster",
+  "pass": true,
+  "info": "5 times 11? | Right. | 4 times 3? | Right. | You got 10 of 10. | Nice speed. The timer is now 9.5 seconds."
+ },
+ {
+  "test": "\"vocab by ear\" says a word, meaning and hook, then asks",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "saying the meaning back counts",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"I do not know\" gives the meaning again",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"audio lessons\" opens the listen-only player",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"play\" starts at his level and keeps talking with no answers needed",
+  "pass": true,
+  "info": "Audio lessons. 29 parts. | Now: Level 5: | Halves and Quarters. | Say play to start. | Level 5: Halves and Quarters. | Halves and quarters."
+ },
+ {
+  "test": "background talk does not navigate away",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"next lesson\" jumps ahead",
+  "pass": true,
+  "info": "A quarter means cut into 4 equal parts. | Picture a dollar. | Half a dollar is 50 cents. | A quarter is 25 cents. | abundant. | abundant means more than enough; plenty."
+ },
+ {
+  "test": "\"pause\" pauses, \"resume\" goes on",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"repeat that\" replays a line",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"stop\" stops playing",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"read along\" shows big text",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"my turn\" listens to him read",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "reading is scored: words correct per minute + accuracy, and saved",
+  "pass": true,
+  "info": "Many doctors say adults need seven to nine hours each night. | Say my turn to read it out loud. | Go ahead. Read the text out loud. | Say I am done when you finish. | You read 42 of 43 words right. | That is 98 percent, at 840 words correct per minute."
  },
  {
   "test": "\"tutor\" reads saved misses and options",
@@ -207,7 +402,7 @@
  {
   "test": "tutor: spoken wrong answer -> kind check + hint 1",
   "pass": true,
-  "info": "Or say \"I don't know\". | You are closer than you think. | Not yet. B is not it. | That is OK. | Let's look again. | Hint 1 (the idea):"
+  "info": "Or say \"I don't know\". | Good. You did not give up. | Not yet. A is not it. | That is OK. | Let's look again. | Hint 1 (the idea):"
  },
  {
   "test": "tutor: \"I don't know\" -> hint 2",
@@ -272,7 +467,7 @@
  {
   "test": "listening restarts by itself after silence (onend)",
   "pass": true,
-  "info": "89->92"
+  "info": "175->178"
  },
  {
   "test": "recovers from a recognition error and keeps going",

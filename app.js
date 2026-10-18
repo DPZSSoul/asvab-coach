@@ -2,7 +2,7 @@
 'use strict';
 const BANK = window.ASVAB_BANK;
 const SECTIONS = BANK.sections;               // {AR:'Arithmetic Reasoning', ...}
-const APP_VERSION = '2.1.0 (bank '+BANK.version+')';
+const APP_VERSION = '2.2.0 (bank '+BANK.version+')';
 const SEC_ORDER = ['AR','WK','PC','MK','GS','EI'];
 const MEPS_ORDER = ['GS','AR','WK','PC','MK','EI'];   // real CAT-ASVAB order (officialasvab.com)
 const CAT = BANK.cat;                          // {GS:[15,12], ...} questions, minutes (officialasvab.com, no tryout items)
@@ -133,6 +133,10 @@ function toast(msg){ let t = document.getElementById('toast'); if (!t){ t = docu
 function wordsHTML(text){
   return String(text ?? '').split(/(\s+)/).map(p => /^\s+$/.test(p) || p==='' ? p : `<span class="w">${esc(p)}</span>`).join('');
 }
+// 3/4 -> "3 fourths", 1/2 -> "1 half": how people say fractions out loud
+const DEN_WORD = { 2:['half','halves'], 3:['third','thirds'], 4:['fourth','fourths'], 5:['fifth','fifths'], 6:['sixth','sixths'], 7:['seventh','sevenths'], 8:['eighth','eighths'],
+  9:['ninth','ninths'], 10:['tenth','tenths'], 11:['eleventh','elevenths'], 12:['twelfth','twelfths'], 16:['sixteenth','sixteenths'], 100:['hundredth','hundredths'] };
+function fracWords(n, d){ const w = DEN_WORD[d]; return w ? `${n} ${n === 1 ? w[0] : w[1]}` : `${n} over ${d}`; }
 function sayable(word, prev, next){
   let w = word;
   if (w === 'x' && prev && next && /[\d)]$/.test(prev) && /^[\d(]/.test(next)) return 'times';
@@ -142,13 +146,15 @@ function sayable(word, prev, next){
   if (w === '*' || w === '×') return 'times';
   w = w.replace(/\^2\b/g, ' squared').replace(/\^3\b/g, ' cubed').replace(/\^\(?(-?\w+)\)?/g, ' to the power of $1')
        .replace(/√/g, ' root ').replace(/π/g, ' pi').replace(/(\d)\s*%/g, '$1 percent').replace(/\|/g, ' absolute ')
-       .replace(/(\d+)\/(\d+)/g, '$1 over $2');
+       .replace(/(^|[^\w.])(\d+)\/(\d+)(?!\d|\.\d)/g, (m, pre, n, d) => pre + fracWords(+n, +d));
+  if (/^\d+\/\d+[.,;:!?]*$/.test(word) && prev && /^-?\d+$/.test(prev)) w = 'and ' + w;   // 2 1/2 -> 2 and 1 half
   if (/^[A-Z]{4,}[.,:;!?"]*$/.test(w.replace(/^["(]/,''))) w = w.toLowerCase();   // ALL-CAPS words: say them, do not spell
   return w;
 }
 const Speech = {
   ok: 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window,
   gen: 0,   // bumped by stop(): ends every running read
+  recent: [], lastEnd: 0,   // what the app said lately (to ignore its own echo)
   seq: 0,   // bumped by each new read: ends the previous read only
   voices(){ return this.ok ? speechSynthesis.getVoices() : []; },
   voice(){ const vs = this.voices(); return vs.find(v => v.voiceURI === settings.voiceURI) || vs.find(v => /^en-US/i.test(v.lang) && v.localService) || vs.find(v => /^en/i.test(v.lang)) || null; },
@@ -191,8 +197,9 @@ const Speech = {
             t += sw.length/cps*1000 + (/[.,;:!?]$/.test(spans[i].textContent) ? 220/u.rate : 0); });
         }, 400)); };
       let watchdog = null;
-      const done = () => { if (finished) return; finished = true; clearInterval(watchdog); timers.forEach(clearTimeout); if (last>=0 && spans[idxs[last]]) spans[idxs[last]].classList.remove('hl'); resolve(); };
+      const done = () => { if (finished) return; finished = true; Speech.lastEnd = Date.now(); if (Speech.recent.length) Speech.recent[Speech.recent.length - 1].end = Date.now(); clearInterval(watchdog); timers.forEach(clearTimeout); if (last>=0 && spans[idxs[last]]) spans[idxs[last]].classList.remove('hl'); resolve(); };
       u.onend = done; u.onerror = e => { if (e && e.error === 'not-allowed' && Speech.onBlocked) Speech.onBlocked(); done(); };
+      Speech.recent.push({ text: text.trim(), at: Date.now() }); if (Speech.recent.length > 12) Speech.recent.shift();
       speechSynthesis.speak(u);
       // safety: finish if the read was stopped or the engine never fires onend
       watchdog = setInterval(() => { if (!alive()) done(); else if (!speechSynthesis.speaking && !speechSynthesis.pending) setTimeout(done, 300); }, 1000);
@@ -221,49 +228,71 @@ const Voice = {
     return '';
   },
   note(){ return this.why() || (location.protocol === 'file:' ? 'You opened the app as a file. Chrome may block the mic here. If voice answers fail, use the web link (https) or run server.py.' : ''); },
-  listen(ms=9000){
+  listen(ms=9000, opts={}){
     return new Promise(resolve => {
       if (!SR){ resolve({ error:'unsupported' }); return; }
       try { this.stop(); } catch(e){}
-      const r = new SR(); this.rec = r; r.lang = 'en-US'; r.interimResults = false; r.maxAlternatives = 4; r.continuous = false;
-      let done = false; const finish = v => { if (done) return; done = true; clearTimeout(t); setListening(false); resolve(v); };
-      r.onresult = e => { const alts = []; for (const res of e.results) for (const a of res) alts.push(a.transcript); finish({ text: alts[0] || '', alts }); };
-      r.onerror = e => finish({ error: e.error || 'error' });
-      r.onend = () => finish({ error: 'no-speech' });
+      const r = new SR(); this.rec = r; r.lang = 'en-US'; r.interimResults = true; r.maxAlternatives = 5; r.continuous = !!opts.continuous;
+      let done = false, interim = [], finals = [], lastErr = null; const t0 = Date.now();
+      const finish = v => { if (done) return; done = true; clearTimeout(t); setListening(false); v.ms = Date.now() - t0; voiceLog(v); resolve(v); };
+      const result = () => { const alts = [...new Set(finals.concat(interim).map(x => String(x || '').trim()).filter(Boolean))];
+        return alts.length ? { text: opts.continuous ? finals.join(' ') || interim.join(' ') : alts[0], alts, interim: interim.slice() } : { text:'', alts:[], empty:true }; };
+      let idle = null; const bump = () => { if (!opts.continuous) return; clearTimeout(idle); idle = setTimeout(() => { try { r.stop(); } catch(e){} }, opts.idleMs || 6000); };
+      r.onresult = e => {
+        let fin = false; interim = []; bump();
+        for (let i = e.resultIndex || 0; i < e.results.length; i++){ const res = e.results[i];
+          const isFinal = res.isFinal !== false;   // fakes and old engines send plain arrays: treat them as final
+          for (let k = 0; k < res.length; k++){ const x = res[k] && res[k].transcript; if (x == null) continue; if (isFinal) finals.push(x); else interim.push(x); }
+          if (isFinal) fin = true; }
+        if (fin && !opts.continuous) finish(result());
+        if (opts.continuous && /\b(i am done|im done|i'm done)\s*\.?$/i.test(finals.join(' '))) { try { r.stop(); } catch(e){} }
+      };
+      r.onerror = e => { lastErr = e.error || 'error'; if (lastErr === 'no-speech' && (finals.length || interim.length)) return; if (!opts.continuous || FATAL_MIC_ERRS.includes(lastErr)) finish({ error: lastErr, alts: interim.slice() }); };
+      r.onend = () => { const v = result(); finish(v.empty && !opts.continuous ? { error: lastErr || 'no-speech' } : v); };
       const t = setTimeout(() => { try{ r.stop(); }catch(e){} }, ms);
       try { r.start(); setListening(true); } catch(e){ finish({ error: 'start-failed' }); }
     });
   },
   stop(){ if (this.rec){ try{ this.rec.abort(); }catch(e){} this.rec = null; } setListening(false); }
 };
+const FATAL_MIC_ERRS = ['not-allowed', 'service-not-allowed', 'audio-capture'];
+// hidden debug log of what the recognizer heard (Settings > Voice debug log; say "what did you hear")
+const VOICE_LOG = (() => { try { return JSON.parse(localStorage.getItem('asvab.voicelog')) || []; } catch(e){ return []; } })();   // keeps the last session's log after a reload
+function voiceLog(v){ VOICE_LOG.push({ at: new Date().toISOString(), text: v.text || '', alts: v.alts || [], interim: v.interim || [], error: v.error || (v.empty ? 'empty' : ''), ctx: (typeof HF !== 'undefined' && HF.ctxName) || '' });
+  if (VOICE_LOG.length > 80) VOICE_LOG.shift(); try { localStorage.setItem('asvab.voicelog', JSON.stringify(VOICE_LOG.slice(-40))); } catch(e){} }
 function setListening(on){ $$('.listen-status').forEach(el => el.innerHTML = on ? '<span class="listen-dot"></span>Listening... speak now.' : ''); }
 const LETTER_WORDS = { a:0, ay:0, eh:0, hey:0, alpha:0, alfa:0, b:1, be:1, bee:1, bravo:1, c:2, see:2, sea:2, si:2, charlie:2, d:3, dee:3, de:3, delta:3, the:3 };
 function normalize(s){ return String(s).toLowerCase().replace(/['\u2019]/g,'').replace(/[$,]/g,'').replace(/[^a-z0-9.%/ -]/g,' ').replace(/\s+/g,' ').trim(); }
 // Returns {type:'answer', index} | {type:'cmd', cmd} | {type:'conf', value} | null
 function parseVoice(alts, choices){
-  const list = Array.isArray(alts) ? alts : [alts];
-  for (const raw of list){
-    const t = normalize(raw); if (!t) continue;
-    if (/\b(not sure|unsure|kind of|kinda|maybe|so so|shaky|shaky|sorta|sort of)\b/.test(t)) return { type:'conf', value:'shaky' };
-    if (/\bguess(ed|ing)?\b/.test(t)) return { type:'conf', value:'guessed' };
-    if (/\b(sure|certain|confident|positive|i knew it)\b/.test(t)) return { type:'conf', value:'sure' };
-    if (/\b(repeat|again|say that|what was that|read it)\b/.test(t)) return { type:'cmd', cmd:'repeat' };
-    if (/\b(next|skip|move on|go on)\b/.test(t)) return { type:'cmd', cmd:'next' };
-    if (/\b(hint|help|clue)\b/.test(t)) return { type:'cmd', cmd:'hint' };
-    if (/\b(stop|quit|pause|end)\b/.test(t)) return { type:'cmd', cmd:'stop' };
-    let m = t.match(/\b(?:option|answer|letter|choice|choose|pick|it's|its|is|say|i think|go with)\s+([a-z]+)\b/);
-    if (m && m[1] in LETTER_WORDS && m[1] !== 'the') return { type:'answer', index: LETTER_WORDS[m[1]] };
-    const words = t.split(' ');
-    if (words.length <= 2 && words.every(w => w in LETTER_WORDS)) { const w = words.find(w => w!=='the') || words[0]; return { type:'answer', index: LETTER_WORDS[w] }; }
-    if (choices){
-      const nc = choices.map(normalize);
-      let i = nc.findIndex(c => c === t); if (i >= 0) return { type:'answer', index:i };
-      const digits = s => (s.match(/-?\d+(?:\.\d+)?(?:\/\d+)?/g) || []).map(n => n.includes('/') ? n : String(Number(n))).join(' ');
-      if (digits(t)){ const hits = nc.map((c,k)=>k).filter(k => digits(nc[k]) && digits(nc[k]) === digits(t)); if (hits.length === 1) return { type:'answer', index:hits[0] }; }
-      const scores = nc.map(c => { const cw = c.split(' ').filter(w => w.length > 2); if (!cw.length) return t.includes(c) && c.length>1 ? 1 : 0;
+  const list = (Array.isArray(alts) ? alts : [alts]).filter(x => x != null && String(x).trim());
+  const nc = choices ? choices.map(normalize) : null;
+  const answerOf = (raw) => {
+    const t = normalize(raw).replace(/\.$/, ''); if (!t) return null;
+    if (nc){ const i = nc.findIndex(c => c === t); if (i >= 0) return i; }
+    const li = MS.letterIndex(raw, choices); if (li != null) return li;
+    if (nc){
+      const vi = MS.choiceByValue(raw, choices); if (vi != null) return vi;
+      const scores = nc.map(c => { const cw = c.split(' ').filter(w => w.length > 2); if (!cw.length) return t.includes(c) && c.length > 1 ? 1 : 0;
         return cw.filter(w => t.includes(w)).length / cw.length; });
-      const best = Math.max(...scores); if (best >= 0.6 && scores.filter(s => s === best).length === 1) return { type:'answer', index: scores.indexOf(best) };
+      const best = Math.max(...scores); if (best >= 0.6 && scores.filter(x => x === best).length === 1) return scores.indexOf(best);
     }
+    return null;
+  };
+  for (let k = 0; k < list.length; k++){
+    const raw = list[k]; const t = normalize(raw); if (!t) continue;
+    // a lone letter sound ("hey", "a.", "see") is an answer, even if it looks like a word
+    const a0 = answerOf(raw); if (a0 != null && t.split(' ').length <= 3) return { type:'answer', index:a0 };
+    if (k === 0){
+      if (/\b(not sure|unsure|kind of|kinda|maybe|so so|shaky|sorta|sort of)\b/.test(t)) return { type:'conf', value:'shaky' };
+      if (/\bguess(ed|ing)?\b/.test(t)) return { type:'conf', value:'guessed' };
+      if (/\b(sure|certain|confident|positive|i knew it)\b/.test(t)) return { type:'conf', value:'sure' };
+      if (/\b(repeat|again|say that|what was that|read it)\b/.test(t)) return { type:'cmd', cmd:'repeat' };
+      if (/\b(next|skip|move on|go on)\b/.test(t)) return { type:'cmd', cmd:'next' };
+      if (/\b(hint|help|clue)\b/.test(t)) return { type:'cmd', cmd:'hint' };
+      if (/\b(stop|quit|pause|end)\b/.test(t)) return { type:'cmd', cmd:'stop' };
+    }
+    if (a0 != null) return { type:'answer', index:a0 };
   }
   return null;
 }
@@ -354,6 +383,9 @@ function cleanup(){ Speech.stop(); Voice.stop(); if (S && S.timer) clearInterval
 function go(name, arg){
   if (M && M.running && name !== 'meps-run' && !confirm('Leave the MEPS test? Your run will end.')) return;
   if (M && name !== 'meps-run') M.running = false;
+  // Arithmetic Reasoning is the catch-up track until its last level is passed (or he picked the real questions)
+  if (name === 'home' && typeof AR_REAL !== 'undefined') AR_REAL = false;
+  if (name === 'practice' && arg === 'AR' && typeof arDone === 'function' && !arDone() && !AR_REAL){ name = 'ladder'; arg = undefined; }
   cleanup(); window.scrollTo(0,0);
   const fn = SCREENS[name] || SCREENS.home; fn(arg); renderStreak();
   if (typeof NAV_STACK !== 'undefined'){ NAV_STACK.push([SCREENS[name] ? name : 'home', arg]); if (NAV_STACK.length > 30) NAV_STACK.shift(); }
@@ -382,10 +414,19 @@ SCREENS.home = () => {
     <p>${s.goalMet ? 'Goal done for today. Great work.' : `Do ${DAILY_GOAL - s.todayCount} more to keep your streak.`} Streak: ${s.streak} day${s.streak===1?'':'s'}.</p></div>
   ${itFocusHTML()}
   <h2>Practice a section</h2>
-  <div class="grid">${SEC_ORDER.map(k => `<button class="tile" onclick="go('practice','${k}')">${SECTIONS[k]}<small>Level ${level(k)} of 3 | ${dueList(k).length} due</small></button>`).join('')}</div>
+  <div class="grid">${SEC_ORDER.map(k => k === 'AR' && !arDone()
+      ? `<button class="tile" id="arTile" onclick="go('practice','AR')">${SECTIONS[k]}<small>Catch-up level ${ladState().level} of ${NLEV}: ${esc(ladLevel(ladState().level).title)}</small></button>`
+      : `<button class="tile" onclick="go('practice','${k}')">${SECTIONS[k]}<small>Level ${level(k)} of 3 | ${dueList(k).length} due</small></button>`).join('')}</div>
+  <h2>Learn by ear</h2>
+  <div class="grid">
+    <button class="tile primary" onclick="go('audio')">Audio lessons<small>Listen only. Like a podcast for work.</small></button>
+    <button class="tile" onclick="go('drill')">Speed drills<small>Quick mental math out loud</small></button>
+    <button class="tile" onclick="go('vocab')">Vocab by ear<small>Hear a word. Say what it means.</small></button>
+    <button class="tile" onclick="go('readalong')">Read along<small>Big text. Read it out loud.</small></button>
+  </div>
   <h2>More</h2>
   <div class="grid">
-    <button class="tile primary" onclick="go('ladder')">Math ladder<small>${esc(ladderStatusText().replace('On the math ladder you are on ', 'You are on '))}</small></button>
+    <button class="tile primary" onclick="go('ladder')">Math ladder<small>${esc(ladderStatusText().replace('In Arithmetic Reasoning you are on ', 'Arithmetic Reasoning catch-up: '))}</small></button>
     <button class="tile" onclick="go('handsfree')">Hands-free practice<small>It reads. You answer out loud.</small></button>
     <button class="tile" onclick="go('tutor')">Tutor<small>Get help on a question.</small></button>
     <button class="tile" onclick="go('review')">My misses<small>${errs.length} saved</small></button>
@@ -403,7 +444,9 @@ SCREENS.home = () => {
 SCREENS.practice = (sec) => {
   sec = SECTIONS[sec] ? sec : 'AR'; const [n, min] = CAT[sec]; const per = Math.round(min*60/n);
   const pool = sectionPool(sec); const custom = pool.filter(q => q.custom).length;
-  app().innerHTML = `<h1>${SECTIONS[sec]}</h1>
+  const arBack = sec === 'AR' ? (arDone() ? `<div class="card"><p>You finished the catch-up track. These are the real test-level questions.</p><button class="small" id="arBack">Catch-up track (math ladder)</button></div>`
+    : `<div class="card" id="arRealNote"><p>Real test questions. Your catch-up track is on level ${ladState().level} of ${NLEV}.</p><button class="small" id="arBack">Back to the catch-up track</button></div>`) : '';
+  app().innerHTML = `<h1>${SECTIONS[sec]}</h1>${arBack}
   <div class="card"><p>Level ${level(sec)} of 3. ${dueList(sec).length} questions are due for review.</p>
   <p>${pool.length} questions in the bank${custom ? ` (${custom} made by AI)` : ''}.</p></div>
   <div class="card"><label for="cnt">How many questions?</label>
@@ -420,6 +463,7 @@ SCREENS.practice = (sec) => {
   $('#startBtn').onclick = () => startSession(sec, count, { hf:false });
   $('#hfBtn').onclick = () => startSession(sec, count, { hf:true });
   $('#genBtn').onclick = () => generateQuestions(sec, 5, $('#genOut'));
+  const ab = $('#arBack'); if (ab) ab.onclick = () => go('ladder');
 };
 
 function startSession(sec, n, opts={}){
@@ -528,7 +572,7 @@ SCREENS.handsfree = () => {
   ${why ? `<div class="notice"><strong>Heads up:</strong> ${esc(why)}</div>` : ''}
   <h2>Pick a section</h2><div class="grid">${SEC_ORDER.map(k => `<button class="tile" data-s="${k}">${SECTIONS[k]}</button>`).join('')}</div>
   <div class="toggle"><input type="checkbox" id="hfTimer"><label for="hfTimer" style="margin:0">Use the CAT timer too</label></div>`;
-  $$('[data-s]').forEach(b => b.onclick = () => startSession(b.dataset.s, 10, { hf:true, timer: $('#hfTimer').checked }));
+  $$('[data-s]').forEach(b => b.onclick = () => (b.dataset.s === 'AR' && !arDone()) ? go('ladder') : startSession(b.dataset.s, 10, { hf:true, timer: $('#hfTimer').checked }));
 };
 /* ---------------- tutor ---------------- */
 // Offline tutor for bank questions follows 08_tutor_rules.md:
@@ -682,6 +726,7 @@ SCREENS.progress = () => {
   const meps = Store.get('meps', []);
   app().innerHTML = `<h1>My progress</h1>
   ${itPanelHTML(practiceEstimates(), 'from your practice')}
+  ${byEarProgressHTML()}
   <div class="two-col">
     <div class="card"><h2>Topics to re-learn</h2><p>Missed, or right but not sure.</p>${relearn.length ? relearn.map(([k,v]) => `<button class="small" style="width:100%;margin:4px 0" data-l="${k}">${esc(LESSONS[k].name)} (${SECTIONS[LESSONS[k].section] ? LESSONS[k].section : ''})</button>`).join('') : '<p>None right now.</p>'}</div>
     <div class="card"><h2>Just needs reps</h2><p>You were right and sure.</p>${reps.length ? reps.map(([k,v]) => `<button class="small" style="width:100%;margin:4px 0" data-l="${k}">${esc(LESSONS[k].name)} (${LESSONS[k].section})</button>`).join('') : '<p>None yet.</p>'}</div>
@@ -691,6 +736,16 @@ SCREENS.progress = () => {
   ${meps.length ? `<div class="card"><h2>MEPS practice runs</h2><table><tr><th>Date</th><th>Est. AFQT</th><th>Raw</th></tr>${meps.slice(-10).reverse().map(m => `<tr><td>${new Date(m.date).toLocaleDateString()}</td><td>${m.afqt}</td><td>${m.right}/${m.total}</td></tr>`).join('')}</table></div>` : ''}`;
   $$('[data-l]').forEach(b => b.onclick = () => go('lesson', b.dataset.l));
 };
+// catch-up track, reading fluency, and speed drill progress in one card
+function byEarProgressHTML(){
+  const st = typeof ladState === 'function' ? ladState() : null; const rd = Store.get('reading', []); const dr = Store.get('drill', null);
+  const lastR = rd[rd.length - 1], firstR = rd[0], bestR = rd.reduce((m, x) => Math.max(m, x.wcpm), 0);
+  const DN = { times:'Times tables', halves:'Halves and quarters', percent:'Percent facts', mixed:'Mixed' };
+  return `<div class="card" id="earProg"><h2>Catch-up, reading, and drills</h2>
+    ${st ? `<p>${esc(arHeader(st.level))}. ${Object.keys(st.passed || {}).length} of ${NLEV} levels passed.</p>` : ''}
+    <p>${rd.length ? `Reading: last ${lastR.wcpm} words correct per minute at ${lastR.acc}% accuracy. Best ${bestR}. First ${firstR.wcpm}. ${rd.length} reading${rd.length === 1 ? '' : 's'}.` : 'Reading: no readings yet. Try Read along.'}</p>
+    <p>${dr && dr.best && Object.keys(dr.best).length ? 'Speed drills best: ' + Object.entries(dr.best).map(([k, v]) => `${DN[k] || k} ${v} of 10`).join(', ') + `. Answer timer: ${dr.limit} seconds.` : 'Speed drills: none yet.'}</p></div>`;
+}
 SCREENS.lesson = (topic) => {
   const L = LESSONS[topic]; if (!L){ go('progress'); return; }
   app().innerHTML = `<h1>${esc(L.name)}</h1>${lessonHTML(topic)}
@@ -932,6 +987,9 @@ SCREENS.settings = () => {
   <div class="card"><h2>Hands-free</h2>
     <div class="toggle"><input type="checkbox" id="hfAuto" ${settings.hfAuto?'checked':''}><label for="hfAuto" style="margin:0">Start hands-free by itself next time (when the mic is already allowed)</label></div>
     <div class="toggle"><input type="checkbox" id="hfWake" ${settings.hfWake?'checked':''}><label for="hfWake" style="margin:0">Wake word: only listen to commands that start with "coach"</label></div></div>
+  <div class="card"><h2>Voice debug log</h2><p>What the mic heard lately, newest first. The other guesses are in brackets. Say "what did you hear" any time to hear the last few.</p>
+    <div class="row"><button class="small" id="vlogRefresh">Refresh</button><button class="small" id="vlogCopy">Copy log</button><button class="small" id="vlogClear">Clear log</button></div>
+    <ol id="vlog" class="vlog"></ol></div>
   <div class="card"><h2>Screen</h2>
     <div class="toggle"><input type="checkbox" id="dark" ${settings.dark?'checked':''}><label for="dark" style="margin:0">Dark, high contrast</label></div>
     <div class="toggle"><input type="checkbox" id="timerSet" ${settings.timerOn?'checked':''}><label for="timerSet" style="margin:0">Timer on in practice</label></div></div>
@@ -945,6 +1003,11 @@ SCREENS.settings = () => {
     <div class="row"><button class="primary" id="exportBtn">Download question bank</button><label class="btn" for="importFile" style="margin:0;display:inline-flex;align-items:center">Import a backup</label><input type="file" id="importFile" accept="application/json,.json" class="hidden"></div><div id="ioOut"></div></div>
   <div class="card"><h2>Clean up</h2><div class="row"><button id="clearCustom">Delete AI questions (${custom.length})</button><button id="resetAll">Reset all progress</button></div></div>
   <p>Questions are original ASVAB-style practice items, not real ASVAB questions. App version ${esc(APP_VERSION)}.</p>`;
+  const drawLog = () => { const el = $('#vlog'); if (!el) return; const rows = VOICE_LOG.slice(-40).reverse();
+    el.innerHTML = rows.length ? rows.map(x => `<li><b>${esc(x.at.slice(11, 19))}</b> ${esc(x.ctx || '')}: ${x.text ? '"' + esc(x.text) + '"' : '<i>(' + esc(x.error || 'nothing') + ')</i>'}${x.alts && x.alts.length > 1 ? ' [' + esc(x.alts.slice(1).join(' | ')) + ']' : ''}${x.echo ? ' (own voice, ignored)' : ''}</li>`).join('') : '<li>Nothing yet. Turn on hands-free and say something.</li>'; };
+  drawLog(); $('#vlogRefresh').onclick = drawLog;
+  $('#vlogClear').onclick = () => { VOICE_LOG.length = 0; try { localStorage.removeItem('asvab.voicelog'); } catch(e){} drawLog(); };
+  $('#vlogCopy').onclick = () => { const t = JSON.stringify(VOICE_LOG.slice(-40), null, 1); (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(() => toast('Log copied.'), () => toast('Could not copy.')); };
   const sel = $('#voiceSel'); fillVoices(sel); sel.onchange = () => { settings.voiceURI = sel.value; saveSettings(); };
   $('#rate').oninput = e => { settings.rate = +e.target.value; $('#rateVal').textContent = settings.rate; saveSettings(); };
   $('#testVoice').onclick = () => Speech.speakEl($('#sample'));
@@ -985,7 +1048,7 @@ function importAll(file){
 function boot(){
   saveSettings(); renderStreak();
   const [name, arg] = (location.hash.slice(1) || 'home').split('/');
-  go(['home','practice','handsfree','tutor','review','progress','meps','settings','lesson','ladder','ladlesson'].includes(name) ? name : 'home', arg);
+  go(['home','practice','handsfree','tutor','review','progress','meps','settings','lesson','ladder','ladlesson','audio','drill','vocab','readalong'].includes(name) ? name : 'home', arg);
   renderHfBar();
   // auto-resume hands-free when he asked for it and the mic is already allowed (no prompt needed)
   if (settings.hfAuto && !Voice.why()){

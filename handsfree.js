@@ -66,6 +66,7 @@ const HF = {
   // a yes/no question by voice
   ask(question){ return new Promise(resolve => { this.pending = { question, resolve }; this.run(async () => { await Speech.say(question); }); }); },
   enter(name, arg){
+    this.misses = 0;
     this.ctxName = name; this.arg = arg; this.ctx = VCTX[name] || null; this.dictation = null;
     renderHfBar(); if (!this.on || this.paused) return;
     if (this.ctx && this.ctx.intro) this.run(alive => this.ctx.intro(alive, arg));
@@ -75,19 +76,26 @@ const HF = {
     if (this.looping) return; this.looping = true;
     try {
       while (this.on){
-        if (this.talking > 0 || (Speech.ok && (speechSynthesis.speaking || speechSynthesis.pending))){ await sleep(120); continue; }
+        if (this.talking > 0 || (Speech.ok && (speechSynthesis.speaking || speechSynthesis.pending))){ this.quietSince = 0; await sleep(120); continue; }
+        if (Date.now() - (Speech.lastEnd || 0) < ECHO_GAP_MS){ await sleep(80); continue; }
         this.setStage('listening');
-        const r = await Voice.listen(this.dictation ? 20000 : 12000);
+        const lo = this.ctx && this.ctx.listen ? this.ctx.listen(this.arg) : null;   // a screen can ask for a longer or continuous listen
+        const lms = this.ctx && this.ctx.listenMs ? (typeof this.ctx.listenMs === 'function' ? this.ctx.listenMs(this.arg) : this.ctx.listenMs) : 0;
+        const t0 = Date.now(); this.listenGap = t0 - (Speech.lastEnd || 0);
+        const r = await Voice.listen(this.dictation ? 20000 : (lo && lo.ms) || lms || 12000, lo || {});
+        this.quickReply = (Date.now() - t0) < 1200;   // a person needs longer than this to hear, answer, and be recognized
         if (!this.on) break;
         if (this.talking > 0) continue;              // the app started talking: ignore this turn
         if (r.error){
           if (FATAL_MIC.includes(r.error)){ this.micBlocked(r.error); break; }
           if (r.error === 'start-failed'){ if (++this.startFails > 8){ this.micBlocked(r.error); break; } await sleep(400); continue; }
           this.startFails = 0;
+          if (r.error === 'no-speech' && this.ctx && this.ctx.onSilence && !this.paused){ this.ctx.onSilence(this.arg); continue; }
           if (r.error === 'no-speech' || r.error === 'aborted'){ if (r.error === 'no-speech' && ++this.silent % 8 === 0 && !this.paused && !this.dictation) await this.say('I am still listening. Say help to hear what you can say.'); continue; }
           await sleep(500); continue;                 // network or other: try again
         }
-        this.startFails = 0; this.silent = 0;
+        this.startFails = 0; this.silent = 0; this.lastMs = r.ms || 0;
+        if (r.empty){ if (this.ctx && this.ctx.choices && this.ctx.choices() && !this.pending && !this.paused) this.missed('', r); continue; }
         // do not await: a command may ask a yes/no question, and this loop must keep listening for the reply
         this.handle(r.alts && r.alts.length ? r.alts : [r.text], r.text || '').catch(e => console.warn('hands-free:', e));
         await sleep(150);
@@ -101,6 +109,7 @@ const HF = {
   async handle(alts, raw){
     const all = alts.map(normalize).filter(Boolean); if (!all.length) return;
     let t = all[0];
+    if (!(this.ctx && this.ctx.noEcho && this.ctx.noEcho()) && isEcho(t)){ VOICE_LOG.length && (VOICE_LOG[VOICE_LOG.length - 1].echo = true); return; }   // it heard itself
     this.heard = raw; const hv = document.getElementById('hfHeard'); if (hv) hv.textContent = raw ? `I heard: "${raw}"` : '';
     if (settings.hfWake){ const w = all.find(x => /^(hey )?coach\b/.test(x)); if (!w && !this.pending && !this.dictation) return; if (w) t = w.replace(/^(hey )?coach\b\s*/, ''); if (!t) { await this.say('Yes?'); return; } }
     if (this.paused){ if (anyOf(t, ['resume', 'start listening', 'wake up', 'continue', 'i am back', 'im back', 'unpause'])) this.resume(); return; }
@@ -108,22 +117,39 @@ const HF = {
       const p = this.pending;
       if (isYes(t) && !isNo(t)){ this.pending = null; p.resolve(true); return; }
       if (isNo(t)){ this.pending = null; p.resolve(false); return; }
+      p.misses = (p.misses || 0) + 1;
+      if (p.misses >= 2){ this.pending = null; await this.say('I will take that as no.'); p.resolve(false); return; }   // never loop on a yes/no question
       await this.say('Please say yes or no. ' + p.question); return;
     }
     if (this.dictation){ await this.dictation.onText(t, raw); return; }
     // an exact answer text ("faster", "steel") beats any command word
     if (this.ctx && this.ctx.choices){ const ch = this.ctx.choices(); if (ch){ const i = ch.map(normalize).indexOf(t); if (i >= 0){ this.ctx.pick(i); return; } } }
+    // some screens own words that are also global commands ("explain again slower")
+    if (this.ctx && this.ctx.priority && this.ctx.handle){ const done = await this.ctx.handle(t, all, raw, this.arg); if (done) return; }
     // global commands first
     if (anyOf(t, ['stop hands free', 'turn off hands free', 'exit hands free', 'hands free off', 'stop handsfree'])){ this.stop(); return; }
     if (anyOf(t, ['pause', 'stop listening', 'be quiet', 'hold on', 'wait a minute', 'take a break'])){ this.pause(); return; }
     if (/^(help|what can i say|commands|options|what do i say)\b/.test(t) || t === 'help me'){ await this.help(); return; }
     if (anyOf(t, ['slower', 'slow down', 'too fast'])){ settings.rate = Math.max(0.5, Math.round((Number(settings.rate) - 0.1) * 10) / 10); saveSettings(); await this.say(`Slower. Speed ${settings.rate}.`); return; }
     if (anyOf(t, ['faster', 'speed up', 'too slow'])){ settings.rate = Math.min(1.6, Math.round((Number(settings.rate) + 0.1) * 10) / 10); saveSettings(); await this.say(`Faster. Speed ${settings.rate}.`); return; }
+    if (/\bwhat did you hear\b|\bwhat did you just hear\b|\bwhat do you hear\b|\bwhat did i say\b/.test(t)){ await this.say(heardReport()); return; }
     if (/\bwhat level am i\b|\bmy level\b|\bwhat level\b|\bwhich level\b/.test(t)){ await this.say(levelReport()); return; }
     if (this.ctx && this.ctx.handle){ const done = await this.ctx.handle(t, all, raw, this.arg); if (done) return; }
     if (/\b(repeat|again|say that again|what was that|say it again|one more time)\b/.test(t)){ this.enter(this.ctxName, this.arg); return; }
-    if (await this.nav(t)) return;
-    await this.say("I didn't catch that. Say it again, or say help.");
+    if (!(this.ctx && this.ctx.strictNav && t.split(' ').length > 3) && await this.nav(t)) return;   // in listen-only mode, long background talk never navigates
+    if (this.ctx && this.ctx.choices && this.ctx.choices()){ await this.missed(raw); return; }
+    if (this.ctx && this.ctx.onMiss){ await this.ctx.onMiss(raw, this.arg); return; }
+    await this.say("Sorry, I did not get that. Say help to hear what you can say.");
+  },
+  // a misheard answer: one short re-prompt, then say what it heard and read the choices once, then just listen
+  async missed(raw){
+    this.misses = (this.misses || 0) + 1;
+    if (this.misses === 1) return this.say(this.ctx.missLine || 'Say Alpha, Bravo, Charlie, or Delta, or say the answer.');
+    if (this.misses === 2) return this.run(async alive => {
+      await Speech.say(raw ? `I heard "${raw}". That is not one of the choices.` : 'I did not hear an answer.'); if (!alive()) return;
+      const ch = this.ctx.choices() || []; for (let i = 0; i < ch.length && alive(); i++) await Speech.say(`${LET[i]}. ${dot(ch[i])}`);
+      if (alive()) await Speech.say(this.ctx.missLine2 || 'Say the letter or the answer.'); });
+    if (this.misses % 4 === 0) return this.say(this.ctx.missLine || 'Say Alpha, Bravo, Charlie, or Delta, or say the answer.');
   },
   async help(){
     const h = this.ctx && this.ctx.help ? (typeof this.ctx.help === 'function' ? this.ctx.help(this.arg) : this.ctx.help) : 'Say a section name, math ladder, MEPS, progress, tutor, or review misses.';
@@ -140,6 +166,10 @@ const HF = {
     if (anyOf(t, ['error log', 'my misses', 'review misses', 'misses', 'mistakes', 'review my misses', 'missed questions', 'review'])) return to('review');
     if (anyOf(t, ['tutor', 'tutor me', 'teacher', 'help me learn'])) return to('tutor');
     if (anyOf(t, ['settings', 'options menu'])) return to('settings');
+    if (anyOf(t, ['audio lessons', 'audio lesson', 'listen mode', 'listen only', 'podcast', 'audio mode'])) return to('audio');
+    if (anyOf(t, ['speed drills', 'speed drill', 'drills', 'drill', 'mental math', 'math facts'])) return to('drill');
+    if (anyOf(t, ['vocab by ear', 'vocab drill', 'word drill', 'vocabulary drill', 'audio vocab'])) return to('vocab');
+    if (anyOf(t, ['read along', 'reading practice', 'read aloud practice', 'reading fluency', 'practice reading'])) return to('readalong');
     if (/\b(ladder|catch up|catchup)\b/.test(t) || (/\b(go to|work on|learn|study|teach me|open|level)\b/.test(t) && ladderFind(t))){
       const n = ladderFind(t); return to(/\blevel\b|go to|work on|learn|study|teach me|open/.test(t) && n ? 'ladder' : 'ladder', n ? String(n) : undefined); }
     if (anyOf(t, ['it focus', 'the plan', 'my plan', 'what should i practice', 'what should i study', 'focus plan'])){ await this.say(itPlanText(true)); return true; }
@@ -162,6 +192,24 @@ const HF = {
   },
 };
 let NAV_STACK = [];
+const ECHO_GAP_MS = 450;
+// did the mic just catch the app's own voice? (a phrase of 2+ words that the app said in the last few seconds)
+// did the mic just catch the tail of the app's own voice? Only a result that comes right after the app stopped talking,
+// within a few seconds, and that repeats 2+ words of the very last thing the app said.
+function isEcho(t){
+  const w = t.split(' ').filter(Boolean); if (w.length < 2) return false;
+  if (!(HF.listenGap < 1500 && HF.quickReply)) return false;
+  const lastSaid = Speech.recent[Speech.recent.length - 1]; if (!lastSaid) return false;
+  const tail = normalize(lastSaid.text).split(' ').slice(-Math.max(w.length + 2, 6)).join(' ');   // an echo is the end of what it just said
+  if ((' ' + tail + ' ').includes(' ' + w.join(' ') + ' ')) return true;
+  if (w.length >= 4){ const rw = new Set(tail.split(' ')); return w.filter(x => rw.has(x)).length / w.length >= 0.85; }
+  return false;
+}
+function heardReport(){
+  const last = VOICE_LOG.filter(x => x.text || (x.alts && x.alts.length)).slice(-4, -1);
+  if (!last.length) return 'I have not heard anything yet.';
+  return 'Here is what I heard last. ' + last.map((x, i) => `${i + 1}: "${x.text}"${x.alts.length > 1 ? `, or maybe "${x.alts.slice(1, 3).join('", or "')}"` : ''}${x.echo ? ', that was my own voice' : ''}.`).join(' ');
+}
 function levelReport(){
   const lv = SEC_ORDER.map(k => `${SECTIONS[k]}: level ${level(k)} of 3`).join('. ');
   return ladderStatusText() + ' Practice levels: ' + lv + '.';
@@ -195,7 +243,7 @@ const sayEl = (sel, prefix) => Speech.speakEl(typeof sel === 'string' ? $(sel) :
 function answerFrom(all, choices){ return parseVoice(all, choices); }
 const VCTX = {
   home: {
-    help: 'Say a section name, like arithmetic, word knowledge, or electronics. Or say practice, math ladder, MEPS, progress, tutor, review misses, the plan, or settings.',
+    help: 'Say a section name, like arithmetic, word knowledge, or electronics. Or say audio lessons, speed drills, vocab by ear, read along, math ladder, MEPS, progress, tutor, review misses, the plan, or settings.',
     async intro(alive){
       const s = streakInfo();
       await Speech.say(`Home. Today you did ${s.todayCount} of ${DAILY_GOAL} questions. Streak: ${s.streak} day${s.streak === 1 ? '' : 's'}.`); if (!alive()) return;
@@ -219,7 +267,7 @@ const VCTX = {
   handsfree: {
     help: 'Say a section name to start 10 questions. For example: arithmetic, or electronics.',
     async intro(){ await Speech.say('Hands-free practice. Say a section name to start 10 questions.'); },
-    async handle(t){ const sec = sectionIn(t); if (sec){ startSession(sec, 10, { hf:true, timer:false }); return true; } return false; },
+    async handle(t){ const sec = sectionIn(t); if (sec){ if (sec === 'AR' && !arDone()) go('ladder'); else startSession(sec, 10, { hf:true, timer:false }); return true; } return false; },
   },
   prereview: {
     help: 'Say next miss to hear the next one. Say skip review or start to begin practice.',
@@ -255,9 +303,15 @@ const VCTX = {
       if (/\b(explain|steps|why|step by step)\b/.test(t)){ HF.run(async alive => { await sayEl('ol.steps'); if (alive()) await Speech.say('How sure were you? Say sure, shaky, or guessed.'); }); return true; }
       const p = parseVoice(all, null);
       if (p && p.type === 'conf'){ const msg = setConf(p.value); HF.enter('afterconf', msg); return true; }
+      if (/^(yes|yeah|yep|very|totally|for sure)\b/.test(t)){ HF.enter('afterconf', setConf('sure')); return true; }
+      if (/^(no|nope|nah|not really|no idea)\b/.test(t)){ HF.enter('afterconf', setConf('guessed')); return true; }
       if (/\bnext\b/.test(t)){ setConf('shaky'); nextQ(); return true; }
       return false;
     },
+    // never get stuck here: one short re-prompt, then mark it shaky and move on
+    async onMiss(raw){ HF.misses = (HF.misses || 0) + 1;
+      if (HF.misses === 1){ await HF.say('Say sure, shaky, or guessed. Or say next.'); return; }
+      const msg = setConf('shaky'); HF.enter('afterconf', 'I will mark it shaky. ' + msg); },
   },
   afterconf: {
     help: 'Say next for the next question. Say explain to hear the steps, lesson to hear the lesson, or tutor me.',
@@ -410,12 +464,13 @@ const VCTX = {
       if (alive()) await Speech.say('Estimate only. Confirm with a recruiter. Say review misses, progress, or home.'); },
   },
   ladder: {
-    help: 'Say start to do a set of 10. Say lesson to hear the lesson. Say placement test to find your level. Say go to fractions, or level 6, to move. Say what level am I.',
-    async intro(alive, arg){ const st = ladState(); const view = Math.min(15, Math.max(1, +arg || st.level));
-      await Speech.say(ladderStatusText() + (view !== st.level ? ` You are looking at level ${view}: ${ladLevel(view).title}.` : '')); if (!alive()) return;
+    help: 'Say start to do a set of 10. Say lesson to hear the lesson. Say placement test to find your level. Say go to fractions, or level 6, to move. Say real test questions for the 85 real ones.',
+    async intro(alive, arg){ const st = ladState(); const view = clampLv(+arg || st.level);
+      await Speech.say(arHeader(st.level) + '. ' + ladderStatusText() + (view !== st.level ? ` You are looking at level ${view}: ${ladLevel(view).title}.` : '')); if (!alive()) return;
       await Speech.say(st.placed ? 'Say start, lesson, go to a level, or help.' : 'New here? Say placement test. Or say start, lesson, or help.'); },
     async handle(t, all, raw, arg){
-      const view = Math.min(15, Math.max(1, +arg || ladState().level));
+      const view = clampLv(+arg || ladState().level);
+      if (anyOf(t, ['real test questions', 'real questions', 'real test', 'real ones', 'test questions'])){ openRealAR(); return true; }
       if (anyOf(t, ['placement test', 'placement', 'placement check', 'find my level'])){ ladStart(0); return true; }
       const n = ladderFind(t); if (n && n !== view){ go('ladder', String(n)); return true; }
       if (/\blesson\b/.test(t)){ go('ladlesson', String(view)); return true; }
@@ -424,38 +479,89 @@ const VCTX = {
       return false;
     },
   },
+  // the spoken lesson: short steps, with quick spoken checks between them
   ladlesson: {
-    help: 'Say start to do a set. Say repeat to hear the lesson again. Say back to the ladder.',
-    async intro(alive, arg){ const n = +arg || ladState().level; await Speech.say(`Level ${n} lesson: ${ladLevel(n).title}.`); if (!alive()) return; await sayEl('#ladLessonBody'); if (alive()) await Speech.say('Say start to do a set of 10.'); },
-    async handle(t, all, raw, arg){ if (isGo(t) || t === 'practice'){ ladStart(+arg || ladState().level); return true; } return false; },
+    help: 'Answer the quick check out loud, or say skip. Say repeat that, slower, or start to begin a set.',
+    async intro(alive, arg){ const n = clampLv(+arg || ladState().level); if (!LL || LL.n !== n) LL = { n, i:0, wait:null, miss:0 };
+      if (LL.i === 0) await Speech.say(`Level ${n} lesson: ${ladLevel(n).title}.`); if (!alive()) return; await llPlay(alive); },
+    async handle(t, all, raw, arg){
+      const n = clampLv(+arg || ladState().level);
+      if (LL && LL.wait){
+        if (/\b(skip|i dont know|no idea|tell me)\b/.test(t)){ const c = LL.wait; LL.wait = null; LL.i++; HF.run(async alive => { await Speech.say(`The answer is ${c.a}. ${c.why}`); if (alive()) await llPlay(alive); }); return true; }
+        const said = all.map(x => MS.said(x)).find(Boolean);
+        if (said){ const c = LL.wait; const key = MS.value(c.a); LL.wait = null; LL.i++; const ok = key && MS.eq(key, said.v);
+          HF.run(async alive => { await Speech.say(ok ? `Yes! ${c.why}` : `Not quite. The answer is ${c.a}. ${c.why}`); if (alive()) await llPlay(alive); }); return true; }
+      }
+      if (/\b(repeat that|say that again|again)\b/.test(t)){ LL.i = Math.max(0, LL.i - (LL.wait ? 0 : 1)); LL.wait = null; HF.run(alive => llPlay(alive)); return true; }
+      if (isGo(t) || t === 'practice' || anyOf(t, ['start a set', 'start the set'])){ LL = null; ladStart(n); return true; }
+      if (anyOf(t, ['start over', 'from the top', 'restart the lesson'])){ LL = { n, i:0, wait:null, miss:0 }; HF.run(alive => llPlay(alive)); return true; }
+      return false;
+    },
+    async onSilence(){ if (!LL || !LL.wait) return; LL.miss++;
+      if (LL.miss === 1){ await HF.say('Take your time. Say the answer, or say skip.'); return; }
+      const c = LL.wait; LL.wait = null; LL.i++; LL.miss = 0; HF.run(async alive => { await Speech.say(`The answer is ${c.a}. ${c.why}`); if (alive()) await llPlay(alive); }); },
+    async onMiss(raw){ if (LL && LL.wait) await HF.say('Say the answer as a number, like 3 fourths or 12. Or say skip.'); else await HF.say('Say start to do a set, or repeat that.'); },
   },
   ladq: {
-    choices: () => LR && !LR.answered ? LR.qs[LR.i].choices : null, pick: i => ladAnswer(i),
-    help: 'Say A, B, C, or D, or the answer. Say repeat, hint, or end.',
-    async intro(alive){ if (!LR) return; await readQuestionAloud(LR.qs[LR.i]); if (alive()) await Speech.say('Your answer?'); },
-    async handle(t, all){
-      if (!LR) return false; const q = LR.qs[LR.i];
+    choices: () => LR && !LR.answered && !ladIsSay(LR.qs[LR.i]) ? LR.qs[LR.i].choices : null, pick: i => ladAnswer(i),
+    get missLine(){ return 'Say Alpha, Bravo, Charlie, or Delta, or say the answer.'; },
+    help: () => LR && ladIsSay(LR.qs[LR.i]) ? 'Say the answer as a number, like 3 fourths, point 5, or x equals 4. Say repeat, hint, or end.' : 'Say A, B, C, or D, or the answer. Say repeat, hint, or end.',
+    async intro(alive){ if (!LR) return; const q = LR.qs[LR.i]; await ladReadQ(q); if (alive()) await Speech.say(ladIsSay(q) ? 'Say the answer.' : 'Your answer?'); },
+    async handle(t, all, raw){
+      if (!LR || LR.answered) return false; const q = LR.qs[LR.i];
       if (/\b(hint|clue|help me)\b/.test(t)){ await HF.say(ladHint()); return true; }
       if (anyOf(t, ['read the choices', 'choices'])){ HF.run(async alive => { const chs = $$('.choice'); for (let i = 0; i < chs.length && alive(); i++) await sayEl(chs[i].querySelector('span[id]'), LET[i] + '.'); }); return true; }
       if (anyOf(t, ['end', 'quit', 'stop the set', 'end set'])){ const y = await HF.ask('End this set? Say yes or no.'); if (y) go('ladder'); else HF.enter('ladq'); return true; }
+      if (ladIsSay(q)){
+        if (/\b(i dont know|no idea|skip|pass)\b/.test(t)){ ladAnswer(-1, raw, ''); return true; }
+        // speech engines give several guesses: if any guess is the right value, count it; otherwise judge the first number heard
+        const [ka, kb = '1'] = String(q.value).split('/'); const key = MS.fr(+ka, +kb);
+        const guesses = [raw].concat(all); const good = guesses.find(x => { const v = MS.said(x); return v && MS.eq(v.v, key); });
+        if (good != null && ladAnswerSaid(good)) return true;
+        for (const x of guesses) if (ladAnswerSaid(x)) return true;
+        return false;
+      }
       const p = parseVoice(all, q.choices); if (p && p.type === 'answer'){ ladAnswer(p.index); return true; }
       return false;
     },
+    // spoken-answer questions: never loop; one short re-prompt, then say what it heard and the question again once
+    async onMiss(raw){ HF.misses = (HF.misses || 0) + 1;
+      if (HF.misses === 1) return HF.say('Say the answer as a number, like 3 fourths or 12.');
+      if (HF.misses === 2) return HF.run(async alive => { await Speech.say(raw ? `I heard "${raw}". I need a number.` : 'I did not hear a number.'); if (alive() && LR) await ladReadQ(LR.qs[LR.i]); if (alive()) await Speech.say('Say the answer, or say I do not know.'); });
+      if (HF.misses % 4 === 0) return HF.say('Say the answer as a number, or say I do not know.'); },
   },
   ladfb: {
-    help: 'Say next. Or say repeat to hear why again.',
-    async intro(alive, whyId){ await sayEl('#' + whyId); if (alive()) await Speech.say(LR && LR.i + 1 < LR.qs.length ? 'Say next.' : 'Say next to see your score.'); },
-    async handle(t){ if (/\b(next|continue|go on|ready|score)\b/.test(t)){ ladNext(); return true; } return false; },
+    priority: true,
+    help: 'Say next. Say explain again slower. Say another one like this. Or say repeat to hear why again.',
+    async intro(alive, whyId){ await sayEl('#' + whyId); if (alive()) await Speech.say((LR && LR.i + 1 < LR.qs.length ? 'Say next' : 'Say next to see your score') + ', explain again slower, or another one like this.'); },
+    async handle(t){
+      if (anyOf(t, ['explain again slower', 'slower please', 'explain again', 'explain it again', 'explain slower', 'say it slower'])){ HF.run(async alive => { await ladExplainSlow(); if (alive()) await Speech.say('Say next, or another one like this.'); }); return true; }
+      if (anyOf(t, ['another one like this', 'another one', 'one more like this', 'another like this', 'more like this', 'give me another'])){ if (!ladAnotherLike()) await HF.say('No more like this one. Say next.'); return true; }
+      if (/\b(next|continue|go on|ready|score)\b/.test(t)){ ladNext(); return true; }
+      return false; },
   },
   laddone: {
     help: 'Say start to do the next set. Say lesson, math ladder, or home.',
-    async intro(alive, info){ await Speech.say(info.msg); if (alive()) await Speech.say(`Say start for level ${info.level}, lesson, or home.`); },
+    async intro(alive, info){ await Speech.say(info.msg); if (alive()) await Speech.say(info.finished ? 'Say real practice to start the real Arithmetic Reasoning questions, or home.' : `Say start for level ${info.level}, lesson, or home.`); },
     async handle(t, all, raw, info){
+      if (info.finished && anyOf(t, ['real practice', 'real questions', 'start', 'practice'])){ go('practice', 'AR'); return true; }
       if (/\blesson\b/.test(t)){ go('ladlesson', String(info.level)); return true; }
       if (isGo(t, ['next level', 'next set', 'try again']) || t === 'again'){ ladStart(info.level); return true; }
       return false; },
   },
 };
+let LL = null;   // spoken lesson position
+async function llPlay(alive){
+  const L = ladLevel(LL.n); const steps = L.lesson;
+  while (LL.i < steps.length){
+    if (!alive()) return; const b = steps[LL.i];
+    const el = document.querySelector(`[data-step="${LL.i}"]`); $$('.lad-li.now').forEach(x => x.classList.remove('now')); if (el) el.classList.add('now');
+    if (b.t === 'check'){ LL.wait = b; LL.miss = 0; await Speech.say('Quick check. ' + b.q); return; }   // now listen for his answer
+    if (b.t === 'pre' || b.t === 'h') { LL.i++; continue; }
+    await Speech.say(b.x); LL.i++; await sleep(250);
+  }
+  if (alive()) await Speech.say('That is the lesson. Say start to do a set of 10, or repeat that.');
+}
 function spokenTime(s){ s = Math.max(0, Math.ceil(s)); const m = Math.floor(s / 60), r = s % 60; return (m ? `${m} minute${m === 1 ? '' : 's'}` : '') + (m && r ? ' and ' : '') + (r || !m ? `${r} second${r === 1 ? '' : 's'}` : ''); }
 async function readMiss(st, alive){
   const e = st.errs[st.k]; if (!e) return;
@@ -468,5 +574,84 @@ async function readReviewItem(alive){
   await Speech.say(`Miss ${HF.revK + 1} of ${list.length}. ${SECTIONS[e.section] || ''}. ${e.stem} You said: ${dot(e.guessText)} The right answer is: ${dot(e.answerText)} ${e.explanation}`);
   if (alive()) await Speech.say('Say next, tutor me, or remove this one.');
 }
+
+/* ---------- learn by ear: vocab, drills, audio lessons, read along ---------- */
+const NOT_ANSWER = t => /^(help|pause|home|back|go back|repeat|again|say that again|stop hands free|what did you hear|slower|faster)\b/.test(t);
+Object.assign(VCTX, {
+  vocab: { async intro(){ if (VQ) HF.enter('vocabq'); } },
+  vocabq: {
+    priority: true, listenMs: 15000,
+    help: 'Say what the word means, in your own words. Say skip, repeat, or home.',
+    async intro(alive){ if (!VQ) return; await Speech.say(vocabIntroText()); },
+    async handle(t){
+      if (!VQ || NOT_ANSWER(t)) return false;
+      if (/^(repeat|again|say it again)$/.test(t)) return false;
+      if (/^(skip|next|next word)$/.test(t)){ VQ.w = vocabNext(); HF.run(async () => { await Speech.say('OK. Next word.'); }).then(() => vocabShow(false)); return true; }
+      const ok = vocabCheck(VQ.w[2], t) || (t.includes(VQ.w[1].split(';')[0].toLowerCase()));
+      const msg = /\b(i dont know|no idea|not sure)\b/.test(t) ? vocabScore(false) : vocabScore(ok);
+      HF.run(async alive => { await Speech.say(msg); if (alive()) await Speech.say('Next word.'); }).then(() => { if (HF.ctxName === 'vocabq') vocabShow(false); });
+      return true;
+    },
+  },
+  drill: {
+    help: 'Say times tables, halves and quarters, percent facts, or mixed. Say timer on or timer off.',
+    async intro(alive, kind){ if (kind && DR){ HF.enter('drillq'); return; } const st = drillState();
+      await Speech.say(`Speed drills. Say times tables, halves and quarters, percent facts, or mixed. The timer is ${st.timer ? 'on, ' + st.limit + ' seconds' : 'off'}. Say timer on or timer off.`); },
+    async handle(t){
+      if (/\btimer (on|off)\b/.test(t)){ const st = drillState(); st.timer = /on$/.test(t.match(/timer (on|off)/)[0]); Store.set('drill', st); const c = $('#drTimer'); if (c) c.checked = st.timer; await HF.say(`Timer ${st.timer ? 'on' : 'off'}.`); return true; }
+      const k = anyOf(t, ['times tables', 'times table', 'times', 'multiplication']) ? 'times' : anyOf(t, ['halves and quarters', 'halves', 'quarters', 'half']) ? 'halves'
+        : anyOf(t, ['percent facts', 'percent', 'percents']) ? 'percent' : anyOf(t, ['mixed', 'mixed facts', 'all of them', 'everything']) ? 'mixed' : null;
+      if (k){ go('drill', k); return true; } return false; },
+  },
+  drillq: {
+    priority: true,
+    listenMs: () => DR && DR.timer ? DR.limit * 1000 + 600 : 12000,
+    help: 'Say the answer as a number. Say skip, or end drill.',
+    async intro(alive){ if (!DR) return; DR.nagged = false; await Speech.say(DR.qs[DR.i].q + '?'); DR.t0 = Date.now(); },
+    async onSilence(){ if (!DR || DR.answered) return; if (DR.timer){ if (Date.now() - DR.t0 < DR.limit * 1000) return; return void drillAnswer(null); } if (!DR.nagged){ DR.nagged = true; await HF.say('Say the answer, or say skip.'); } },
+    async handle(t, all, raw){
+      if (!DR || NOT_ANSWER(t)) return false;
+      if (anyOf(t, ['end drill', 'stop drill', 'quit'])){ go('drill'); return true; }
+      if (/\b(skip|i dont know|pass|no idea)\b/.test(t)){ drillAnswer(null); return true; }
+      for (const x of [raw].concat(all)) if (drillAnswer(x)) return true;
+      return false; },
+    async onMiss(raw){ await HF.say('Say the answer as a number.'); },
+  },
+  drilldone: {
+    help: 'Say again, other drills, or home.',
+    async intro(alive, info){ await Speech.say(info.msg); },
+    async handle(t, all, raw, info){ if (anyOf(t, ['again', 'one more', 'another', 'go again', 'start'])){ go('drill', info.kind); return true; } if (anyOf(t, ['other drills', 'drills', 'menu'])){ go('drill'); return true; } return false; },
+  },
+  audio: {
+    priority: true, strictNav: true,
+    listenMs: () => AL && AL.playing ? Math.max(1800, AL.pauseMs || 0) : 12000,
+    help: 'Say play, stop, next lesson, previous lesson, repeat that, or pause. Say resume to go on.',
+    async intro(alive){ if (!AL) return; if (!AL.playing){ await Speech.say(`Audio lessons. ${AL.list.length} parts. Now: ${AL.list[AL.i].title}. Say play to start.`); return; } keepAwake(true); await alLine(alive); },
+    async onSilence(){ if (AL && AL.playing) HF.run(alive => alLine(alive)); },
+    async handle(t){
+      if (!AL) return false;
+      if (anyOf(t, ['next lesson', 'next part', 'skip lesson', 'skip this'])){ alJump(AL.i + 1); return true; }
+      if (anyOf(t, ['previous lesson', 'last lesson', 'go back a lesson', 'previous'])){ alJump(AL.i - 1); return true; }
+      if (anyOf(t, ['repeat that', 'say that again', 'again', 'what was that'])){ AL.j = Math.max(0, AL.j - 1); AL.playing = true; HF.run(alive => alLine(alive)); return true; }
+      if (!AL.playing && anyOf(t, ['play', 'start', 'go', 'begin', 'resume', 'continue'])){ alStart(); return true; }
+      if (AL.playing && anyOf(t, ['stop', 'stop playing', 'stop the lesson'])){ alStop(); await HF.say('Stopped. Say play to go on.'); return true; }
+      return false; },
+    async onMiss(){ if (AL && AL.playing) HF.run(alive => alLine(alive)); },   // background talk: just keep playing
+  },
+  readalong: {
+    priority: true,
+    listen: () => RA && RA.reading ? { ms: 90000, continuous: true, idleMs: 5000 } : null,
+    noEcho: () => !!(RA && RA.reading),
+    help: 'Say listen to hear it. Say my turn to read it out loud. Say next text, or home.',
+    async intro(){ await Speech.say('Read along. Say listen to hear the text, or my turn to read it out loud.'); },
+    async handle(t, all, raw){
+      if (!RA) return false;
+      if (RA.reading){ const msg = readResult(raw, HF.lastMs || 0); await HF.say(msg + ' Say my turn to try again, or next text.'); return true; }
+      if (anyOf(t, ['listen', 'read it to me', 'read it', 'play it'])){ HF.run(async () => { await Speech.speakEl($('#raText')); await Speech.say('Say my turn to read it out loud.'); }); return true; }
+      if (anyOf(t, ['my turn', 'my turn to read', 'start reading', 'let me read', 'i will read'])){ readMine(); return true; }
+      if (anyOf(t, ['next text', 'next one', 'next', 'another text'])){ go('readalong', String((RA.k + 1) % RA.texts.length)); return true; }
+      return false; },
+  },
+});
 
 boot();

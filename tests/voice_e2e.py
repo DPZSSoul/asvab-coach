@@ -42,9 +42,9 @@ with sync_playwright() as pw:
     ok('voice yes/no answers the remember question', say('no', 'Tap Start hands-free next time') and p.evaluate('settings.hfAuto') is False)
     ok('home is read aloud: streak, IT focus plan, available commands', heard('Streak') and heard('IT focus for today') and heard('Say a section name'))
     ok('help lists commands', say('help', 'You can always say: home, back, repeat'))
-    ok('unknown speech -> "I didn\'t catch that"', say('purple monkey dishwasher', "I didn't catch that. Say it again, or say help"))
+    ok('unknown speech -> short "did not get that" line (no command words to echo)', say('purple monkey dishwasher', "Sorry, I did not get that"))
     # ---- section -> answer -> next ----
-    ok('fuzzy section name "arithmatic" opens Arithmetic Reasoning', say('arithmatic', 'Say start to begin') and 'Arithmetic Reasoning' in p.inner_text('h1'))
+    ok('fuzzy section name "math knowlege" opens Math Knowledge', say('math knowlege', 'Say start to begin') and 'Knowledge' in p.inner_text('h1'))
     say('five questions', '5 questions')
     ok('"start" begins a voice session and reads the question', say('start', 'Your answer?') and p.evaluate('S && S.qs.length') == 5 and heard('Question.'), last())
     a = p.evaluate('S.qs[0].answer')
@@ -70,7 +70,38 @@ with sync_playwright() as pw:
     ok('destructive action asks yes/no ("remove" -> "no" keeps it)', say('remove this one', 'Remove this miss') and say('no', 'Kept') and len(p.evaluate("JSON.parse(localStorage.getItem('asvab.errors'))")) == n0)
     # ---- pre-session review of last misses, by voice ----
     say('word knowledge', 'Say start to begin')
+    say('fifteen questions', '15 questions')
     ok('pre-session review is read aloud and "skip review" starts', say('start', 'Quick look at your last') and heard('Miss 1 of') and say('skip review', 'Your answer?') and p.evaluate('!!S'), last())
+    # ---- real-phone mishearings of A/B/C/D (the "says sorry and repeats" bug) ----
+    def cur(): return p.evaluate('S.qs[S.i].answer')
+    def right(): return p.evaluate('S.results.length && S.results[S.results.length-1].correct')
+    a = cur(); t = ['hey', 'bee', 'see', 'the'][a]
+    ok(f'lone letter heard as "{t}" is accepted', say(t, 'How sure were you') and right(), last())
+    ok('stray "hey" at the confidence prompt -> one short re-prompt', say('hey', 'Say sure, shaky, or guessed. Or say next'))
+    ok('second miss at the confidence prompt marks it shaky and moves on (no loop)', say('banana', 'I will mark it shaky') and say('next', 'Your answer?'))
+    a = cur(); t = ['a.', 'be', 'sea', 'dee'][a]
+    ok(f'letter with a period / sound-alike "{t}" is accepted', say(t, 'How sure were you') and right(), last())
+    say('sure', 'Say next'); say('next', 'Your answer?')
+    a = cur(); t = 'kate||' + ['eh', 'b', 'si', 'd'][a]
+    ok(f'second recognition alternative is used ("{t}")', say(t, 'How sure were you') and right(), last())
+    say('sure', 'Say next'); say('next', 'Your answer?')
+    a = cur(); t = '~' + ['ay', 'bee', 'c', 'delta'][a]
+    ok(f'interim-only result is used ("{t[1:]}")', say(t, 'How sure were you') and right(), last())
+    say('sure', 'Say next'); say('next', 'Your answer?')
+    a = cur(); t = ['first', 'second', 'third', 'fourth'][a]
+    ok(f'ordinal "{t}" is accepted', say(t, 'How sure were you') and right(), last())
+    say('sure', 'Say next'); say('next', 'Your answer?')
+    q_reads = lambda: sum(1 for x in p.evaluate('window.__spoken') if x.startswith('Question.'))
+    r0 = q_reads()
+    ok('empty transcript -> short re-prompt (not the whole question)', say('__empty', 'Say Alpha, Bravo, Charlie, or Delta, or say the answer') and q_reads() == r0)
+    say('__echo'); p.wait_for_timeout(1800)
+    ok('the app hearing its own voice is ignored', p.evaluate('HF.misses') == 1 and p.evaluate('VOICE_LOG.some(x => x.echo)'), p.evaluate('HF.misses'))
+    ok('second miss says what it heard and reads the choices once', say('banana split', 'I heard "banana split"') and heard('Say the letter or the answer') and q_reads() == r0, last(8))
+    mark['i'] = p.evaluate('window.__spoken.length'); p.evaluate("window.__heard.push('zebra crossing')"); p.wait_for_timeout(2500)
+    ok('third miss stays quiet: it never loops', p.evaluate('window.__spoken.length') == mark['i'] and not p.evaluate('S.answered'), last())
+    a = cur()
+    ok('"letter X" then works', say('letter ' + 'abcd'[a], 'How sure were you') and right(), last())
+    ok('"what did you hear" reads the transcript log', say('what did you hear', 'Here is what I heard last') and heard('banana split'))
     say('home', 'Say a section name')
     # ---- MEPS hands-free ----
     ok('"start MEPS mode" opens MEPS and reads the rules', say('start meps mode', 'Say start the test') and 'MEPS' in p.inner_text('h1'))
@@ -83,22 +114,83 @@ with sync_playwright() as pw:
     ok('MEPS: time left is announced at intervals (5 minutes)', heard('Time left: 4 minutes', 8000), last())
     ok('leaving MEPS asks to confirm; "no" stays', say('home', 'Quit the MEPS test') and say('no', 'Keep going') and p.evaluate('!!(M && M.running)'))
     ok('"yes" quits MEPS', say('home', 'Quit the MEPS test') and say('yes', 'Say a section name') and p.evaluate('!M || !M.running'))
-    # ---- math ladder ----
-    ok('"math ladder" opens the ladder and reads the level', say('math ladder', 'level 1 of 15') and 'Math ladder' in p.inner_text('h1'))
-    ok('"go to fractions" opens level 6', say('go to fractions', 'Fractions 1') and p.get_attribute('#ladView', 'data-level') == '6', last())
-    ok('"what level am I" answers', say('what level am i', 'you are on level 1 of 15'))
+    # ---- Arithmetic Reasoning = the audio-first catch-up track ----
+    ok('"arithmatic" opens the AR catch-up track at his level', say('arithmatic', 'Arithmetic Reasoning: Level 1 of 27') and 'Arithmetic Reasoning: Level 1 of 27' in p.inner_text('h1'), p.inner_text('h1'))
+    say('home', 'Say a section name')
+    ok('"math ladder" is an alias for the same place', say('math ladder', 'Arithmetic Reasoning: Level 1 of 27') and '#ladder' in p.url)
+    ok('"go to fractions" opens level 4, What a Fraction Means', say('go to fractions', 'What a Fraction Means') and p.get_attribute('#ladView', 'data-level') == '4', last())
+    ok('"what level am I" answers', say('what level am i', 'you are on level 1 of 27'))
     ok('"level three" jumps to level 3', say('level three', 'level 3') and p.get_attribute('#ladView', 'data-level') == '3')
-    say('go to fractions', 'Fractions 1')
-    ok('"lesson" reads the level lesson', say('lesson', 'Say start to do a set of 10', 60000) and 'Fractions' in p.inner_text('h1'))
-    ok('"start" begins a ladder set', say('start', 'Your answer?') and p.evaluate('LR && LR.n') == 6)
-    allok = True
+    say('go to fractions', 'What a Fraction Means')
+    ok('spoken lesson: picture + quick check asked out loud', say('lesson', 'Quick check', 60000) and heard('pizza') and p.evaluate('LL && !!LL.wait'), last())
+    ok('quick check answered "three fourths" -> Yes', say('three fourths', 'Yes!', 30000) and heard('Quick check', 60000), last())
+    ok('quick check answered "one sixth" (as "1/6") -> Yes, lesson ends', say('1/6', 'Yes!', 30000) and heard('That is the lesson', 60000), last())
+    ok('"start" begins a set of spoken questions (no letters read)', say('start', 'Say the answer.') and p.evaluate('LR && LR.n') == 4)
+    ok('a non-number twice: short line, then what it heard + the question once (no loop)', say('purple', 'Say the answer as a number') and say('purple', 'I heard "purple". I need a number'), last())
+    allok = True; extra = False; slow = False
     for k in range(10):
-        a = p.evaluate('LR.qs[LR.i].answer')
-        if not say(['A','B','C','D'][a], 'Say next'): allok = False; break
-        if not say('next', 'Your answer?' if k < 9 else 'Say start for level'): allok = False; break
+        q = p.evaluate('LR.qs[LR.i]'); v = q['value']; sa = q['sayAnswer']
+        spoken = sa if k % 3 == 0 else (v if k % 3 == 1 else 'um ' + sa)
+        if k == 2: spoken = 'nine||' + sa      # a wrong first alternative: the right one in the list still counts
+        if not say(spoken, 'another one like this'): allok = False; break
+        if k == 0: slow = say('explain again slower', 'Say next, or another one like this', 40000)
+        if k == 1:
+            n0 = p.evaluate('LR.qs.length'); extra = say('another one like this', 'Say the answer.') and p.evaluate('LR.qs.length') == n0 + 1 and p.evaluate('LR.qs[LR.i].extra')
+            q = p.evaluate('LR.qs[LR.i]'); say(q['sayAnswer'], 'another one like this')
+        if not say('next', 'Say the answer.' if k < 9 else 'Say start for level'): allok = False; break
+    ok('"explain again slower" re-reads the steps slowly', slow)
+    ok('"another one like this" adds an extra question that does not count', extra)
     st = p.evaluate("JSON.parse(localStorage.getItem('asvab.ladder'))")
-    ok('ladder set by voice: 10 of 10 passes level 6 and moves to 7', allok and st and st['passed'].get('6') and st['level'] == 7, st)
-    ok('"what level am I" now says level 7', say('what level am i', 'level 7 of 15'))
+    ok('spoken answers ("three fourths", "3/4", "um ...") pass level 4 and move to 5', allok and st and st['passed'].get('4') and st['level'] == 5 and st['best']['4'] == 10, [st, last()])
+    ok('"what level am I" now says level 5', say('what level am i', 'level 5 of 27'))
+    say('math ladder', 'Arithmetic Reasoning: Level 5 of 27')
+    ok('"real test questions" opens the 85 real AR questions', say('real test questions', 'Say start to begin') and p.locator('#arRealNote').count() == 1 and 'Arithmetic Reasoning' in p.inner_text('h1'))
+    say('home', 'Say a section name')
+    # ---- learn by ear: speed drills ----
+    ok('"speed drills" opens drills', say('speed drills', 'Say times tables') and 'Speed drills' in p.inner_text('h1'))
+    say('timer on', 'Timer on')
+    ok('"times tables" starts and reads a fact', say('times tables', '?') and p.evaluate('!!DR && DR.timer'))
+    def drill_q():   # wait until the next fact is on screen and has been read out, then return its answer
+        until("DR && !DR.answered && window.__spoken.length && window.__spoken[window.__spoken.length - 1] === DR.qs[DR.i].q + '?'", 20000)
+        return p.evaluate('DR.qs[DR.i].a')
+    good = True
+    for k in range(10):
+        a = drill_q()
+        if k == 3: ok('drill: a wrong answer gets a short reason', say(str(a + 1), 'Not quite')); continue
+        if k == 5:
+            mark['i'] = p.evaluate('window.__spoken.length'); ok('drill: no answer -> "Time." and the reason (answer timer)', heard('Time.', 20000)); continue
+        if not say(('x equals ' if k == 7 else '') + str(a), 'Right.' if k < 9 else 'You got'): good = False
+    ok('drill: 8 of 10 by voice', good and heard('You got 8 of 10', 20000) and p.evaluate("JSON.parse(localStorage.getItem('asvab.drill')).best.times") == 8, last())
+    good = True
+    say('again', '?')
+    for k in range(10):
+        a = drill_q()
+        if not say(str(a), 'Right.' if k < 9 else 'You got'): good = False
+    ok('drill: 10 fast -> the timer gets a little faster', good and heard('The timer is now 9.5 seconds', 20000) and p.evaluate("JSON.parse(localStorage.getItem('asvab.drill')).limit") == 9.5, last())
+    say('home', 'Say a section name')
+    # ---- vocab by ear ----
+    ok('"vocab by ear" says a word, meaning and hook, then asks', say('vocab by ear', 'Now you say it') and heard('Memory hook'))
+    w = p.evaluate('VQ.w')
+    ok('saying the meaning back counts', say('it means ' + w[2][0], 'Yes!') and heard('Next word', 20000))
+    ok('"I do not know" gives the meaning again', say("i don't know", 'You will hear it again soon'))
+    say('home', 'Say a section name')
+    # ---- audio lessons (listen only) ----
+    ok('"audio lessons" opens the listen-only player', say('audio lessons', 'Say play to start') and 'Audio lessons' in p.inner_text('h1'))
+    ok('"play" starts at his level and keeps talking with no answers needed', say('play', 'Level 5: Halves and Quarters') and heard('quarter', 30000) and until('AL.j >= 3', 30000), last())
+    say('so then he told me the meeting is at noon back in the office'); p.wait_for_timeout(1500)
+    ok('background talk does not navigate away', 'Audio lessons' in p.inner_text('h1'))
+    ok('"next lesson" jumps ahead', say('next lesson', 'means') and p.evaluate('AL.i') == 1, last())
+    ok('"pause" pauses, "resume" goes on', say('pause', 'Paused') and p.evaluate('HF.paused') and say('resume') and until('!HF.paused') and heard('.', 20000))
+    ok('"repeat that" replays a line', say('repeat that') and heard('.', 20000))
+    ok('"stop" stops playing', say('stop', 'Stopped') and not p.evaluate('AL.playing'))
+    say('home', 'Say a section name')
+    # ---- read along ----
+    ok('"read along" shows big text', say('read along', 'Say listen') and p.locator('.read-big').count() >= 1)
+    say('listen', 'Say my turn', 60000)
+    txt = p.evaluate('RA.text.text'); words = txt.split(); read = ' '.join(words[:3] + words[4:])   # he skips one word
+    ok('"my turn" listens to him read', say('my turn', 'Go ahead'))
+    ok('reading is scored: words correct per minute + accuracy, and saved', say(read, 'words correct per minute', 30000) and p.evaluate("JSON.parse(localStorage.getItem('asvab.reading')).slice(-1)[0].correct") == len(words) - 1, last())
+    say('home', 'Say a section name')
     # ---- tutor by voice ----
     ok('"tutor" reads saved misses and options', say('tutor', 'Say my last miss') and 'Tutor' in p.inner_text('h1'))
     ok('"my last miss" starts the step tutor (steps read aloud)', say('my last miss', 'Step 3') and p.evaluate('!!T'))

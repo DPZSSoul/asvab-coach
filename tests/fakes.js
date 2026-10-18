@@ -13,15 +13,24 @@
   window.SpeechSynthesisUtterance = U;
   window.__heard = [];   // queue of transcripts the fake recognizer will "hear"
   window.__recStarts = 0;
-  window.__recWhileSpeaking = 0; window.__silenceMs = +(params.get('silence') || 0);
+  window.__recWhileSpeaking = 0; window.__silenceMs = +(params.get('silence') || 0); window.__replyMs = +(params.get('reply') || 1300);
   class FakeRec { start(){ window.__recStarts++; if (window.speechSynthesis.speaking) window.__recWhileSpeaking++;
       const started = Date.now(); this._live = true;
-      const tick = () => { if (!this._live) return; const t = window.__heard.shift();
+      const tick = () => { if (!this._live) return;
+        // a real person needs a moment to answer; only an echo of the app's own voice comes back at once
+        const nxt = window.__heard[0]; if (nxt != null && nxt !== '__echo' && Date.now() - started < window.__replyMs){ this._h = setTimeout(tick, 40); return; }
+        const t = window.__heard.shift();
         if (t == null){ if (Date.now() - started < window.__silenceMs){ this._h = setTimeout(tick, 40); return; }
           this._live = false; this.onerror && this.onerror({ error:'no-speech' }); this.onend && this.onend(); return; }
         this._live = false; window.__recog = (window.__recog || []).concat(t);
         if (t.startsWith('__error:')){ this.onerror && this.onerror({ error:t.slice(8) }); this.onend && this.onend(); return; }
-        this.onresult && this.onresult({ results: [[{ transcript:t }]] }); this.onend && this.onend(); };
+        if (t === '__empty'){ this.onresult && this.onresult({ resultIndex:0, results: [Object.assign([{ transcript:'' }], { isFinal:true })] }); this.onend && this.onend(); return; }
+        if (t === '__echo'){ const last = window.__spoken[window.__spoken.length - 1] || ''; const w = last.split(/\s+/); const tail = w.slice(-5).join(' ');
+          this.onresult && this.onresult({ resultIndex:0, results: [Object.assign([{ transcript:tail }], { isFinal:true })] }); this.onend && this.onend(); return; }
+        if (t.startsWith('~')){   // interim only: the engine never sends a final result
+          this.onresult && this.onresult({ resultIndex:0, results: [Object.assign([{ transcript:t.slice(1) }], { isFinal:false })] }); this.onend && this.onend(); return; }
+        const alts = t.split('||');   // "hey||a||eh": several alternatives for one final result
+        this.onresult && this.onresult({ resultIndex:0, results: [Object.assign(alts.map(x => ({ transcript:x })), { isFinal:true })] }); this.onend && this.onend(); };
       this._h = setTimeout(tick, 50); }
     stop(){ this.abort(); }
     abort(){ if (!this._live) return; this._live = false; clearTimeout(this._h); this.onerror && this.onerror({ error:'aborted' }); this.onend && this.onend(); } }

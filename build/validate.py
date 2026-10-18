@@ -234,7 +234,23 @@ for L in LAD['levels']:
                     if sp.nsimplify(c)!=got: err.append(f"{q['id']} ladder key {c} != {got}")
                     lad_chk+=1
                 except Exception: pass
-if len(LAD['placement'])!=15: err.append('placement needs 15 items')
+if len(LAD['placement'])!=len(LAD['levels']) or len(LAD['levels'])!=27: err.append('placement needs one item per level (27)')
+# audio-first items: re-evaluate each item's sympy check against the key, and run the spoken-answer round trip
+_xs=sp.Symbol('x'); lad_sym=0
+for L in LAD['levels']:
+    for st in L['sets']:
+        for q in st:
+            if 'check' not in q: continue
+            v=sp.sympify(q['check'],locals={'Rational':sp.Rational,'Eq':sp.Eq,'Max':sp.Max,'Min':sp.Min,'x':_xs})
+            if isinstance(v,sp.Equality): v=sp.solve(v,_xs)[0]
+            if q['mode']=='say':
+                a,b=(q['value'].split('/')+['1'])[:2]
+                if sp.Rational(v)!=sp.Rational(int(a),int(b)): err.append(f"{q['id']} check {q['check']} = {v} but key is {q['value']}")
+            lad_sym+=1
+import subprocess
+_rt=subprocess.run(['node',os.path.join(os.path.dirname(os.path.abspath(__file__)),'check_ladder_speech.js')],capture_output=True,text=True)
+if _rt.returncode: err.append('spoken-answer round trip failed: '+_rt.stdout[:400])
+lad_chk+=lad_sym
 res_ladder=dict(items=lad_n, placement=len(LAD['placement']), checked=lad_chk)
 res=dict(ladder=res_ladder, counts=dict(cnt), total=len(Q), errors=err, warnings=warn, math_checked=checked_q, math_methods=dict(methods), math_unchecked=unchecked)
 
@@ -346,8 +362,28 @@ for L in LAD['levels']:
                     if sp.nsimplify(c)!=got: err.append(f"{q['id']} ladder key {c} != {got}")
                     lad_chk+=1
                 except Exception: pass
-if len(LAD['placement'])!=15: err.append('placement needs 15 items')
-res_ladder=dict(items=lad_n, placement=len(LAD['placement']), checked=lad_chk)
+if len(LAD['placement'])!=len(LAD['levels']) or len(LAD['levels'])!=27: err.append('placement needs one item per level (27)')
+# audio-first items: re-evaluate each item's sympy check against the key, and run the spoken-answer round trip
+_xs=sp.Symbol('x'); lad_sym=0
+for L in LAD['levels']:
+    for st in L['sets']:
+        for q in st:
+            if 'check' not in q: continue
+            v=sp.sympify(q['check'],locals={'Rational':sp.Rational,'Eq':sp.Eq,'Max':sp.Max,'Min':sp.Min,'x':_xs})
+            if isinstance(v,sp.Equality): v=sp.solve(v,_xs)[0]
+            if q['mode']=='say':
+                a,b=(q['value'].split('/')+['1'])[:2]
+                if sp.Rational(v)!=sp.Rational(int(a),int(b)): err.append(f"{q['id']} check {q['check']} = {v} but key is {q['value']}")
+            lad_sym+=1
+import subprocess
+_rt=subprocess.run(['node',os.path.join(os.path.dirname(os.path.abspath(__file__)),'check_ladder_speech.js')],capture_output=True,text=True)
+if _rt.returncode: err.append('spoken-answer round trip failed: '+_rt.stdout[:400])
+lad_chk+=lad_sym
+_sw=subprocess.run([sys.executable,os.path.join(os.path.dirname(os.path.abspath(__file__)),'sweep_ladder.py'),'200'],capture_output=True,text=True)
+try: _swr=json.loads(_sw.stdout.strip().splitlines()[-1])
+except Exception: _swr={'errors':-1,'raw':_sw.stdout[-300:]+_sw.stderr[-300:]}
+if _sw.returncode: err.append('ladder seed sweep failed: '+json.dumps(_swr.get('first',_swr))[:400])
+res_ladder=dict(items=lad_n, placement=len(LAD['placement']), checked=lad_chk, seed_sweep=dict(seeds=_swr.get('seeds'), items=_swr.get('items'), errors=_swr.get('errors')))
 res=dict(ladder=res_ladder, counts=dict(cnt), total=len(Q), errors=err, warnings=warn, math_checked=checked_q, math_methods=dict(methods), math_unchecked=unchecked, ei_calc_checked=ei_checked, shares=shares, formats=dict(fmt))
 json.dump(res,open('validate_report.json','w'),indent=1)
 print(json.dumps(res,indent=1))

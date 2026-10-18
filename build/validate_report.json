@@ -1,8 +1,13 @@
 {
  "ladder": {
-  "items": 600,
-  "placement": 15,
-  "checked": 586
+  "items": 1080,
+  "placement": 27,
+  "checked": 1060,
+  "seed_sweep": {
+   "seeds": 200,
+   "items": 54000,
+   "errors": 0
+  }
  },
  "counts": {
   "AR": 85,
