@@ -67,7 +67,7 @@
  {
   "test": "spaced repetition: missed -> box 1, due in ~5 min",
   "pass": true,
-  "info": "{'box': 1, 'right': 0, 'wrong': 1, 'due': 1792334651996, 'seen': 1792334351996}"
+  "info": "{'box': 1, 'right': 0, 'wrong': 1, 'due': 1792339419739, 'seen': 1792339119739}"
  },
  {
   "test": "topic marked for re-learn",
@@ -82,7 +82,7 @@
  {
   "test": "score tracker attempt saved",
   "pass": true,
-  "info": "{'AR': [{'date': '2026-10-18T14:39:15.928Z', 'correct': 4, 'total': 5, 'pct': 80, 'mode': 'practice'}]}"
+  "info": "{'AR': [{'date': '2026-10-18T15:58:42.639Z', 'correct': 4, 'total': 5, 'pct': 80, 'mode': 'practice'}]}"
  },
  {
   "test": "spaced repetition: sure-right -> box 2, due ~1 day",
@@ -157,7 +157,7 @@
  {
   "test": "symbols spoken in words",
   "pass": true,
-  "info": "3 over 4|times|x squared|25 percent"
+  "info": "3 fourths|times|x squared|25 percent"
  },
  {
   "test": "read-along fallback timing highlights without boundary events",
@@ -177,7 +177,7 @@
  {
   "test": "hands-free: reads, hears \"repeat\", NATO answer, confidence, \"next\"",
   "pass": true,
-  "info": "{'qid': 'GS-009', 'correct': True, 'guess': 3, 'topic': 'gs-earth-space', 'conf': 'sure'}"
+  "info": "{'qid': 'GS-013', 'correct': True, 'guess': 0, 'topic': 'gs-chemistry', 'conf': 'sure'}"
  },
  {
   "test": "hands-free speaks right/wrong with reason and asks confidence",
@@ -190,19 +190,44 @@
   "info": ""
  },
  {
-  "test": "math ladder screen: 15 levels, starts at level 1",
+  "test": "opening Arithmetic Reasoning goes to the catch-up track with the AR header",
+  "pass": true,
+  "info": "Arithmetic Reasoning: Level 1 of 27, Adding and Subtracting in Your Head"
+ },
+ {
+  "test": "home AR tile shows the catch-up level and opens the track",
   "pass": true,
   "info": ""
  },
  {
-  "test": "placement: first miss on question 5 puts him on level 5",
+  "test": "\"Math ladder\" tile is an alias for the same place",
   "pass": true,
-  "info": "{'level': 5, 'placed': True, 'passed': {'1': True, '2': True, '3': True, '4': True}, 'tries': {}, 'best': {}, 'log': []}"
+  "info": ""
+ },
+ {
+  "test": "\"Real test questions\" opens the 85 real AR items",
+  "pass": true,
+  "info": "['Real test questions (85)', 1, 85, 'https://dpzssoul.github.io/asvab-coach/index.html#practice/AR']"
+ },
+ {
+  "test": "real AR practice uses AR bank items",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "after home, AR goes back to the track",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "placement stops at the first miss (question 5 -> level 5)",
+  "pass": true,
+  "info": "{'v': 3, 'level': 5, 'placed': True, 'passed': {'1': True, '2': True, '3': True, '4': True}, 'tries': {}, 'best': {}, 'log': []}"
  },
  {
   "test": "ladder: 7 of 10 does not pass (needs 8)",
   "pass": true,
-  "info": "{'level': 5, 'placed': True, 'passed': {'1': True, '2': True, '3': True, '4': True}, 'tries': {'5': 1}, 'best': {'5': 7}, 'log': [{'date': '2026-10-18T14:39:44.426Z', 'level': 5, 'right': 7, 'total': 10}]}"
+  "info": "{'v': 3, 'level': 5, 'placed': True, 'passed': {'1': True, '2': True, '3': True, '4': True}, 'tries': {'5': 1}, 'best': {'5': 7}, 'log': [{'date': '2026-10-18T15:59:17.886Z', 'level': 5, 'right': 7, 'total': 10}]}"
  },
  {
   "test": "ladder: the retry uses a new set (set B)",
@@ -212,20 +237,85 @@
  {
   "test": "ladder: second miss in a row sends him back one level",
   "pass": true,
-  "info": "{'level': 4, 'placed': True, 'passed': {'1': True, '2': True, '3': True, '4': True}, 'tries': {'5': 0}, 'best': {'5': 7}, 'log': [{'date': '2026-10-18T14:39:44.426Z', 'level': 5, 'right': 7, 'total': 10}, {'date': '2026-10-18T14:39:45.096Z', 'level': 5, 'right': 7, 'total': 10}]}"
+  "info": "{'v': 3, 'level': 4, 'placed': True, 'passed': {'1': True, '2': True, '3': True, '4': True}, 'tries': {'5': 0}, 'best': {'5': 7}, 'log': [{'date': '2026-10-18T15:59:17.886Z', 'level': 5, 'right': 7, 'total': 10}, {'date': '2026-10-18T15:59:18.551Z', 'level': 5, 'right': 7, 'total': 10}]}"
  },
  {
-  "test": "ladder: 8+ of 10 passes and moves up",
-  "pass": true,
-  "info": "{'level': 5, 'placed': True, 'passed': {'1': True, '2': True, '3': True, '4': True}, 'tries': {'4': 0, '5': 0}, 'best': {'4': 10, '5': 7}, 'log': [{'date': '2026-10-18T14:39:44.426Z', 'level': 5, 'right': 7, 'total': 10}, {'date': '2026-10-18T14:39:45.096Z', 'level': 5, 'right': 7, 'total': 10}, {'date': '2026-10-18T14:39:45.775Z', 'level': 4, 'right': 10, 'total': 10}]}"
- },
- {
-  "test": "ladder bank: 15 levels x 4 sets x 10 + 15 placement items",
+  "test": "\"Another one like this\" adds an extra, uncounted question",
   "pass": true,
   "info": ""
  },
  {
-  "test": "ladder lesson renders with read-aloud",
+  "test": "ladder: 8+ of 10 passes and moves up",
+  "pass": true,
+  "info": "{'v': 3, 'level': 5, 'placed': True, 'passed': {'1': True, '2': True, '3': True, '4': True}, 'tries': {'4': 0, '5': 0}, 'best': {'4': 10, '5': 7}, 'log': [{'date': '2026-10-18T15:59:17.886Z', 'level': 5, 'right': 7, 'total': 10}, {'date': '2026-10-18T15:59:18.551Z', 'level': 5, 'right': 7, 'total': 10}, {'date': '2026-10-18T15:59:19.287Z', 'level': 4, 'right': 10, 'total': 10}]}"
+ },
+ {
+  "test": "track: 27 levels x 4 sets x 10 + 27 placement; levels 1-26 spoken answers, 27 = A-D bridge",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "fraction + algebra steps present (meaning ... words to an equation)",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "typed/spoken \"6 eighths\" for a simplify item is not counted (must be simplest)",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "spoken lesson renders with quick checks",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "old 15-level progress is moved to the first new small step he has not done",
+  "pass": true,
+  "info": "{'v': 3, 'level': 5, 'placed': True, 'passed': {'1': True, '2': True, '3': True, '4': True, '9': True}, 'tries': {}, 'best': {}, 'log': [], 'migrated': True}"
+ },
+ {
+  "test": "after the bridge level is passed, AR uses the real questions (adaptive practice)",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "home AR tile shows the normal level once the track is done",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "learn-by-ear screens render (audio lessons, drills, vocab, read along)",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "Settings shows the voice debug log (transcript + other guesses)",
+  "pass": true,
+  "info": "15:59:19 question: \"hey\" [a | eh]\n15:59:16 afterconf: \"next\"\n15:59:13 feedback: \"sure\"\n15:59:10 question: \"alpha\"\n15:59:"
+ },
+ {
+  "test": "voice debug log can be cleared",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "progress shows catch-up level, reading WCPM, and drills",
+  "pass": true,
+  "info": "Catch-up, reading, and drills\n\nArithmetic Reasoning: Level 1 of 27, Adding and Subtracting in Your Head. 0 of 27 levels passed.\n\nReading: last 55 words correct "
+ },
+ {
+  "test": "audio playlist starts at his level and includes vocab review",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "read-along scoring: words correct, accuracy, words correct per minute",
+  "pass": true,
+  "info": "{'words': 7, 'correct': 6, 'acc': 86, 'wcpm': 60, 'hit': [True, True, True, False, True, True, True], 'list': ['the', 'ship', 'left', 'the', 'dock', 'at', 'dawn']}"
+ },
+ {
+  "test": "typed speed drill: 10 of 10 saved",
   "pass": true,
   "info": ""
  },
@@ -252,7 +342,7 @@
  {
   "test": "MEPS time-out scores unanswered as random guesses (official rule)",
   "pass": true,
-  "info": "{'right': 1, 'total': 15, 'answered': 1, 'guessed': 3.5}"
+  "info": "{'right': 0, 'total': 15, 'answered': 1, 'guessed': 3.5}"
  },
  {
   "test": "MEPS score report with labeled AFQT estimate",
@@ -262,7 +352,7 @@
  {
   "test": "MEPS report shows all IT rules (212 / 156 / CT / 214) and EI part",
   "pass": true,
-  "info": "MEPS practice: score report Test done. You got 47 out of 85. Estimated AFQT: about 84. IT main rule estimate: 238 of 212. This is only an estimate. Read Part\tRight\tPercent\tEst. standard score General "
+  "info": "MEPS practice: score report Test done. You got 46 out of 85. Estimated AFQT: about 84. IT main rule estimate: 238 of 212. This is only an estimate. Read Part\tRight\tPercent\tEst. standard score General "
  },
  {
   "test": "IT estimate: AR50 MK50 EI35 VE50 GS65 -> 185/212 and 165/156",
@@ -312,7 +402,7 @@
  {
   "test": "import restores progress and custom questions",
   "pass": true,
-  "info": "Backup restored. 1 AI questions. 33 misses."
+  "info": "Backup restored. 1 AI questions. 34 misses."
  },
  {
   "test": "service worker controls page and app loads offline",
@@ -325,9 +415,9 @@
   "info": ""
  },
  {
-  "test": "service worker version bumped (asvab-coach-v3, network-first)",
+  "test": "service worker version bumped (asvab-coach-v4, network-first)",
   "pass": true,
-  "info": "['asvab-coach-v3']"
+  "info": "['asvab-coach-v4']"
  },
  {
   "test": "manifest valid with icons",
