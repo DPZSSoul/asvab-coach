@@ -10,7 +10,7 @@ html=html.replace('<link rel="icon" href="icon-192.png">',f'<link rel="icon" hre
 html=html.replace('<link rel="stylesheet" href="styles.css">','<style>\n'+rd('styles.css')+'\n</style>')
 html=html.replace('<script src="questions.js"></script>','<script>window.ASVAB_SINGLE_FILE=true;\n'+safe(rd('questions.js'))+'</script>')
 html=html.replace('<script src="tutor_rules.js"></script>','<script>'+safe(rd('tutor_rules.js'))+'</script>')
-for f in ['mathspeech.js','app.js','ladder.js','ladder_ui.js','audio.js','handsfree.js']:
+for f in ['earlessons.js','pcreal.js','mathspeech.js','app.js','ladder.js','ladder_ui.js','audio.js','features.js','handsfree.js']:
     html=html.replace(f'<script src="{f}"></script>','<script>\n'+safe(rd(f))+'\n</script>')
 assert 'src="' not in html and 'href="styles' not in html
 open(os.path.join(R,'asvab-coach.html'),'w',encoding='utf-8').write(html)

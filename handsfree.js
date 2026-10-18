@@ -155,12 +155,18 @@ const HF = {
     const h = this.ctx && this.ctx.help ? (typeof this.ctx.help === 'function' ? this.ctx.help(this.arg) : this.ctx.help) : 'Say a section name, math ladder, MEPS, progress, tutor, or review misses.';
     await this.say(h + ' ' + GLOBAL_HELP);
   },
-  async leaveMeps(){ if (!(M && M.running)) return true; const yes = await this.ask('Quit the MEPS test? Your run will end. Say yes or no.');
+  async leaveMeps(){ if (!(M && M.running)) return true; const yes = await this.ask(`Quit the ${M.kind === 'weekly' ? 'weekly' : 'MEPS'} test? Your run will end. Say yes or no.`);
     if (yes){ M.running = false; clearInterval(M.timer); } else { await this.say('OK. Keep going.'); if (M && M.running && M.q && this.ctxName === 'mepsq') this.enter('mepsq'); } return yes; },
   async nav(t){
     const to = async (name, arg) => { if (M && M.running && !(await this.leaveMeps())) return true; go(name, arg); return true; };
     if (anyOf(t, ['home', 'main menu', 'go home', 'start over', 'menu'])) return to('home');
     if (/^(go )?back\b|\bgo back\b|\bprevious screen\b/.test(t)){ const prev = NAV_STACK.length > 1 ? NAV_STACK[NAV_STACK.length - 2] : ['home']; NAV_STACK.splice(-2); return to(prev[0], prev[1]); }
+    if (anyOf(t, ['weekly test', 'weekly practice test', 'weekly', 'week test', 'weekly quiz', 'score goal'])) return to('weekly');
+    if (anyOf(t, ["today's plan", 'todays plan', 'today plan', 'daily plan', 'work plan', 'ten minute plan', '10 minute plan', 'plan for today', 'start my plan'])) return to('plan', 'new');
+    if (anyOf(t, ['test day tips', 'test day tip', 'test tips', 'testing tips', 'test day', 'tips for the test', 'meps tips'])) return to('earset', 'tips');
+    if (anyOf(t, ['electronics by ear', 'electronics lessons', 'electronic lessons', 'electricity lessons', 'ei lessons', 'electronics lesson'])) return to('earset', 'ei');
+    if (anyOf(t, ['real test passages', 'real passages', 'real test reading', 'real reading', 'real test level', 'hard passages', 'long passages'])) return to('pcreal');
+    if (anyOf(t, ['reminder', 'reminders', 'daily reminder'])) return to('settings');
     if (anyOf(t, ['meps', 'meps mode', 'practice test', 'full test', 'mock test', 'meps test', 'maps mode', 'meeps'])) return to('meps');
     if (anyOf(t, ['progress', 'my progress', 'my scores', 'scores', 'score report', 'line score', 'line scores'])) return to('progress');
     if (anyOf(t, ['error log', 'my misses', 'review misses', 'misses', 'mistakes', 'review my misses', 'missed questions', 'review'])) return to('review');
@@ -243,12 +249,14 @@ const sayEl = (sel, prefix) => Speech.speakEl(typeof sel === 'string' ? $(sel) :
 function answerFrom(all, choices){ return parseVoice(all, choices); }
 const VCTX = {
   home: {
-    help: 'Say a section name, like arithmetic, word knowledge, or electronics. Or say audio lessons, speed drills, vocab by ear, read along, math ladder, MEPS, progress, tutor, review misses, the plan, or settings.',
+    help: 'Say todays plan for a 10 minute plan. Say weekly test, test day tips, or electronics by ear. Say a section name, like arithmetic, word knowledge, or electronics. Or say audio lessons, speed drills, vocab by ear, read along, math ladder, MEPS, progress, tutor, review misses, the plan, or settings.',
     async intro(alive){
       const s = streakInfo();
       await Speech.say(`Home. Today you did ${s.todayCount} of ${DAILY_GOAL} questions. Streak: ${s.streak} day${s.streak === 1 ? '' : 's'}.`); if (!alive()) return;
+      if ($('#remindBanner')){ await Speech.say(`Study reminder. ${DAILY_GOAL - s.todayCount} more questions keep your streak.`); if (!alive()) return; }
+      if ($('#weeklyNudge')){ await Speech.say('Your weekly test is due. Say weekly test to start it.'); if (!alive()) return; }
       await Speech.say(itPlanText(false)); if (!alive()) return;
-      await Speech.say('Say a section name, practice, math ladder, MEPS, progress, tutor, review misses, or help.');
+      await Speech.say("Say today's plan for 10 minutes of study. Or say a section name, weekly test, test day tips, math ladder, MEPS, progress, or help.");
     },
   },
   practice: {
@@ -282,9 +290,12 @@ const VCTX = {
   question: {
     choices: () => S && !S.answered ? S.qs[S.i].choices : null, pick: i => answer(i),
     help: 'Say A, B, C, or D. Or say the answer words. You can say repeat, read the passage, read the choices, hint, skip, or end practice.',
-    async intro(alive){ if (!S) return; await readQuestionAloud(S.qs[S.i]); if (!alive()) return; await Speech.say('Your answer?'); },
+    async intro(alive){ if (!S) return; await (S.pcMode ? pcrRead(S.qs[S.i]) : readQuestionAloud(S.qs[S.i])); if (!alive()) return; await Speech.say('Your answer?'); },
     async handle(t, all){
       if (!S) return false; const q = S.qs[S.i];
+      if (S.pcMode && anyOf(t, ['stop guide', 'guide off', 'stop the guide', 'no guide'])){ pcrGuide(true); await HF.say('Guide off.'); return true; }
+      if (S.pcMode && anyOf(t, ['guide me', 'guide', 'pacer', 'highlight'])){ pcrGuide(true); pcrGuide(); await HF.say('Guide on. Follow the light. Say stop guide to stop it.'); return true; }
+      if (S.pcMode && anyOf(t, ['read to me', 'read it to me'])){ HF.run(async () => { await sayEl('.passage-text', 'Passage.'); }); return true; }
       if (anyOf(t, ['read the passage', 'passage', 'read passage'])){ HF.run(async () => { await (q.passage ? sayEl('.passage-text', 'Passage.') : Speech.say('This question has no passage.')); }); return true; }
       if (anyOf(t, ['read the choices', 'choices', 'options', 'read the options'])){ HF.run(async alive => { const chs = $$('.choice'); for (let i = 0; i < chs.length && alive(); i++) await sayEl(chs[i].querySelector('span[id]'), LET[i] + '.'); }); return true; }
       if (/\b(hint|clue|explain|help me)\b/.test(t)){ const h = showHint(q); await HF.say(h || 'No more hints. Give it your best try.'); return true; }
@@ -329,7 +340,7 @@ const VCTX = {
   done: {
     help: 'Say practice again, progress, math ladder, or home.',
     async intro(alive, info){ await sayEl('#setSum'); if (!alive()) return; await Speech.say('Say practice again, progress, or home.'); },
-    async handle(t, all, raw, info){ if (anyOf(t, ['practice again', 'again', 'another set', 'one more set'])){ go('practice', info.sec); return true; } return false; },
+    async handle(t, all, raw, info){ if (anyOf(t, ['practice again', 'again', 'another set', 'one more set'])){ if (info.pcreal) go('pcreal'); else go('practice', info.sec); return true; } return false; },
   },
   tutor: {
     help: 'Say my last miss, or miss number 2. Say new question to say a question out loud.',
@@ -414,9 +425,14 @@ const VCTX = {
       return false; },
   },
   settings: {
-    help: 'Say slower, faster, read along on or off, dark mode on or off, auto start on or off, wake word on or off, or home.',
-    async intro(){ await Speech.say(`Settings. Reading speed ${settings.rate}. Auto start is ${settings.hfAuto ? 'on' : 'off'}. Wake word is ${settings.hfWake ? 'on. Start each command with the word coach' : 'off'}. ` + VCTX.settings.help); },
+    help: 'Say reminder on, reminder off, or remind me at 7 PM. Say slower, faster, read along on or off, dark mode on or off, auto start on or off, wake word on or off, or home.',
+    async intro(){ await Speech.say(`Settings. ${remStatusText()} Reading speed ${settings.rate}. Auto start is ${settings.hfAuto ? 'on' : 'off'}. Wake word is ${settings.hfWake ? 'on. Start each command with the word coach' : 'off'}. ` + VCTX.settings.help); },
     async handle(t){
+      if (/\bremind/.test(t)){ const tm = parseSpokenTime(t);
+        if (tm){ await reminderSet(true, tm); go('settings'); await HF.say(`Reminder on, every day at ${remSpoken(tm)}.`); return true; }
+        if (/\b(off|stop|no)\b/.test(t)){ await reminderSet(false); go('settings'); await HF.say('Reminder off.'); return true; }
+        if (/\b(on|yes|start)\b/.test(t)){ await reminderSet(true); go('settings'); await HF.say(`Reminder on, every day at ${remSpoken()}. Say remind me at, and a time, to change it.`); return true; }
+        await HF.say(remStatusText() + ' Say reminder on, reminder off, or remind me at 7 PM.'); return true; }
       const onoff = t.match(/\b(on|off)\b/); if (!onoff) return false; const v = onoff[1] === 'on';
       const set = async (k, name) => { settings[k] = v; saveSettings(); await HF.say(`${name} ${v ? 'on' : 'off'}.`); go('settings'); return true; };
       if (/read ?along|highlight/.test(t)) return set('readAlong', 'Read along');
@@ -434,7 +450,7 @@ const VCTX = {
   },
   mepspart: {
     help: 'Say begin to start this part now. Say quit to end the test.',
-    async intro(){ if (!M) return; const k = MEPS_ORDER[M.part]; const [n, min] = CAT[k]; await Speech.say(`Part ${M.part + 1} of ${MEPS_ORDER.length}: ${SECTIONS[k]}. ${n} questions. ${min} minutes. Say begin. Or it starts by itself.`); },
+    async intro(){ if (!M) return; const k = M.order[M.part]; const [n, min] = M.counts[k]; await Speech.say(`${M.kind === 'weekly' ? 'Weekly test. ' : ''}Part ${M.part + 1} of ${M.order.length}: ${SECTIONS[k]}. ${n} questions. ${spokenTime(min * 60)}. Say begin. Or it starts by itself.`); },
     async handle(t){
       if (isGo(t)){ const b = $('#mBegin'); if (b) b.click(); return true; }
       if (anyOf(t, ['quit', 'quit meps', 'end the test', 'stop the test', 'exit'])){ if (await HF.leaveMeps()) go('home'); return true; }
@@ -552,7 +568,7 @@ const VCTX = {
 };
 let LL = null;   // spoken lesson position
 async function llPlay(alive){
-  const L = ladLevel(LL.n); const steps = L.lesson;
+  const steps = LL.steps || ladLevel(LL.n).lesson;
   while (LL.i < steps.length){
     if (!alive()) return; const b = steps[LL.i];
     const el = document.querySelector(`[data-step="${LL.i}"]`); $$('.lad-li.now').forEach(x => x.classList.remove('now')); if (el) el.classList.add('now');
@@ -560,7 +576,7 @@ async function llPlay(alive){
     if (b.t === 'pre' || b.t === 'h') { LL.i++; continue; }
     await Speech.say(b.x); LL.i++; await sleep(250);
   }
-  if (alive()) await Speech.say('That is the lesson. Say start to do a set of 10, or repeat that.');
+  if (alive()){ if (LL.onEnd) LL.onEnd(); await Speech.say(LL.end || 'That is the lesson. Say start to do a set of 10, or repeat that.'); }
 }
 function spokenTime(s){ s = Math.max(0, Math.ceil(s)); const m = Math.floor(s / 60), r = s % 60; return (m ? `${m} minute${m === 1 ? '' : 's'}` : '') + (m && r ? ' and ' : '') + (r || !m ? `${r} second${r === 1 ? '' : 's'}` : ''); }
 async function readMiss(st, alive){
@@ -654,4 +670,5 @@ Object.assign(VCTX, {
   },
 });
 
+Object.assign(VCTX, EXTRA_VCTX);
 boot();

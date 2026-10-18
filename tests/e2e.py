@@ -286,7 +286,7 @@ with sync_playwright() as pw:
     ok('practice works offline', p.locator('.choice').count() == 4)
     ctx.set_offline(False)
     swt = p.evaluate("fetch('sw.js',{cache:'no-store'}).then(r=>r.text())"); keys = p.evaluate('caches.keys()')
-    ok('service worker version bumped (asvab-coach-v4, network-first)', "asvab-coach-v4" in swt and 'network-first' in swt and 'asvab-coach-v4' in keys and 'asvab-coach-v3' not in keys, keys)
+    ok('service worker version bumped (asvab-coach-v5, network-first)', "asvab-coach-v5" in swt and 'network-first' in swt and 'asvab-coach-v5' in keys and 'asvab-coach-v4' not in keys, keys)
     man = p.evaluate("fetch('manifest.webmanifest').then(r=>r.json())"); ok('manifest valid with icons', man['name'] == 'ASVAB Coach' and len(man['icons']) == 2)
 
     # ---- single self-contained file over file:// ----

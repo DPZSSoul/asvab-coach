@@ -118,6 +118,14 @@ window.ASVAB_BANK={"version": "2026-10-17b", "title": "ASVAB Coach question bank
 <script>window.TUTOR_RULES="# Tutor Rules for the Bot\n\nThese rules are for the bot.\nUse them every time he says he is stuck.\n\nThe goal: he learns to solve it himself.\nGiving the answer fast does not teach him.\n\n## The Big Rules\n\n- Never give the final answer right away.\n- Use short sentences. Max about 12 words.\n- One idea at a time.\n- Ask only one question at a time.\n- Wait for his reply before you go on.\n- Praise effort. Every time.\n- Never say \"easy\" or \"obvious\".\n- Never rush him.\n- Do not correct his spelling or typing.\n- Check his thinking, not his spelling.\n\n## Dyslexia-Friendly Style\n\n- Use short lines. Add blank lines between steps.\n- Use numbered steps.\n- Put key numbers on their own line.\n- Say symbols in words: \"plus\", \"times\", \"divided by\".\n- Offer to read a long passage in small chunks.\n- Use plain words. If a hard word shows up, explain it.\n- Let him answer in his own words.\n- Let him answer by voice if his device allows it.\n- Do not use long paragraphs.\n\n## The Method (Step by Step)\n\n### Step 1: Say what it is\n\nTell him what the thing is, in plain words.\nThen say why it matters.\n\n- What it is: 1 or 2 short sentences.\n- Why it matters: 1 short sentence.\n\n### Step 2: Tiny real-life example\n\nGive one small example from daily life.\nKeep it to 2 or 3 short lines.\nUse food, money, cars, phones, or the Navy.\nDo NOT use the numbers from his problem.\n\n### Step 3: Ask him to try\n\nAsk: \"Want to try the first step?\"\nIf he tries, go to Step 5.\nIf he says \"I don't know\", use the hint ladder.\n\n### Step 4: The hint ladder\n\nGive one hint at a time.\nAfter each hint, ask him to try.\n\n- Hint 1: The idea.\n  - Name the main idea or rule.\n  - No numbers from his problem yet.\n- Hint 2: The first step.\n  - Show only the first move.\n  - Do not finish the problem.\n- Hint 3: A worked example.\n  - Solve a SIMILAR problem with different numbers.\n  - Show every step. Keep it short.\n  - Then say: \"Now try yours the same way.\"\n\n### Step 5: Check his work kindly\n\nWhen he tries:\n\n1. Say what he did well first.\n2. Find the first step that is right.\n3. Find the first step that is off.\n4. Ask a question that points at it.\n5. Let him fix it.\n\nDo not just say \"wrong\".\nSay \"not yet\" or \"close\".\n\n### Step 6: When to reveal the answer\n\nOnly reveal the answer when BOTH are true:\n\n- You gave all 3 hints.\n- AND he tried the next step, OR he asks for the answer.\n\nIf he asks early, say:\n\"I hear you. Let me give you a hint first. You are close.\"\n\nThen give the next hint.\n\nWhen you do reveal:\n\n- Show the answer step by step.\n- Explain why each step works.\n- Then give him a new, similar problem.\n- Praise the effort.\n\n### Step 7: Lock it in\n\n- Ask him to say the rule in his own words.\n- Give one similar problem to try alone.\n- Log the topic in the tracker notes if it was hard.\n  - Example: `python3 tracker.py add MK 6 10 \"fractions hard\"`\n\n## If He Gets It Right\n\n- Say it is right. Say why it is right.\n- Praise the effort. Not just the answer.\n- Ask him to tell you the steps in order.\n- If he got it fast, try a harder one.\n\n## Praise Lines (use different ones)\n\n- \"Nice try. You showed your work.\"\n- \"Good. You did not give up.\"\n- \"That is the right first step.\"\n- \"I like how you checked it.\"\n- \"You are thinking like a technician.\"\n- \"Mistakes help your brain learn.\"\n- \"Step 1 is right. Let's look at step 2.\"\n- \"You are closer than you think.\"\n\n## Watch for Frustration\n\nSigns: short replies, \"I can't\", \"this is dumb\".\n\n- Slow down.\n- Say: \"This one is tricky. Many people miss it.\"\n- Make the step smaller.\n- Offer a break. Offer an easier one first.\n- Never shame him.\n\n## During a Timed Test\n\n- Do not tutor while the clock runs.\n- Say: \"Skip it and come back.\"\n- After he says \"stop\", go over the misses.\n- Use the hint ladder on each miss.\n\n## Quick Templates by Subject\n\n- AR (word problems):\n  - Hint 1: What is the question asking for?\n  - Hint 2: Write down the numbers. Pick the operation.\n  - Hint 3: Worked example with new numbers.\n- MK (math skills):\n  - Hint 1: Name the rule or formula.\n  - Hint 2: Do the first step only.\n  - Hint 3: Worked example.\n- WK (words):\n  - Hint 1: Look at the sentence. What is the mood?\n  - Hint 2: Look for word parts. (See 01b_word_parts.md.)\n  - Hint 3: Use the word in a sample sentence.\n- PC (passages):\n  - Hint 1: Read the question first. What type is it?\n  - Hint 2: Find the line that answers it.\n  - Hint 3: Show how a similar question is solved.\n- GS (science):\n  - Hint 1: What topic is this? Life, earth, or physical?\n  - Hint 2: Give a memory hook.\n  - Hint 3: Give a similar fact and its answer.\n- EI (electronics):\n  - Hint 1: Name the formula. (Ohm's law or power.)\n  - Hint 2: Write what you know and what you need.\n  - Hint 3: Solve a similar circuit with new numbers.\n\n## Sample Dialogue 1: A Fraction Problem\n\nProblem: What is 1/2 + 1/3?\n\n**You:** I don't get how to add fractions.\n\n**Bot:**\nA fraction is a part of a whole.\nThe bottom number tells the size of each piece.\nAdding works only when the pieces are the same size.\nWhy it matters: AR and MK use fractions a lot.\n\n**Bot:**\nTiny example.\nYou eat half a candy bar.\nLater you eat a quarter of a different bar.\nThe pieces are different sizes.\nSo you cannot just count them.\n\n**Bot:** Want to try your problem? Tell me your first step.\n\n**You:** 2/5?\n\n**Bot:**\nGood try. You showed your work.\nYou added the tops and the bottoms.\nLet's check it.\nHalf a bar is a big piece.\nIs 2/5 more or less than half?\n\n**You:** less\n\n**Bot:**\nYes. Less than half.\nBut you started with half and added more.\nSo the answer should be MORE than half.\nSomething is off. Want a hint?\n\n**You:** ok\n\n**Bot:**\nHint 1 (the idea):\nFractions need the same size pieces before you add.\nThe bottom numbers must match.\nWant to try again?\n\n**You:** i dont know how\n\n**Bot:**\nNo problem.\nHint 2 (the first step):\nFind a number that both 2 and 3 go into evenly.\nTry counting by 2s and 3s.\nWhat do you find?\n\n**You:** 6\n\n**Bot:**\nYes! 6 works.\nThat is the common bottom number.\nWant to change 1/2 into sixths?\n\n**You:** not sure\n\n**Bot:**\nHint 3 (a similar example, new numbers):\nAdd 1/2 + 1/4.\nMake the bottoms match: 4.\n1/2 = 2/4. (Top and bottom times 2.)\n2/4 + 1/4 = 3/4.\nNow try yours the same way.\n\n**You:** 1/2 = 3/6. 1/3 = 2/6. So 5/6\n\n**Bot:**\nYes! 5/6 is right.\nYou did every step.\nCheck: 5/6 is more than half. That fits.\nCan you say the rule in your own words?\n\n**You:** make the bottoms the same then add the tops\n\n**Bot:**\nPerfect. That is the whole rule.\nHere is one to try alone: 1/4 + 1/3.\n\n## Sample Dialogue 2: An Ohm's Law Problem\n\nProblem: A 12 volt battery is connected to a 4 ohm resistor. How much current flows?\n\n**You:** just tell me the answer\n\n**Bot:**\nI hear you. This one is tricky at first.\nLet me help you get it yourself.\nYou will remember it better.\nFirst, what it is.\n\n**Bot:**\nOhm's law links three things.\nVoltage (volts) is the push.\nResistance (ohms) is how hard it is to flow.\nCurrent (amps) is how much flows.\nWhy it matters: EI tests use it a lot.\n\n**Bot:**\nTiny example.\nThink of a garden hose.\nWater pressure is the push.\nA pinched hose is the resistance.\nThe water coming out is the current.\nMore push: more water.\nMore pinch: less water.\n\n**Bot:** Want to try the first step?\n\n**You:** idk\n\n**Bot:**\nHint 1 (the idea):\nCurrent equals voltage divided by resistance.\nWe write it: I = V / R.\nWhich number in your problem is V?\n\n**You:** 12?\n\n**Bot:**\nYes. 12 volts is V.\nYou found it. Nice.\nWhich number is R?\n\n**You:** 4\n\n**Bot:**\nRight. 4 ohms is R.\nHint 2 (the first step):\nWrite the formula with your numbers.\nI = V / R\nI = 12 / 4\nWant to finish it?\n\n**You:** ok just tell me\n\n**Bot:**\nYou are one step away.\nHere is Hint 3 (a similar example, new numbers):\nA 10 volt battery and a 5 ohm resistor.\nI = 10 / 5\nI = 2 amps.\nNow try yours the same way.\n\n**You:** 12 / 4 = 3\n\n**Bot:**\nYes! 3 amps.\nAlways add the unit. Amps.\nYou found V and R yourself. Good work.\nQuick check.\nSay the resistor were 6 ohms.\nWould the current go up or down?\n\n**You:** down\n\n**Bot:**\nRight. More resistance means less current.\nTry this one alone: 24 volts and 8 ohms.\n\n## Note on Answer Keys\n\nA finished test is not the same as being stuck.\nAfter he finishes a test, he may read the key.\nKeys have a one-line reason for each answer.\nIf a reason is not enough, use the hint ladder to teach it.\n";
 </script>
 <script>
+window.ASVAB_EAR={"ei": [{"id": "ei-1", "title": "Electricity is water in a pipe", "topics": ["ei-basics"], "steps": [{"t": "say", "x": "Picture a water tank with a hose coming out of the bottom."}, {"t": "say", "x": "Voltage is the push. It is like water pressure in the hose. More pressure pushes the water harder. Voltage is measured in volts."}, {"t": "say", "x": "Current is the flow. It is how much water moves past one spot each second. Current is measured in amps."}, {"t": "say", "x": "Resistance is a narrow spot in the hose. A narrow spot fights the flow. Resistance is measured in ohms."}, {"t": "say", "x": "So remember: more push, more flow. More narrow, less flow."}, {"t": "say", "x": "Two batteries stacked end to end are like two pumps in a row. Their pushes add up."}, {"t": "check", "q": "Two batteries of 1 and a half volts each are stacked end to end. How many volts in all? Say the number.", "a": "3 volts", "v": "3", "chk": "3/2 + 3/2", "why": "One and a half plus one and a half is 3. Pushes in a row add up."}, {"t": "check", "q": "A narrow spot has 5 ohms. You make it twice as narrow, so the resistance doubles. How many ohms now? Say the number.", "a": "10 ohms", "v": "10", "chk": "2*5", "why": "Double 5 is 10 ohms. More narrow means more resistance, and less flow."}]}, {"id": "ei-2", "title": "Ohm's law as a triangle", "topics": ["ei-ohms-law"], "steps": [{"t": "say", "x": "Ohm's law says V equals I times R. V is volts, the push. I is amps, the flow. R is ohms, the narrow spot."}, {"t": "say", "x": "Picture a triangle. V sits on top. I and R sit side by side on the bottom."}, {"t": "say", "x": "Cover the one you want with your thumb. Cover V, and you see I next to R. Side by side means multiply."}, {"t": "say", "x": "Cover I, and you see V over R. Over means divide. So amps equal volts divided by ohms."}, {"t": "say", "x": "Cover R, and you see V over I. So ohms equal volts divided by amps."}, {"t": "check", "q": "A 12 volt battery is hooked to a 4 ohm resistor. How many amps flow? Say the number.", "a": "3 amps", "v": "3", "chk": "12/4", "why": "Cover I. You see V over R. 12 divided by 4 is 3 amps."}, {"t": "check", "q": "2 amps flow through a 6 ohm resistor. How many volts? Say the number.", "a": "12 volts", "v": "12", "chk": "2*6", "why": "Cover V. You see I times R. 2 times 6 is 12 volts."}, {"t": "check", "q": "A heater pulls 10 amps from 120 volts. How many ohms is it? Say the number.", "a": "12 ohms", "v": "12", "chk": "120/10", "why": "Cover R. You see V over I. 120 divided by 10 is 12 ohms."}]}, {"id": "ei-3", "title": "Series and parallel: one lane or many lanes", "topics": ["ei-series-parallel"], "steps": [{"t": "say", "x": "Series means one lane. Picture a one lane road with toll booths in a row. Every car must go through every booth."}, {"t": "say", "x": "In series, the same current goes through every part. The resistances add up: 4 ohms plus 6 ohms is 10 ohms."}, {"t": "say", "x": "And if one part breaks, the lane is blocked. Old holiday lights went dark when one bulb broke. That is series."}, {"t": "say", "x": "Parallel means many lanes side by side. The traffic splits, and each lane carries part of it."}, {"t": "say", "x": "More lanes means it is easier to get through. So in parallel, the total resistance goes down."}, {"t": "say", "x": "Two equal resistors in parallel give half of one. Two 10 ohm resistors in parallel give 5 ohms."}, {"t": "say", "x": "Your house is wired in parallel. That is why one lamp can be off while the others stay on."}, {"t": "check", "q": "A 4 ohm and a 6 ohm resistor are in series. What is the total, in ohms? Say the number.", "a": "10 ohms", "v": "10", "chk": "4+6", "why": "Series is one lane. Resistances add: 4 plus 6 is 10."}, {"t": "check", "q": "Two 10 ohm resistors are in parallel. What is the total, in ohms? Say the number.", "a": "5 ohms", "v": "5", "chk": "1/(Rational(1,10)+Rational(1,10))", "why": "Two equal resistors in parallel give half of one. Half of 10 is 5."}, {"t": "check", "q": "Three bulbs are in series. One bulb burns out. How many bulbs stay lit? Say the number.", "a": "0", "v": "0", "chk": "0", "why": "Series is one lane. One break blocks the whole lane, so all 3 go dark. The answer is 0."}]}, {"id": "ei-4", "title": "Power: push times flow", "topics": ["ei-power"], "steps": [{"t": "say", "x": "Picture water turning a water wheel. The wheel does more work when the push is strong and the flow is big."}, {"t": "say", "x": "Power works the same way. Power equals volts times amps. P equals V times I. Power is measured in watts."}, {"t": "say", "x": "You can use a triangle again. P on top, V and I on the bottom. Cover what you want."}, {"t": "say", "x": "Your power bill counts kilowatt hours. 1 kilowatt is 1000 watts. 1000 watts for 1 hour is 1 kilowatt hour."}, {"t": "check", "q": "A tool uses 120 volts and 2 amps. How many watts? Say the number.", "a": "240 watts", "v": "240", "chk": "120*2", "why": "P equals V times I. 120 times 2 is 240 watts."}, {"t": "check", "q": "A 60 watt bulb runs on 120 volts. How many amps does it pull? Say the number.", "a": "1 half of an amp", "v": "1/2", "chk": "Rational(60,120)", "why": "Cover I. You see P over V. 60 divided by 120 is 1 half. That is point 5 amps."}, {"t": "check", "q": "A 1000 watt heater runs for 3 hours. How many kilowatt hours? Say the number.", "a": "3 kilowatt hours", "v": "3", "chk": "1000*3/1000", "why": "1000 watts is 1 kilowatt. 1 kilowatt for 3 hours is 3 kilowatt hours."}]}, {"id": "ei-5", "title": "AC and DC", "topics": ["ei-ac-dc"], "steps": [{"t": "say", "x": "DC means direct current. It flows one way only, like water running downhill from a tank. Batteries give DC."}, {"t": "say", "x": "AC means alternating current. It flips back and forth, like a saw going push, pull, push, pull. Wall outlets give AC."}, {"t": "say", "x": "In the United States, wall power flips 60 times each second. That is 60 hertz. Hertz means cycles per second."}, {"t": "say", "x": "A normal wall outlet in the United States gives about 120 volts."}, {"t": "say", "x": "Why AC for houses? Its voltage is easy to raise and lower with a transformer, so power can travel far on the lines."}, {"t": "check", "q": "How many cycles each second does wall power make in the United States? Say the number.", "a": "60", "v": "60", "chk": "60", "why": "United States wall power is 60 hertz. That means 60 cycles each second."}, {"t": "check", "q": "About how many volts does a normal United States wall outlet give? Say the number.", "a": "120 volts", "v": "120", "chk": "120", "why": "A normal outlet gives about 120 volts. Big things like dryers use 240."}]}, {"id": "ei-6", "title": "Conductors and insulators", "topics": ["ei-materials"], "steps": [{"t": "say", "x": "A conductor lets electricity move through it easily. Picture a wide, smooth pipe."}, {"t": "say", "x": "Good conductors are metals: silver, copper, gold, and aluminum. Silver is the best, but it costs too much. So most wire is copper."}, {"t": "say", "x": "An insulator blocks electricity. Picture a pipe packed with clay. Rubber, glass, plastic, and dry wood are insulators."}, {"t": "say", "x": "A wire is copper inside, for the flow, and plastic outside, to keep the flow in and keep you safe."}, {"t": "say", "x": "In between are semiconductors, like silicon. They are used to make computer chips."}, {"t": "say", "x": "For wire size, a smaller gauge number means a thicker wire. 12 gauge is thicker than 14 gauge, and it can carry more current."}, {"t": "check", "q": "Copper, rubber, aluminum, and glass. How many of these are conductors? Say the number.", "a": "2", "v": "2", "chk": "2", "why": "Copper and aluminum are metals, so they conduct. Rubber and glass are insulators. That is 2."}, {"t": "check", "q": "Which wire is thicker, 12 gauge or 14 gauge? Say the gauge number.", "a": "12 gauge", "v": "12", "chk": "12", "why": "A smaller gauge number means a thicker wire. So 12 gauge is thicker."}]}, {"id": "ei-7", "title": "Common parts in a circuit", "topics": ["ei-components"], "steps": [{"t": "say", "x": "A resistor is the narrow spot. It limits current."}, {"t": "say", "x": "A capacitor is like a small water tank. It fills up with charge and empties again. It is measured in farads."}, {"t": "say", "x": "Capacitors side by side, in parallel, add up, like tanks side by side holding more water."}, {"t": "say", "x": "A diode is a one way valve. Current can go through it in one direction only. An LED is a diode that gives off light."}, {"t": "say", "x": "A transistor is a valve that a small current can open or close. It works as a switch or an amplifier."}, {"t": "say", "x": "A fuse is a weak link. If too much current flows, it melts and opens the circuit, to protect the wires. A circuit breaker does the same job, and you can reset it."}, {"t": "say", "x": "A switch opens or closes the path. Open means off. Closed means on."}, {"t": "check", "q": "A diode is a one way valve. In how many directions can current flow through it? Say the number.", "a": "1 direction", "v": "1", "chk": "1", "why": "A diode lets current through one way only. So 1."}, {"t": "check", "q": "A 10 microfarad and a 20 microfarad capacitor are in parallel. How many microfarads in all? Say the number.", "a": "30 microfarads", "v": "30", "chk": "10+20", "why": "Capacitors in parallel add, like tanks side by side. 10 plus 20 is 30."}, {"t": "check", "q": "A circuit normally pulls 8 amps. You have fuses rated 5, 10, and 30 amps. What is the smallest fuse that will not blow? Say the number.", "a": "10 amps", "v": "10", "chk": "Min(10,30)", "why": "A 5 amp fuse would melt at 8 amps. 10 is the smallest one above 8. 30 would not protect the wire well."}]}, {"id": "ei-8", "title": "Magnets and coils", "topics": ["ei-magnetism"], "steps": [{"t": "say", "x": "Every magnet has 2 poles, a north pole and a south pole."}, {"t": "say", "x": "Opposite poles pull together. Like poles push apart. North pulls south. North pushes north."}, {"t": "say", "x": "If you cut a magnet in half, each piece still gets its own north and south pole."}, {"t": "say", "x": "Current in a wire makes a magnetic field around it. Wrap the wire in a coil around iron, and you get an electromagnet. Turn off the current, and the magnet turns off."}, {"t": "say", "x": "It works the other way too. Move a magnet near a coil, and current flows. That is how a generator works."}, {"t": "say", "x": "A transformer has two coils. The voltage changes by the turns. Half the turns out means half the volts out."}, {"t": "check", "q": "How many poles does every magnet have? Say the number.", "a": "2 poles", "v": "2", "chk": "2", "why": "Every magnet has a north pole and a south pole. That is 2."}, {"t": "check", "q": "You cut a bar magnet in half. How many poles does each piece have? Say the number.", "a": "2 poles", "v": "2", "chk": "2", "why": "Each piece makes its own north and south pole. So still 2."}, {"t": "check", "q": "A transformer has 100 turns in and 50 turns out. 120 volts go in. How many volts come out? Say the number.", "a": "60 volts", "v": "60", "chk": "120*50/100", "why": "Half the turns out means half the volts. Half of 120 is 60."}]}], "tips": [{"id": "tip-1", "title": "Answer each question. There is no going back.", "src": ["cat-applicants", "cat-recruiters", "fact-sheet"], "steps": [{"t": "say", "x": "On the computer test, called the CAT-ASVAB, you see one question at a time."}, {"t": "say", "x": "Once you answer and move on, you cannot go back and change it. So read each question with care before you pick."}, {"t": "say", "x": "Each part has a time limit. The screen shows the time and the questions left, in the lower right corner."}, {"t": "say", "x": "If time runs out, the questions you did not reach are scored as if you had guessed at random. That lowers your score."}, {"t": "say", "x": "So keep a steady pace and answer every question. If time is almost gone, keep answering as well as you can. The official fact sheet says careful answers beat random guesses."}, {"t": "check", "q": "How many times can you go back and change an answer on the computer test? Say the number.", "a": "0", "v": "0", "chk": "0", "why": "Zero. Once you move on, the answer is locked in."}]}, {"id": "tip-2", "title": "Harder questions are a good sign", "src": ["cat-applicants", "cat-recruiters", "faqs"], "steps": [{"t": "say", "x": "The computer test adapts to you. Everyone starts with a question of medium difficulty."}, {"t": "say", "x": "If you get one right, the next one is usually harder. If you miss one, the next one is usually easier."}, {"t": "say", "x": "So if the questions feel hard, that often means you are doing well. Do not panic. Stay steady."}, {"t": "say", "x": "Scores are linked so they mean the same thing for everyone, even though people get different questions."}, {"t": "check", "q": "You get a question right. Is the next one usually easier or harder? Say 1 for easier, or 2 for harder.", "a": "2, harder", "v": "2", "chk": "2", "why": "A right answer usually brings a harder question. Harder is a good sign."}]}, {"id": "tip-3", "title": "Pacing for each part", "src": ["cat-applicants", "what-to-expect"], "steps": [{"t": "say", "x": "Here are the real limits, for the parts that count for Navy IT."}, {"t": "say", "x": "General Science: 15 questions in 12 minutes. That is about 48 seconds each."}, {"t": "say", "x": "Arithmetic Reasoning: 15 questions in 55 minutes. That is more than 3 minutes each. Use that time. Write your work down."}, {"t": "say", "x": "Word Knowledge: 15 questions in 9 minutes. That is about 36 seconds each. Move fast. You know it or you do not."}, {"t": "say", "x": "Paragraph Comprehension: 10 questions in 27 minutes. That is about 2 and a half minutes each."}, {"t": "say", "x": "Math Knowledge: 15 questions in 31 minutes. That is about 2 minutes each."}, {"t": "say", "x": "Electronics Information: 15 questions in 10 minutes. That is 40 seconds each."}, {"t": "say", "x": "Do not spend too long on one question. Almost everyone finishes before time runs out, so a steady pace works."}, {"t": "say", "x": "Some people get extra tryout questions that do not count. When that happens, the time limit is longer too."}, {"t": "check", "q": "How many minutes do you get for Arithmetic Reasoning? Say the number.", "a": "55 minutes", "v": "55", "chk": "55", "why": "Arithmetic Reasoning gives 55 minutes for 15 questions. Take your time and write it out."}, {"t": "check", "q": "Word Knowledge has 15 questions in 9 minutes. How many minutes is that? Say the number.", "a": "9 minutes", "v": "9", "chk": "9", "why": "Only 9 minutes for 15 words. Answer and move on."}]}, {"id": "tip-4", "title": "Rule out wrong answers", "src": ["preparing"], "steps": [{"t": "say", "x": "When you do not know the answer, do not just guess. First rule out the choices you know are wrong."}, {"t": "say", "x": "Look for a choice that is too big, too small, or does not answer the question. Cross it off in your head."}, {"t": "say", "x": "Then pick the best one from what is left. Each choice you rule out makes a good guess more likely."}, {"t": "check", "q": "There are 4 choices. You rule out 2. How many choices are left? Say the number.", "a": "2", "v": "2", "chk": "4-2", "why": "4 minus 2 is 2. Now you pick from 2, not 4."}]}, {"id": "tip-5", "title": "Paragraphs: read the question first", "src": ["preparing", "coach"], "steps": [{"t": "say", "x": "This one is a coach tip. For Paragraph Comprehension, read the question before you read the passage."}, {"t": "say", "x": "Then you know what to look for. Main idea? A detail? A word meaning?"}, {"t": "say", "x": "Read the passage once, looking for that. Then go back to the exact line that answers it."}, {"t": "say", "x": "The right answer must be backed up by the passage, not by what you already know."}]}, {"id": "tip-6", "title": "Scratch paper, no calculator, and units", "src": ["what-to-expect", "faqs", "cat-recruiters", "preparing"], "steps": [{"t": "say", "x": "You cannot use a calculator on the ASVAB. The test wants to see if you can do the math by hand."}, {"t": "say", "x": "At the testing station you get scratch paper and a pencil. If you need more, press the HELP key. The clock stops while you get help."}, {"t": "say", "x": "Use the paper on every math question. Write the numbers down. Draw a quick picture. It keeps you from mixing things up."}, {"t": "say", "x": "Check your units. If the question asks for inches and you worked in feet, change it before you answer."}, {"t": "check", "q": "A board is 2 feet long. How many inches is that? Say the number.", "a": "24 inches", "v": "24", "chk": "2*12", "why": "1 foot is 12 inches. 2 times 12 is 24 inches."}]}, {"id": "tip-7", "title": "The day before and the day of", "src": ["preparing", "what-to-expect", "coach"], "steps": [{"t": "say", "x": "Get plenty of rest the night before. That is official advice."}, {"t": "say", "x": "Bring valid identification. You need it to get into the testing room."}, {"t": "say", "x": "Do not be late. If you are late, you will be turned away and have to reschedule."}, {"t": "say", "x": "Coach tip: eat a normal meal before you go, so hunger does not pull your mind away. Ask your recruiter what else to bring."}, {"t": "say", "x": "Your recruiter may drive you there, but cannot come into the testing room."}]}, {"id": "tip-8", "title": "Stay calm", "src": ["coach", "cat-applicants"], "steps": [{"t": "say", "x": "Coach tip: if you feel stuck or nervous, take one slow breath in, and one slow breath out."}, {"t": "say", "x": "One hard question does not ruin a test. The test adapts, and the next one may be easier."}, {"t": "say", "x": "Read the question again, slowly. Ask: what is it really asking? Then do one small step."}, {"t": "say", "x": "You have practiced this. Trust your steps."}]}, {"id": "tip-9", "title": "Ask your recruiter about accommodations", "src": ["what-to-expect", "accommodations"], "steps": [{"t": "say", "x": "You learn best by listening, and that is OK. Ask your recruiter if any testing accommodations are possible for you."}, {"t": "say", "x": "Be ready for the answer to be no. The official ASVAB pages list no accommodations for the enlistment test, and other sources say tests taken with accommodations cannot be used to enlist."}, {"t": "say", "x": "So the safest plan is to practice under the real time limits, the way this app does in MEPS mode and the weekly test."}, {"t": "say", "x": "Also tell your recruiter the truth about your school history and health. The official site says to answer those questions openly and honestly."}]}]};
+
+</script>
+<script>
+window.ASVAB_PCREAL={"version": "2026-10-18", "passages": [{"id": "R01", "title": "Lockout before repairs", "text": "Before a technician repairs a machine, its power must be shut off and locked out. Lockout means placing a lock on the switch so that no one can turn the machine back on by mistake. Each worker who will touch the machine adds a personal lock and a tag with his or her name. The machine cannot be restarted until every lock is removed, and only the person who placed a lock may remove it. Some workers see this as a slow and needless step, especially for a quick job. However, safety records show that many serious injuries happen during short repairs, when someone assumes the work will be finished before anyone notices. A few minutes spent on lockout can prevent an accident that ends a career.", "words": 127}, {"id": "R02", "title": "The Navajo Code Talkers", "text": "During World War II, the United States Marine Corps needed a way to send battlefield messages that the enemy could not understand. The answer came from the Navajo language, which had no written alphabet at the time and was spoken by very few people outside the Navajo Nation. Several hundred Navajo men served as Code Talkers. They built a code inside their own language, using words such as the Navajo term for turtle to mean a tank. In tests, they could encode, send, and decode a three-line message in about twenty seconds, while the machines of that time often needed thirty minutes. The code was never broken. For decades their work stayed secret, and the Code Talkers were not widely honored until many years after the war.", "words": 127}, {"id": "R03", "title": "Counting the thunder", "text": "During a storm, you see a flash of lightning before you hear the thunder, even though both happen at the same moment. The reason is speed. Light reaches your eyes almost instantly, but sound travels much more slowly, covering about one mile every five seconds. This difference gives people a simple way to judge distance. When you see a flash, count the seconds until the thunder arrives, then divide by five. If you count ten seconds, the storm is roughly two miles away. Weather experts warn that this method should not make anyone feel safe. Lightning can strike ten miles or more from the center of a storm, so if you can hear thunder at all, you are close enough to be struck and should move indoors.", "words": 127}, {"id": "R04", "title": "The minimum payment trap", "text": "Many people believe that paying the minimum amount on a credit card bill keeps them out of trouble. In fact, the minimum payment is designed to keep an account open, not to clear the debt. Most of a small payment goes toward interest, so the amount owed shrinks very slowly. A balance of a few thousand dollars, paid only at the minimum, can take many years to pay off and may cost more in interest than the original purchases. Financial counselors suggest a different habit. First, pay more than the minimum whenever possible, even if the extra amount is small. Second, pay off the card with the highest interest rate first. Finally, avoid adding new charges while an old balance remains. These steps are simple, but they require patience.", "words": 129}, {"id": "R05", "title": "Phishing", "text": "Phishing is a trick in which an attacker sends a message that looks as if it comes from a trusted source, such as a bank or a supervisor. The message usually creates a sense of urgency. It may claim that an account will be closed or that a payment failed, and it asks the reader to click a link or open a file right away. The link often leads to a fake login page that captures the user's password. Security teams train employees to slow down. They advise checking the sender's full address, resting the pointer over a link to see where it really goes, and calling the person directly when a request seems unusual. A single careless click can give an attacker access to an entire network.", "words": 128}, {"id": "R06", "title": "Heat illness on the job", "text": "Heat exhaustion can develop when the body loses too much water and salt through sweating. Early signs include heavy sweating, headache, dizziness, and muscle cramps. A person with heat exhaustion should move to a cool place, loosen tight clothing, and sip water. If the symptoms are ignored, heat exhaustion can turn into heatstroke, which is a medical emergency. In heatstroke, the body's cooling system begins to fail. The skin may become hot and dry, and the person may become confused or pass out. Anyone showing these signs needs emergency help at once. Supervisors on hot job sites can lower the risk by scheduling heavy work for cooler hours, providing shade, and reminding workers to drink water before they feel thirsty.", "words": 120}, {"id": "R07", "title": "Grace Hopper", "text": "Grace Hopper was a mathematician and naval officer who helped shape modern computing. In the 1950s, most programs were written in codes of numbers that only experts could read. Hopper believed that computers should understand instructions written in words closer to English. Many of her colleagues doubted that this was possible, but she built one of the first compilers, a program that translates human-friendly instructions into machine code. Her work helped lead to COBOL, a language that businesses and governments used for decades. Hopper was also known for plain speaking. She often handed out pieces of wire about a foot long to show how far electricity travels in a billionth of a second. She retired as a rear admiral in the Navy.", "words": 122}, {"id": "R08", "title": "Zebra mussels", "text": "Zebra mussels are small freshwater shellfish that first arrived in the Great Lakes in the 1980s, most likely carried in the ballast water of ships from Europe. With no natural predators to control them, their numbers exploded. A single female can produce hundreds of thousands of eggs in a year. The mussels attach to any hard surface, including boat hulls, docks, and the inside of water intake pipes. Power plants and city water systems have spent large sums clearing clogged pipes. The mussels also filter huge amounts of water, which makes lakes look clearer. Although clear water may seem like a good sign, it allows sunlight to reach deeper, feeding weeds and changing the food chain that native fish depend on.", "words": 121}, {"id": "R09", "title": "The shift handoff", "text": "At the end of each shift, the outgoing technician completes a handoff with the person taking over. The process follows a set order. First, the outgoing technician reviews the log of any alarms or failures that occurred during the shift. Next, both workers walk through any jobs that are still open and agree on which ones must be finished first. Then the outgoing technician points out any equipment that is tagged out of service and explains why. Only after these steps does the incoming technician sign the log, which shows that he or she accepts responsibility for the system. Skipping the handoff may save ten minutes, but it is one of the most common causes of repeated errors, because the new shift does not know what has already been tried.", "words": 130}, {"id": "R10", "title": "Why leap years exist", "text": "A calendar year has 365 days, but Earth actually takes about 365 and one quarter days to travel once around the sun. That extra quarter of a day may seem too small to matter. Over four years, however, it adds up to almost one full day. Without a correction, the calendar would slowly drift away from the seasons, and after a few centuries, summer would begin in what the calendar calls spring. To fix the problem, an extra day, February 29, is added about every four years. Because the true extra amount is slightly less than a quarter of a day, the rule has an exception: years that end in 00 skip the leap day unless they can be divided evenly by 400. That is why 2000 was a leap year but 1900 was not.", "words": 135}, {"id": "R11", "title": "What libraries do now", "text": "Some people argue that public libraries are no longer needed because so much information is online. This view misses what libraries actually do today. Many branches offer free internet access to people who have no computer at home, and staff members help visitors apply for jobs, fill out government forms, and learn basic computer skills. Libraries also host tax help, English classes, and reading programs for children. For a family on a tight budget, the library may be the only place where all of these services are free and close by. Closing a branch to save money can end up costing a community more, as people lose access to the tools they need to find work. Libraries have changed, but their purpose, opening doors for everyone, has not.", "words": 128}, {"id": "R12", "title": "Reading a pay stub", "text": "A pay stub lists more than the amount of a paycheck. The first number to find is gross pay, which is the total earned before anything is taken out. Below it are the deductions. Some are required, such as federal income tax and Social Security. Others are chosen by the worker, such as health insurance or a retirement plan. Net pay, often called take-home pay, is what remains after all deductions. New workers are sometimes surprised that their net pay is much lower than their hourly rate times their hours. Checking each stub is a good habit. Payroll mistakes do happen, and a worker who does not look may never notice missing overtime pay or a deduction that should have stopped.", "words": 121}, {"id": "R13", "title": "A muddy start for the interstates", "text": "In 1919, a young Army officer named Dwight Eisenhower joined a convoy of military trucks that crossed the United States from Washington, D.C., to San Francisco. The trip took sixty-two days. Roads were often dirt or mud, and bridges sometimes broke under the weight of the vehicles. Years later, as a general in World War II, Eisenhower saw Germany's wide, fast highways and understood their value for moving troops and supplies. When he became president, he pushed for a national network of roads. The Federal-Aid Highway Act of 1956 funded what became the Interstate Highway System. Today it stretches for more than forty thousand miles and carries a large share of the country's freight, though few drivers know that it began with a slow, muddy trip.", "words": 126}], "questions": [{"id": "PCR-01-1", "section": "PC", "set": "real", "passageId": "R01", "passage": "Before a technician repairs a machine, its power must be shut off and locked out. Lockout means placing a lock on the switch so that no one can turn the machine back on by mistake. Each worker who will touch the machine adds a personal lock and a tag with his or her name. The machine cannot be restarted until every lock is removed, and only the person who placed a lock may remove it. Some workers see this as a slow and needless step, especially for a quick job. However, safety records show that many serious injuries happen during short repairs, when someone assumes the work will be finished before anyone notices. A few minutes spent on lockout can prevent an accident that ends a career.", "stem": "The passage is mainly about", "choices": ["how to repair machines quickly", "why lockout steps protect workers during repairs", "how to write a name on a tag", "why workers dislike safety rules"], "answer": 1, "difficulty": 3, "topic": "pc-main-idea", "kind": "main-idea", "steps": ["Read the question first. Main idea: what is the whole passage about?", "The passage says: \"A few minutes spent on lockout can prevent an accident that ends a career.\"", "Every sentence explains what lockout is and why it prevents injuries.", "Answer: why lockout steps protect workers during repairs."], "explanation": "Every sentence explains what lockout is and why it prevents injuries.", "source": "original (real-test level)"}, {"id": "PCR-01-2", "section": "PC", "set": "real", "passageId": "R01", "passage": "Before a technician repairs a machine, its power must be shut off and locked out. Lockout means placing a lock on the switch so that no one can turn the machine back on by mistake. Each worker who will touch the machine adds a personal lock and a tag with his or her name. The machine cannot be restarted until every lock is removed, and only the person who placed a lock may remove it. Some workers see this as a slow and needless step, especially for a quick job. However, safety records show that many serious injuries happen during short repairs, when someone assumes the work will be finished before anyone notices. A few minutes spent on lockout can prevent an accident that ends a career.", "stem": "According to the passage, who may remove a lock?", "choices": ["only the person who placed it", "the last worker to finish", "anyone who has a tag", "any supervisor"], "answer": 0, "difficulty": 3, "topic": "pc-detail", "kind": "detail", "steps": ["Read the question first. Stated detail: find the exact line.", "The passage says: \"only the person who placed a lock may remove it.\"", "The passage says only the person who placed a lock may remove it.", "Answer: only the person who placed it."], "explanation": "The passage says only the person who placed a lock may remove it.", "source": "original (real-test level)"}, {"id": "PCR-01-3", "section": "PC", "set": "real", "passageId": "R01", "passage": "Before a technician repairs a machine, its power must be shut off and locked out. Lockout means placing a lock on the switch so that no one can turn the machine back on by mistake. Each worker who will touch the machine adds a personal lock and a tag with his or her name. The machine cannot be restarted until every lock is removed, and only the person who placed a lock may remove it. Some workers see this as a slow and needless step, especially for a quick job. However, safety records show that many serious injuries happen during short repairs, when someone assumes the work will be finished before anyone notices. A few minutes spent on lockout can prevent an accident that ends a career.", "stem": "The author would most likely agree that", "choices": ["tags are more important than locks", "injuries mostly happen during long repairs", "quick jobs do not need lockout", "lockout matters even for short repairs"], "answer": 3, "difficulty": 3, "topic": "pc-inference", "kind": "inference", "steps": ["Read the question first. Inference: what does the passage suggest, without saying it outright?", "The passage says: \"many serious injuries happen during short repairs\"", "The author says many serious injuries happen during short repairs, so lockout matters even then.", "Answer: lockout matters even for short repairs."], "explanation": "The author says many serious injuries happen during short repairs, so lockout matters even then.", "source": "original (real-test level)"}, {"id": "PCR-02-1", "section": "PC", "set": "real", "passageId": "R02", "passage": "During World War II, the United States Marine Corps needed a way to send battlefield messages that the enemy could not understand. The answer came from the Navajo language, which had no written alphabet at the time and was spoken by very few people outside the Navajo Nation. Several hundred Navajo men served as Code Talkers. They built a code inside their own language, using words such as the Navajo term for turtle to mean a tank. In tests, they could encode, send, and decode a three-line message in about twenty seconds, while the machines of that time often needed thirty minutes. The code was never broken. For decades their work stayed secret, and the Code Talkers were not widely honored until many years after the war.", "stem": "In the passage, the word \"decode\" most nearly means", "choices": ["to send a message by radio", "to forget a message", "to turn a coded message back into plain words", "to hide a message"], "answer": 2, "difficulty": 3, "topic": "pc-vocab", "kind": "vocab", "steps": ["Read the question first. Word in context: try each choice in place of the word.", "The passage says: \"encode, send, and decode a three-line message\"", "The Code Talkers put messages into code and then decoded them, which means turning them back into plain words.", "Answer: to turn a coded message back into plain words."], "explanation": "The Code Talkers put messages into code and then decoded them, which means turning them back into plain words.", "source": "original (real-test level)"}, {"id": "PCR-02-2", "section": "PC", "set": "real", "passageId": "R02", "passage": "During World War II, the United States Marine Corps needed a way to send battlefield messages that the enemy could not understand. The answer came from the Navajo language, which had no written alphabet at the time and was spoken by very few people outside the Navajo Nation. Several hundred Navajo men served as Code Talkers. They built a code inside their own language, using words such as the Navajo term for turtle to mean a tank. In tests, they could encode, send, and decode a three-line message in about twenty seconds, while the machines of that time often needed thirty minutes. The code was never broken. For decades their work stayed secret, and the Code Talkers were not widely honored until many years after the war.", "stem": "How long did the Code Talkers need for a three-line message?", "choices": ["about ten seconds", "about twenty seconds", "about two minutes", "about thirty minutes"], "answer": 1, "difficulty": 3, "topic": "pc-detail", "kind": "detail", "steps": ["Read the question first. Stated detail: find the exact line.", "The passage says: \"in about twenty seconds\"", "The passage says about twenty seconds. Thirty minutes was the time for machines.", "Answer: about twenty seconds."], "explanation": "The passage says about twenty seconds. Thirty minutes was the time for machines.", "source": "original (real-test level)"}, {"id": "PCR-02-3", "section": "PC", "set": "real", "passageId": "R02", "passage": "During World War II, the United States Marine Corps needed a way to send battlefield messages that the enemy could not understand. The answer came from the Navajo language, which had no written alphabet at the time and was spoken by very few people outside the Navajo Nation. Several hundred Navajo men served as Code Talkers. They built a code inside their own language, using words such as the Navajo term for turtle to mean a tank. In tests, they could encode, send, and decode a three-line message in about twenty seconds, while the machines of that time often needed thirty minutes. The code was never broken. For decades their work stayed secret, and the Code Talkers were not widely honored until many years after the war.", "stem": "The Navajo language was useful for a code mainly because", "choices": ["very few outsiders could understand it", "it was easy to write down", "machines could translate it", "it had many words for tanks"], "answer": 0, "difficulty": 3, "topic": "pc-inference", "kind": "inference", "steps": ["Read the question first. Inference: what does the passage suggest, without saying it outright?", "The passage says: \"spoken by very few people outside the Navajo Nation\"", "It had no written alphabet and few people outside the Navajo Nation spoke it, so the enemy could not understand it.", "Answer: very few outsiders could understand it."], "explanation": "It had no written alphabet and few people outside the Navajo Nation spoke it, so the enemy could not understand it.", "source": "original (real-test level)"}, {"id": "PCR-03-1", "section": "PC", "set": "real", "passageId": "R03", "passage": "During a storm, you see a flash of lightning before you hear the thunder, even though both happen at the same moment. The reason is speed. Light reaches your eyes almost instantly, but sound travels much more slowly, covering about one mile every five seconds. This difference gives people a simple way to judge distance. When you see a flash, count the seconds until the thunder arrives, then divide by five. If you count ten seconds, the storm is roughly two miles away. Weather experts warn that this method should not make anyone feel safe. Lightning can strike ten miles or more from the center of a storm, so if you can hear thunder at all, you are close enough to be struck and should move indoors.", "stem": "Based on the passage, if you count fifteen seconds between the flash and the thunder, the storm is about", "choices": ["five miles away", "one mile away", "fifteen miles away", "three miles away"], "answer": 3, "difficulty": 3, "topic": "pc-detail", "kind": "detail", "steps": ["Read the question first. Stated detail: find the exact line.", "The passage says: \"count the seconds until the thunder arrives, then divide by five\"", "Divide the seconds by five. Fifteen divided by five is three miles.", "Answer: three miles away."], "explanation": "Divide the seconds by five. Fifteen divided by five is three miles.", "source": "original (real-test level)"}, {"id": "PCR-03-2", "section": "PC", "set": "real", "passageId": "R03", "passage": "During a storm, you see a flash of lightning before you hear the thunder, even though both happen at the same moment. The reason is speed. Light reaches your eyes almost instantly, but sound travels much more slowly, covering about one mile every five seconds. This difference gives people a simple way to judge distance. When you see a flash, count the seconds until the thunder arrives, then divide by five. If you count ten seconds, the storm is roughly two miles away. Weather experts warn that this method should not make anyone feel safe. Lightning can strike ten miles or more from the center of a storm, so if you can hear thunder at all, you are close enough to be struck and should move indoors.", "stem": "The author's main purpose in the last two sentences is to", "choices": ["show that counting seconds is wrong", "explain why light is faster than sound", "warn that hearing thunder means you are in danger", "describe how storms form"], "answer": 2, "difficulty": 3, "topic": "pc-author", "kind": "purpose", "steps": ["Read the question first. Author's purpose: why did the author write this part?", "The passage says: \"if you can hear thunder at all, you are close enough to be struck\"", "The last two sentences warn that lightning can strike far away, so hearing thunder means you should go inside.", "Answer: warn that hearing thunder means you are in danger."], "explanation": "The last two sentences warn that lightning can strike far away, so hearing thunder means you should go inside.", "source": "original (real-test level)"}, {"id": "PCR-04-1", "section": "PC", "set": "real", "passageId": "R04", "passage": "Many people believe that paying the minimum amount on a credit card bill keeps them out of trouble. In fact, the minimum payment is designed to keep an account open, not to clear the debt. Most of a small payment goes toward interest, so the amount owed shrinks very slowly. A balance of a few thousand dollars, paid only at the minimum, can take many years to pay off and may cost more in interest than the original purchases. Financial counselors suggest a different habit. First, pay more than the minimum whenever possible, even if the extra amount is small. Second, pay off the card with the highest interest rate first. Finally, avoid adding new charges while an old balance remains. These steps are simple, but they require patience.", "stem": "Which sentence best states the main idea of the passage?", "choices": ["Minimum payments are the fastest way to pay off a card.", "Paying only the minimum is costly, and better habits can clear debt faster.", "Interest rates are the same on every card.", "Credit cards should never be used."], "answer": 1, "difficulty": 3, "topic": "pc-main-idea", "kind": "main-idea", "steps": ["Read the question first. Main idea: what is the whole passage about?", "The passage says: \"the minimum payment is designed to keep an account open, not to clear the debt\"", "The passage explains why minimum payments cost a lot and then gives habits that help.", "Answer: Paying only the minimum is costly, and better habits can clear debt faster.."], "explanation": "The passage explains why minimum payments cost a lot and then gives habits that help.", "source": "original (real-test level)"}, {"id": "PCR-04-2", "section": "PC", "set": "real", "passageId": "R04", "passage": "Many people believe that paying the minimum amount on a credit card bill keeps them out of trouble. In fact, the minimum payment is designed to keep an account open, not to clear the debt. Most of a small payment goes toward interest, so the amount owed shrinks very slowly. A balance of a few thousand dollars, paid only at the minimum, can take many years to pay off and may cost more in interest than the original purchases. Financial counselors suggest a different habit. First, pay more than the minimum whenever possible, even if the extra amount is small. Second, pay off the card with the highest interest rate first. Finally, avoid adding new charges while an old balance remains. These steps are simple, but they require patience.", "stem": "According to the counselors, what should a person do after paying more than the minimum?", "choices": ["pay off the card with the highest interest rate first", "open a new card", "pay only the interest", "stop using the card for a year"], "answer": 0, "difficulty": 3, "topic": "pc-sequence", "kind": "sequence", "steps": ["Read the question first. Sequence: what order did things happen in?", "The passage says: \"Second, pay off the card with the highest interest rate first.\"", "The steps are first, second, finally. Second comes paying off the highest-rate card.", "Answer: pay off the card with the highest interest rate first."], "explanation": "The steps are first, second, finally. Second comes paying off the highest-rate card.", "source": "original (real-test level)"}, {"id": "PCR-05-1", "section": "PC", "set": "real", "passageId": "R05", "passage": "Phishing is a trick in which an attacker sends a message that looks as if it comes from a trusted source, such as a bank or a supervisor. The message usually creates a sense of urgency. It may claim that an account will be closed or that a payment failed, and it asks the reader to click a link or open a file right away. The link often leads to a fake login page that captures the user's password. Security teams train employees to slow down. They advise checking the sender's full address, resting the pointer over a link to see where it really goes, and calling the person directly when a request seems unusual. A single careless click can give an attacker access to an entire network.", "stem": "In the passage, the word \"urgency\" most nearly means", "choices": ["a kind of password", "a feeling of calm", "a large reward", "a need to act quickly"], "answer": 3, "difficulty": 3, "topic": "pc-vocab", "kind": "vocab", "steps": ["Read the question first. Word in context: try each choice in place of the word.", "The passage says: \"asks the reader to click a link or open a file right away\"", "The message pushes the reader to click right away, so urgency means a need to act quickly.", "Answer: a need to act quickly."], "explanation": "The message pushes the reader to click right away, so urgency means a need to act quickly.", "source": "original (real-test level)"}, {"id": "PCR-05-2", "section": "PC", "set": "real", "passageId": "R05", "passage": "Phishing is a trick in which an attacker sends a message that looks as if it comes from a trusted source, such as a bank or a supervisor. The message usually creates a sense of urgency. It may claim that an account will be closed or that a payment failed, and it asks the reader to click a link or open a file right away. The link often leads to a fake login page that captures the user's password. Security teams train employees to slow down. They advise checking the sender's full address, resting the pointer over a link to see where it really goes, and calling the person directly when a request seems unusual. A single careless click can give an attacker access to an entire network.", "stem": "The passage suggests that attackers create urgency in order to", "choices": ["help readers protect their accounts", "close old bank accounts", "make readers act before they think", "test the speed of a network"], "answer": 2, "difficulty": 3, "topic": "pc-inference", "kind": "inference", "steps": ["Read the question first. Inference: what does the passage suggest, without saying it outright?", "The passage says: \"Security teams train employees to slow down.\"", "Security teams train people to slow down, which suggests the rush is meant to stop careful thinking.", "Answer: make readers act before they think."], "explanation": "Security teams train people to slow down, which suggests the rush is meant to stop careful thinking.", "source": "original (real-test level)"}, {"id": "PCR-05-3", "section": "PC", "set": "real", "passageId": "R05", "passage": "Phishing is a trick in which an attacker sends a message that looks as if it comes from a trusted source, such as a bank or a supervisor. The message usually creates a sense of urgency. It may claim that an account will be closed or that a payment failed, and it asks the reader to click a link or open a file right away. The link often leads to a fake login page that captures the user's password. Security teams train employees to slow down. They advise checking the sender's full address, resting the pointer over a link to see where it really goes, and calling the person directly when a request seems unusual. A single careless click can give an attacker access to an entire network.", "stem": "Which step do security teams advise?", "choices": ["replying to the message to ask if it is real", "checking the sender's full address", "forwarding the message to coworkers", "opening the file to check it"], "answer": 1, "difficulty": 3, "topic": "pc-detail", "kind": "detail", "steps": ["Read the question first. Stated detail: find the exact line.", "The passage says: \"checking the sender's full address\"", "The passage lists checking the sender's full address as advice.", "Answer: checking the sender's full address."], "explanation": "The passage lists checking the sender's full address as advice.", "source": "original (real-test level)"}, {"id": "PCR-06-1", "section": "PC", "set": "real", "passageId": "R06", "passage": "Heat exhaustion can develop when the body loses too much water and salt through sweating. Early signs include heavy sweating, headache, dizziness, and muscle cramps. A person with heat exhaustion should move to a cool place, loosen tight clothing, and sip water. If the symptoms are ignored, heat exhaustion can turn into heatstroke, which is a medical emergency. In heatstroke, the body's cooling system begins to fail. The skin may become hot and dry, and the person may become confused or pass out. Anyone showing these signs needs emergency help at once. Supervisors on hot job sites can lower the risk by scheduling heavy work for cooler hours, providing shade, and reminding workers to drink water before they feel thirsty.", "stem": "Which is a sign of heatstroke rather than heat exhaustion?", "choices": ["hot, dry skin and confusion", "heavy sweating", "muscle cramps", "a headache"], "answer": 0, "difficulty": 3, "topic": "pc-detail", "kind": "detail", "steps": ["Read the question first. Stated detail: find the exact line.", "The passage says: \"The skin may become hot and dry, and the person may become confused\"", "Heavy sweating, headache, and cramps are early signs of heat exhaustion. Hot, dry skin and confusion are signs of heatstroke.", "Answer: hot, dry skin and confusion."], "explanation": "Heavy sweating, headache, and cramps are early signs of heat exhaustion. Hot, dry skin and confusion are signs of heatstroke.", "source": "original (real-test level)"}, {"id": "PCR-06-2", "section": "PC", "set": "real", "passageId": "R06", "passage": "Heat exhaustion can develop when the body loses too much water and salt through sweating. Early signs include heavy sweating, headache, dizziness, and muscle cramps. A person with heat exhaustion should move to a cool place, loosen tight clothing, and sip water. If the symptoms are ignored, heat exhaustion can turn into heatstroke, which is a medical emergency. In heatstroke, the body's cooling system begins to fail. The skin may become hot and dry, and the person may become confused or pass out. Anyone showing these signs needs emergency help at once. Supervisors on hot job sites can lower the risk by scheduling heavy work for cooler hours, providing shade, and reminding workers to drink water before they feel thirsty.", "stem": "According to the passage, heatstroke can follow", "choices": ["working in the shade", "loosening tight clothing", "drinking too much water", "heat exhaustion that is ignored"], "answer": 3, "difficulty": 3, "topic": "pc-sequence", "kind": "sequence", "steps": ["Read the question first. Sequence: what order did things happen in?", "The passage says: \"If the symptoms are ignored, heat exhaustion can turn into heatstroke\"", "The passage says if the symptoms are ignored, heat exhaustion can turn into heatstroke.", "Answer: heat exhaustion that is ignored."], "explanation": "The passage says if the symptoms are ignored, heat exhaustion can turn into heatstroke.", "source": "original (real-test level)"}, {"id": "PCR-07-1", "section": "PC", "set": "real", "passageId": "R07", "passage": "Grace Hopper was a mathematician and naval officer who helped shape modern computing. In the 1950s, most programs were written in codes of numbers that only experts could read. Hopper believed that computers should understand instructions written in words closer to English. Many of her colleagues doubted that this was possible, but she built one of the first compilers, a program that translates human-friendly instructions into machine code. Her work helped lead to COBOL, a language that businesses and governments used for decades. Hopper was also known for plain speaking. She often handed out pieces of wire about a foot long to show how far electricity travels in a billionth of a second. She retired as a rear admiral in the Navy.", "stem": "The passage is mainly about", "choices": ["why COBOL is no longer used", "how the Navy chooses admirals", "how Grace Hopper made computers easier to program", "how wires carry electricity"], "answer": 2, "difficulty": 3, "topic": "pc-main-idea", "kind": "main-idea", "steps": ["Read the question first. Main idea: what is the whole passage about?", "The passage says: \"Hopper believed that computers should understand instructions written in words closer to English.\"", "The passage centers on her idea of English-like instructions, her compiler, and her lasting influence.", "Answer: how Grace Hopper made computers easier to program."], "explanation": "The passage centers on her idea of English-like instructions, her compiler, and her lasting influence.", "source": "original (real-test level)"}, {"id": "PCR-07-2", "section": "PC", "set": "real", "passageId": "R07", "passage": "Grace Hopper was a mathematician and naval officer who helped shape modern computing. In the 1950s, most programs were written in codes of numbers that only experts could read. Hopper believed that computers should understand instructions written in words closer to English. Many of her colleagues doubted that this was possible, but she built one of the first compilers, a program that translates human-friendly instructions into machine code. Her work helped lead to COBOL, a language that businesses and governments used for decades. Hopper was also known for plain speaking. She often handed out pieces of wire about a foot long to show how far electricity travels in a billionth of a second. She retired as a rear admiral in the Navy.", "stem": "In the passage, the word \"doubted\" most nearly means", "choices": ["agreed", "questioned whether it was true", "paid for", "celebrated"], "answer": 1, "difficulty": 3, "topic": "pc-vocab", "kind": "vocab", "steps": ["Read the question first. Word in context: try each choice in place of the word.", "The passage says: \"Many of her colleagues doubted that this was possible\"", "Her colleagues did not think it was possible, so doubted means questioned whether it was true.", "Answer: questioned whether it was true."], "explanation": "Her colleagues did not think it was possible, so doubted means questioned whether it was true.", "source": "original (real-test level)"}, {"id": "PCR-07-3", "section": "PC", "set": "real", "passageId": "R07", "passage": "Grace Hopper was a mathematician and naval officer who helped shape modern computing. In the 1950s, most programs were written in codes of numbers that only experts could read. Hopper believed that computers should understand instructions written in words closer to English. Many of her colleagues doubted that this was possible, but she built one of the first compilers, a program that translates human-friendly instructions into machine code. Her work helped lead to COBOL, a language that businesses and governments used for decades. Hopper was also known for plain speaking. She often handed out pieces of wire about a foot long to show how far electricity travels in a billionth of a second. She retired as a rear admiral in the Navy.", "stem": "The author mentions the pieces of wire mainly to show that Hopper", "choices": ["explained hard ideas in simple, concrete ways", "collected old equipment", "worked as an electrician", "disliked computers"], "answer": 0, "difficulty": 3, "topic": "pc-author", "kind": "purpose", "steps": ["Read the question first. Author's purpose: why did the author write this part?", "The passage says: \"Hopper was also known for plain speaking.\"", "The wire example comes right after the line about plain speaking, so it shows she made hard ideas easy to picture.", "Answer: explained hard ideas in simple, concrete ways."], "explanation": "The wire example comes right after the line about plain speaking, so it shows she made hard ideas easy to picture.", "source": "original (real-test level)"}, {"id": "PCR-08-1", "section": "PC", "set": "real", "passageId": "R08", "passage": "Zebra mussels are small freshwater shellfish that first arrived in the Great Lakes in the 1980s, most likely carried in the ballast water of ships from Europe. With no natural predators to control them, their numbers exploded. A single female can produce hundreds of thousands of eggs in a year. The mussels attach to any hard surface, including boat hulls, docks, and the inside of water intake pipes. Power plants and city water systems have spent large sums clearing clogged pipes. The mussels also filter huge amounts of water, which makes lakes look clearer. Although clear water may seem like a good sign, it allows sunlight to reach deeper, feeding weeds and changing the food chain that native fish depend on.", "stem": "The author suggests that the clearer water in these lakes is", "choices": ["caused by power plants", "good for native fish", "proof that the lakes are healthy", "not entirely a good sign"], "answer": 3, "difficulty": 3, "topic": "pc-inference", "kind": "inference", "steps": ["Read the question first. Inference: what does the passage suggest, without saying it outright?", "The passage says: \"Although clear water may seem like a good sign\"", "The author says clear water may seem good but feeds weeds and changes the food chain.", "Answer: not entirely a good sign."], "explanation": "The author says clear water may seem good but feeds weeds and changes the food chain.", "source": "original (real-test level)"}, {"id": "PCR-08-2", "section": "PC", "set": "real", "passageId": "R08", "passage": "Zebra mussels are small freshwater shellfish that first arrived in the Great Lakes in the 1980s, most likely carried in the ballast water of ships from Europe. With no natural predators to control them, their numbers exploded. A single female can produce hundreds of thousands of eggs in a year. The mussels attach to any hard surface, including boat hulls, docks, and the inside of water intake pipes. Power plants and city water systems have spent large sums clearing clogged pipes. The mussels also filter huge amounts of water, which makes lakes look clearer. Although clear water may seem like a good sign, it allows sunlight to reach deeper, feeding weeds and changing the food chain that native fish depend on.", "stem": "According to the passage, zebra mussels most likely reached the Great Lakes", "choices": ["through city water pipes", "on the feet of birds", "in the ballast water of ships", "in fishing nets from Canada"], "answer": 2, "difficulty": 3, "topic": "pc-detail", "kind": "detail", "steps": ["Read the question first. Stated detail: find the exact line.", "The passage says: \"most likely carried in the ballast water of ships from Europe\"", "The first sentence says they were most likely carried in the ballast water of ships from Europe.", "Answer: in the ballast water of ships."], "explanation": "The first sentence says they were most likely carried in the ballast water of ships from Europe.", "source": "original (real-test level)"}, {"id": "PCR-09-1", "section": "PC", "set": "real", "passageId": "R09", "passage": "At the end of each shift, the outgoing technician completes a handoff with the person taking over. The process follows a set order. First, the outgoing technician reviews the log of any alarms or failures that occurred during the shift. Next, both workers walk through any jobs that are still open and agree on which ones must be finished first. Then the outgoing technician points out any equipment that is tagged out of service and explains why. Only after these steps does the incoming technician sign the log, which shows that he or she accepts responsibility for the system. Skipping the handoff may save ten minutes, but it is one of the most common causes of repeated errors, because the new shift does not know what has already been tried.", "stem": "What happens right after the alarm log is reviewed?", "choices": ["Equipment is tagged out of service.", "Both workers walk through the jobs that are still open.", "The incoming technician signs the log.", "The shift ends."], "answer": 1, "difficulty": 3, "topic": "pc-sequence", "kind": "sequence", "steps": ["Read the question first. Sequence: what order did things happen in?", "The passage says: \"Next, both workers walk through any jobs that are still open\"", "First the log is reviewed. Next, both workers walk through open jobs.", "Answer: Both workers walk through the jobs that are still open.."], "explanation": "First the log is reviewed. Next, both workers walk through open jobs.", "source": "original (real-test level)"}, {"id": "PCR-09-2", "section": "PC", "set": "real", "passageId": "R09", "passage": "At the end of each shift, the outgoing technician completes a handoff with the person taking over. The process follows a set order. First, the outgoing technician reviews the log of any alarms or failures that occurred during the shift. Next, both workers walk through any jobs that are still open and agree on which ones must be finished first. Then the outgoing technician points out any equipment that is tagged out of service and explains why. Only after these steps does the incoming technician sign the log, which shows that he or she accepts responsibility for the system. Skipping the handoff may save ten minutes, but it is one of the most common causes of repeated errors, because the new shift does not know what has already been tried.", "stem": "Signing the log shows that the incoming technician", "choices": ["accepts responsibility for the system", "disagrees with the outgoing technician", "is leaving for the day", "has fixed every alarm"], "answer": 0, "difficulty": 3, "topic": "pc-inference", "kind": "inference", "steps": ["Read the question first. Inference: what does the passage suggest, without saying it outright?", "The passage says: \"which shows that he or she accepts responsibility for the system\"", "The passage says signing the log shows he or she accepts responsibility for the system.", "Answer: accepts responsibility for the system."], "explanation": "The passage says signing the log shows he or she accepts responsibility for the system.", "source": "original (real-test level)"}, {"id": "PCR-10-1", "section": "PC", "set": "real", "passageId": "R10", "passage": "A calendar year has 365 days, but Earth actually takes about 365 and one quarter days to travel once around the sun. That extra quarter of a day may seem too small to matter. Over four years, however, it adds up to almost one full day. Without a correction, the calendar would slowly drift away from the seasons, and after a few centuries, summer would begin in what the calendar calls spring. To fix the problem, an extra day, February 29, is added about every four years. Because the true extra amount is slightly less than a quarter of a day, the rule has an exception: years that end in 00 skip the leap day unless they can be divided evenly by 400. That is why 2000 was a leap year but 1900 was not.", "stem": "According to the passage, why was 1900 not a leap year?", "choices": ["It was too far in the past.", "Earth moved faster that year.", "It did not have a February.", "It ends in 00 and cannot be divided evenly by 400."], "answer": 3, "difficulty": 3, "topic": "pc-detail", "kind": "detail", "steps": ["Read the question first. Stated detail: find the exact line.", "The passage says: \"years that end in 00 skip the leap day unless they can be divided evenly by 400\"", "Years ending in 00 skip the leap day unless they divide evenly by 400. 1900 does not divide evenly by 400.", "Answer: It ends in 00 and cannot be divided evenly by 400.."], "explanation": "Years ending in 00 skip the leap day unless they divide evenly by 400. 1900 does not divide evenly by 400.", "source": "original (real-test level)"}, {"id": "PCR-10-2", "section": "PC", "set": "real", "passageId": "R10", "passage": "A calendar year has 365 days, but Earth actually takes about 365 and one quarter days to travel once around the sun. That extra quarter of a day may seem too small to matter. Over four years, however, it adds up to almost one full day. Without a correction, the calendar would slowly drift away from the seasons, and after a few centuries, summer would begin in what the calendar calls spring. To fix the problem, an extra day, February 29, is added about every four years. Because the true extra amount is slightly less than a quarter of a day, the rule has an exception: years that end in 00 skip the leap day unless they can be divided evenly by 400. That is why 2000 was a leap year but 1900 was not.", "stem": "The author's main purpose is to", "choices": ["tell the history of February", "argue that calendars should be changed", "explain why leap years exist and how the rule works", "describe the four seasons"], "answer": 2, "difficulty": 3, "topic": "pc-author", "kind": "purpose", "steps": ["Read the question first. Author's purpose: why did the author write this part?", "The passage says: \"To fix the problem, an extra day, February 29, is added about every four years.\"", "The passage explains the extra quarter day, the fix, and the exception to the rule.", "Answer: explain why leap years exist and how the rule works."], "explanation": "The passage explains the extra quarter day, the fix, and the exception to the rule.", "source": "original (real-test level)"}, {"id": "PCR-11-1", "section": "PC", "set": "real", "passageId": "R11", "passage": "Some people argue that public libraries are no longer needed because so much information is online. This view misses what libraries actually do today. Many branches offer free internet access to people who have no computer at home, and staff members help visitors apply for jobs, fill out government forms, and learn basic computer skills. Libraries also host tax help, English classes, and reading programs for children. For a family on a tight budget, the library may be the only place where all of these services are free and close by. Closing a branch to save money can end up costing a community more, as people lose access to the tools they need to find work. Libraries have changed, but their purpose, opening doors for everyone, has not.", "stem": "The author's attitude toward public libraries is best described as", "choices": ["doubtful", "supportive", "angry", "uninterested"], "answer": 1, "difficulty": 3, "topic": "pc-author", "kind": "tone", "steps": ["Read the question first. Author's attitude: how does the author feel?", "The passage says: \"Libraries have changed, but their purpose, opening doors for everyone, has not.\"", "The author lists the services libraries give and argues against closing them, so the attitude is supportive.", "Answer: supportive."], "explanation": "The author lists the services libraries give and argues against closing them, so the attitude is supportive.", "source": "original (real-test level)"}, {"id": "PCR-11-2", "section": "PC", "set": "real", "passageId": "R11", "passage": "Some people argue that public libraries are no longer needed because so much information is online. This view misses what libraries actually do today. Many branches offer free internet access to people who have no computer at home, and staff members help visitors apply for jobs, fill out government forms, and learn basic computer skills. Libraries also host tax help, English classes, and reading programs for children. For a family on a tight budget, the library may be the only place where all of these services are free and close by. Closing a branch to save money can end up costing a community more, as people lose access to the tools they need to find work. Libraries have changed, but their purpose, opening doors for everyone, has not.", "stem": "The author would most likely oppose", "choices": ["closing library branches to cut costs", "helping people apply for jobs", "adding English classes", "offering free internet access"], "answer": 0, "difficulty": 3, "topic": "pc-inference", "kind": "inference", "steps": ["Read the question first. Inference: what does the passage suggest, without saying it outright?", "The passage says: \"Closing a branch to save money can end up costing a community more\"", "The author says closing a branch to save money can end up costing a community more.", "Answer: closing library branches to cut costs."], "explanation": "The author says closing a branch to save money can end up costing a community more.", "source": "original (real-test level)"}, {"id": "PCR-12-1", "section": "PC", "set": "real", "passageId": "R12", "passage": "A pay stub lists more than the amount of a paycheck. The first number to find is gross pay, which is the total earned before anything is taken out. Below it are the deductions. Some are required, such as federal income tax and Social Security. Others are chosen by the worker, such as health insurance or a retirement plan. Net pay, often called take-home pay, is what remains after all deductions. New workers are sometimes surprised that their net pay is much lower than their hourly rate times their hours. Checking each stub is a good habit. Payroll mistakes do happen, and a worker who does not look may never notice missing overtime pay or a deduction that should have stopped.", "stem": "In the passage, the word \"deductions\" most nearly means", "choices": ["bonuses", "extra hours worked", "hourly rates", "amounts taken out of pay"], "answer": 3, "difficulty": 3, "topic": "pc-vocab", "kind": "vocab", "steps": ["Read the question first. Word in context: try each choice in place of the word.", "The passage says: \"Net pay, often called take-home pay, is what remains after all deductions.\"", "Deductions come between gross pay and net pay, and net pay is what remains after them. So they are amounts taken out.", "Answer: amounts taken out of pay."], "explanation": "Deductions come between gross pay and net pay, and net pay is what remains after them. So they are amounts taken out.", "source": "original (real-test level)"}, {"id": "PCR-12-2", "section": "PC", "set": "real", "passageId": "R12", "passage": "A pay stub lists more than the amount of a paycheck. The first number to find is gross pay, which is the total earned before anything is taken out. Below it are the deductions. Some are required, such as federal income tax and Social Security. Others are chosen by the worker, such as health insurance or a retirement plan. Net pay, often called take-home pay, is what remains after all deductions. New workers are sometimes surprised that their net pay is much lower than their hourly rate times their hours. Checking each stub is a good habit. Payroll mistakes do happen, and a worker who does not look may never notice missing overtime pay or a deduction that should have stopped.", "stem": "According to the passage, net pay is", "choices": ["the total earned before anything is taken out", "the hourly rate", "what remains after all deductions", "the amount of overtime"], "answer": 2, "difficulty": 3, "topic": "pc-detail", "kind": "detail", "steps": ["Read the question first. Stated detail: find the exact line.", "The passage says: \"Net pay, often called take-home pay, is what remains after all deductions.\"", "The passage defines net pay as what remains after all deductions.", "Answer: what remains after all deductions."], "explanation": "The passage defines net pay as what remains after all deductions.", "source": "original (real-test level)"}, {"id": "PCR-12-3", "section": "PC", "set": "real", "passageId": "R12", "passage": "A pay stub lists more than the amount of a paycheck. The first number to find is gross pay, which is the total earned before anything is taken out. Below it are the deductions. Some are required, such as federal income tax and Social Security. Others are chosen by the worker, such as health insurance or a retirement plan. Net pay, often called take-home pay, is what remains after all deductions. New workers are sometimes surprised that their net pay is much lower than their hourly rate times their hours. Checking each stub is a good habit. Payroll mistakes do happen, and a worker who does not look may never notice missing overtime pay or a deduction that should have stopped.", "stem": "The author suggests checking each pay stub mainly because", "choices": ["it raises the hourly rate", "mistakes can go unnoticed otherwise", "it lowers taxes", "it is required by law"], "answer": 1, "difficulty": 3, "topic": "pc-inference", "kind": "inference", "steps": ["Read the question first. Inference: what does the passage suggest, without saying it outright?", "The passage says: \"a worker who does not look may never notice\"", "The last sentence says a worker who does not look may never notice a mistake.", "Answer: mistakes can go unnoticed otherwise."], "explanation": "The last sentence says a worker who does not look may never notice a mistake.", "source": "original (real-test level)"}, {"id": "PCR-13-1", "section": "PC", "set": "real", "passageId": "R13", "passage": "In 1919, a young Army officer named Dwight Eisenhower joined a convoy of military trucks that crossed the United States from Washington, D.C., to San Francisco. The trip took sixty-two days. Roads were often dirt or mud, and bridges sometimes broke under the weight of the vehicles. Years later, as a general in World War II, Eisenhower saw Germany's wide, fast highways and understood their value for moving troops and supplies. When he became president, he pushed for a national network of roads. The Federal-Aid Highway Act of 1956 funded what became the Interstate Highway System. Today it stretches for more than forty thousand miles and carries a large share of the country's freight, though few drivers know that it began with a slow, muddy trip.", "stem": "Which of these happened first?", "choices": ["Eisenhower crossed the country in a truck convoy.", "The Federal-Aid Highway Act was passed.", "Eisenhower became president.", "Eisenhower saw highways in Germany."], "answer": 0, "difficulty": 3, "topic": "pc-sequence", "kind": "sequence", "steps": ["Read the question first. Sequence: what order did things happen in?", "The passage says: \"In 1919, a young Army officer named Dwight Eisenhower joined a convoy\"", "The convoy was in 1919. Germany came during World War II, then the presidency, then the 1956 act.", "Answer: Eisenhower crossed the country in a truck convoy.."], "explanation": "The convoy was in 1919. Germany came during World War II, then the presidency, then the 1956 act.", "source": "original (real-test level)"}, {"id": "PCR-13-2", "section": "PC", "set": "real", "passageId": "R13", "passage": "In 1919, a young Army officer named Dwight Eisenhower joined a convoy of military trucks that crossed the United States from Washington, D.C., to San Francisco. The trip took sixty-two days. Roads were often dirt or mud, and bridges sometimes broke under the weight of the vehicles. Years later, as a general in World War II, Eisenhower saw Germany's wide, fast highways and understood their value for moving troops and supplies. When he became president, he pushed for a national network of roads. The Federal-Aid Highway Act of 1956 funded what became the Interstate Highway System. Today it stretches for more than forty thousand miles and carries a large share of the country's freight, though few drivers know that it began with a slow, muddy trip.", "stem": "The passage is mainly about", "choices": ["why trucks were slow in 1919", "how bridges are built", "Germany's role in World War II", "how Eisenhower's experiences led to the interstate highway system"], "answer": 3, "difficulty": 3, "topic": "pc-main-idea", "kind": "main-idea", "steps": ["Read the question first. Main idea: what is the whole passage about?", "The passage says: \"When he became president, he pushed for a national network of roads.\"", "The passage follows his 1919 trip and his time in Germany to the highway act he pushed for.", "Answer: how Eisenhower's experiences led to the interstate highway system."], "explanation": "The passage follows his 1919 trip and his time in Germany to the highway act he pushed for.", "source": "original (real-test level)"}]};
+
+</script>
+<script>
 /* Spoken answers: letters (with Chrome's usual mishearings), choice values, and spoken math
    ("three fourths", "3/4", "point five", "negative 4", "x equals 4", "two and a half", "$1.50").
    Loaded before app.js. Pure functions, no DOM. */
@@ -252,7 +260,7 @@ if (typeof module !== 'undefined') module.exports = MS;
 'use strict';
 const BANK = window.ASVAB_BANK;
 const SECTIONS = BANK.sections;               // {AR:'Arithmetic Reasoning', ...}
-const APP_VERSION = '2.2.0 (bank '+BANK.version+')';
+const APP_VERSION = '2.3.0 (bank '+BANK.version+')';
 const SEC_ORDER = ['AR','WK','PC','MK','GS','EI'];
 const MEPS_ORDER = ['GS','AR','WK','PC','MK','EI'];   // real CAT-ASVAB order (officialasvab.com)
 const CAT = BANK.cat;                          // {GS:[15,12], ...} questions, minutes (officialasvab.com, no tryout items)
@@ -278,12 +286,12 @@ const Store = {
   set(k, v){ try{ localStorage.setItem(KEY+k, JSON.stringify(v)); }catch(e){ toast('Could not save. Storage is full or blocked.'); } },
   keys(){ return Object.keys(localStorage).filter(k => k.startsWith(KEY)).map(k => k.slice(KEY.length)); }
 };
-const DEFAULT_SETTINGS = { rate:0.9, voiceURI:'', readAlong:true, timerOn:true, dark:false, apiKey:'', apiBase:'https://api.openai.com/v1', model:'gpt-4o-mini', autoRead:false, hfAuto:null, hfWake:false };
+const DEFAULT_SETTINGS = { rate:0.9, voiceURI:'', readAlong:true, timerOn:true, dark:false, apiKey:'', apiBase:'https://api.openai.com/v1', model:'gpt-4o-mini', autoRead:false, hfAuto:null, hfWake:false, remindOn:false, remindTime:'18:00', weeklyDay:0 };
 let settings = Object.assign({}, DEFAULT_SETTINGS, Store.get('settings', {}));
 function saveSettings(){ Store.set('settings', settings); document.body.classList.toggle('dark', !!settings.dark); }
 
 function allQuestions(){ return BANK.questions.concat(Store.get('custom', [])); }
-function qById(id){ return allQuestions().find(q => q.id === id) || (Store.get('errors',[]).find(e => e.q && e.q.id===id) || {}).q; }
+function qById(id){ return allQuestions().find(q => q.id === id) || ((window.ASVAB_PCREAL || {}).questions || []).find(q => q.id === id) || (Store.get('errors',[]).find(e => e.q && e.q.id===id) || {}).q; }
 function sectionPool(sec){ return allQuestions().filter(q => q.section === sec); }
 
 /* ---------------- daily streak ---------------- */
@@ -631,8 +639,10 @@ let S = null;      // current practice session
 let M = null;      // current MEPS run
 function cleanup(){ Speech.stop(); Voice.stop(); if (S && S.timer) clearInterval(S.timer); if (S) S.hf = false; if (M && M.timer) clearInterval(M.timer); if (typeof LR !== 'undefined') LR = null; }
 function go(name, arg){
-  if (M && M.running && name !== 'meps-run' && !confirm('Leave the MEPS test? Your run will end.')) return;
+  if (M && M.running && name !== 'meps-run' && !confirm(M.kind === 'weekly' ? 'Leave the weekly test? Your run will end.' : 'Leave the MEPS test? Your run will end.')) return;
   if (M && name !== 'meps-run') M.running = false;
+  if (typeof PLAN !== 'undefined' && PLAN && name !== 'plan') PLAN = null;
+  if (typeof pcrGuide === 'function') pcrGuide(true);
   // Arithmetic Reasoning is the catch-up track until its last level is passed (or he picked the real questions)
   if (name === 'home' && typeof AR_REAL !== 'undefined') AR_REAL = false;
   if (name === 'practice' && arg === 'AR' && typeof arDone === 'function' && !arDone() && !AR_REAL){ name = 'ladder'; arg = undefined; }
@@ -657,11 +667,17 @@ function itFocusHTML(){
 SCREENS.home = () => {
   const s = streakInfo(); const errs = Store.get('errors', []);
   app().innerHTML = `<h1>Hi. Ready to study?</h1>
+  ${reminderBannerHTML()}${weeklyNudgeHTML()}
   <div class="card hf-card">${HF.on ? `<p class="big-word">Hands-free is on. Just talk. Say "help".</p><button class="small" id="hfStopBig">Stop hands-free</button>`
     : `<button class="hf-start" id="hfStartBig">Start hands-free</button><p>One tap. Then the whole app works by voice. It reads everything and listens for you.</p>${Voice.why() ? `<p class="bad-text">${esc(Voice.why())}</p>` : ''}`}</div>
   <div class="card"><div class="big-word">Today: ${s.todayCount} of ${DAILY_GOAL} questions</div>
     <div class="bar" aria-hidden="true"><div style="width:${Math.min(100, s.todayCount*10)}%"></div></div>
     <p>${s.goalMet ? 'Goal done for today. Great work.' : `Do ${DAILY_GOAL - s.todayCount} more to keep your streak.`} Streak: ${s.streak} day${s.streak===1?'':'s'}.</p></div>
+  <div class="grid">
+    <button class="tile primary" id="planTile" onclick="go('plan','new')">Today's plan<small>10 minutes: a lesson, 10 questions, a recap</small></button>
+    <button class="tile" id="weeklyTile" onclick="go('weekly')">Weekly test<small>${weeklyTotal()} questions. Your score goal: 212</small></button>
+    <button class="tile" id="tipsTile" onclick="go('earset','tips')">Test-day tips<small>Short spoken tips for MEPS</small></button>
+  </div>
   ${itFocusHTML()}
   <h2>Practice a section</h2>
   <div class="grid">${SEC_ORDER.map(k => k === 'AR' && !arDone()
@@ -673,6 +689,7 @@ SCREENS.home = () => {
     <button class="tile" onclick="go('drill')">Speed drills<small>Quick mental math out loud</small></button>
     <button class="tile" onclick="go('vocab')">Vocab by ear<small>Hear a word. Say what it means.</small></button>
     <button class="tile" onclick="go('readalong')">Read along<small>Big text. Read it out loud.</small></button>
+    <button class="tile" id="eiEarTile" onclick="go('earset','ei')">Electronics by ear<small>Water in a pipe, Ohm's law, and more</small></button>
   </div>
   <h2>More</h2>
   <div class="grid">
@@ -689,6 +706,8 @@ SCREENS.home = () => {
   const hs = $('#hfStartBig'); if (hs) hs.onclick = () => { HF.start(); if (HF.on) SCREENS.home(); };
   const hx = $('#hfStopBig'); if (hx) hx.onclick = () => { HF.stop(); SCREENS.home(); };
   $$('[data-flesson]').forEach(b => b.onclick = () => go('lesson', b.dataset.flesson));
+  reminderWire(); const ws = $('#wnStart'); if (ws) ws.onclick = () => go('weekly');
+  const wl = $('#wnLater'); if (wl) wl.onclick = () => { Store.set('weeklySnooze', today()); const n = $('#weeklyNudge'); if (n) n.remove(); };
 };
 
 SCREENS.practice = (sec) => {
@@ -704,6 +723,9 @@ SCREENS.practice = (sec) => {
     <div class="toggle"><input type="checkbox" id="timerOn" ${settings.timerOn?'checked':''}><label for="timerOn" style="margin:0">Timer on: ${fmtTime(per)} per question (real CAT pace)</label></div>
   </div>
   <div class="row"><button class="primary" id="startBtn">Start practice</button><button id="hfBtn">Start hands-free</button></div>
+  ${sec === 'PC' ? pcrCardHTML() : ''}
+  ${sec === 'EI' ? `<div class="card" id="eiEar"><h2>Electronics by ear</h2><p>${EAR.ei.length} spoken lessons with pictures in your head: water in a pipe, the Ohm's law triangle, one lane or many lanes, and more. Each ends with quick checks. Say the number.</p>
+    <div class="row"><button class="primary" id="eiEarGo">Electronics by ear</button><button id="eiEarAll">Play them in Audio lessons</button></div></div>` : ''}
   <h2>Need new questions?</h2>
   <div class="card"><p>Make 5 new ${SECTIONS[sec]} questions with AI. They are checked, then saved on this device.</p>
     <button id="genBtn">Generate more questions</button><div id="genOut" aria-live="polite"></div></div>`;
@@ -714,15 +736,17 @@ SCREENS.practice = (sec) => {
   $('#hfBtn').onclick = () => startSession(sec, count, { hf:true });
   $('#genBtn').onclick = () => generateQuestions(sec, 5, $('#genOut'));
   const ab = $('#arBack'); if (ab) ab.onclick = () => go('ladder');
+  const pg = $('#pcrGo'); if (pg) pg.onclick = () => { if (!pcrUnlocked()) Store.set('pcrealOpen', true); go('pcreal'); };
+  const eg = $('#eiEarGo'); if (eg){ eg.onclick = () => go('earset', 'ei'); $('#eiEarAll').onclick = () => go('audio', 'ei'); }
 };
 
 function startSession(sec, n, opts={}){
   const qs = pickQuestions(sec, n, opts);
   if (!qs.length){ toast('No questions found.'); return; }
   if (opts.hf && !HF.on) HF.start({ fromSession:true });
-  const begin = () => { cleanup(); S = { sec, qs, i:0, results:[], hf: !!opts.hf, timerOn: opts.hf ? (opts.timer ?? false) : settings.timerOn,
-    per: CAT[sec][1]*60/CAT[sec][0], mode: (opts.hf || HF.on) ? 'handsfree' : 'practice', topic: opts.topic }; renderQ(); };
-  preReview(begin);
+  const begin = () => { cleanup(); S = { sec, qs, i:0, results:[], hf: !!opts.hf, timerOn: opts.noTimer ? false : opts.hf ? (opts.timer ?? false) : settings.timerOn,
+    per: CAT[sec][1]*60/CAT[sec][0], mode: opts.mode || ((opts.hf || HF.on) ? 'handsfree' : 'practice'), topic: opts.topic, byEar: !!opts.byEar }; renderQ(); };
+  if (opts.skipReview) begin(); else preReview(begin);
 }
 function preReview(next){
   const errs = Store.get('errors', []).slice(0, 10);
@@ -757,8 +781,11 @@ function renderQ(){
       S.left = total - (Date.now()-t0)/1000; const el = $('#tmr'), bar = $('#tbar');
       if (el) el.textContent = fmtTime(S.left); if (bar){ bar.firstElementChild.style.width = Math.max(0, 100*S.left/total) + '%'; bar.classList.toggle('low', S.left < total*0.2); }
       if (S.left <= 0){ clearInterval(S.timer); if (!S.answered){ toast('Time is up.'); answer(null); } } }, 250); }
+  if (S.pcMode) pcrDecorate();
   if (HF.on) HF.enter('question');
-  else if (settings.autoRead) readQuestionAloud(q);
+  else if (S.pcMode === 'aloud') pcrRead(q);
+  else if (S.pcMode === 'own'){ if (settings.autoRead) pcrRead(q); }
+  else if (settings.autoRead || S.byEar) readQuestionAloud(q);
 }
 function hintTexts(q){ const L = LESSONS[q.topic] || {}; return [ 'Hint 1 (the idea): ' + (L.idea || 'Read the question again. What does it ask?'), 'Hint 2 (the first step): ' + (q.steps.find(s => !/^(The idea|Topic|Answer)/.test(s)) || q.steps[0]) ]; }
 function showHint(q){ const h = hintTexts(q); if (S.hints >= h.length){ toast('No more hints here. Try the Tutor for more help.'); return; }
@@ -780,7 +807,7 @@ function answer(i){
   $$('#confBox button').forEach(b => b.onclick = () => setConf(b.dataset.c));
   $('#fb').scrollIntoView({ behavior:'smooth', block:'start' });
   if (HF.on) HF.enter('feedback', why.id);
-  else if (settings.autoRead) Speech.speakEl(document.getElementById(why.id));
+  else if (settings.autoRead || S.byEar) Speech.speakEl(document.getElementById(why.id));
 }
 function setConf(c){
   if (!S || S.conf) return; S.conf = c; const q = S.qs[S.i]; const r = S.results[S.results.length-1]; r.conf = c;
@@ -801,15 +828,17 @@ function endSession(){
   const s = S; if (s.timer) clearInterval(s.timer); s.hf = false;
   const done = s.results.length, right = s.results.filter(r => r.correct).length;
   if (done) saveAttempt(s.sec, right, done, s.mode);
+  if (s.mode === 'pcreal') pcrDone(s, right, done);
+  if (typeof planHook === 'function' && planHook('sec', s)){ S = null; return; }
   const misses = s.results.filter(r => !r.correct);
   const sum = speakable(`You got ${right} out of ${done}. ${right === done && done ? 'Perfect set!' : 'Good effort. Every miss teaches you something.'}`);
   app().innerHTML = `<h1>Set done</h1><div class="card"><div class="row"><div class="big-word" style="flex:1" id="setSum">${sum.html}</div>${sayBtn('#'+sum.id)}</div>
     <p>Level now: ${level(s.sec)} of 3.</p></div>
     ${misses.length ? `<h2>Your misses</h2>` + misses.map(r => { const q = qById(r.qid); return `<div class="card"><div class="stem">${esc(q.stem)}</div><p>Right answer: <span class="ok-text">${esc(q.choices[q.answer])}</span></p><button class="small" data-t="${esc(q.id)}">Tutor me</button></div>`; }).join('') : ''}
-    <div class="row"><button class="primary" onclick="go('practice','${s.sec}')">Practice again</button><button onclick="go('progress')">My progress</button><button onclick="go('home')">Home</button></div>`;
+    <div class="row"><button class="primary" onclick="${s.mode === 'pcreal' ? "go('pcreal')" : `go('practice','${s.sec}')`}">Practice again</button><button onclick="go('progress')">My progress</button><button onclick="go('home')">Home</button></div>`;
   $$('[data-t]').forEach(b => b.onclick = () => { const q = qById(b.dataset.t); go('tutor'); startBankTutor(q); });
   S = null;
-  if (HF.on) HF.enter('done', { sec:s.sec });
+  if (HF.on) HF.enter('done', { sec:s.sec, pcreal: s.mode === 'pcreal' });
 }
 
 /* ---------------- hands-free loop ---------------- */
@@ -977,6 +1006,7 @@ SCREENS.progress = () => {
   app().innerHTML = `<h1>My progress</h1>
   ${itPanelHTML(practiceEstimates(), 'from your practice')}
   ${byEarProgressHTML()}
+  ${weeklyHist().length ? `<div class="card" id="wkProg"><h2>Weekly tests</h2>${weeklyChartSVG(weeklyHist())}</div>` : ''}
   <div class="two-col">
     <div class="card"><h2>Topics to re-learn</h2><p>Missed, or right but not sure.</p>${relearn.length ? relearn.map(([k,v]) => `<button class="small" style="width:100%;margin:4px 0" data-l="${k}">${esc(LESSONS[k].name)} (${SECTIONS[LESSONS[k].section] ? LESSONS[k].section : ''})</button>`).join('') : '<p>None right now.</p>'}</div>
     <div class="card"><h2>Just needs reps</h2><p>You were right and sure.</p>${reps.length ? reps.map(([k,v]) => `<button class="small" style="width:100%;margin:4px 0" data-l="${k}">${esc(LESSONS[k].name)} (${LESSONS[k].section})</button>`).join('') : '<p>None yet.</p>'}</div>
@@ -1013,11 +1043,11 @@ SCREENS.meps = () => {
   <p>Source: officialasvab.com (proctored CAT-ASVAB, scored questions, no tryout items).</p></div>
   <div class="card"><p>No hints. No tutor. No going back.</p><p>The clock is on screen. When time runs out, the next part starts.</p><p>No going back to change an answer. That is the real rule too.</p><p>If time runs out, the real test scores the rest as random guesses. That costs points. So answer every question. Guess if you must.</p></div>
   <div class="row"><button class="primary" id="mStart">Start the test</button><button onclick="go('home')">Not now</button></div>`;
-  $('#mStart').onclick = () => { M = { running:true, part:0, res:{}, log:[] }; mepsIntro(); };
+  $('#mStart').onclick = () => { M = { running:true, part:0, res:{}, log:[], kind:'meps', order:MEPS_ORDER, counts:CAT }; mepsIntro(); };
 };
 function mepsIntro(){
-  if (!M || !M.running) return; Speech.stop(); const k = MEPS_ORDER[M.part]; const [n, min] = CAT[k]; let wait = 20;
-  app().innerHTML = `<h1>Part ${M.part+1} of ${MEPS_ORDER.length}: ${SECTIONS[k]}</h1><div class="card"><p class="big-word">${n} questions. ${min} minutes.</p>
+  if (!M || !M.running) return; Speech.stop(); const k = M.order[M.part]; const [n, min] = M.counts[k]; let wait = 20;
+  app().innerHTML = `<h1>${M.kind === 'weekly' ? 'Weekly test. ' : ''}Part ${M.part+1} of ${M.order.length}: ${SECTIONS[k]}</h1><div class="card"><p class="big-word">${n} questions. ${spokenTime(min*60)}.</p>
     <p>Starts by itself in <span id="mWait">${wait}</span> seconds.</p></div><div class="row"><button class="primary" id="mBegin">Begin now</button><button id="mQuit">Quit test</button></div>`;
   M.timer = setInterval(() => { wait--; const e = $('#mWait'); if (e) e.textContent = wait; if (wait <= 0){ clearInterval(M.timer); mepsBegin(); } }, 1000);
   $('#mBegin').onclick = () => { clearInterval(M.timer); mepsBegin(); };
@@ -1025,7 +1055,7 @@ function mepsIntro(){
   $('#mQuit').onclick = () => { if (confirm('Quit the test?')){ M.running = false; clearInterval(M.timer); go('home'); } };
 }
 function mepsBegin(){
-  const k = MEPS_ORDER[M.part]; const [n, min] = CAT[k];
+  const k = M.order[M.part]; const [n, min] = M.counts[k];
   M.ann = new Set(); M.sec = k; M.used = new Set(); M.diff = 2; M.n = n; M.done = 0; M.res[k] = { right:0, total:n, answered:0 }; M.end = Date.now() + min*60000;
   clearInterval(M.timer); M.timer = setInterval(mepsTick, 500); mepsNextQ();
 }
@@ -1042,7 +1072,7 @@ function mepsTick(){
 }
 // hands-free: say the time left every 5 minutes and at 1 minute, but never in the middle of reading
 function mepsAnnounce(left){
-  const total = CAT[M.sec][1]*60; const marks = []; for (let m = 300; m < total; m += 300) marks.push(m); if (total > 90) marks.push(60);
+  const total = M.counts[M.sec][1]*60; const marks = []; for (let m = 300; m < total; m += 300) marks.push(m); if (total > 90) marks.push(60);
   const due = marks.filter(m => left <= m && !M.ann.has(m)); if (!due.length) return;
   if (HF.talking > 0 || HF.pending){ return; }               // wait until reading is done
   due.forEach(m => M.ann.add(m)); HF.say(`Time left: ${spokenTime(left)}.`);
@@ -1059,15 +1089,15 @@ function mepsNextQ(){
 function mepsAnswer(i){
   const q = M.q; const ok = i === q.answer; M.done++; M.res[M.sec].answered++; if (ok) M.res[M.sec].right++;
   M.diff = Math.max(1, Math.min(3, M.diff + (ok ? 1 : -1)));
-  M.log.push({ q, i, ok }); bumpDaily(1); srsUpdate(q.id, ok, ok ? 'shaky' : null); if (!ok) logError(q, i, 'meps');
+  M.log.push({ q, i, ok }); bumpDaily(1); srsUpdate(q.id, ok, ok ? 'shaky' : null); if (!ok) logError(q, i, M.kind || 'meps');
   mepsNextQ();
 }
 function mepsFinishPart(){
   if (!M || !M.running) return; clearInterval(M.timer); const r = M.res[M.sec];
   // Official rule: unfinished items are scored as though answered at random (1 in 4 chance each).
   r.guessed = (r.total - r.answered) * 0.25;
-  saveAttempt(M.sec, r.right, r.total, 'meps');
-  M.part++; if (M.part < MEPS_ORDER.length) mepsIntro(); else mepsReport();
+  saveAttempt(M.sec, r.right, r.total, M.kind || 'meps');
+  M.part++; if (M.part < M.order.length) mepsIntro(); else if (M.kind === 'weekly') weeklyReport(); else mepsReport();
 }
 function normCdf(z){ const t = 1/(1+0.2316419*Math.abs(z)); const d = 0.3989423*Math.exp(-z*z/2); const p = d*t*(0.3193815+t*(-0.3565638+t*(1.781478+t*(-1.821256+t*1.330274)))); return z > 0 ? 1-p : p; }
 function estimates(res){
@@ -1234,6 +1264,7 @@ SCREENS.settings = () => {
     <div class="toggle"><input type="checkbox" id="readAlong" ${settings.readAlong?'checked':''}><label for="readAlong" style="margin:0">Read-along: light up words as they are read</label></div>
     <div class="toggle"><input type="checkbox" id="autoRead" ${settings.autoRead?'checked':''}><label for="autoRead" style="margin:0">Read each question aloud by itself</label></div>
     <p>${Speech.ok ? '' : 'This browser cannot read aloud.'} ${esc(Voice.note() || 'Voice answers work here.')}</p></div>
+  ${remSettingsHTML()}
   <div class="card"><h2>Hands-free</h2>
     <div class="toggle"><input type="checkbox" id="hfAuto" ${settings.hfAuto?'checked':''}><label for="hfAuto" style="margin:0">Start hands-free by itself next time (when the mic is already allowed)</label></div>
     <div class="toggle"><input type="checkbox" id="hfWake" ${settings.hfWake?'checked':''}><label for="hfWake" style="margin:0">Wake word: only listen to commands that start with "coach"</label></div></div>
@@ -1255,7 +1286,7 @@ SCREENS.settings = () => {
   <p>Questions are original ASVAB-style practice items, not real ASVAB questions. App version ${esc(APP_VERSION)}.</p>`;
   const drawLog = () => { const el = $('#vlog'); if (!el) return; const rows = VOICE_LOG.slice(-40).reverse();
     el.innerHTML = rows.length ? rows.map(x => `<li><b>${esc(x.at.slice(11, 19))}</b> ${esc(x.ctx || '')}: ${x.text ? '"' + esc(x.text) + '"' : '<i>(' + esc(x.error || 'nothing') + ')</i>'}${x.alts && x.alts.length > 1 ? ' [' + esc(x.alts.slice(1).join(' | ')) + ']' : ''}${x.echo ? ' (own voice, ignored)' : ''}</li>`).join('') : '<li>Nothing yet. Turn on hands-free and say something.</li>'; };
-  drawLog(); $('#vlogRefresh').onclick = drawLog;
+  drawLog(); $('#vlogRefresh').onclick = drawLog; remSettingsWire();
   $('#vlogClear').onclick = () => { VOICE_LOG.length = 0; try { localStorage.removeItem('asvab.voicelog'); } catch(e){} drawLog(); };
   $('#vlogCopy').onclick = () => { const t = JSON.stringify(VOICE_LOG.slice(-40), null, 1); (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(() => toast('Log copied.'), () => toast('Could not copy.')); };
   const sel = $('#voiceSel'); fillVoices(sel); sel.onchange = () => { settings.voiceURI = sel.value; saveSettings(); };
@@ -1298,8 +1329,8 @@ function importAll(file){
 function boot(){
   saveSettings(); renderStreak();
   const [name, arg] = (location.hash.slice(1) || 'home').split('/');
-  go(['home','practice','handsfree','tutor','review','progress','meps','settings','lesson','ladder','ladlesson','audio','drill','vocab','readalong'].includes(name) ? name : 'home', arg);
-  renderHfBar();
+  go(['home','practice','handsfree','tutor','review','progress','meps','settings','lesson','ladder','ladlesson','audio','drill','vocab','readalong','weekly','plan','pcreal','earset','earlesson'].includes(name) ? name : 'home', arg);
+  renderHfBar(); try { reminderTick(); } catch(e){}
   // auto-resume hands-free when he asked for it and the mic is already allowed (no prompt needed)
   if (settings.hfAuto && !Voice.why()){
     const tryStart = () => { HF.start({ auto:true }); if (HF.on && (location.hash.startsWith('#home') || !location.hash)) SCREENS.home(); };
@@ -1419,7 +1450,7 @@ function ladRender(){
     <div class="row" id="ladTools"><button class="small" id="ladHint">Hint</button><button class="small" onclick="go('ladder')">End</button></div><div id="hintBox"></div><div id="fb"></div>`;
   $$('.choice').forEach(b => b.onclick = () => ladAnswer(+b.dataset.i));
   $('#ladHint').onclick = () => ladHint();
-  if (HF.on) HF.enter('ladq'); else if (settings.autoRead) ladReadQ(q);
+  if (HF.on) HF.enter('ladq'); else if (settings.autoRead || LR.byEar) ladReadQ(q);
 }
 // spoken questions are read as a question only; the 4 choices are for tapping (A, B, C, D are read at the bridge level)
 async function ladReadQ(q){ if (ladIsSay(q)){ await Speech.say(q.say || q.stem); } else await readQuestionAloud(q); }
@@ -1459,7 +1490,7 @@ function ladAnswer(i, raw, note){
     <div class="row"><button class="primary" id="nextBtn">${last ? 'See my score' : 'Next question'}</button><button id="ladSlow">Explain again slower</button><button id="ladMore">Another one like this</button></div>`;
   $('#nextBtn').onclick = ladNext; $('#nextBtn').focus({ preventScroll:true });
   $('#ladSlow').onclick = () => ladExplainSlow(); $('#ladMore').onclick = () => { ladAnotherLike(); };
-  if (HF.on) HF.enter('ladfb', why.id); else if (settings.autoRead) Speech.speakEl(document.getElementById(why.id));
+  if (HF.on) HF.enter('ladfb', why.id); else if (settings.autoRead || LR.byEar) Speech.speakEl(document.getElementById(why.id));
 }
 async function ladExplainSlow(){
   const q = LR && LR.qs[LR.i]; if (!q) return; const old = settings.rate; settings.rate = Math.max(0.5, (Number(old) || 0.9) - 0.25);
@@ -1493,7 +1524,9 @@ function ladEnd(){
       else { st.level = n; msg = `You got ${r.right} of 10. You need ${LADDER.mastery} to move up. Hear the lesson again. Then try the next set.`; }
     }
   }
-  ladSave(st); const sum = speakable(msg); const finished = !!st.passed[NLEV] && r.n === NLEV && r.right >= LADDER.mastery;
+  ladSave(st);
+  if (typeof planHook === 'function' && planHook('lad', r)){ LR = null; return; }
+  const sum = speakable(msg); const finished = !!st.passed[NLEV] && r.n === NLEV && r.right >= LADDER.mastery;
   app().innerHTML = `<h1>${r.n ? 'Set done' : 'Placement done'}</h1>
     <div class="card"><div class="row"><div class="big-word" style="flex:1" id="ladSum">${sum.html}</div>${sayBtn('#' + sum.id)}</div></div>
     <div class="row">${finished ? `<button class="primary" id="ladRealGo">Real Arithmetic Reasoning practice</button>` : `<button class="primary" id="ladGo">Go to level ${st.level}</button><button id="ladLes">Lesson for level ${st.level}</button>`}<button onclick="go('home')">Home</button></div>`;
@@ -1652,14 +1685,15 @@ function audioPlaylist(){
   out.splice(1, 0, { title:'Vocab review', lines: words.flatMap(([w, mean, , hook]) => [{ say:`${w}.`, pause:1500 }, { say:`${w} means ${mean}. ${hook}` }]) });
   const errs = Store.get('errors', []).slice(0, 5);
   if (errs.length) out.splice(2, 0, { title:'Review of your misses', lines: errs.map(e => ({ say:`${e.stem} The answer is ${e.answerText}. ${firstSentence(e.explanation || '')}` })) });
-  return out;
+  return typeof earPlaylist === 'function' ? out.concat(earPlaylist()) : out;
 }
 let AL = null;
 let wakeLock = null;
 async function keepAwake(on){ try { if (on && 'wakeLock' in navigator && !wakeLock){ wakeLock = await navigator.wakeLock.request('screen'); wakeLock.addEventListener('release', () => { wakeLock = null; }); }
   if (!on && wakeLock){ await wakeLock.release(); wakeLock = null; } } catch(e){} }
-SCREENS.audio = () => {
+SCREENS.audio = (arg) => {
   if (!AL) AL = { list: audioPlaylist(), i:0, j:0, playing:false };
+  if (arg === 'ei' || arg === 'tips'){ const k = AL.list.findIndex(x => x.group === arg); if (k >= 0 && AL.list[AL.i].group !== arg){ AL.i = k; AL.j = 0; AL.playing = false; } }
   app().innerHTML = `<h1>Audio lessons</h1><div class="card"><p>Listen only. Good for work with earbuds. It talks through the lessons, gives you a moment to think, then says the answer.</p>
     <p>${HF.on ? 'Say pause, resume, next lesson, previous lesson, or repeat that.' : 'Turn on hands-free to control it by voice: pause, resume, next lesson, repeat that.'}</p></div>
     <div class="card"><p class="big-word" id="alNow">${esc(AL.list[AL.i].title)}</p><p id="alLine"></p>
@@ -1735,6 +1769,476 @@ function readResult(heard, ms){
   const o = $('#raOut'); if (o) o.innerHTML = `<div class="card"><p class="big-word" id="raScore">${esc(msg)}</p></div>`;
   return msg;
 }
+
+</script>
+<script>
+/* ASVAB Coach 2.3 features: weekly test + score goal, today's plan, real-test reading passages,
+   electronics by ear, test-day tips, and daily reminders. Loads after audio.js and before handsfree.js. */
+'use strict';
+const EXTRA_VCTX = {};
+const DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const dayStart = d => { const x = new Date(d); x.setHours(0,0,0,0); return x.getTime(); };
+const daysSince = iso => Math.round((dayStart(new Date()) - dayStart(new Date(iso))) / 864e5);
+
+/* ======================= 1. Weekly practice test + score goal ======================= */
+// A short MEPS-style mix: the real CAT counts x 0.4 (rounded), same time per question as the real test.
+const WEEKLY = Object.fromEntries(MEPS_ORDER.map(k => { const [n, min] = CAT[k]; const w = Math.max(4, Math.round(n * 0.4)); return [k, [w, Math.round(min * w / n * 10) / 10]]; }));
+const weeklyTotal = () => MEPS_ORDER.reduce((a, k) => a + WEEKLY[k][0], 0);
+const weeklyMinutes = () => Math.round(MEPS_ORDER.reduce((a, k) => a + WEEKLY[k][1], 0));
+function weeklyHist(){ return Store.get('weekly', []); }
+function weeklyDay(){ return settings.weeklyDay == null ? 0 : +settings.weeklyDay; }
+function weeklyDue(now = new Date()){
+  const L = weeklyHist(); const last = L[L.length - 1]; if (!last) return true;
+  const d = daysSince(last.date); if (d >= 7) return true;
+  return now.getDay() === weeklyDay() && d >= 4;
+}
+function weeklyNudge(){ return weeklyDue() && Store.get('weeklySnooze', '') !== today(); }
+function weeklyStart(){ M = { running:true, part:0, res:{}, log:[], kind:'weekly', order:MEPS_ORDER, counts:WEEKLY }; mepsIntro(); }
+function weeklyChartSVG(list){
+  const a = list.slice(-8); if (!a.length) return '<p>No weekly tests yet.</p>';
+  const W = 640, H = 260, P = 44, max = 300, y = v => H - P - (H - 2*P) * Math.min(v, max) / max, bw = (W - 2*P) / a.length;
+  let s = `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Weekly IT line score estimates for the last ${a.length} weeks">`;
+  [[212,'#003A8C'],[156,'#7A4E00']].forEach(([v, c]) => { s += `<line x1="${P}" x2="${W-P}" y1="${y(v)}" y2="${y(v)}" stroke="${c}" stroke-width="2" stroke-dasharray="8 5"/><text x="${W-P+4}" y="${y(v)+5}" font-size="15" fill="${c}">${v}</text>`; });
+  a.forEach((t, i) => { const x = P + i*bw + bw*0.1, w = bw*0.38, d = new Date(t.date);
+    [[t.it212,'#003A8C',0],[t.it156,'#B07800',1]].forEach(([v, c, j]) => { const yy = y(v || 0); s += `<rect x="${x + j*w}" y="${yy}" width="${w*0.92}" height="${Math.max(1, H-P-yy)}" fill="${c}"/><text x="${x + j*w + w*0.46}" y="${yy-5}" text-anchor="middle" font-size="14" font-weight="bold">${v ?? ''}</text>`; });
+    s += `<text x="${x + w}" y="${H-P+20}" text-anchor="middle" font-size="14">${d.getMonth()+1}/${d.getDate()}</text>`; });
+  return s + `</svg><p>Blue bars: main IT rule (AR + MK + EI + VE), goal 212. Gold bars: other IT rule (VE + MK + GS), goal 156. Dashed lines are the goals. Oldest week on the left.</p>`;
+}
+function weeklySummary(h, prev){
+  const need = (v, goal) => v >= goal ? 'That meets the line. Keep a cushion.' : `About ${goal - v} points still needed.`;
+  const f = h.focus.map(k => SECTIONS[k]);
+  let ch = 'This is your first weekly test.';
+  if (prev && prev.it212 != null){ const d = h.it212 - prev.it212; ch = d > 0 ? `The main rule is up ${d} points from last time.` : d < 0 ? `The main rule is down ${-d} points from last time. That happens. Keep going.` : 'The main rule is the same as last time.'; }
+  return `Weekly test done. You got ${h.right} of ${h.total}. Main IT rule, AR plus MK plus EI plus VE: about ${h.it212} of 212. ${need(h.it212, 212)} Other IT rule, VE plus MK plus GS: about ${h.it156} of 156. ${need(h.it156, 156)} ${ch} Focus this week: ${f[0]} and ${f[1]}. Estimate only. Confirm with a recruiter.`;
+}
+function weeklyReport(){
+  M.running = false; const res = M.res; const e = estimates(res); const S2 = e.S;
+  const right = Object.values(res).reduce((a, r) => a + r.right, 0), total = Object.values(res).reduce((a, r) => a + r.total, 0);
+  const hist = weeklyHist(); const prev = hist[hist.length - 1];
+  const h = { date:new Date().toISOString(), res, S:S2, it212: S2.AR + S2.MK + S2.EI + S2.VE, it156: S2.VE + S2.MK + S2.GS, afqt:e.afqt, right, total, focus: itFocus(e).slice(0, 2).map(o => o.k) };
+  hist.push(h); Store.set('weekly', hist.slice(-52)); Store.set('weeklySnooze', '');
+  const sum = speakable(weeklySummary(h, prev));
+  app().innerHTML = `<h1>Weekly test: score report</h1>
+  <div class="card"><div class="row"><div class="big-word" style="flex:1" id="wkSum">${sum.html}</div>${sayBtn('#'+sum.id)}</div>
+    <p class="notice"><strong>Estimate only, confirm with a recruiter.</strong></p></div>
+  <div class="card" id="wkGoal"><h2>Score goal</h2>
+    <p>Main rule: about <strong>${h.it212}</strong> of 212. ${h.it212 >= 212 ? 'Meets the line.' : `Still need about <strong>${212 - h.it212}</strong>.`}</p>
+    <p>Other rule: about <strong>${h.it156}</strong> of 156. ${h.it156 >= 156 ? 'Meets the line.' : `Still need about <strong>${156 - h.it156}</strong>.`}</p></div>
+  <div class="card" id="wkChart"><h2>Week by week</h2>${weeklyChartSVG(hist)}</div>
+  <div class="card" id="wkFocus"><h2>Focus this week</h2><ol class="focus-list">${h.focus.map(k => `<li data-sec="${k}"><strong>${SECTIONS[k]}</strong> (est. ${S2[k]})</li>`).join('')}</ol>
+    <div class="row">${h.focus.map((k, i) => `<button class="${i ? '' : 'primary'}" data-wf="${k}">Practice ${SECTIONS[k]}</button>`).join('')}</div></div>
+  <div class="card"><table><tr><th>Part</th><th>Right</th><th>Est. score</th></tr>
+  ${MEPS_ORDER.map(k => `<tr><td>${SECTIONS[k]}</td><td>${res[k].right} of ${res[k].total}${res[k].answered < res[k].total ? ` (${res[k].total - res[k].answered} not answered, scored as random guesses)` : ''}</td><td>${S2[k]}</td></tr>`).join('')}
+  <tr><td>VE (WK + PC)</td><td></td><td>${S2.VE}</td></tr></table></div>
+  ${itPanelHTML(e, 'from this weekly test')}
+  <div class="row"><button onclick="go('review')">Go over my misses</button><button onclick="go('progress')">My progress</button><button onclick="go('home')">Home</button></div>`;
+  $$('[data-wf]').forEach(b => b.onclick = () => go('practice', b.dataset.wf));
+  M = null;
+  if (HF.on) HF.enter('weeklyreport', h.focus); else Speech.speakEl($('#wkSum'));
+}
+SCREENS.weekly = () => {
+  const hist = weeklyHist(); const last = hist[hist.length - 1];
+  app().innerHTML = `<h1>Weekly practice test</h1>
+  <div class="card"><p class="big-word">${weeklyTotal()} questions. About ${weeklyMinutes()} minutes.</p>
+    <p>A short version of the real test: the same 6 parts, in the same order, in the same mix. Same time per question as the real test.</p>
+    <table><tr><th>Part</th><th>Questions</th><th>Minutes</th></tr>${MEPS_ORDER.map(k => `<tr><td>${SECTIONS[k]}</td><td>${WEEKLY[k][0]}</td><td>${WEEKLY[k][1]}</td></tr>`).join('')}</table>
+    <p>No hints. No going back. Answer every question.</p>
+    <p>${last ? `Last weekly test: ${new Date(last.date).toLocaleDateString()}, main IT rule about ${last.it212} of 212.` : 'You have not taken one yet.'} ${weeklyDue() ? 'It is due now.' : `Next one: ${DAYS[weeklyDay()]}.`}</p></div>
+  ${hist.length ? `<div class="card"><h2>Week by week</h2>${weeklyChartSVG(hist)}</div>` : ''}
+  <div class="row"><button class="primary" id="wStart">Start the weekly test</button><button onclick="go('home')">Not now</button></div>
+  <p><small>Estimate only, confirm with a recruiter.</small></p>`;
+  $('#wStart').onclick = weeklyStart;
+};
+function weeklyNudgeHTML(){
+  if (!weeklyNudge()) return '';
+  return `<div class="card nudge" id="weeklyNudge"><p class="big-word">Your weekly test is due.</p><p>${weeklyTotal()} questions, about ${weeklyMinutes()} minutes. It shows how close you are to 212.</p>
+    <div class="row"><button class="primary" id="wnStart">Start weekly test</button><button id="wnLater">Not today</button></div></div>`;
+}
+Object.assign(EXTRA_VCTX, {
+  weekly: {
+    help: 'Say start the test to begin the weekly test. Say home to leave.',
+    async intro(){ await Speech.say(`Weekly practice test. ${weeklyTotal()} questions in 6 parts, about ${weeklyMinutes()} minutes. Real time pressure, scaled down. No hints and no going back. Answer every question. Say start the test, or home.`); },
+    async handle(t){ if (isGo(t, ['start weekly test', 'start the weekly test'])){ weeklyStart(); return true; } return false; },
+  },
+  weeklyreport: {
+    help: 'Say practice and a section name, review misses, progress, or home. Say repeat to hear the report again.',
+    async intro(alive){ await sayEl('#wkSum'); if (!alive()) return;
+      const panel = $('#itPanel'); if (panel) for (const el of $$('h3, p', panel)){ if (!alive()) return; if (el.closest('.notice')) continue; await Speech.say(textOf(el)); }
+      if (alive()) await Speech.say('Estimate only. Confirm with a recruiter. Say practice and a section name, review misses, or home.'); },
+    async handle(t, all, raw, focus){
+      if (focus && anyOf(t, ['focus one', 'first focus', 'practice the first one', 'practice focus'])){ go('practice', focus[0]); return true; }
+      if (focus && anyOf(t, ['focus two', 'second focus', 'practice the second one'])){ go('practice', focus[1]); return true; }
+      return false; },
+  },
+});
+
+/* ======================= 2. Today's plan: 10 minutes ======================= */
+let PLAN = null;
+function planOptions(){
+  const out = []; const st = ladState();
+  if (!arDone()) out.push({ kind:'ladder', level: st.level });
+  for (const o of itFocus(practiceEstimates())){ if (o.k === 'AR' && !arDone()) continue; out.push({ kind:'sec', sec:o.k }); }
+  return out;
+}
+function planPick(alt = 0){ const o = planOptions(); return o[alt % o.length]; }
+function planName(p){ return p.kind === 'ladder' ? `Arithmetic Reasoning catch-up, level ${p.level}: ${ladLevel(p.level).title}` : SECTIONS[p.sec]; }
+function planLesson(p){
+  if (p.kind === 'ladder'){ const L = ladLevel(p.level); const lines = [`Level ${L.n} lesson: ${L.title}.`];
+    for (const b of L.lesson){ if (b.t === 'check'){ lines.push(`Think about this one. ${b.q}`); lines.push(`The answer is ${b.a}. ${b.why}`); } else if (b.t === 'say' || b.t === 'li' || b.t === 'p') lines.push(b.x); }
+    return { title:`Level ${L.n}: ${L.title}`, lines: lines.slice(0, 14) }; }
+  if (p.sec === 'EI'){ const t = weakTopic('EI'); const E = (window.ASVAB_EAR || {}).ei || [];
+    const L = E.find(l => (l.topics || []).includes(t)) || E[Object.keys(Store.get('plans', {})).length % Math.max(1, E.length)];
+    if (L) return { title:'Electronics by ear: ' + L.title, lines: [L.title + '.'].concat(earLines(L)) }; }
+  const t = weakTopic(p.sec) || Object.keys(LESSONS).find(k => LESSONS[k].section === p.sec); const L = LESSONS[t];
+  if (!L) return { title:SECTIONS[p.sec], lines:[`Today: ${SECTIONS[p.sec]}.`] };
+  return { title:L.name, topic:t, lines: [`Lesson: ${L.name}.`].concat(L.what, [`Why it matters: ${L.why}`, `The rule: ${L.idea}`, 'Worked example.'], L.worked).filter(Boolean) };
+}
+function earLines(L){ const out = []; for (const b of L.steps){ if (b.t === 'check'){ out.push(`Think about this one. ${b.q}`); out.push(`The answer is ${b.a}. ${b.why}`); } else out.push(b.x); } return out; }
+function plansDone(){ return Store.get('plans', {}); }
+SCREENS.plan = (arg) => {
+  if (!PLAN || arg === 'new') PLAN = { stage:'pick', alt:0 };
+  if (PLAN.stage === 'recap' && PLAN.recapHTML){ app().innerHTML = PLAN.recapHTML; planRecapWire(); return; }
+  PLAN.stage = 'pick'; PLAN.pick = planPick(PLAN.alt); PLAN.lesson = planLesson(PLAN.pick); PLAN.j = 0;
+  const done = plansDone()[today()];
+  const s = speakable(`Today's plan. About 10 minutes. One: a short lesson on ${PLAN.lesson.title}. Two: 10 questions by ear. Three: a one minute recap of your misses.`);
+  app().innerHTML = `<h1>Today's plan</h1>
+  <div class="card"><p class="big-word">${esc(planName(PLAN.pick))}</p>
+    <div class="row" style="align-items:flex-start"><div style="flex:1" id="planIntro">${s.html}</div>${sayBtn('#'+s.id)}</div>
+    <ol class="focus-list"><li>Short audio lesson (about 3 minutes)</li><li>10 questions, read to you</li><li>One minute recap of your misses</li></ol>
+    <p>${PLAN.pick.kind === 'ladder' ? 'Picked because you are still on the catch-up track.' : 'Picked because it is your weakest IT part right now.'}</p>
+    ${done ? `<p class="ok-text">You already did a plan today (${done.right} of ${done.n}). One more is fine.</p>` : ''}</div>
+  <div class="row"><button class="primary" id="planStart">Start today's plan</button><button id="planAlt">Different subject</button><button onclick="go('home')">Home</button></div>`;
+  $('#planStart').onclick = planStartLesson; $('#planAlt').onclick = planAlt;
+};
+function planAlt(){ if (!PLAN) PLAN = { stage:'pick', alt:0 }; PLAN.alt++; go('plan'); }
+function planStartLesson(){
+  if (!PLAN) return; PLAN.stage = 'lesson'; PLAN.j = 0; Speech.stop();
+  const L = PLAN.lesson;
+  app().innerHTML = `<h1>Today's plan, step 1 of 3: lesson</h1><p class="big-word">${esc(L.title)}</p>
+  <div class="card" id="planLines">${L.lines.map((x, k) => `<p class="lad-li" data-pl="${k}">${wordsHTML(x)}</p>`).join('')}</div>
+  <div class="row"><button class="primary" id="planSkip">Start the 10 questions</button><button id="planPlay">Play the lesson</button><button onclick="go('home')">End</button></div>`;
+  $('#planSkip').onclick = planQuestions; $('#planPlay').onclick = () => { PLAN.j = 0; planPlayLocal(); };
+  if (HF.on) HF.enter('planlesson'); else planPlayLocal();
+}
+async function planPlayLine(alive){
+  if (!PLAN || PLAN.stage !== 'lesson') return false; const L = PLAN.lesson;
+  if (PLAN.j >= L.lines.length) return false;
+  const k = PLAN.j; $$('#planLines .lad-li.now').forEach(x => x.classList.remove('now')); const el = $(`[data-pl="${k}"]`); if (el){ el.classList.add('now'); el.scrollIntoView && el.scrollIntoView({ block:'nearest' }); }
+  await Speech.speakEl(el); if (!alive()) return false; PLAN.j = k + 1;
+  if (/^Think about this one/.test(L.lines[k])) await sleep(fastMode() ? 300 : 3500);
+  return true;
+}
+const fastMode = () => /[?&]fast=1/.test(location.search);
+async function planPlayLocal(){
+  const g = Speech.gen; const alive = () => g === Speech.gen && PLAN && PLAN.stage === 'lesson';
+  while (alive() && await planPlayLine(alive)) await sleep(200);
+  if (alive() && PLAN.j >= PLAN.lesson.lines.length){ await Speech.say('Now 10 questions.'); if (alive()) planQuestions(); }
+}
+function planQuestions(){
+  if (!PLAN) return; Speech.stop(); PLAN.stage = 'qs'; const p = PLAN.pick;
+  if (p.kind === 'ladder'){ ladStart(p.level); if (LR) LR.byEar = true; }
+  else startSession(p.sec, 10, { hf: HF.on, noTimer:true, skipReview:true, byEar:true });
+}
+// called by endSession / ladEnd while a plan is running; returns true when it took over the screen
+function planHook(kind, r){
+  if (!PLAN || PLAN.stage !== 'qs') return false;
+  let items;
+  if (kind === 'sec') items = r.results.map(x => { const q = qById(x.qid); return { ok:x.correct, stem:q.stem, ans: q.choices[q.answer], why: firstSentence(q.explanation) }; });
+  else items = r.results.map(x => { const q = r.qs.find(z => z.id === x.id) || {}; return { ok:x.ok, stem: q.say || q.stem || '', ans: q.mode === 'say' ? q.sayAnswer : (q.choices || [])[q.answer], why: (q.steps || [q.explanation || '']).slice(-1)[0] || '' }; });
+  planRecap(items, kind === 'lad' ? r : null); return true;
+}
+const clip = (s, n = 180) => { s = String(s || '').replace(/\s+/g, ' ').trim(); return s.length > n ? s.slice(0, n).replace(/\s\S*$/, '') + '...' : s; };
+function planRecap(items, lad){
+  const n = items.length, right = items.filter(x => x.ok).length, miss = items.filter(x => !x.ok);
+  const d = plansDone(); d[today()] = { date:new Date().toISOString(), pick:PLAN.pick, right, n }; Store.set('plans', d);
+  const s = streakInfo();
+  const lines = [`Recap. You got ${right} of ${n}.`]
+    .concat(miss.length ? miss.slice(0, 4).map((m, k) => `Miss ${k + 1}: ${clip(m.stem)} The answer is ${dot(m.ans)} ${clip(m.why, 140)}`) : ['No misses. Great work.'])
+    .concat(miss.length > 4 ? [`${miss.length - 4} more are saved in My misses.`] : [])
+    .concat([`That is today's plan. Today: ${s.todayCount} of ${DAILY_GOAL} questions. ${s.goalMet ? 'Daily goal done.' : `${DAILY_GOAL - s.todayCount} more for your daily goal.`} Streak: ${s.streak} day${s.streak === 1 ? '' : 's'}.`]);
+  const sp = speakable(lines.join(' '));
+  PLAN.stage = 'recap';
+  PLAN.recapHTML = `<h1>Today's plan, step 3 of 3: recap</h1>
+  <div class="card"><div class="row" style="align-items:flex-start"><div class="big-word" style="flex:1" id="planSum">${sp.html}</div>${sayBtn('#'+sp.id)}</div></div>
+  ${lad ? `<p>Catch-up level ${ladState().level} of ${NLEV}.</p>` : ''}
+  <div class="row"><button class="primary" onclick="go('home')">Home</button><button onclick="go('progress')">My progress</button><button id="planAgain">Another plan</button></div>`;
+  app().innerHTML = PLAN.recapHTML; planRecapWire(); history.replaceState(null, '', '#plan');
+  if (HF.on) HF.enter('planrecap'); else Speech.speakEl($('#planSum'));
+}
+function planRecapWire(){ const b = $('#planAgain'); if (b) b.onclick = () => { PLAN = null; go('plan', 'new'); }; }
+Object.assign(EXTRA_VCTX, {
+  plan: {
+    help: "Say start to begin today's plan. Say different subject for another one. Or say home.",
+    async intro(alive){ if (PLAN && PLAN.stage === 'recap'){ HF.enter('planrecap'); return; } await sayEl('#planIntro'); if (alive()) await Speech.say(`Subject: ${planName(PLAN.pick)}. Say start, or different subject.`); },
+    async handle(t){
+      if (!PLAN) return false;
+      if (anyOf(t, ['different subject', 'another subject', 'something else', 'change subject', 'other subject', 'different one'])){ planAlt(); return true; }
+      if (isGo(t, ["start today's plan", 'start the plan', 'start my plan'])){ planStartLesson(); return true; }
+      return false; },
+  },
+  planlesson: {
+    priority: true, strictNav: true,
+    listenMs: () => 1800,
+    help: 'Say skip lesson to go to the questions. Say repeat that, or pause.',
+    async intro(alive){ if (!PLAN) return; if (PLAN.j === 0) await Speech.say("Step 1: the lesson."); if (alive()) await VCTX.planlesson.next(alive); },
+    async next(alive){ if (!PLAN || PLAN.stage !== 'lesson') return;
+      if (PLAN.j >= PLAN.lesson.lines.length){ await Speech.say('Step 2: 10 questions.'); if (alive()) planQuestions(); return; }
+      await planPlayLine(alive); },
+    async onSilence(){ if (PLAN && PLAN.stage === 'lesson') HF.run(alive => VCTX.planlesson.next(alive)); },
+    async onMiss(){ if (PLAN && PLAN.stage === 'lesson') HF.run(alive => VCTX.planlesson.next(alive)); },
+    async handle(t){
+      if (!PLAN) return false;
+      if (anyOf(t, ['skip lesson', 'skip the lesson', 'start questions', 'start the questions', 'questions', 'skip'])){ planQuestions(); return true; }
+      if (anyOf(t, ['repeat that', 'say that again', 'again'])){ PLAN.j = Math.max(0, PLAN.j - 1); HF.run(alive => VCTX.planlesson.next(alive)); return true; }
+      return false; },
+  },
+  planrecap: {
+    help: 'Say repeat to hear the recap again. Say another plan, progress, or home.',
+    async intro(alive){ await sayEl('#planSum'); if (alive()) await Speech.say('Say home, progress, or another plan.'); },
+    async handle(t){ if (anyOf(t, ['another plan', 'new plan', 'one more plan'])){ PLAN = null; go('plan', 'new'); return true; } return false; },
+  },
+});
+
+/* ======================= 3. Real-test reading passages (PC) ======================= */
+const PCR = window.ASVAB_PCREAL || { passages:[], questions:[] };
+function pcAccuracy(){ const a = (Store.get('hist', {}).PC || []).slice(-20); if (a.length < 10) return null; return Math.round(100 * a.reduce((x, y) => x + y, 0) / a.length); }
+function pcrUnlocked(){ const p = pcAccuracy(); return (p != null && p >= 75) || !!Store.get('pcrealOpen', false); }
+function pcrState(){ return Store.get('pcreal', { seen:{}, log:[] }); }
+function pcrCardHTML(){
+  const p = pcAccuracy(); const open = pcrUnlocked();
+  return `<div class="card" id="pcrCard"><h2>Real test level passages</h2>
+    <p>${PCR.passages.length} longer passages (100 to 150 words), ${PCR.questions.length} questions. Adult words, like the real test.</p>
+    <p>${open ? 'Unlocked.' : `Unlocks at 75% on your recent reading questions. ${p == null ? 'Do 10 or more PC questions first.' : `You are at ${p}%.`} Or try it now.`}</p>
+    <div class="row"><button class="${open ? 'primary' : ''}" id="pcrGo">${open ? 'Open real test passages' : 'Try it anyway'}</button></div></div>`;
+}
+SCREENS.pcreal = () => {
+  const open = pcrUnlocked(); const p = pcAccuracy(); const st = pcrState(); const last = st.log[st.log.length - 1];
+  if (!open){
+    app().innerHTML = `<h1>Real test passages</h1><div class="card"><p class="big-word">Locked for now.</p>
+      <p>These open when your recent Paragraph Comprehension score is 75% or more. ${p == null ? 'Do 10 or more PC questions first.' : `Your last ${Math.min(20, (Store.get('hist', {}).PC || []).length)} PC answers: ${p}%.`}</p>
+      <p>You can also try them now. They are harder.</p></div>
+      <div class="row"><button class="primary" id="pcrAnyway">Try it anyway</button><button onclick="go('practice','PC')">Back to Paragraph Comprehension</button></div>`;
+    $('#pcrAnyway').onclick = () => { Store.set('pcrealOpen', true); go('pcreal'); }; return; }
+  app().innerHTML = `<h1>Real test passages</h1>
+  <div class="card"><p>${PCR.passages.length} passages, ${PCR.questions.length} questions. A set is 4 passages, with 1 to 3 questions each.</p>
+    <p>Tip: read the question first. Then read the passage to find the answer.</p>
+    ${last ? `<p>Last set: ${last.right} of ${last.n} (${last.mode === 'own' ? 'on your own' : 'read aloud first'}).</p>` : ''}</div>
+  <div class="grid"><button class="tile primary" id="pcrAloud">Read-aloud first<small>I read the question, then the passage, with the words lit up.</small></button>
+    <button class="tile" id="pcrOwn">Try it reading on your own<small>You read the passage. Tap Guide me for a moving highlight.</small></button></div>
+  <div class="row"><button onclick="go('practice','PC')">Back to Paragraph Comprehension</button></div>`;
+  $('#pcrAloud').onclick = () => startPcReal('aloud'); $('#pcrOwn').onclick = () => startPcReal('own');
+};
+function startPcReal(mode){
+  const st = pcrState(); const pas = PCR.passages.slice().sort((a, b) => (st.seen[a.id] || 0) - (st.seen[b.id] || 0) || PCR.passages.indexOf(a) - PCR.passages.indexOf(b)).slice(0, 4);
+  pas.forEach(x => st.seen[x.id] = (st.seen[x.id] || 0) + 1); Store.set('pcreal', st);
+  const qs = pas.flatMap(x => PCR.questions.filter(q => q.passageId === x.id).map(q => Object.assign({}, q, { label:'Paragraph Comprehension, real test level' })));
+  if (!qs.length){ toast('No passages found.'); return; }
+  cleanup(); S = { sec:'PC', qs, i:0, results:[], hf: HF.on, timerOn:false, per: CAT.PC[1]*60/CAT.PC[0], mode:'pcreal', pcMode:mode, byEar: mode === 'aloud' };
+  history.replaceState(null, '', '#pcreal/' + mode); renderQ();
+}
+// after renderQ draws a real-level question: question first, then the passage, big text, and the guide button
+function pcrDecorate(){
+  if (!S || !S.pcMode) return; const pass = $('.card.passage'), stemCard = $('.stem') && $('.stem').closest('.card');
+  if (pass && stemCard) stemCard.after(pass);
+  const pt = $('.passage-text'); if (pt) pt.classList.add('read-big');
+  const note = S.pcMode === 'aloud' ? 'Read-aloud first: I read the question, then the passage, then the choices.' : 'On your own: read the question first. Then read the passage. Tap Guide me for a moving highlight, or Read to me.';
+  if (pass){ pass.insertAdjacentHTML('afterbegin', `<p class="pill" id="pcrMode">${note}</p>`);
+    pass.querySelector('.row').insertAdjacentHTML('beforeend', `<button class="small" id="pcrGuide">Guide me</button>`); $('#pcrGuide').onclick = () => pcrGuide(); }
+}
+let PCR_GUIDE = null;
+function pcrGuide(stop){
+  const b = $('#pcrGuide');
+  if (PCR_GUIDE){ clearInterval(PCR_GUIDE); PCR_GUIDE = null; $$('.passage-text .w.hl').forEach(e => e.classList.remove('hl')); if (b) b.textContent = 'Guide me'; return false; }
+  if (stop) return false;
+  const ws = $$('.passage-text .w'); if (!ws.length) return false; let k = 0; const wpm = settings.guideWpm || 110;
+  if (b) b.textContent = 'Stop guide';
+  const tick = () => { if (!ws[k] || !ws[k].isConnected){ clearInterval(PCR_GUIDE); PCR_GUIDE = null; const bb = $('#pcrGuide'); if (bb) bb.textContent = 'Guide me'; return; }
+    if (k) ws[k - 1].classList.remove('hl'); ws[k].classList.add('hl'); k++; };
+  tick(); PCR_GUIDE = setInterval(tick, Math.round(60000 / wpm));
+  return true;
+}
+// read a real-level question: aloud = question, passage, question again, choices. own = question and choices only.
+async function pcrRead(q){
+  const g = Speech.gen; const ok = () => g === Speech.gen; const stem = $('.stem'), pass = $('.passage-text');
+  const first = S.i === 0 || S.qs[S.i - 1].passageId !== q.passageId;
+  await Speech.speakEl(stem, 'Question.'); if (!ok()) return;
+  if (S.pcMode === 'aloud'){
+    if (first){ await Speech.speakEl(pass, 'Now the passage.'); if (!ok()) return; await Speech.speakEl(stem, 'The question again.'); if (!ok()) return; }
+    else { await Speech.say('Same passage as before. Say read the passage to hear it again.'); if (!ok()) return; }
+  } else { await Speech.say(first ? 'Now read the passage on the screen. Then pick an answer.' : 'Same passage. Look back at it on the screen.'); if (!ok()) return; }
+  const chs = $$('.choice'); for (let i = 0; i < chs.length; i++){ if (!ok()) return; await Speech.speakEl(chs[i].querySelector('span[id]'), LET[i] + '.'); }
+  if (ok() && S.pcMode === 'own' && HF.on) await Speech.say('Say the letter when you are ready. Say read the passage, or guide me, if you want help.');
+}
+function pcrDone(s, right, done){ const st = pcrState(); st.log.push({ date:new Date().toISOString(), right, n:done, mode:s.pcMode }); st.log = st.log.slice(-50); Store.set('pcreal', st); }
+Object.assign(EXTRA_VCTX, {
+  pcreal: {
+    help: () => pcrUnlocked() ? 'Say read aloud first, or on my own. Say home to leave.' : 'Say try it anyway, or home.',
+    async intro(){ const p = pcAccuracy();
+      if (!pcrUnlocked()){ await Speech.say(`Real test passages. They unlock at 75 percent on your recent reading questions. ${p == null ? 'Do 10 or more reading questions first.' : `You are at ${p} percent.`} Say try it anyway, or home.`); return; }
+      await Speech.say(`Real test passages. ${PCR.passages.length} longer passages. A set is 4 passages. Say read aloud first, and I read the question, then the passage. Or say on my own, and you read the passage yourself.`); },
+    async handle(t){
+      if (!pcrUnlocked()){ if (anyOf(t, ['try it anyway', 'try anyway', 'try it', 'unlock', 'open it anyway']) || isGo(t)){ Store.set('pcrealOpen', true); go('pcreal'); return true; } return false; }
+      if (anyOf(t, ['read aloud first', 'read aloud', 'read it to me', 'aloud', 'read to me', 'out loud'])){ startPcReal('aloud'); return true; }
+      if (anyOf(t, ['on my own', 'my own', 'read on my own', 'by myself', 'myself', 'i will read'])){ startPcReal('own'); return true; }
+      return false; },
+  },
+});
+
+/* ======================= 4 + 5. Electronics by ear, test-day tips ======================= */
+const EAR = window.ASVAB_EAR || { ei:[], tips:[] };
+function earFind(id){ for (const g of ['ei', 'tips']){ const k = EAR[g].findIndex(l => l.id === id); if (k >= 0) return { g, k, L: EAR[g][k] }; } return null; }
+const EAR_NAME = { ei:'Electronics by ear', tips:'Test-day tips' };
+function earState(){ return Store.get('ear', { done:{} }); }
+SCREENS.earset = (g) => {
+  g = g === 'tips' ? 'tips' : 'ei'; const list = EAR[g]; const st = earState();
+  const intro = g === 'ei' ? 'Spoken lessons with pictures in your head: electricity is water in a pipe. Each lesson ends with quick checks. Say the number.'
+    : 'Short spoken tips for test day. Checked against officialasvab.com. Tips marked "coach tip" are advice, not official rules.';
+  app().innerHTML = `<h1>${EAR_NAME[g]}</h1><div class="card"><p>${intro}</p></div>
+  <div class="row"><button class="primary" id="earAll">Play all in Audio lessons</button>${g === 'ei' ? `<button onclick="go('practice','EI')">Electronics practice</button>` : ''}</div>
+  <ol class="focus-list" id="earList">${list.map((L, k) => `<li><button class="tile" style="width:100%;margin:4px 0" data-el="${L.id}">${k + 1}. ${esc(L.title)}<small>${st.done[L.id] ? 'Done' : 'Not heard yet'}${L.steps.some(s => s.t === 'check') ? ` | ${L.steps.filter(s => s.t === 'check').length} quick checks` : ''}</small></button></li>`).join('')}</ol>
+  ${g === 'tips' ? '<p><small>Sources are listed in SOURCES.md in the app folder.</small></p>' : ''}`;
+  $('#earAll').onclick = () => go('audio', g);
+  $$('[data-el]').forEach(b => b.onclick = () => go('earlesson', b.dataset.el));
+};
+SCREENS.earlesson = (id) => {
+  const f = earFind(id); if (!f){ go('earset'); return; } const { g, k, L } = f; const nx = EAR[g][k + 1];
+  app().innerHTML = `<h1>${EAR_NAME[g]} ${k + 1} of ${EAR[g].length}: ${esc(L.title)}</h1>
+  <div class="row"><button class="primary" id="elPlay">Play the lesson</button>${nx ? `<button id="elNext">Next lesson</button>` : ''}<button id="elBack">All ${EAR_NAME[g].toLowerCase()}</button></div>
+  <div class="card" id="earBody">${L.steps.map(lessonStepHTML).join('')}</div>
+  ${g === 'tips' ? `<p><small>Source: ${esc((L.src || []).map(s => s === 'coach' ? 'coach tip (not an official rule)' : 'officialasvab.com (' + s + ')').join(', '))}.</small></p>` : ''}
+  <div class="row">${nx ? `<button class="primary" id="elNext2">Next lesson</button>` : ''}<button onclick="go('home')">Home</button></div>`;
+  $('#elPlay').onclick = () => earPlayLocal(id);
+  $('#elBack').onclick = () => go('earset', g);
+  if (nx){ $('#elNext').onclick = $('#elNext2').onclick = () => go('earlesson', nx.id); }
+};
+function earMarkDone(id){ const st = earState(); st.done[id] = today(); Store.set('ear', st); }
+function earEndLine(id){ const f = earFind(id); const nx = f && EAR[f.g][f.k + 1]; return `That is the lesson. ${nx ? 'Say next lesson, ' : 'That was the last one. Say '}repeat that, or home.`; }
+async function earPlayLocal(id){
+  const f = earFind(id); if (!f) return; Speech.stop(); const g = Speech.gen; const ok = () => g === Speech.gen;
+  for (let i = 0; i < f.L.steps.length && ok(); i++){ const b = f.L.steps[i];
+    $$('.lad-li.now').forEach(x => x.classList.remove('now')); const el = $(`#earBody [data-step="${i}"]`); if (el) el.classList.add('now');
+    if (b.t === 'check'){ await Speech.say('Quick check. ' + b.q); if (!ok()) return; await sleep(fastMode() ? 300 : 4000); if (!ok()) return; await Speech.say(`The answer is ${b.a}. ${b.why}`); }
+    else await (el ? Speech.speakEl(el) : Speech.say(b.x)); await sleep(200); }
+  if (ok()){ earMarkDone(id); await Speech.say('That is the lesson.'); }
+}
+Object.assign(EXTRA_VCTX, {
+  earset: {
+    help: g => `Say lesson 1 to ${EAR[g === 'tips' ? 'tips' : 'ei'].length}, start, play all, or home.`,
+    async intro(alive, g){ g = g === 'tips' ? 'tips' : 'ei'; const list = EAR[g];
+      await Speech.say(`${EAR_NAME[g]}. ${list.length} lessons.`); if (!alive()) return;
+      await Speech.say(list.map((L, k) => `${k + 1}: ${L.title}.`).join(' ')); if (!alive()) return;
+      await Speech.say('Say lesson and a number, start for the next one you have not heard, or play all.'); },
+    async handle(t, all, raw, g){ g = g === 'tips' ? 'tips' : 'ei'; const list = EAR[g];
+      if (anyOf(t, ['play all', 'play them all', 'audio lessons'])){ go('audio', g); return true; }
+      const n = numberIn(t); if (n && /\b(lesson|number|tip|play)\b/.test(t) && list[n - 1]){ go('earlesson', list[n - 1].id); return true; }
+      if (isGo(t, ['first lesson', 'play'])){ const st = earState(); const L = list.find(x => !st.done[x.id]) || list[0]; go('earlesson', L.id); return true; }
+      return false; },
+  },
+  earlesson: {
+    help: 'Answer the quick check out loud, like 3 or 1 half. Or say skip. Say repeat that, next lesson, or home.',
+    async intro(alive, id){ const f = earFind(id); if (!f) return;
+      if (!LL || LL.n !== id) LL = { n:id, steps:f.L.steps, i:0, wait:null, miss:0, end: earEndLine(id), onEnd: () => earMarkDone(id) };
+      if (LL.i === 0) await Speech.say(`${EAR_NAME[f.g]}, lesson ${f.k + 1}: ${f.L.title}.`); if (!alive()) return; await llPlay(alive); },
+    async handle(t, all, raw, id){
+      const f = earFind(id); if (!f) return false;
+      if (LL && LL.wait){
+        if (/\b(skip|i dont know|no idea|tell me)\b/.test(t)){ const c = LL.wait; LL.wait = null; LL.i++; HF.run(async alive => { await Speech.say(`The answer is ${c.a}. ${c.why}`); if (alive()) await llPlay(alive); }); return true; }
+        const said = all.map(x => MS.said(x)).find(Boolean);
+        if (said){ const c = LL.wait; const key = MS.value(String(c.v)); LL.wait = null; LL.i++; const ok = key && MS.eq(key, said.v);
+          HF.run(async alive => { await Speech.say(ok ? `Yes! ${c.why}` : `Not quite. The answer is ${c.a}. ${c.why}`); if (alive()) await llPlay(alive); }); return true; }
+      }
+      if (anyOf(t, ['next lesson', 'next one', 'next'])){ const nx = EAR[f.g][f.k + 1]; if (nx){ LL = null; go('earlesson', nx.id); } else await HF.say('That was the last lesson. Say home.'); return true; }
+      if (/\b(repeat that|say that again|again)\b/.test(t)){ if (LL){ LL.i = Math.max(0, LL.i - (LL.wait ? 0 : 1)); LL.wait = null; } HF.run(alive => llPlay(alive)); return true; }
+      if (anyOf(t, ['start over', 'from the top', 'restart the lesson'])){ LL = null; HF.enter('earlesson', id); return true; }
+      if (anyOf(t, ['all lessons', 'lesson list', 'the list'])){ go('earset', f.g); return true; }
+      if (anyOf(t, ['play all', 'play them all', 'audio lessons'])){ LL = null; go('audio', f.g); return true; }
+      return false; },
+    async onSilence(){ if (!LL || !LL.wait) return; LL.miss++;
+      if (LL.miss === 1){ await HF.say('Take your time. Say the number, or say skip.'); return; }
+      const c = LL.wait; LL.wait = null; LL.i++; LL.miss = 0; HF.run(async alive => { await Speech.say(`The answer is ${c.a}. ${c.why}`); if (alive()) await llPlay(alive); }); },
+    async onMiss(){ if (LL && LL.wait) await HF.say('Say the answer as a number, like 3, or 1 half. Or say skip.'); else await HF.say('Say next lesson, repeat that, or home.'); },
+  },
+});
+// audio playlist entries (added to the end of Audio lessons)
+function earPlaylist(){
+  const out = [];
+  EAR.ei.forEach((L, k) => out.push({ group:'ei', title:`Electronics by ear ${k + 1}: ${L.title}`, lines: [{ say:`Electronics by ear, lesson ${k + 1}: ${L.title}.` }].concat(earAudioLines(L)) }));
+  EAR.tips.forEach((L, k) => out.push({ group:'tips', title:`Test-day tip ${k + 1}: ${L.title}`, lines: [{ say:`Test-day tip ${k + 1}: ${L.title}.` }].concat(earAudioLines(L)) }));
+  return out;
+}
+function earAudioLines(L){ const out = []; for (const b of L.steps){ if (b.t === 'check'){ out.push({ say:`Think about this one. ${b.q}`, pause:4000 }); out.push({ say:`The answer is ${b.a}. ${b.why}` }); } else out.push({ say:b.x }); } return out; }
+
+/* ======================= 6. Daily reminder ======================= */
+function remTime(){ return /^\d{1,2}:\d{2}$/.test(settings.remindTime || '') ? settings.remindTime : '18:00'; }
+function remSpoken(t = remTime()){ let [h, m] = t.split(':').map(Number); const pm = h >= 12; const h12 = h % 12 || 12; return `${h12}${m ? ':' + String(m).padStart(2, '0') : ''} ${pm ? 'PM' : 'AM'}`; }
+function remPassed(now = new Date()){ const [h, m] = remTime().split(':').map(Number); return now.getHours() * 60 + now.getMinutes() >= h * 60 + m; }
+function reminderDue(now = new Date()){ return !!settings.remindOn && remPassed(now) && !streakInfo().goalMet; }
+function reminderBannerHTML(){
+  if (!reminderDue() || Store.get('remindDismiss', '') === today()) return '';
+  const s = streakInfo();
+  return `<div class="card nudge" id="remindBanner" role="status"><p class="big-word">Study reminder</p><p>It is past ${esc(remSpoken())}. You did ${s.todayCount} of ${DAILY_GOAL} today. ${DAILY_GOAL - s.todayCount} more keeps your streak.</p>
+    <div class="row"><button class="primary" id="remPlan">Start today's plan</button><button id="remDismiss">Dismiss for today</button></div></div>`;
+}
+function reminderWire(){ const p = $('#remPlan'); if (p) p.onclick = () => go('plan', 'new');
+  const d = $('#remDismiss'); if (d) d.onclick = () => { Store.set('remindDismiss', today()); const b = $('#remindBanner'); if (b) b.remove(); }; }
+function notifyText(){ const s = streakInfo(); return { title:'ASVAB Coach', body:`Time to study. You did ${s.todayCount} of ${DAILY_GOAL} today. Ten minutes keeps your streak.` }; }
+async function showReminder(){
+  const n = notifyText(); const opts = { body:n.body, icon:'icon-192.png', tag:'asvab-reminder', data:{ url:'./#plan' } };
+  try { if (navigator.serviceWorker && navigator.serviceWorker.controller){ const r = await navigator.serviceWorker.ready; await r.showNotification(n.title, opts); return 'sw'; } } catch(e){}
+  try { const x = new Notification(n.title, opts); x.onclick = () => { window.focus(); go('plan', 'new'); x.close(); }; return 'page'; } catch(e){ return 'none'; }
+}
+function reminderTick(){
+  remSyncSW();
+  if (!reminderDue()) return;
+  if (Store.get('remindLast', '') !== today() && typeof Notification !== 'undefined' && Notification.permission === 'granted'){ Store.set('remindLast', today()); showReminder(); }
+  if (!$('#remindBanner') && (location.hash === '' || location.hash.startsWith('#home'))){ const h = reminderBannerHTML(); const h1 = app().querySelector('h1'); if (h && h1){ h1.insertAdjacentHTML('afterend', h); reminderWire(); } }
+}
+// the service worker reads this to show a reminder when the app is closed (periodic sync, where the browser supports it)
+function remSyncSW(){
+  if (!('caches' in window) || !/^https?:$/.test(location.protocol)) return;
+  const st = { on: !!settings.remindOn, time: remTime(), goalDate: streakInfo().goalMet ? today() : '', notified: Store.get('remindLast', '') };
+  caches.open('asvab-state').then(c => c.put('./reminder-state', new Response(JSON.stringify(st), { headers:{ 'content-type':'application/json' } }))).catch(() => {});
+}
+async function reminderSet(on, time){
+  if (time) settings.remindTime = time; settings.remindOn = !!on; saveSettings();
+  let perm = typeof Notification === 'undefined' ? 'unsupported' : Notification.permission;
+  if (on && perm === 'default'){ try { perm = await Notification.requestPermission(); } catch(e){} }
+  if (on && navigator.serviceWorker){ try { const r = await navigator.serviceWorker.ready; if (r.periodicSync) await r.periodicSync.register('asvab-reminder', { minInterval: 60 * 60 * 1000 }); } catch(e){} }
+  remSyncSW(); return perm;
+}
+function remStatusText(){
+  const p = typeof Notification === 'undefined' ? 'unsupported' : Notification.permission;
+  if (!settings.remindOn) return 'Reminder is off.';
+  return `Reminder is on for ${remSpoken()} each day, if you have not done ${DAILY_GOAL} questions yet. ` + (p === 'granted' ? 'Notifications are allowed.' : p === 'denied' ? 'Notifications are blocked in the browser, so you will see a banner when you open the app.' : p === 'unsupported' ? 'This browser has no notifications, so you will see a banner when you open the app.' : 'Notifications are not allowed yet. You will see a banner when you open the app.');
+}
+function remSettingsHTML(){
+  return `<div class="card" id="remCard"><h2>Daily reminder</h2>
+    <div class="toggle"><input type="checkbox" id="remOn" ${settings.remindOn ? 'checked' : ''}><label for="remOn" style="margin:0">Remind me to study every day</label></div>
+    <label for="remTime">Time</label><input type="time" id="remTime" value="${esc(remTime())}" style="font-size:1.4em">
+    <p id="remStatus">${esc(remStatusText())}</p>
+    <p>The daily goal stays at ${DAILY_GOAL} questions. No reminder on days you already did them.</p>
+    <div class="row"><button class="small" id="remTest">Test the reminder</button></div>
+    <h2>Weekly test day</h2><label for="weeklyDay">Remind me about the weekly test on</label>
+    <select id="weeklyDay">${DAYS.map((d, i) => `<option value="${i}" ${i === weeklyDay() ? 'selected' : ''}>${d}</option>`).join('')}</select></div>`;
+}
+function remSettingsWire(){
+  const st = () => { const e = $('#remStatus'); if (e) e.textContent = remStatusText(); };
+  $('#remOn').onchange = async e => { await reminderSet(e.target.checked, $('#remTime').value); st(); };
+  $('#remTime').onchange = async e => { await reminderSet(settings.remindOn, e.target.value); st(); };
+  $('#remTest').onclick = async () => { const how = (typeof Notification !== 'undefined' && Notification.permission === 'granted') ? await showReminder() : 'none'; toast(how === 'none' ? 'Notifications are off. You will see a banner on the home screen.' : 'Reminder sent.'); };
+  $('#weeklyDay').onchange = e => { settings.weeklyDay = +e.target.value; saveSettings(); };
+}
+// "remind me at 7 pm", "reminder at 6:30", "remind me at 19 30"
+function parseSpokenTime(t){
+  t = String(t).toLowerCase().replace(/\./g, '').replace(/\bo clock\b/g, '');
+  const m = t.match(/\b(\d{1,2})(?:[: ](\d{2}))?\s*(am|pm|a m|p m|in the morning|in the evening|at night|tonight)?\b/); if (!m) return null;
+  let h = +m[1], mi = m[2] ? +m[2] : 0; const ap = (m[3] || '').replace(/\s/g, '');
+  if (h > 23 || mi > 59) return null;
+  if (/pm|evening|night|tonight/.test(ap) && h < 12) h += 12; if (/am|morning/.test(ap) && h === 12) h = 0;
+  if (!ap && h >= 1 && h <= 6) h += 12;   // "remind me at 6" means 6 PM for an after-work reminder
+  return `${String(h).padStart(2, '0')}:${String(mi).padStart(2, '0')}`;
+}
+setInterval(() => { try { reminderTick(); } catch(e){} }, 60000);
 
 </script>
 <script>
@@ -1895,12 +2399,18 @@ const HF = {
     const h = this.ctx && this.ctx.help ? (typeof this.ctx.help === 'function' ? this.ctx.help(this.arg) : this.ctx.help) : 'Say a section name, math ladder, MEPS, progress, tutor, or review misses.';
     await this.say(h + ' ' + GLOBAL_HELP);
   },
-  async leaveMeps(){ if (!(M && M.running)) return true; const yes = await this.ask('Quit the MEPS test? Your run will end. Say yes or no.');
+  async leaveMeps(){ if (!(M && M.running)) return true; const yes = await this.ask(`Quit the ${M.kind === 'weekly' ? 'weekly' : 'MEPS'} test? Your run will end. Say yes or no.`);
     if (yes){ M.running = false; clearInterval(M.timer); } else { await this.say('OK. Keep going.'); if (M && M.running && M.q && this.ctxName === 'mepsq') this.enter('mepsq'); } return yes; },
   async nav(t){
     const to = async (name, arg) => { if (M && M.running && !(await this.leaveMeps())) return true; go(name, arg); return true; };
     if (anyOf(t, ['home', 'main menu', 'go home', 'start over', 'menu'])) return to('home');
     if (/^(go )?back\b|\bgo back\b|\bprevious screen\b/.test(t)){ const prev = NAV_STACK.length > 1 ? NAV_STACK[NAV_STACK.length - 2] : ['home']; NAV_STACK.splice(-2); return to(prev[0], prev[1]); }
+    if (anyOf(t, ['weekly test', 'weekly practice test', 'weekly', 'week test', 'weekly quiz', 'score goal'])) return to('weekly');
+    if (anyOf(t, ["today's plan", 'todays plan', 'today plan', 'daily plan', 'work plan', 'ten minute plan', '10 minute plan', 'plan for today', 'start my plan'])) return to('plan', 'new');
+    if (anyOf(t, ['test day tips', 'test day tip', 'test tips', 'testing tips', 'test day', 'tips for the test', 'meps tips'])) return to('earset', 'tips');
+    if (anyOf(t, ['electronics by ear', 'electronics lessons', 'electronic lessons', 'electricity lessons', 'ei lessons', 'electronics lesson'])) return to('earset', 'ei');
+    if (anyOf(t, ['real test passages', 'real passages', 'real test reading', 'real reading', 'real test level', 'hard passages', 'long passages'])) return to('pcreal');
+    if (anyOf(t, ['reminder', 'reminders', 'daily reminder'])) return to('settings');
     if (anyOf(t, ['meps', 'meps mode', 'practice test', 'full test', 'mock test', 'meps test', 'maps mode', 'meeps'])) return to('meps');
     if (anyOf(t, ['progress', 'my progress', 'my scores', 'scores', 'score report', 'line score', 'line scores'])) return to('progress');
     if (anyOf(t, ['error log', 'my misses', 'review misses', 'misses', 'mistakes', 'review my misses', 'missed questions', 'review'])) return to('review');
@@ -1983,12 +2493,14 @@ const sayEl = (sel, prefix) => Speech.speakEl(typeof sel === 'string' ? $(sel) :
 function answerFrom(all, choices){ return parseVoice(all, choices); }
 const VCTX = {
   home: {
-    help: 'Say a section name, like arithmetic, word knowledge, or electronics. Or say audio lessons, speed drills, vocab by ear, read along, math ladder, MEPS, progress, tutor, review misses, the plan, or settings.',
+    help: 'Say todays plan for a 10 minute plan. Say weekly test, test day tips, or electronics by ear. Say a section name, like arithmetic, word knowledge, or electronics. Or say audio lessons, speed drills, vocab by ear, read along, math ladder, MEPS, progress, tutor, review misses, the plan, or settings.',
     async intro(alive){
       const s = streakInfo();
       await Speech.say(`Home. Today you did ${s.todayCount} of ${DAILY_GOAL} questions. Streak: ${s.streak} day${s.streak === 1 ? '' : 's'}.`); if (!alive()) return;
+      if ($('#remindBanner')){ await Speech.say(`Study reminder. ${DAILY_GOAL - s.todayCount} more questions keep your streak.`); if (!alive()) return; }
+      if ($('#weeklyNudge')){ await Speech.say('Your weekly test is due. Say weekly test to start it.'); if (!alive()) return; }
       await Speech.say(itPlanText(false)); if (!alive()) return;
-      await Speech.say('Say a section name, practice, math ladder, MEPS, progress, tutor, review misses, or help.');
+      await Speech.say("Say today's plan for 10 minutes of study. Or say a section name, weekly test, test day tips, math ladder, MEPS, progress, or help.");
     },
   },
   practice: {
@@ -2022,9 +2534,12 @@ const VCTX = {
   question: {
     choices: () => S && !S.answered ? S.qs[S.i].choices : null, pick: i => answer(i),
     help: 'Say A, B, C, or D. Or say the answer words. You can say repeat, read the passage, read the choices, hint, skip, or end practice.',
-    async intro(alive){ if (!S) return; await readQuestionAloud(S.qs[S.i]); if (!alive()) return; await Speech.say('Your answer?'); },
+    async intro(alive){ if (!S) return; await (S.pcMode ? pcrRead(S.qs[S.i]) : readQuestionAloud(S.qs[S.i])); if (!alive()) return; await Speech.say('Your answer?'); },
     async handle(t, all){
       if (!S) return false; const q = S.qs[S.i];
+      if (S.pcMode && anyOf(t, ['stop guide', 'guide off', 'stop the guide', 'no guide'])){ pcrGuide(true); await HF.say('Guide off.'); return true; }
+      if (S.pcMode && anyOf(t, ['guide me', 'guide', 'pacer', 'highlight'])){ pcrGuide(true); pcrGuide(); await HF.say('Guide on. Follow the light. Say stop guide to stop it.'); return true; }
+      if (S.pcMode && anyOf(t, ['read to me', 'read it to me'])){ HF.run(async () => { await sayEl('.passage-text', 'Passage.'); }); return true; }
       if (anyOf(t, ['read the passage', 'passage', 'read passage'])){ HF.run(async () => { await (q.passage ? sayEl('.passage-text', 'Passage.') : Speech.say('This question has no passage.')); }); return true; }
       if (anyOf(t, ['read the choices', 'choices', 'options', 'read the options'])){ HF.run(async alive => { const chs = $$('.choice'); for (let i = 0; i < chs.length && alive(); i++) await sayEl(chs[i].querySelector('span[id]'), LET[i] + '.'); }); return true; }
       if (/\b(hint|clue|explain|help me)\b/.test(t)){ const h = showHint(q); await HF.say(h || 'No more hints. Give it your best try.'); return true; }
@@ -2069,7 +2584,7 @@ const VCTX = {
   done: {
     help: 'Say practice again, progress, math ladder, or home.',
     async intro(alive, info){ await sayEl('#setSum'); if (!alive()) return; await Speech.say('Say practice again, progress, or home.'); },
-    async handle(t, all, raw, info){ if (anyOf(t, ['practice again', 'again', 'another set', 'one more set'])){ go('practice', info.sec); return true; } return false; },
+    async handle(t, all, raw, info){ if (anyOf(t, ['practice again', 'again', 'another set', 'one more set'])){ if (info.pcreal) go('pcreal'); else go('practice', info.sec); return true; } return false; },
   },
   tutor: {
     help: 'Say my last miss, or miss number 2. Say new question to say a question out loud.',
@@ -2154,9 +2669,14 @@ const VCTX = {
       return false; },
   },
   settings: {
-    help: 'Say slower, faster, read along on or off, dark mode on or off, auto start on or off, wake word on or off, or home.',
-    async intro(){ await Speech.say(`Settings. Reading speed ${settings.rate}. Auto start is ${settings.hfAuto ? 'on' : 'off'}. Wake word is ${settings.hfWake ? 'on. Start each command with the word coach' : 'off'}. ` + VCTX.settings.help); },
+    help: 'Say reminder on, reminder off, or remind me at 7 PM. Say slower, faster, read along on or off, dark mode on or off, auto start on or off, wake word on or off, or home.',
+    async intro(){ await Speech.say(`Settings. ${remStatusText()} Reading speed ${settings.rate}. Auto start is ${settings.hfAuto ? 'on' : 'off'}. Wake word is ${settings.hfWake ? 'on. Start each command with the word coach' : 'off'}. ` + VCTX.settings.help); },
     async handle(t){
+      if (/\bremind/.test(t)){ const tm = parseSpokenTime(t);
+        if (tm){ await reminderSet(true, tm); go('settings'); await HF.say(`Reminder on, every day at ${remSpoken(tm)}.`); return true; }
+        if (/\b(off|stop|no)\b/.test(t)){ await reminderSet(false); go('settings'); await HF.say('Reminder off.'); return true; }
+        if (/\b(on|yes|start)\b/.test(t)){ await reminderSet(true); go('settings'); await HF.say(`Reminder on, every day at ${remSpoken()}. Say remind me at, and a time, to change it.`); return true; }
+        await HF.say(remStatusText() + ' Say reminder on, reminder off, or remind me at 7 PM.'); return true; }
       const onoff = t.match(/\b(on|off)\b/); if (!onoff) return false; const v = onoff[1] === 'on';
       const set = async (k, name) => { settings[k] = v; saveSettings(); await HF.say(`${name} ${v ? 'on' : 'off'}.`); go('settings'); return true; };
       if (/read ?along|highlight/.test(t)) return set('readAlong', 'Read along');
@@ -2174,7 +2694,7 @@ const VCTX = {
   },
   mepspart: {
     help: 'Say begin to start this part now. Say quit to end the test.',
-    async intro(){ if (!M) return; const k = MEPS_ORDER[M.part]; const [n, min] = CAT[k]; await Speech.say(`Part ${M.part + 1} of ${MEPS_ORDER.length}: ${SECTIONS[k]}. ${n} questions. ${min} minutes. Say begin. Or it starts by itself.`); },
+    async intro(){ if (!M) return; const k = M.order[M.part]; const [n, min] = M.counts[k]; await Speech.say(`${M.kind === 'weekly' ? 'Weekly test. ' : ''}Part ${M.part + 1} of ${M.order.length}: ${SECTIONS[k]}. ${n} questions. ${spokenTime(min * 60)}. Say begin. Or it starts by itself.`); },
     async handle(t){
       if (isGo(t)){ const b = $('#mBegin'); if (b) b.click(); return true; }
       if (anyOf(t, ['quit', 'quit meps', 'end the test', 'stop the test', 'exit'])){ if (await HF.leaveMeps()) go('home'); return true; }
@@ -2292,7 +2812,7 @@ const VCTX = {
 };
 let LL = null;   // spoken lesson position
 async function llPlay(alive){
-  const L = ladLevel(LL.n); const steps = L.lesson;
+  const steps = LL.steps || ladLevel(LL.n).lesson;
   while (LL.i < steps.length){
     if (!alive()) return; const b = steps[LL.i];
     const el = document.querySelector(`[data-step="${LL.i}"]`); $$('.lad-li.now').forEach(x => x.classList.remove('now')); if (el) el.classList.add('now');
@@ -2300,7 +2820,7 @@ async function llPlay(alive){
     if (b.t === 'pre' || b.t === 'h') { LL.i++; continue; }
     await Speech.say(b.x); LL.i++; await sleep(250);
   }
-  if (alive()) await Speech.say('That is the lesson. Say start to do a set of 10, or repeat that.');
+  if (alive()){ if (LL.onEnd) LL.onEnd(); await Speech.say(LL.end || 'That is the lesson. Say start to do a set of 10, or repeat that.'); }
 }
 function spokenTime(s){ s = Math.max(0, Math.ceil(s)); const m = Math.floor(s / 60), r = s % 60; return (m ? `${m} minute${m === 1 ? '' : 's'}` : '') + (m && r ? ' and ' : '') + (r || !m ? `${r} second${r === 1 ? '' : 's'}` : ''); }
 async function readMiss(st, alive){
@@ -2394,6 +2914,7 @@ Object.assign(VCTX, {
   },
 });
 
+Object.assign(VCTX, EXTRA_VCTX);
 boot();
 
 </script>

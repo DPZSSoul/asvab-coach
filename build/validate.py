@@ -384,7 +384,58 @@ try: _swr=json.loads(_sw.stdout.strip().splitlines()[-1])
 except Exception: _swr={'errors':-1,'raw':_sw.stdout[-300:]+_sw.stderr[-300:]}
 if _sw.returncode: err.append('ladder seed sweep failed: '+json.dumps(_swr.get('first',_swr))[:400])
 res_ladder=dict(items=lad_n, placement=len(LAD['placement']), checked=lad_chk, seed_sweep=dict(seeds=_swr.get('seeds'), items=_swr.get('items'), errors=_swr.get('errors')))
-res=dict(ladder=res_ladder, counts=dict(cnt), total=len(Q), errors=err, warnings=warn, math_checked=checked_q, math_methods=dict(methods), math_unchecked=unchecked, ei_calc_checked=ei_checked, shares=shares, formats=dict(fmt))
+# ---------- 2.3: ear lessons (EI + test-day tips) and real-test PC passages ----------
+_here=os.path.dirname(os.path.abspath(__file__)); _root=os.path.join(_here,'..')
+_js=lambda f: json.loads(open(os.path.join(_root,f)).read().split('=',1)[1].strip().rstrip(';'))
+EAR=_js('earlessons.js'); PCR=_js('pcreal.js'); SRC=open(os.path.join(_root,'SOURCES.md')).read()
+ear_chk=0
+if len(EAR['ei'])!=8: err.append(f"electronics by ear needs 8 lessons, has {len(EAR['ei'])}")
+if len(EAR['tips'])<9: err.append(f"test-day tips has only {len(EAR['tips'])}")
+for g in ['ei','tips']:
+    for L in EAR[g]:
+        if g=='ei' and L['steps'][-1]['t']!='check': err.append(f"{L['id']} does not end with a spoken check")
+        if g=='tips':
+            for k in L['src']:
+                if k not in SRC: err.append(f"{L['id']} source {k} not in SOURCES.md")
+        for st in L['steps']:
+            if st['t']!='check': continue
+            got=sp.nsimplify(sp.sympify(st['chk'],locals={'Min':sp.Min,'Max':sp.Max,'Rational':sp.Rational}),rational=True)
+            if got!=sp.nsimplify(st['v'],rational=True): err.append(f"{L['id']} check {st['chk']} = {got} but key is {st['v']}")
+            ear_chk+=1
+if 'officialasvab.com' not in SRC: err.append('SOURCES.md does not cite officialasvab.com')
+_es=subprocess.run(['node',os.path.join(_here,'check_ear_speech.js')],capture_output=True,text=True)
+if _es.returncode: err.append('ear lesson spoken-answer round trip failed: '+_es.stdout[:400])
+pids={x['id'] for x in PCR['passages']}; pc_words=[]
+for x in PCR['passages']:
+    w=len(x['text'].split()); pc_words.append(w)
+    if not 100<=w<=150: err.append(f"{x['id']} has {w} words (needs 100-150)")
+    nq=sum(q['passageId']==x['id'] for q in PCR['questions'])
+    if not 1<=nq<=3: err.append(f"{x['id']} has {nq} questions (needs 1-3)")
+pk=Counter()
+for q in PCR['questions']:
+    i=q['id']
+    if q['passageId'] not in pids: err.append(f'{i} unknown passage')
+    if len(q['choices'])!=4 or len(set(c.lower() for c in q['choices']))!=4 or q['answer'] not in (0,1,2,3): err.append(f'{i} bad choices/answer')
+    if not q.get('explanation') or len(q.get('steps',[]))<2: err.append(f'{i} needs an explanation and steps')
+    txt=next(x['text'] for x in PCR['passages'] if x['id']==q['passageId'])
+    if q['passage']!=txt: err.append(f'{i} passage text differs from its passage')
+    if i in ids: err.append(f'{i} id clashes with the bank')
+    pk[q['answer']]+=1
+if len(PCR['passages'])<12 or len(PCR['questions'])<24: err.append('real-test PC set needs 12+ passages and 24+ questions')
+if min(pk.values())<6: err.append(f'real-test PC answer keys are lopsided {dict(pk)}')
+_kinds=Counter(q['kind'] for q in PCR['questions'])
+for k in ['main-idea','detail','inference','vocab']:
+    if not _kinds[k]: err.append(f'real-test PC set has no {k} questions')
+# existing banks unchanged since the last release
+_old=subprocess.run(['git','-C',_root,'show','HEAD:questions.json'],capture_output=True,text=True)
+_same=_old.returncode==0 and json.loads(_old.stdout)['questions']==B['questions']
+if _old.returncode==0 and not _same: err.append('questions.json changed: existing banks must stay unchanged')
+_ladold=subprocess.run(['git','-C',_root,'show','HEAD:ladder.js'],capture_output=True,text=True)
+if _ladold.returncode==0 and _ladold.stdout!=open(os.path.join(_root,'ladder.js')).read(): err.append('ladder.js changed: existing banks must stay unchanged')
+res_new=dict(ear_lessons=dict(ei=len(EAR['ei']),tips=len(EAR['tips']),checks_sympy=ear_chk,speech=json.loads(_es.stdout.strip() or '{}')),
+  pc_real=dict(passages=len(PCR['passages']),questions=len(PCR['questions']),words=[min(pc_words),max(pc_words)],kinds=dict(_kinds),keys=dict(pk)),
+  banks_unchanged=_same)
+res=dict(release_2_3=res_new, ladder=res_ladder, counts=dict(cnt), total=len(Q), errors=err, warnings=warn, math_checked=checked_q, math_methods=dict(methods), math_unchecked=unchecked, ei_calc_checked=ei_checked, shares=shares, formats=dict(fmt))
 json.dump(res,open('validate_report.json','w'),indent=1)
 print(json.dumps(res,indent=1))
 sys.exit(1 if err else 0)

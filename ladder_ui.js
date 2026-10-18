@@ -92,7 +92,7 @@ function ladRender(){
     <div class="row" id="ladTools"><button class="small" id="ladHint">Hint</button><button class="small" onclick="go('ladder')">End</button></div><div id="hintBox"></div><div id="fb"></div>`;
   $$('.choice').forEach(b => b.onclick = () => ladAnswer(+b.dataset.i));
   $('#ladHint').onclick = () => ladHint();
-  if (HF.on) HF.enter('ladq'); else if (settings.autoRead) ladReadQ(q);
+  if (HF.on) HF.enter('ladq'); else if (settings.autoRead || LR.byEar) ladReadQ(q);
 }
 // spoken questions are read as a question only; the 4 choices are for tapping (A, B, C, D are read at the bridge level)
 async function ladReadQ(q){ if (ladIsSay(q)){ await Speech.say(q.say || q.stem); } else await readQuestionAloud(q); }
@@ -132,7 +132,7 @@ function ladAnswer(i, raw, note){
     <div class="row"><button class="primary" id="nextBtn">${last ? 'See my score' : 'Next question'}</button><button id="ladSlow">Explain again slower</button><button id="ladMore">Another one like this</button></div>`;
   $('#nextBtn').onclick = ladNext; $('#nextBtn').focus({ preventScroll:true });
   $('#ladSlow').onclick = () => ladExplainSlow(); $('#ladMore').onclick = () => { ladAnotherLike(); };
-  if (HF.on) HF.enter('ladfb', why.id); else if (settings.autoRead) Speech.speakEl(document.getElementById(why.id));
+  if (HF.on) HF.enter('ladfb', why.id); else if (settings.autoRead || LR.byEar) Speech.speakEl(document.getElementById(why.id));
 }
 async function ladExplainSlow(){
   const q = LR && LR.qs[LR.i]; if (!q) return; const old = settings.rate; settings.rate = Math.max(0.5, (Number(old) || 0.9) - 0.25);
@@ -166,7 +166,9 @@ function ladEnd(){
       else { st.level = n; msg = `You got ${r.right} of 10. You need ${LADDER.mastery} to move up. Hear the lesson again. Then try the next set.`; }
     }
   }
-  ladSave(st); const sum = speakable(msg); const finished = !!st.passed[NLEV] && r.n === NLEV && r.right >= LADDER.mastery;
+  ladSave(st);
+  if (typeof planHook === 'function' && planHook('lad', r)){ LR = null; return; }
+  const sum = speakable(msg); const finished = !!st.passed[NLEV] && r.n === NLEV && r.right >= LADDER.mastery;
   app().innerHTML = `<h1>${r.n ? 'Set done' : 'Placement done'}</h1>
     <div class="card"><div class="row"><div class="big-word" style="flex:1" id="ladSum">${sum.html}</div>${sayBtn('#' + sum.id)}</div></div>
     <div class="row">${finished ? `<button class="primary" id="ladRealGo">Real Arithmetic Reasoning practice</button>` : `<button class="primary" id="ladGo">Go to level ${st.level}</button><button id="ladLes">Lesson for level ${st.level}</button>`}<button onclick="go('home')">Home</button></div>`;

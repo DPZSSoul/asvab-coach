@@ -49,6 +49,27 @@ start it by itself next time when the mic is already allowed. A wake word ("coac
   "letter A", or the answer value). It uses all recognition alternatives and never loops: one short re-prompt,
   then it says what it heard and reads the choices once. Say "what did you hear" for the last transcripts.
 - IT focus plan on the home screen and an IT line-score panel (estimate only, confirm with a recruiter).
+- New in 2.3 (all by voice too):
+  - Weekly practice test (say "weekly test"): 34 questions in the real order and mix (GS 6, AR 6, WK 6, PC 4,
+    MK 6, EI 6, the CAT counts x 0.4) with the same time per question as the real test (about 58 minutes).
+    A home nudge appears when it is due (every 7 days, or on the chosen weekday, Sunday by default). The report
+    reads aloud the estimated IT scores against 212 (AR+MK+EI+VE) and 156 (VE+MK+GS), the points still needed,
+    the change since last week, a week-by-week chart, and the 2 subjects to focus on. Estimate only.
+  - Today's plan (tap, or say "today's plan"): about 10 minutes. It picks the AR catch-up ladder while you are
+    below the bridge, otherwise your weakest IT part. A short audio lesson, 10 questions read to you, then a
+    one-minute spoken recap of the misses. It counts toward the daily goal of 10 and the streak.
+  - Real-test reading passages (PC section, or say "real test passages"): 13 original passages of 120-135 words,
+    31 questions (main idea, detail, inference, word in context, purpose, tone, sequence), all explained.
+    Unlocks at 75% on your last 20 PC answers, or by choice ("try it anyway"). Two modes: read-aloud first
+    (question, then the passage, with highlighting) and on your own (big text, "Guide me" moving highlight).
+  - Electronics by ear (EI section link, Audio lessons, or say "electronics by ear"): 8 spoken lessons built on
+    pictures (water in a pipe, the Ohm's law triangle, one lane vs many lanes, P = V x I, AC/DC, conductors,
+    parts, magnets). Each ends with quick checks; you say the number.
+  - Test-day tips (home tile, Audio lessons, or say "test day tips"): 9 short spoken tips checked against
+    officialasvab.com. See `SOURCES.md` for every claim and its source; coach tips are marked.
+  - Daily reminder (Settings, or say "remind me at 7 PM"): a notification at your time if you allow it, and a
+    banner when you open the app, only on days you have not done 10 questions. While the app is closed it is best
+    effort (periodic background sync, where the browser supports it).
 - MEPS mode: 6 parts in the real order with official CAT counts and minutes; unanswered items at time-out
   are scored as random guesses, like the real test.
   `questions.json` (also embedded as `questions.js` so it works from file://).
@@ -76,9 +97,13 @@ python3 build/build_bank.py     # needs the study pack at /home/box/asvab-study 
 python3 build/build_audio_ladder.py   # writes ladder.js (27 levels x 40 items, sympy-checked)
 python3 build/sweep_ladder.py 200     # runs every level's generators over 200 seeds (54,000 items) with sympy
 python3 build/validate.py       # counts, 4 choices, answer keys, sympy/arithmetic math checks (runs the sweep too)
+python3 build/ear_lessons.py    # writes earlessons.js (EI + test-day tip lessons; every spoken check verified by sympy)
+python3 build/pc_real.py        # writes pcreal.js (real-test-level PC passages; checks quotes and word counts)
 python3 build/make_single.py    # writes asvab-coach.html
 python3 tests/e2e.py            # Playwright end-to-end tests (needs a running server on :8765)
 python3 tests/voice_e2e.py      # voice-only run with a fake recognizer and noisy transcripts
+python3 tests/features_e2e.py   # 2.3 features by touch (weekly test, plan, PC real, ear lessons, tips, reminders)
+python3 tests/features_voice.py # 2.3 features by voice only
 node tests/speech_unit.js       # spoken-answer parser unit tests
 ```
 

@@ -2,7 +2,7 @@
 'use strict';
 const BANK = window.ASVAB_BANK;
 const SECTIONS = BANK.sections;               // {AR:'Arithmetic Reasoning', ...}
-const APP_VERSION = '2.2.0 (bank '+BANK.version+')';
+const APP_VERSION = '2.3.0 (bank '+BANK.version+')';
 const SEC_ORDER = ['AR','WK','PC','MK','GS','EI'];
 const MEPS_ORDER = ['GS','AR','WK','PC','MK','EI'];   // real CAT-ASVAB order (officialasvab.com)
 const CAT = BANK.cat;                          // {GS:[15,12], ...} questions, minutes (officialasvab.com, no tryout items)
@@ -28,12 +28,12 @@ const Store = {
   set(k, v){ try{ localStorage.setItem(KEY+k, JSON.stringify(v)); }catch(e){ toast('Could not save. Storage is full or blocked.'); } },
   keys(){ return Object.keys(localStorage).filter(k => k.startsWith(KEY)).map(k => k.slice(KEY.length)); }
 };
-const DEFAULT_SETTINGS = { rate:0.9, voiceURI:'', readAlong:true, timerOn:true, dark:false, apiKey:'', apiBase:'https://api.openai.com/v1', model:'gpt-4o-mini', autoRead:false, hfAuto:null, hfWake:false };
+const DEFAULT_SETTINGS = { rate:0.9, voiceURI:'', readAlong:true, timerOn:true, dark:false, apiKey:'', apiBase:'https://api.openai.com/v1', model:'gpt-4o-mini', autoRead:false, hfAuto:null, hfWake:false, remindOn:false, remindTime:'18:00', weeklyDay:0 };
 let settings = Object.assign({}, DEFAULT_SETTINGS, Store.get('settings', {}));
 function saveSettings(){ Store.set('settings', settings); document.body.classList.toggle('dark', !!settings.dark); }
 
 function allQuestions(){ return BANK.questions.concat(Store.get('custom', [])); }
-function qById(id){ return allQuestions().find(q => q.id === id) || (Store.get('errors',[]).find(e => e.q && e.q.id===id) || {}).q; }
+function qById(id){ return allQuestions().find(q => q.id === id) || ((window.ASVAB_PCREAL || {}).questions || []).find(q => q.id === id) || (Store.get('errors',[]).find(e => e.q && e.q.id===id) || {}).q; }
 function sectionPool(sec){ return allQuestions().filter(q => q.section === sec); }
 
 /* ---------------- daily streak ---------------- */
@@ -381,8 +381,10 @@ let S = null;      // current practice session
 let M = null;      // current MEPS run
 function cleanup(){ Speech.stop(); Voice.stop(); if (S && S.timer) clearInterval(S.timer); if (S) S.hf = false; if (M && M.timer) clearInterval(M.timer); if (typeof LR !== 'undefined') LR = null; }
 function go(name, arg){
-  if (M && M.running && name !== 'meps-run' && !confirm('Leave the MEPS test? Your run will end.')) return;
+  if (M && M.running && name !== 'meps-run' && !confirm(M.kind === 'weekly' ? 'Leave the weekly test? Your run will end.' : 'Leave the MEPS test? Your run will end.')) return;
   if (M && name !== 'meps-run') M.running = false;
+  if (typeof PLAN !== 'undefined' && PLAN && name !== 'plan') PLAN = null;
+  if (typeof pcrGuide === 'function') pcrGuide(true);
   // Arithmetic Reasoning is the catch-up track until its last level is passed (or he picked the real questions)
   if (name === 'home' && typeof AR_REAL !== 'undefined') AR_REAL = false;
   if (name === 'practice' && arg === 'AR' && typeof arDone === 'function' && !arDone() && !AR_REAL){ name = 'ladder'; arg = undefined; }
@@ -407,11 +409,17 @@ function itFocusHTML(){
 SCREENS.home = () => {
   const s = streakInfo(); const errs = Store.get('errors', []);
   app().innerHTML = `<h1>Hi. Ready to study?</h1>
+  ${reminderBannerHTML()}${weeklyNudgeHTML()}
   <div class="card hf-card">${HF.on ? `<p class="big-word">Hands-free is on. Just talk. Say "help".</p><button class="small" id="hfStopBig">Stop hands-free</button>`
     : `<button class="hf-start" id="hfStartBig">Start hands-free</button><p>One tap. Then the whole app works by voice. It reads everything and listens for you.</p>${Voice.why() ? `<p class="bad-text">${esc(Voice.why())}</p>` : ''}`}</div>
   <div class="card"><div class="big-word">Today: ${s.todayCount} of ${DAILY_GOAL} questions</div>
     <div class="bar" aria-hidden="true"><div style="width:${Math.min(100, s.todayCount*10)}%"></div></div>
     <p>${s.goalMet ? 'Goal done for today. Great work.' : `Do ${DAILY_GOAL - s.todayCount} more to keep your streak.`} Streak: ${s.streak} day${s.streak===1?'':'s'}.</p></div>
+  <div class="grid">
+    <button class="tile primary" id="planTile" onclick="go('plan','new')">Today's plan<small>10 minutes: a lesson, 10 questions, a recap</small></button>
+    <button class="tile" id="weeklyTile" onclick="go('weekly')">Weekly test<small>${weeklyTotal()} questions. Your score goal: 212</small></button>
+    <button class="tile" id="tipsTile" onclick="go('earset','tips')">Test-day tips<small>Short spoken tips for MEPS</small></button>
+  </div>
   ${itFocusHTML()}
   <h2>Practice a section</h2>
   <div class="grid">${SEC_ORDER.map(k => k === 'AR' && !arDone()
@@ -423,6 +431,7 @@ SCREENS.home = () => {
     <button class="tile" onclick="go('drill')">Speed drills<small>Quick mental math out loud</small></button>
     <button class="tile" onclick="go('vocab')">Vocab by ear<small>Hear a word. Say what it means.</small></button>
     <button class="tile" onclick="go('readalong')">Read along<small>Big text. Read it out loud.</small></button>
+    <button class="tile" id="eiEarTile" onclick="go('earset','ei')">Electronics by ear<small>Water in a pipe, Ohm's law, and more</small></button>
   </div>
   <h2>More</h2>
   <div class="grid">
@@ -439,6 +448,8 @@ SCREENS.home = () => {
   const hs = $('#hfStartBig'); if (hs) hs.onclick = () => { HF.start(); if (HF.on) SCREENS.home(); };
   const hx = $('#hfStopBig'); if (hx) hx.onclick = () => { HF.stop(); SCREENS.home(); };
   $$('[data-flesson]').forEach(b => b.onclick = () => go('lesson', b.dataset.flesson));
+  reminderWire(); const ws = $('#wnStart'); if (ws) ws.onclick = () => go('weekly');
+  const wl = $('#wnLater'); if (wl) wl.onclick = () => { Store.set('weeklySnooze', today()); const n = $('#weeklyNudge'); if (n) n.remove(); };
 };
 
 SCREENS.practice = (sec) => {
@@ -454,6 +465,9 @@ SCREENS.practice = (sec) => {
     <div class="toggle"><input type="checkbox" id="timerOn" ${settings.timerOn?'checked':''}><label for="timerOn" style="margin:0">Timer on: ${fmtTime(per)} per question (real CAT pace)</label></div>
   </div>
   <div class="row"><button class="primary" id="startBtn">Start practice</button><button id="hfBtn">Start hands-free</button></div>
+  ${sec === 'PC' ? pcrCardHTML() : ''}
+  ${sec === 'EI' ? `<div class="card" id="eiEar"><h2>Electronics by ear</h2><p>${EAR.ei.length} spoken lessons with pictures in your head: water in a pipe, the Ohm's law triangle, one lane or many lanes, and more. Each ends with quick checks. Say the number.</p>
+    <div class="row"><button class="primary" id="eiEarGo">Electronics by ear</button><button id="eiEarAll">Play them in Audio lessons</button></div></div>` : ''}
   <h2>Need new questions?</h2>
   <div class="card"><p>Make 5 new ${SECTIONS[sec]} questions with AI. They are checked, then saved on this device.</p>
     <button id="genBtn">Generate more questions</button><div id="genOut" aria-live="polite"></div></div>`;
@@ -464,15 +478,17 @@ SCREENS.practice = (sec) => {
   $('#hfBtn').onclick = () => startSession(sec, count, { hf:true });
   $('#genBtn').onclick = () => generateQuestions(sec, 5, $('#genOut'));
   const ab = $('#arBack'); if (ab) ab.onclick = () => go('ladder');
+  const pg = $('#pcrGo'); if (pg) pg.onclick = () => { if (!pcrUnlocked()) Store.set('pcrealOpen', true); go('pcreal'); };
+  const eg = $('#eiEarGo'); if (eg){ eg.onclick = () => go('earset', 'ei'); $('#eiEarAll').onclick = () => go('audio', 'ei'); }
 };
 
 function startSession(sec, n, opts={}){
   const qs = pickQuestions(sec, n, opts);
   if (!qs.length){ toast('No questions found.'); return; }
   if (opts.hf && !HF.on) HF.start({ fromSession:true });
-  const begin = () => { cleanup(); S = { sec, qs, i:0, results:[], hf: !!opts.hf, timerOn: opts.hf ? (opts.timer ?? false) : settings.timerOn,
-    per: CAT[sec][1]*60/CAT[sec][0], mode: (opts.hf || HF.on) ? 'handsfree' : 'practice', topic: opts.topic }; renderQ(); };
-  preReview(begin);
+  const begin = () => { cleanup(); S = { sec, qs, i:0, results:[], hf: !!opts.hf, timerOn: opts.noTimer ? false : opts.hf ? (opts.timer ?? false) : settings.timerOn,
+    per: CAT[sec][1]*60/CAT[sec][0], mode: opts.mode || ((opts.hf || HF.on) ? 'handsfree' : 'practice'), topic: opts.topic, byEar: !!opts.byEar }; renderQ(); };
+  if (opts.skipReview) begin(); else preReview(begin);
 }
 function preReview(next){
   const errs = Store.get('errors', []).slice(0, 10);
@@ -507,8 +523,11 @@ function renderQ(){
       S.left = total - (Date.now()-t0)/1000; const el = $('#tmr'), bar = $('#tbar');
       if (el) el.textContent = fmtTime(S.left); if (bar){ bar.firstElementChild.style.width = Math.max(0, 100*S.left/total) + '%'; bar.classList.toggle('low', S.left < total*0.2); }
       if (S.left <= 0){ clearInterval(S.timer); if (!S.answered){ toast('Time is up.'); answer(null); } } }, 250); }
+  if (S.pcMode) pcrDecorate();
   if (HF.on) HF.enter('question');
-  else if (settings.autoRead) readQuestionAloud(q);
+  else if (S.pcMode === 'aloud') pcrRead(q);
+  else if (S.pcMode === 'own'){ if (settings.autoRead) pcrRead(q); }
+  else if (settings.autoRead || S.byEar) readQuestionAloud(q);
 }
 function hintTexts(q){ const L = LESSONS[q.topic] || {}; return [ 'Hint 1 (the idea): ' + (L.idea || 'Read the question again. What does it ask?'), 'Hint 2 (the first step): ' + (q.steps.find(s => !/^(The idea|Topic|Answer)/.test(s)) || q.steps[0]) ]; }
 function showHint(q){ const h = hintTexts(q); if (S.hints >= h.length){ toast('No more hints here. Try the Tutor for more help.'); return; }
@@ -530,7 +549,7 @@ function answer(i){
   $$('#confBox button').forEach(b => b.onclick = () => setConf(b.dataset.c));
   $('#fb').scrollIntoView({ behavior:'smooth', block:'start' });
   if (HF.on) HF.enter('feedback', why.id);
-  else if (settings.autoRead) Speech.speakEl(document.getElementById(why.id));
+  else if (settings.autoRead || S.byEar) Speech.speakEl(document.getElementById(why.id));
 }
 function setConf(c){
   if (!S || S.conf) return; S.conf = c; const q = S.qs[S.i]; const r = S.results[S.results.length-1]; r.conf = c;
@@ -551,15 +570,17 @@ function endSession(){
   const s = S; if (s.timer) clearInterval(s.timer); s.hf = false;
   const done = s.results.length, right = s.results.filter(r => r.correct).length;
   if (done) saveAttempt(s.sec, right, done, s.mode);
+  if (s.mode === 'pcreal') pcrDone(s, right, done);
+  if (typeof planHook === 'function' && planHook('sec', s)){ S = null; return; }
   const misses = s.results.filter(r => !r.correct);
   const sum = speakable(`You got ${right} out of ${done}. ${right === done && done ? 'Perfect set!' : 'Good effort. Every miss teaches you something.'}`);
   app().innerHTML = `<h1>Set done</h1><div class="card"><div class="row"><div class="big-word" style="flex:1" id="setSum">${sum.html}</div>${sayBtn('#'+sum.id)}</div>
     <p>Level now: ${level(s.sec)} of 3.</p></div>
     ${misses.length ? `<h2>Your misses</h2>` + misses.map(r => { const q = qById(r.qid); return `<div class="card"><div class="stem">${esc(q.stem)}</div><p>Right answer: <span class="ok-text">${esc(q.choices[q.answer])}</span></p><button class="small" data-t="${esc(q.id)}">Tutor me</button></div>`; }).join('') : ''}
-    <div class="row"><button class="primary" onclick="go('practice','${s.sec}')">Practice again</button><button onclick="go('progress')">My progress</button><button onclick="go('home')">Home</button></div>`;
+    <div class="row"><button class="primary" onclick="${s.mode === 'pcreal' ? "go('pcreal')" : `go('practice','${s.sec}')`}">Practice again</button><button onclick="go('progress')">My progress</button><button onclick="go('home')">Home</button></div>`;
   $$('[data-t]').forEach(b => b.onclick = () => { const q = qById(b.dataset.t); go('tutor'); startBankTutor(q); });
   S = null;
-  if (HF.on) HF.enter('done', { sec:s.sec });
+  if (HF.on) HF.enter('done', { sec:s.sec, pcreal: s.mode === 'pcreal' });
 }
 
 /* ---------------- hands-free loop ---------------- */
@@ -727,6 +748,7 @@ SCREENS.progress = () => {
   app().innerHTML = `<h1>My progress</h1>
   ${itPanelHTML(practiceEstimates(), 'from your practice')}
   ${byEarProgressHTML()}
+  ${weeklyHist().length ? `<div class="card" id="wkProg"><h2>Weekly tests</h2>${weeklyChartSVG(weeklyHist())}</div>` : ''}
   <div class="two-col">
     <div class="card"><h2>Topics to re-learn</h2><p>Missed, or right but not sure.</p>${relearn.length ? relearn.map(([k,v]) => `<button class="small" style="width:100%;margin:4px 0" data-l="${k}">${esc(LESSONS[k].name)} (${SECTIONS[LESSONS[k].section] ? LESSONS[k].section : ''})</button>`).join('') : '<p>None right now.</p>'}</div>
     <div class="card"><h2>Just needs reps</h2><p>You were right and sure.</p>${reps.length ? reps.map(([k,v]) => `<button class="small" style="width:100%;margin:4px 0" data-l="${k}">${esc(LESSONS[k].name)} (${LESSONS[k].section})</button>`).join('') : '<p>None yet.</p>'}</div>
@@ -763,11 +785,11 @@ SCREENS.meps = () => {
   <p>Source: officialasvab.com (proctored CAT-ASVAB, scored questions, no tryout items).</p></div>
   <div class="card"><p>No hints. No tutor. No going back.</p><p>The clock is on screen. When time runs out, the next part starts.</p><p>No going back to change an answer. That is the real rule too.</p><p>If time runs out, the real test scores the rest as random guesses. That costs points. So answer every question. Guess if you must.</p></div>
   <div class="row"><button class="primary" id="mStart">Start the test</button><button onclick="go('home')">Not now</button></div>`;
-  $('#mStart').onclick = () => { M = { running:true, part:0, res:{}, log:[] }; mepsIntro(); };
+  $('#mStart').onclick = () => { M = { running:true, part:0, res:{}, log:[], kind:'meps', order:MEPS_ORDER, counts:CAT }; mepsIntro(); };
 };
 function mepsIntro(){
-  if (!M || !M.running) return; Speech.stop(); const k = MEPS_ORDER[M.part]; const [n, min] = CAT[k]; let wait = 20;
-  app().innerHTML = `<h1>Part ${M.part+1} of ${MEPS_ORDER.length}: ${SECTIONS[k]}</h1><div class="card"><p class="big-word">${n} questions. ${min} minutes.</p>
+  if (!M || !M.running) return; Speech.stop(); const k = M.order[M.part]; const [n, min] = M.counts[k]; let wait = 20;
+  app().innerHTML = `<h1>${M.kind === 'weekly' ? 'Weekly test. ' : ''}Part ${M.part+1} of ${M.order.length}: ${SECTIONS[k]}</h1><div class="card"><p class="big-word">${n} questions. ${spokenTime(min*60)}.</p>
     <p>Starts by itself in <span id="mWait">${wait}</span> seconds.</p></div><div class="row"><button class="primary" id="mBegin">Begin now</button><button id="mQuit">Quit test</button></div>`;
   M.timer = setInterval(() => { wait--; const e = $('#mWait'); if (e) e.textContent = wait; if (wait <= 0){ clearInterval(M.timer); mepsBegin(); } }, 1000);
   $('#mBegin').onclick = () => { clearInterval(M.timer); mepsBegin(); };
@@ -775,7 +797,7 @@ function mepsIntro(){
   $('#mQuit').onclick = () => { if (confirm('Quit the test?')){ M.running = false; clearInterval(M.timer); go('home'); } };
 }
 function mepsBegin(){
-  const k = MEPS_ORDER[M.part]; const [n, min] = CAT[k];
+  const k = M.order[M.part]; const [n, min] = M.counts[k];
   M.ann = new Set(); M.sec = k; M.used = new Set(); M.diff = 2; M.n = n; M.done = 0; M.res[k] = { right:0, total:n, answered:0 }; M.end = Date.now() + min*60000;
   clearInterval(M.timer); M.timer = setInterval(mepsTick, 500); mepsNextQ();
 }
@@ -792,7 +814,7 @@ function mepsTick(){
 }
 // hands-free: say the time left every 5 minutes and at 1 minute, but never in the middle of reading
 function mepsAnnounce(left){
-  const total = CAT[M.sec][1]*60; const marks = []; for (let m = 300; m < total; m += 300) marks.push(m); if (total > 90) marks.push(60);
+  const total = M.counts[M.sec][1]*60; const marks = []; for (let m = 300; m < total; m += 300) marks.push(m); if (total > 90) marks.push(60);
   const due = marks.filter(m => left <= m && !M.ann.has(m)); if (!due.length) return;
   if (HF.talking > 0 || HF.pending){ return; }               // wait until reading is done
   due.forEach(m => M.ann.add(m)); HF.say(`Time left: ${spokenTime(left)}.`);
@@ -809,15 +831,15 @@ function mepsNextQ(){
 function mepsAnswer(i){
   const q = M.q; const ok = i === q.answer; M.done++; M.res[M.sec].answered++; if (ok) M.res[M.sec].right++;
   M.diff = Math.max(1, Math.min(3, M.diff + (ok ? 1 : -1)));
-  M.log.push({ q, i, ok }); bumpDaily(1); srsUpdate(q.id, ok, ok ? 'shaky' : null); if (!ok) logError(q, i, 'meps');
+  M.log.push({ q, i, ok }); bumpDaily(1); srsUpdate(q.id, ok, ok ? 'shaky' : null); if (!ok) logError(q, i, M.kind || 'meps');
   mepsNextQ();
 }
 function mepsFinishPart(){
   if (!M || !M.running) return; clearInterval(M.timer); const r = M.res[M.sec];
   // Official rule: unfinished items are scored as though answered at random (1 in 4 chance each).
   r.guessed = (r.total - r.answered) * 0.25;
-  saveAttempt(M.sec, r.right, r.total, 'meps');
-  M.part++; if (M.part < MEPS_ORDER.length) mepsIntro(); else mepsReport();
+  saveAttempt(M.sec, r.right, r.total, M.kind || 'meps');
+  M.part++; if (M.part < M.order.length) mepsIntro(); else if (M.kind === 'weekly') weeklyReport(); else mepsReport();
 }
 function normCdf(z){ const t = 1/(1+0.2316419*Math.abs(z)); const d = 0.3989423*Math.exp(-z*z/2); const p = d*t*(0.3193815+t*(-0.3565638+t*(1.781478+t*(-1.821256+t*1.330274)))); return z > 0 ? 1-p : p; }
 function estimates(res){
@@ -984,6 +1006,7 @@ SCREENS.settings = () => {
     <div class="toggle"><input type="checkbox" id="readAlong" ${settings.readAlong?'checked':''}><label for="readAlong" style="margin:0">Read-along: light up words as they are read</label></div>
     <div class="toggle"><input type="checkbox" id="autoRead" ${settings.autoRead?'checked':''}><label for="autoRead" style="margin:0">Read each question aloud by itself</label></div>
     <p>${Speech.ok ? '' : 'This browser cannot read aloud.'} ${esc(Voice.note() || 'Voice answers work here.')}</p></div>
+  ${remSettingsHTML()}
   <div class="card"><h2>Hands-free</h2>
     <div class="toggle"><input type="checkbox" id="hfAuto" ${settings.hfAuto?'checked':''}><label for="hfAuto" style="margin:0">Start hands-free by itself next time (when the mic is already allowed)</label></div>
     <div class="toggle"><input type="checkbox" id="hfWake" ${settings.hfWake?'checked':''}><label for="hfWake" style="margin:0">Wake word: only listen to commands that start with "coach"</label></div></div>
@@ -1005,7 +1028,7 @@ SCREENS.settings = () => {
   <p>Questions are original ASVAB-style practice items, not real ASVAB questions. App version ${esc(APP_VERSION)}.</p>`;
   const drawLog = () => { const el = $('#vlog'); if (!el) return; const rows = VOICE_LOG.slice(-40).reverse();
     el.innerHTML = rows.length ? rows.map(x => `<li><b>${esc(x.at.slice(11, 19))}</b> ${esc(x.ctx || '')}: ${x.text ? '"' + esc(x.text) + '"' : '<i>(' + esc(x.error || 'nothing') + ')</i>'}${x.alts && x.alts.length > 1 ? ' [' + esc(x.alts.slice(1).join(' | ')) + ']' : ''}${x.echo ? ' (own voice, ignored)' : ''}</li>`).join('') : '<li>Nothing yet. Turn on hands-free and say something.</li>'; };
-  drawLog(); $('#vlogRefresh').onclick = drawLog;
+  drawLog(); $('#vlogRefresh').onclick = drawLog; remSettingsWire();
   $('#vlogClear').onclick = () => { VOICE_LOG.length = 0; try { localStorage.removeItem('asvab.voicelog'); } catch(e){} drawLog(); };
   $('#vlogCopy').onclick = () => { const t = JSON.stringify(VOICE_LOG.slice(-40), null, 1); (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(() => toast('Log copied.'), () => toast('Could not copy.')); };
   const sel = $('#voiceSel'); fillVoices(sel); sel.onchange = () => { settings.voiceURI = sel.value; saveSettings(); };
@@ -1048,8 +1071,8 @@ function importAll(file){
 function boot(){
   saveSettings(); renderStreak();
   const [name, arg] = (location.hash.slice(1) || 'home').split('/');
-  go(['home','practice','handsfree','tutor','review','progress','meps','settings','lesson','ladder','ladlesson','audio','drill','vocab','readalong'].includes(name) ? name : 'home', arg);
-  renderHfBar();
+  go(['home','practice','handsfree','tutor','review','progress','meps','settings','lesson','ladder','ladlesson','audio','drill','vocab','readalong','weekly','plan','pcreal','earset','earlesson'].includes(name) ? name : 'home', arg);
+  renderHfBar(); try { reminderTick(); } catch(e){}
   // auto-resume hands-free when he asked for it and the mic is already allowed (no prompt needed)
   if (settings.hfAuto && !Voice.why()){
     const tryStart = () => { HF.start({ auto:true }); if (HF.on && (location.hash.startsWith('#home') || !location.hash)) SCREENS.home(); };

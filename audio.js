@@ -146,14 +146,15 @@ function audioPlaylist(){
   out.splice(1, 0, { title:'Vocab review', lines: words.flatMap(([w, mean, , hook]) => [{ say:`${w}.`, pause:1500 }, { say:`${w} means ${mean}. ${hook}` }]) });
   const errs = Store.get('errors', []).slice(0, 5);
   if (errs.length) out.splice(2, 0, { title:'Review of your misses', lines: errs.map(e => ({ say:`${e.stem} The answer is ${e.answerText}. ${firstSentence(e.explanation || '')}` })) });
-  return out;
+  return typeof earPlaylist === 'function' ? out.concat(earPlaylist()) : out;
 }
 let AL = null;
 let wakeLock = null;
 async function keepAwake(on){ try { if (on && 'wakeLock' in navigator && !wakeLock){ wakeLock = await navigator.wakeLock.request('screen'); wakeLock.addEventListener('release', () => { wakeLock = null; }); }
   if (!on && wakeLock){ await wakeLock.release(); wakeLock = null; } } catch(e){} }
-SCREENS.audio = () => {
+SCREENS.audio = (arg) => {
   if (!AL) AL = { list: audioPlaylist(), i:0, j:0, playing:false };
+  if (arg === 'ei' || arg === 'tips'){ const k = AL.list.findIndex(x => x.group === arg); if (k >= 0 && AL.list[AL.i].group !== arg){ AL.i = k; AL.j = 0; AL.playing = false; } }
   app().innerHTML = `<h1>Audio lessons</h1><div class="card"><p>Listen only. Good for work with earbuds. It talks through the lessons, gives you a moment to think, then says the answer.</p>
     <p>${HF.on ? 'Say pause, resume, next lesson, previous lesson, or repeat that.' : 'Turn on hands-free to control it by voice: pause, resume, next lesson, repeat that.'}</p></div>
     <div class="card"><p class="big-word" id="alNow">${esc(AL.list[AL.i].title)}</p><p id="alLine"></p>

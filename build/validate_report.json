@@ -1,4 +1,40 @@
 {
+ "release_2_3": {
+  "ear_lessons": {
+   "ei": 8,
+   "tips": 9,
+   "checks_sympy": 27,
+   "speech": {
+    "checks": 27,
+    "problems": 0,
+    "first": []
+   }
+  },
+  "pc_real": {
+   "passages": 13,
+   "questions": 31,
+   "words": [
+    120,
+    135
+   ],
+   "kinds": {
+    "main-idea": 4,
+    "detail": 8,
+    "inference": 7,
+    "vocab": 4,
+    "purpose": 3,
+    "sequence": 4,
+    "tone": 1
+   },
+   "keys": {
+    "1": 8,
+    "0": 8,
+    "3": 8,
+    "2": 7
+   }
+  },
+  "banks_unchanged": true
+ },
  "ladder": {
   "items": 1080,
   "placement": 27,

@@ -1,0 +1,222 @@
+[
+ {
+  "test": "home reads the weekly nudge and today's plan",
+  "pass": true,
+  "info": "Then Paragraph Comprehension. | Not enough data yet. | Do 10 or more. | This is an estimate only. | Confirm with a recruiter. | Say today's plan for 10 minutes of study."
+ },
+ {
+  "test": "\"weekly test\" opens it and reads counts",
+  "pass": true,
+  "info": "Weekly practice test. | 34 questions in 6 parts, about 58 minutes. | Real time pressure, scaled down. | No hints and no going back. | Answer every question. | Say start the test, or home."
+ },
+ {
+  "test": "\"start the test\" -> part 1 intro read aloud",
+  "pass": true,
+  "info": "Answer every question. | Say start the test, or home. | Weekly test. Part 1 of 6: | General Science. 6 questions. | 4 minutes and 48 seconds. | Say begin. Or it starts by itself."
+ },
+ {
+  "test": "\"begin\" -> first question read, answer by voice",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "NATO answer moves to the next question (no hints, no going back)",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"hint\" is refused like the real test",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"time left\" answers",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "weekly report read aloud: 212, 156, points needed, focus, estimate only",
+  "pass": true,
+  "info": "The Navy minimum is 31. | Above the minimum. | Estimate only. Confirm with a recruiter. | Say practice and a section name, review misses, or home."
+ },
+ {
+  "test": "\"repeat\" re-reads the report",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"today's plan\" opens the plan and reads it",
+  "pass": true,
+  "info": "Adding and Subtracting in Your Head. | Two: 10 questions by ear. | Three: a one minute recap of your misses. | Subject: Arithmetic Reasoning catch-up, level 1: | Adding and Subtracting in Your Head. | Say start, or different subject."
+ },
+ {
+  "test": "\"different subject\" switches",
+  "pass": true,
+  "info": "{'kind': 'sec', 'sec': 'WK'}"
+ },
+ {
+  "test": "plan pick is the AR ladder (below the bridge)",
+  "pass": true,
+  "info": "{'kind': 'ladder', 'level': 1}"
+ },
+ {
+  "test": "\"start\" plays the lesson, line by line, by itself",
+  "pass": true,
+  "info": "Adding and subtracting in your"
+ },
+ {
+  "test": "\"skip lesson\" goes to the 10 questions",
+  "pass": true,
+  "info": "Say start, or different subject. | Step 1: the lesson. | Level 1 lesson: | Adding and Subtracting in Your Head. | What is 41 plus 8? | Say the answer."
+ },
+ {
+  "test": "plan questions are the ladder (10)",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "answer the first plan question by voice",
+  "pass": true,
+  "info": "49"
+ },
+ {
+  "test": "recap read aloud: score, the miss, streak",
+  "pass": true,
+  "info": "Daily goal done. | Streak: 1 day. | Say home, progress, or another plan."
+ },
+ {
+  "test": "\"real test passages\" (locked) offers try it anyway",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"try it anyway\" unlocks",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"read aloud first\": question, then the passage, then choices",
+  "pass": true,
+  "info": "C. how to write a name on a tag | D. why workers dislike safety rules | Your answer?"
+ },
+ {
+  "test": "answer a real-level question by voice",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"read the passage\" re-reads it",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"home\" leaves the set",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"real passages\" then \"on my own\": reads only question and choices",
+  "pass": true,
+  "info": "C. a large reward | D. a need to act quickly | Say the letter when you are ready."
+ },
+ {
+  "test": "\"guide me\" starts the moving highlight",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"stop guide\" stops it",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"electronics by ear\" lists 8 lessons",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"lesson 2\" plays and asks the first spoken check",
+  "pass": true,
+  "info": "So ohms equal volts divided by amps. | Quick check. A 12 volt battery is hooked to a 4 ohm resistor."
+ },
+ {
+  "test": "saying the number (\"3\") -> \"Yes!\"",
+  "pass": true,
+  "info": "12 divided by 4 is 3 amps. | Quick check. 2 amps flow through a 6 ohm resistor."
+ },
+ {
+  "test": "a wrong number -> \"Not quite\" with the answer",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"skip\" gives the answer and finishes the lesson",
+  "pass": true,
+  "info": "120 divided by 10 is 12 ohms. | That is the lesson."
+ },
+ {
+  "test": "\"next lesson\" goes to lesson 3",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"test day tips\" lists 9 tips",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"lesson 1\" reads the tip, then a spoken check",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"zero\" answers the check",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"play all\" sends it to Audio lessons at the tips",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"settings\" reads the reminder status",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"reminder on\" turns it on at 6 PM",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"remind me at 7 pm\" sets 19:00",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"reminder off\" turns it off",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"electronics\" alone still opens the EI section",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "never listens while the app is speaking",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "only one tap in the whole voice run",
+  "pass": true,
+  "info": "1"
+ },
+ {
+  "test": "no console errors in the voice features run",
+  "pass": true,
+  "info": "[]"
+ }
+]
