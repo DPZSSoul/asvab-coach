@@ -22,6 +22,7 @@ with sync_playwright() as pw:
     p = new_page(ctx, errors)
     p.goto(BASE + 'index.html'); p.wait_for_selector('h1')
     ok('home loads', 'Ready to study' in p.inner_text('h1'))
+    ok('home has one big Start hands-free control', p.locator('#hfStartBig').count() == 1)
     ok('six section tiles incl. Electronics Information', all(p.locator(f"button.tile:has-text('{n}')").count() for n in ['Arithmetic Reasoning','Word Knowledge','Paragraph Comprehension','Math Knowledge','General Science','Electronics Information']))
     ok('home IT focus plan lists all 6 IT-formula subtests', p.locator('#itFocus li[data-sec]').count() == 6 and '212' in p.inner_text('#itFocus') and p.locator('#itFocus [data-focus]').count() == 2)
     ok('bank: EI section has 60+ questions, every section 50+', p.evaluate("Object.keys(BANK.sections).every(k => sectionPool(k).length >= 50) && sectionPool('EI').length >= 60"), p.evaluate("Object.fromEntries(Object.keys(BANK.sections).map(k=>[k,sectionPool(k).length]))"))
@@ -130,16 +131,41 @@ with sync_playwright() as pw:
     if p.locator('#skipBtn').count(): p.click('#skipBtn')
     p.wait_for_selector('#hfBox'); a = p.evaluate('S.qs[0].answer')
     nato = ['alpha','bravo','charlie','delta'][a]
-    p.evaluate(f"window.__heard.push('repeat', '{nato}', 'sure')")
+    p.evaluate(f"window.__heard.push('repeat', '{nato}', 'sure', 'next')")
     p.wait_for_function('S && S.i === 1', timeout=30000)
     res = p.evaluate('S.results[0]')
-    ok('hands-free: reads, hears "repeat", NATO answer, confidence, auto-next', res['correct'] and res['conf'] == 'sure', res)
-    spoken = ' | '.join(p.evaluate('window.__spoken'))
+    ok('hands-free: reads, hears "repeat", NATO answer, confidence, "next"', res['correct'] and res['conf'] == 'sure', res)
+    spoken = ' '.join(p.evaluate('window.__spoken'))
     ok('hands-free speaks right/wrong with reason and asks confidence', 'Right!' in spoken and 'How sure were you' in spoken)
+    p.evaluate("HF.stop(false)")
     p.evaluate("go('home')")
     p3 = new_page(ctx, errors); p3.goto(BASE + 'index.html?norec=1#handsfree'); p3.wait_for_selector('h1')
     ok('graceful message when recognition is missing', 'need Chrome or Edge' in p3.inner_text('main'))
     p3.close()
+
+    # ---- math ladder (touch) ----
+    p.evaluate("go('ladder')"); ok('math ladder screen: 15 levels, starts at level 1', p.locator('[data-lv]').count() == 15 and 'level 1 of 15' in p.inner_text('#ladStatus'))
+    p.click('#ladPlace'); p.wait_for_selector('.choice')
+    for k in range(15):
+        a = p.evaluate('LR.qs[LR.i].answer'); lvq = p.evaluate('LR.qs[LR.i].level')
+        p.click(f'.choice[data-i="{a if k < 4 else (a+1)%4}"]'); p.click('#nextBtn')
+    st = ls(p, 'ladder')
+    ok('placement: first miss on question 5 puts him on level 5', st['level'] == 5 and st['placed'] and 'level 5' in p.inner_text('main'), st)
+    p.evaluate("ladStart(5)")
+    for k in range(10):
+        a = p.evaluate('LR.qs[LR.i].answer'); p.click(f'.choice[data-i="{(a+1)%4 if k < 3 else a}"]'); p.click('#nextBtn')
+    st = ls(p, 'ladder'); ok('ladder: 7 of 10 does not pass (needs 8)', st['level'] == 5 and not st['passed'].get('5') and st['tries']['5'] == 1, st)
+    p.evaluate("ladStart(5)"); q2 = p.evaluate('LR.qs[0].id')
+    ok('ladder: the retry uses a new set (set B)', q2.startswith('LAD-05-2-'), q2)
+    for k in range(10):
+        a = p.evaluate('LR.qs[LR.i].answer'); p.click(f'.choice[data-i="{(a+1)%4 if k < 3 else a}"]'); p.click('#nextBtn')
+    st = ls(p, 'ladder'); ok('ladder: second miss in a row sends him back one level', st['level'] == 4, st)
+    p.evaluate("ladStart(4)")
+    for k in range(10):
+        a = p.evaluate('LR.qs[LR.i].answer'); p.click(f'.choice[data-i="{a}"]'); p.click('#nextBtn')
+    st = ls(p, 'ladder'); ok('ladder: 8+ of 10 passes and moves up', st['passed'].get('4') and st['level'] == 5, st)
+    ok('ladder bank: 15 levels x 4 sets x 10 + 15 placement items', p.evaluate("LADDER.levels.length === 15 && LADDER.levels.every(l => l.sets.length === 4 && l.sets.every(s => s.length === 10)) && LADDER.placement.length === 15"))
+    p.evaluate("go('ladlesson','6')"); ok('ladder lesson renders with read-aloud', 'Fractions' in p.inner_text('h1') and p.locator('#ladLessonBody .w').count() > 50)
 
     # ---- MEPS ----
     p.evaluate("go('meps')"); txt = p.inner_text('main')
@@ -218,7 +244,7 @@ with sync_playwright() as pw:
     ok('practice works offline', p.locator('.choice').count() == 4)
     ctx.set_offline(False)
     swt = p.evaluate("fetch('sw.js',{cache:'no-store'}).then(r=>r.text())"); keys = p.evaluate('caches.keys()')
-    ok('service worker version bumped (asvab-coach-v2, network-first)', "asvab-coach-v2" in swt and 'network-first' in swt and 'asvab-coach-v2' in keys and 'asvab-coach-v1' not in keys, keys)
+    ok('service worker version bumped (asvab-coach-v3, network-first)', "asvab-coach-v3" in swt and 'network-first' in swt and 'asvab-coach-v3' in keys and 'asvab-coach-v2' not in keys, keys)
     man = p.evaluate("fetch('manifest.webmanifest').then(r=>r.json())"); ok('manifest valid with icons', man['name'] == 'ASVAB Coach' and len(man['icons']) == 2)
 
     # ---- single self-contained file over file:// ----

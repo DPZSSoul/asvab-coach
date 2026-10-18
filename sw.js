@@ -1,6 +1,6 @@
 /* ASVAB Coach service worker: cache the app so it works offline after the first load. */
-const CACHE = 'asvab-coach-v2';   // bump on every release so old installs update
-const FILES = ['./', 'index.html', 'styles.css', 'app.js', 'questions.js', 'questions.json', 'tutor_rules.js', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'asvab-coach.html'];
+const CACHE = 'asvab-coach-v3';   // bump on every release so old installs update
+const FILES = ['./', 'index.html', 'styles.css', 'app.js', 'ladder.js', 'ladder_ui.js', 'handsfree.js', 'questions.js', 'questions.json', 'tutor_rules.js', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'asvab-coach.html'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => Promise.all(FILES.map(f => c.add(f).catch(() => null)))).then(() => self.skipWaiting()));
 });

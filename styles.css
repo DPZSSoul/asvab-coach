@@ -75,3 +75,12 @@ svg text{ font-family: Verdana, "DejaVu Sans", Arial, sans-serif; fill:var(--tex
 .it-rule{border-top:2px solid #003A8C;padding-top:8px;margin-top:10px}
 .it-rule h3{font-size:1.05rem;margin:4px 0}
 .focus-list li{margin:6px 0;line-height:1.5}
+.hf-start{display:block;width:100%;font-size:1.6rem;padding:26px 18px;background:#003A8C;color:#fff;border:4px solid #FFD400;border-radius:18px;font-weight:bold}
+.hf-start:focus{outline:4px solid #111;outline-offset:3px}
+.hf-bar{position:sticky;top:0;z-index:40;display:flex;flex-wrap:wrap;gap:10px;align-items:center;background:#FFD400;color:#111;padding:10px 14px;border-bottom:3px solid #111;font-size:1rem}
+.hf-bar.off{display:none}
+.hf-bar #hfHeard{flex:1;min-width:160px}
+.tap-layer{position:fixed;inset:0;z-index:100;width:100%;height:100%;font-size:2rem;background:rgba(0,58,140,.95);color:#fff;border:0;border-radius:0}
+.lad-pre{font-family:Consolas,Menlo,monospace;font-size:1.05rem;background:#F1F0E6;padding:10px;border-radius:8px;overflow-x:auto}
+body.dark .lad-pre{background:#222}
+.lad-li{margin:6px 0}

@@ -1,4 +1,9 @@
 {
+ "ladder": {
+  "items": 600,
+  "placement": 15,
+  "checked": 586
+ },
  "counts": {
   "AR": 85,
   "WK": 110,

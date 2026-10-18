@@ -1,5 +1,5 @@
 """Validator for questions.json: structure, counts, answer keys, and math checks (sympy + arithmetic)."""
-import json, re, sys
+import json, re, sys, os
 from fractions import Fraction
 import sympy as sp
 P=sys.argv[1] if len(sys.argv)>1 else '../questions.json'
@@ -38,7 +38,7 @@ def arith_checks(text):
     """Find 'a op b [op c] = r' chains and evaluate them with exact fractions. Returns (n_checked, failures)."""
     n=0; fails=[]
     t=text.replace(',','').replace('$','')
-    for m in re.finditer(r'((?:\(?-?\d+(?:\.\d+)?\)?\s*[x*/+\-]\s*)+\(?-?\d+(?:\.\d+)?\)?)\s*=\s*(-?\d+(?:\.\d+)?)(%?)(?![\d.]*\s*[x*/^])', t):
+    for m in re.finditer(r'((?:\(?-?\d+(?:\.\d+)?\)?\s*[x*/+\-]\s*)+\(?-?\d+(?:\.\d+)?\)?)\s*=\s*(-?\d+(?:\.\d+)?)(%?)(?![\d.]*(?:\s*[x*/^]|\s*[+\-]\s*\d|\s+remainder|\s+\d+/\d+|/\d))', t):
         lhs, rhs = m.group(1), m.group(2)
         if m.group(3)=='%': rhs=str(Fraction(rhs)/100)
         # skip algebra (letters other than x as operator) and exponents
@@ -215,7 +215,28 @@ for q in Q:
         return (Fraction(m.group(1).replace(',','')),m.group(2).strip()) if m else None
     vs=[val(c) for c in q['choices']]
     if all(vs) and len(set(vs))<4: err.append(f"{q['id']} two choices have the same value")
-res=dict(counts=dict(cnt), total=len(Q), errors=err, warnings=warn, math_checked=checked_q, math_methods=dict(methods), math_unchecked=unchecked)
+# ---------- math ladder (ladder.js, from the study pack generator) ----------
+LAD=json.loads(open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'..','ladder.js')).read().split('=',1)[1].rstrip().rstrip(';'))
+lad_n=0; lad_chk=0
+for L in LAD['levels']:
+    if len(L['sets'])<4 or any(len(st)!=10 for st in L['sets']): err.append(f"ladder level {L['n']} sets wrong")
+    for st in L['sets']:
+        for q in st:
+            lad_n+=1
+            if len(q['choices'])!=4 or len(set(q['choices']))!=4 or q['answer'] not in (0,1,2,3): err.append(f"{q['id']} bad choices")
+            n,f=arith_checks(q['explanation']); lad_chk+=bool(n)
+            for ff in f: err.append(f"{q['id']} ladder arithmetic: {ff}")
+            m=re.fullmatch(r'([\d\s()+\-x/^.]+) = \?',q['stem'])
+            if m and not re.search(r'\d \d',m.group(1)):
+                try:
+                    got=sp.nsimplify(sp.sympify(re.sub(r'(?<=[\d)])\s*x\s*(?=[\d(])','*',m.group(1)).replace('^','**')),rational=True)
+                    c=q['choices'][q['answer']].replace(',','')
+                    if sp.nsimplify(c)!=got: err.append(f"{q['id']} ladder key {c} != {got}")
+                    lad_chk+=1
+                except Exception: pass
+if len(LAD['placement'])!=15: err.append('placement needs 15 items')
+res_ladder=dict(items=lad_n, placement=len(LAD['placement']), checked=lad_chk)
+res=dict(ladder=res_ladder, counts=dict(cnt), total=len(Q), errors=err, warnings=warn, math_checked=checked_q, math_methods=dict(methods), math_unchecked=unchecked)
 
 # ---------- EI: independent Python computation of every numeric item ----------
 def par(*r): return 1/sum(Fraction(1,1)/Fraction(v) for v in r)
@@ -306,7 +327,28 @@ for sec,tg in TARGET.items():
         if sum(tc[z] for z in ks)==0: err.append(f"{sec} area {'+'.join(ks)} has no items")
     for z in tc:
         if z not in covered: err.append(f"{sec} topic {z} not in blueprint")
-res=dict(counts=dict(cnt), total=len(Q), errors=err, warnings=warn, math_checked=checked_q, math_methods=dict(methods), math_unchecked=unchecked, ei_calc_checked=ei_checked, shares=shares, formats=dict(fmt))
+# ---------- math ladder (ladder.js, from the study pack generator) ----------
+LAD=json.loads(open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'..','ladder.js')).read().split('=',1)[1].rstrip().rstrip(';'))
+lad_n=0; lad_chk=0
+for L in LAD['levels']:
+    if len(L['sets'])<4 or any(len(st)!=10 for st in L['sets']): err.append(f"ladder level {L['n']} sets wrong")
+    for st in L['sets']:
+        for q in st:
+            lad_n+=1
+            if len(q['choices'])!=4 or len(set(q['choices']))!=4 or q['answer'] not in (0,1,2,3): err.append(f"{q['id']} bad choices")
+            n,f=arith_checks(q['explanation']); lad_chk+=bool(n)
+            for ff in f: err.append(f"{q['id']} ladder arithmetic: {ff}")
+            m=re.fullmatch(r'([\d\s()+\-x/^.]+) = \?',q['stem'])
+            if m and not re.search(r'\d \d',m.group(1)):
+                try:
+                    got=sp.nsimplify(sp.sympify(re.sub(r'(?<=[\d)])\s*x\s*(?=[\d(])','*',m.group(1)).replace('^','**')),rational=True)
+                    c=q['choices'][q['answer']].replace(',','')
+                    if sp.nsimplify(c)!=got: err.append(f"{q['id']} ladder key {c} != {got}")
+                    lad_chk+=1
+                except Exception: pass
+if len(LAD['placement'])!=15: err.append('placement needs 15 items')
+res_ladder=dict(items=lad_n, placement=len(LAD['placement']), checked=lad_chk)
+res=dict(ladder=res_ladder, counts=dict(cnt), total=len(Q), errors=err, warnings=warn, math_checked=checked_q, math_methods=dict(methods), math_unchecked=unchecked, ei_calc_checked=ei_checked, shares=shares, formats=dict(fmt))
 json.dump(res,open('validate_report.json','w'),indent=1)
 print(json.dumps(res,indent=1))
 sys.exit(1 if err else 0)

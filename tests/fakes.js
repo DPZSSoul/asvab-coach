@@ -4,19 +4,27 @@
   window.__spoken = []; window.__boundaryMode = params.get('boundary') !== '0';
   class U { constructor(t){ this.text = t; this.rate = 1; } }
   const synth = { speaking:false, pending:false, _cur:null, getVoices(){ return [{ name:'Fake US', lang:'en-US', voiceURI:'fake', localService:true }]; },
-    speak(u){ this.speaking = true; this._cur = u; window.__spoken.push(u.text); const words = [...u.text.matchAll(/\S+/g)]; const per = window.__boundaryMode ? 60 : 250;
+    speak(u){ this.speaking = true; this._cur = u; window.__spoken.push(u.text); const words = [...u.text.matchAll(/\S+/g)]; const per = params.get('fast') ? 6 : window.__boundaryMode ? 60 : 250;
       setTimeout(() => { u.onstart && u.onstart({}); }, 10);
-      if (window.__boundaryMode) words.forEach((m,i) => setTimeout(() => { if (this._cur === u) u.onboundary && u.onboundary({ name:'word', charIndex:m.index }); }, 20 + i*60));
+      if (window.__boundaryMode) words.forEach((m,i) => setTimeout(() => { if (this._cur === u) u.onboundary && u.onboundary({ name:'word', charIndex:m.index }); }, 20 + i*(params.get('fast') ? 6 : 60)));
       setTimeout(() => { if (this._cur === u){ this.speaking = false; this._cur = null; u.onend && u.onend({}); } }, 40 + words.length*per); },
     cancel(){ const u = this._cur; this._cur = null; this.speaking = false; if (u && u.onend) u.onend({}); }, onvoiceschanged:null };
   Object.defineProperty(window, 'speechSynthesis', { value: synth, configurable:true });
   window.SpeechSynthesisUtterance = U;
   window.__heard = [];   // queue of transcripts the fake recognizer will "hear"
   window.__recStarts = 0;
-  class FakeRec { start(){ window.__recStarts++; const t = window.__heard.shift(); setTimeout(() => {
-      if (t == null){ this.onerror && this.onerror({ error:'no-speech' }); this.onend && this.onend(); return; }
-      this.onresult && this.onresult({ results: [[{ transcript:t }]] }); this.onend && this.onend(); }, 50); }
-    stop(){} abort(){} }
+  window.__recWhileSpeaking = 0; window.__silenceMs = +(params.get('silence') || 0);
+  class FakeRec { start(){ window.__recStarts++; if (window.speechSynthesis.speaking) window.__recWhileSpeaking++;
+      const started = Date.now(); this._live = true;
+      const tick = () => { if (!this._live) return; const t = window.__heard.shift();
+        if (t == null){ if (Date.now() - started < window.__silenceMs){ this._h = setTimeout(tick, 40); return; }
+          this._live = false; this.onerror && this.onerror({ error:'no-speech' }); this.onend && this.onend(); return; }
+        this._live = false; window.__recog = (window.__recog || []).concat(t);
+        if (t.startsWith('__error:')){ this.onerror && this.onerror({ error:t.slice(8) }); this.onend && this.onend(); return; }
+        this.onresult && this.onresult({ results: [[{ transcript:t }]] }); this.onend && this.onend(); };
+      this._h = setTimeout(tick, 50); }
+    stop(){ this.abort(); }
+    abort(){ if (!this._live) return; this._live = false; clearTimeout(this._h); this.onerror && this.onerror({ error:'aborted' }); this.onend && this.onend(); } }
   if (params.get('norec') !== '1') { window.webkitSpeechRecognition = FakeRec; window.SpeechRecognition = FakeRec; }
   else { window.SpeechRecognition = undefined; window.webkitSpeechRecognition = undefined; }
 })();

@@ -5,6 +5,11 @@
   "info": ""
  },
  {
+  "test": "home has one big Start hands-free control",
+  "pass": true,
+  "info": ""
+ },
+ {
   "test": "six section tiles incl. Electronics Information",
   "pass": true,
   "info": ""
@@ -47,7 +52,7 @@
  {
   "test": "localStorage daily count updated",
   "pass": true,
-  "info": "{'2026-10-17': 1}"
+  "info": "{'2026-10-18': 1}"
  },
  {
   "test": "error log saved (question, guess, correct, explanation, date, section)",
@@ -62,7 +67,7 @@
  {
   "test": "spaced repetition: missed -> box 1, due in ~5 min",
   "pass": true,
-  "info": "{'box': 1, 'right': 0, 'wrong': 1, 'due': 1792272007147, 'seen': 1792271707147}"
+  "info": "{'box': 1, 'right': 0, 'wrong': 1, 'due': 1792334555035, 'seen': 1792334255035}"
  },
  {
   "test": "topic marked for re-learn",
@@ -77,7 +82,7 @@
  {
   "test": "score tracker attempt saved",
   "pass": true,
-  "info": "{'AR': [{'date': '2026-10-17T21:15:11.059Z', 'correct': 4, 'total': 5, 'pct': 80, 'mode': 'practice'}]}"
+  "info": "{'AR': [{'date': '2026-10-18T14:37:38.966Z', 'correct': 4, 'total': 5, 'pct': 80, 'mode': 'practice'}]}"
  },
  {
   "test": "spaced repetition: sure-right -> box 2, due ~1 day",
@@ -170,9 +175,9 @@
   "info": "[]"
  },
  {
-  "test": "hands-free: reads, hears \"repeat\", NATO answer, confidence, auto-next",
+  "test": "hands-free: reads, hears \"repeat\", NATO answer, confidence, \"next\"",
   "pass": true,
-  "info": "{'qid': 'GS-072', 'correct': True, 'guess': 2, 'topic': 'gs-earth-space', 'conf': 'sure'}"
+  "info": "{'qid': 'GS-008', 'correct': True, 'guess': 2, 'topic': 'gs-chemistry', 'conf': 'sure'}"
  },
  {
   "test": "hands-free speaks right/wrong with reason and asks confidence",
@@ -181,6 +186,46 @@
  },
  {
   "test": "graceful message when recognition is missing",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "math ladder screen: 15 levels, starts at level 1",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "placement: first miss on question 5 puts him on level 5",
+  "pass": true,
+  "info": "{'level': 5, 'placed': True, 'passed': {'1': True, '2': True, '3': True, '4': True}, 'tries': {}, 'best': {}, 'log': []}"
+ },
+ {
+  "test": "ladder: 7 of 10 does not pass (needs 8)",
+  "pass": true,
+  "info": "{'level': 5, 'placed': True, 'passed': {'1': True, '2': True, '3': True, '4': True}, 'tries': {'5': 1}, 'best': {'5': 7}, 'log': [{'date': '2026-10-18T14:38:07.848Z', 'level': 5, 'right': 7, 'total': 10}]}"
+ },
+ {
+  "test": "ladder: the retry uses a new set (set B)",
+  "pass": true,
+  "info": "LAD-05-2-01"
+ },
+ {
+  "test": "ladder: second miss in a row sends him back one level",
+  "pass": true,
+  "info": "{'level': 4, 'placed': True, 'passed': {'1': True, '2': True, '3': True, '4': True}, 'tries': {'5': 0}, 'best': {'5': 7}, 'log': [{'date': '2026-10-18T14:38:07.848Z', 'level': 5, 'right': 7, 'total': 10}, {'date': '2026-10-18T14:38:08.513Z', 'level': 5, 'right': 7, 'total': 10}]}"
+ },
+ {
+  "test": "ladder: 8+ of 10 passes and moves up",
+  "pass": true,
+  "info": "{'level': 5, 'placed': True, 'passed': {'1': True, '2': True, '3': True, '4': True}, 'tries': {'4': 0, '5': 0}, 'best': {'4': 10, '5': 7}, 'log': [{'date': '2026-10-18T14:38:07.848Z', 'level': 5, 'right': 7, 'total': 10}, {'date': '2026-10-18T14:38:08.513Z', 'level': 5, 'right': 7, 'total': 10}, {'date': '2026-10-18T14:38:09.180Z', 'level': 4, 'right': 10, 'total': 10}]}"
+ },
+ {
+  "test": "ladder bank: 15 levels x 4 sets x 10 + 15 placement items",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "ladder lesson renders with read-aloud",
   "pass": true,
   "info": ""
  },
@@ -207,7 +252,7 @@
  {
   "test": "MEPS time-out scores unanswered as random guesses (official rule)",
   "pass": true,
-  "info": "{'right': 0, 'total': 15, 'answered': 1, 'guessed': 3.5}"
+  "info": "{'right': 1, 'total': 15, 'answered': 1, 'guessed': 3.5}"
  },
  {
   "test": "MEPS score report with labeled AFQT estimate",
@@ -217,7 +262,7 @@
  {
   "test": "MEPS report shows all IT rules (212 / 156 / CT / 214) and EI part",
   "pass": true,
-  "info": "MEPS practice: score report Test done. You got 46 out of 85. Estimated AFQT: about 84. IT main rule estimate: 238 of 212. This is only an estimate. Read Part\tRight\tPercent\tEst. standard score General "
+  "info": "MEPS practice: score report Test done. You got 47 out of 85. Estimated AFQT: about 84. IT main rule estimate: 238 of 212. This is only an estimate. Read Part\tRight\tPercent\tEst. standard score General "
  },
  {
   "test": "IT estimate: AR50 MK50 EI35 VE50 GS65 -> 185/212 and 165/156",
@@ -267,7 +312,7 @@
  {
   "test": "import restores progress and custom questions",
   "pass": true,
-  "info": "Backup restored. 1 AI questions. 34 misses."
+  "info": "Backup restored. 1 AI questions. 33 misses."
  },
  {
   "test": "service worker controls page and app loads offline",
@@ -280,9 +325,9 @@
   "info": ""
  },
  {
-  "test": "service worker version bumped (asvab-coach-v2, network-first)",
+  "test": "service worker version bumped (asvab-coach-v3, network-first)",
   "pass": true,
-  "info": "['asvab-coach-v2']"
+  "info": "['asvab-coach-v3']"
  },
  {
   "test": "manifest valid with icons",
