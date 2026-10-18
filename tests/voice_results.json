@@ -32,17 +32,17 @@
  {
   "test": "\"start\" begins a voice session and reads the question",
   "pass": true,
-  "info": "What score on the fourth test gives an average of 85? | A. 85 | B. 94 | C. 88 | D. 92 | Your answer?"
+  "info": "How many are NOT green? | A. 33 | B. 24 | C. 18 | D. 12 | Your answer?"
  },
  {
   "test": "NATO answer + feedback + confidence prompt",
   "pass": true,
-  "info": "B. 94 | C. 88 | D. 92 | Your answer? | Right! Total needed equals 4 times 85 equals 340. | How sure were you?"
+  "info": "B. 24 | C. 18 | D. 12 | Your answer? | Right! 1 over 3 of 36 equals 12 green. | How sure were you?"
  },
  {
   "test": "confidence by voice, then waits for \"next\"",
   "pass": true,
-  "info": "Right! Total needed equals 4 times 85 equals 340. | How sure were you? | Say sure, shaky, or guessed. | Nice. You knew it. | This topic just needs reps. | Say next, or explain."
+  "info": "Right! 1 over 3 of 36 equals 12 green. | How sure were you? | Say sure, shaky, or guessed. | Nice. You knew it. | This topic just needs reps. | Say next, or explain."
  },
  {
   "test": "\"next\" moves on",
@@ -57,7 +57,7 @@
  {
   "test": "answer by saying the choice text (wrong on purpose)",
   "pass": true,
-  "info": "27 feet"
+  "info": "144 feet"
  },
  {
   "test": "\"explain\" reads the steps",
@@ -107,7 +107,7 @@
  {
   "test": "pre-session review is read aloud and \"skip review\" starts",
   "pass": true,
-  "info": "Question. tranquil most nearly means: | A. peaceful | B. busy | C. angry | D. noisy | Your answer?"
+  "info": "Question. rapid most nearly means: | A. painful | B. doubtful | C. quick | D. partial | Your answer?"
  },
  {
   "test": "\"start MEPS mode\" opens MEPS and reads the rules",
@@ -142,7 +142,7 @@
  {
   "test": "MEPS: time left is announced at intervals (5 minutes)",
   "pass": true,
-  "info": "A. plasma | B. red blood cells | C. white blood cells | D. platelets | Your answer? | Time left: 4 minutes and 59 seconds."
+  "info": "A. buoyancy | B. gravity | C. friction | D. magnetism | Your answer? | Time left: 4 minutes and 59 seconds."
  },
  {
   "test": "leaving MEPS asks to confirm; \"no\" stays",
@@ -187,7 +187,7 @@
  {
   "test": "ladder set by voice: 10 of 10 passes level 6 and moves to 7",
   "pass": true,
-  "info": "{'level': 7, 'placed': False, 'passed': {'6': True}, 'tries': {'6': 0}, 'best': {'6': 10}, 'log': [{'date': '2026-10-18T14:35:21.261Z', 'level': 6, 'right': 10, 'total': 10}]}"
+  "info": "{'level': 7, 'placed': False, 'passed': {'6': True}, 'tries': {'6': 0}, 'best': {'6': 10}, 'log': [{'date': '2026-10-18T14:40:47.986Z', 'level': 6, 'right': 10, 'total': 10}]}"
  },
  {
   "test": "\"what level am I\" now says level 7",
@@ -207,7 +207,7 @@
  {
   "test": "tutor: spoken wrong answer -> kind check + hint 1",
   "pass": true,
-  "info": "Or say \"I don't know\". | You are closer than you think. | Not yet. A is not it. | That is OK. | Let's look again. | Hint 1 (the idea):"
+  "info": "Or say \"I don't know\". | You are closer than you think. | Not yet. B is not it. | That is OK. | Let's look again. | Hint 1 (the idea):"
  },
  {
   "test": "tutor: \"I don't know\" -> hint 2",

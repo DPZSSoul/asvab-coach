@@ -67,7 +67,7 @@
  {
   "test": "spaced repetition: missed -> box 1, due in ~5 min",
   "pass": true,
-  "info": "{'box': 1, 'right': 0, 'wrong': 1, 'due': 1792334555035, 'seen': 1792334255035}"
+  "info": "{'box': 1, 'right': 0, 'wrong': 1, 'due': 1792334651996, 'seen': 1792334351996}"
  },
  {
   "test": "topic marked for re-learn",
@@ -82,7 +82,7 @@
  {
   "test": "score tracker attempt saved",
   "pass": true,
-  "info": "{'AR': [{'date': '2026-10-18T14:37:38.966Z', 'correct': 4, 'total': 5, 'pct': 80, 'mode': 'practice'}]}"
+  "info": "{'AR': [{'date': '2026-10-18T14:39:15.928Z', 'correct': 4, 'total': 5, 'pct': 80, 'mode': 'practice'}]}"
  },
  {
   "test": "spaced repetition: sure-right -> box 2, due ~1 day",
@@ -177,7 +177,7 @@
  {
   "test": "hands-free: reads, hears \"repeat\", NATO answer, confidence, \"next\"",
   "pass": true,
-  "info": "{'qid': 'GS-008', 'correct': True, 'guess': 2, 'topic': 'gs-chemistry', 'conf': 'sure'}"
+  "info": "{'qid': 'GS-009', 'correct': True, 'guess': 3, 'topic': 'gs-earth-space', 'conf': 'sure'}"
  },
  {
   "test": "hands-free speaks right/wrong with reason and asks confidence",
@@ -202,7 +202,7 @@
  {
   "test": "ladder: 7 of 10 does not pass (needs 8)",
   "pass": true,
-  "info": "{'level': 5, 'placed': True, 'passed': {'1': True, '2': True, '3': True, '4': True}, 'tries': {'5': 1}, 'best': {'5': 7}, 'log': [{'date': '2026-10-18T14:38:07.848Z', 'level': 5, 'right': 7, 'total': 10}]}"
+  "info": "{'level': 5, 'placed': True, 'passed': {'1': True, '2': True, '3': True, '4': True}, 'tries': {'5': 1}, 'best': {'5': 7}, 'log': [{'date': '2026-10-18T14:39:44.426Z', 'level': 5, 'right': 7, 'total': 10}]}"
  },
  {
   "test": "ladder: the retry uses a new set (set B)",
@@ -212,12 +212,12 @@
  {
   "test": "ladder: second miss in a row sends him back one level",
   "pass": true,
-  "info": "{'level': 4, 'placed': True, 'passed': {'1': True, '2': True, '3': True, '4': True}, 'tries': {'5': 0}, 'best': {'5': 7}, 'log': [{'date': '2026-10-18T14:38:07.848Z', 'level': 5, 'right': 7, 'total': 10}, {'date': '2026-10-18T14:38:08.513Z', 'level': 5, 'right': 7, 'total': 10}]}"
+  "info": "{'level': 4, 'placed': True, 'passed': {'1': True, '2': True, '3': True, '4': True}, 'tries': {'5': 0}, 'best': {'5': 7}, 'log': [{'date': '2026-10-18T14:39:44.426Z', 'level': 5, 'right': 7, 'total': 10}, {'date': '2026-10-18T14:39:45.096Z', 'level': 5, 'right': 7, 'total': 10}]}"
  },
  {
   "test": "ladder: 8+ of 10 passes and moves up",
   "pass": true,
-  "info": "{'level': 5, 'placed': True, 'passed': {'1': True, '2': True, '3': True, '4': True}, 'tries': {'4': 0, '5': 0}, 'best': {'4': 10, '5': 7}, 'log': [{'date': '2026-10-18T14:38:07.848Z', 'level': 5, 'right': 7, 'total': 10}, {'date': '2026-10-18T14:38:08.513Z', 'level': 5, 'right': 7, 'total': 10}, {'date': '2026-10-18T14:38:09.180Z', 'level': 4, 'right': 10, 'total': 10}]}"
+  "info": "{'level': 5, 'placed': True, 'passed': {'1': True, '2': True, '3': True, '4': True}, 'tries': {'4': 0, '5': 0}, 'best': {'4': 10, '5': 7}, 'log': [{'date': '2026-10-18T14:39:44.426Z', 'level': 5, 'right': 7, 'total': 10}, {'date': '2026-10-18T14:39:45.096Z', 'level': 5, 'right': 7, 'total': 10}, {'date': '2026-10-18T14:39:45.775Z', 'level': 4, 'right': 10, 'total': 10}]}"
  },
  {
   "test": "ladder bank: 15 levels x 4 sets x 10 + 15 placement items",

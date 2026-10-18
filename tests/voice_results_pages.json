@@ -1,0 +1,312 @@
+[
+ {
+  "test": "one tap starts hands-free and offers to remember it",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "voice yes/no answers the remember question",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "home is read aloud: streak, IT focus plan, available commands",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "help lists commands",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "unknown speech -> \"I didn't catch that\"",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "fuzzy section name \"arithmatic\" opens Arithmetic Reasoning",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"start\" begins a voice session and reads the question",
+  "pass": true,
+  "info": "How many are NOT green? | A. 33 | B. 24 | C. 18 | D. 12 | Your answer?"
+ },
+ {
+  "test": "NATO answer + feedback + confidence prompt",
+  "pass": true,
+  "info": "B. 24 | C. 18 | D. 12 | Your answer? | Right! 1 over 3 of 36 equals 12 green. | How sure were you?"
+ },
+ {
+  "test": "confidence by voice, then waits for \"next\"",
+  "pass": true,
+  "info": "Right! 1 over 3 of 36 equals 12 green. | How sure were you? | Say sure, shaky, or guessed. | Nice. You knew it. | This topic just needs reps. | Say next, or explain."
+ },
+ {
+  "test": "\"next\" moves on",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"repeat\" re-reads the question",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "answer by saying the choice text (wrong on purpose)",
+  "pass": true,
+  "info": "144 feet"
+ },
+ {
+  "test": "\"explain\" reads the steps",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"slower\" lowers the speech rate",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"hint\" gives a hint, no answer",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"skip\" skips",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"end practice\" confirms by voice, \"no\" keeps going",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"end practice\" + \"yes\" ends the set and reads the score",
+  "pass": true,
+  "info": "Your answer? | End this set? | Say yes or no. | You got 1 out of 2. | Good effort. Every miss teaches you something. | Say practice again, progress, or home."
+ },
+ {
+  "test": "\"progress\" reads the IT line-score panel",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"error log\" reads misses one by one",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "destructive action asks yes/no (\"remove\" -> \"no\" keeps it)",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "pre-session review is read aloud and \"skip review\" starts",
+  "pass": true,
+  "info": "Question. rapid most nearly means: | A. painful | B. doubtful | C. quick | D. partial | Your answer?"
+ },
+ {
+  "test": "\"start MEPS mode\" opens MEPS and reads the rules",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"start the test\" -> part 1 intro read",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"begin\" -> question read aloud",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "MEPS: no hints by voice",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "MEPS: \"time left\" is spoken",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "MEPS: voice answer accepted",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "MEPS: time left is announced at intervals (5 minutes)",
+  "pass": true,
+  "info": "A. buoyancy | B. gravity | C. friction | D. magnetism | Your answer? | Time left: 4 minutes and 59 seconds."
+ },
+ {
+  "test": "leaving MEPS asks to confirm; \"no\" stays",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"yes\" quits MEPS",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"math ladder\" opens the ladder and reads the level",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"go to fractions\" opens level 6",
+  "pass": true,
+  "info": "Or say start, lesson, or help. | On the math ladder you are on level 1 of 15: | Numbers, Place Value, Add and Subtract. | You passed 0 levels. | You are looking at level 6: | Fractions 1: What They Are."
+ },
+ {
+  "test": "\"what level am I\" answers",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"level three\" jumps to level 3",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"lesson\" reads the level lesson",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"start\" begins a ladder set",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "ladder set by voice: 10 of 10 passes level 6 and moves to 7",
+  "pass": true,
+  "info": "{'level': 7, 'placed': False, 'passed': {'6': True}, 'tries': {'6': 0}, 'best': {'6': 10}, 'log': [{'date': '2026-10-18T14:40:47.986Z', 'level': 6, 'right': 10, 'total': 10}]}"
+ },
+ {
+  "test": "\"what level am I\" now says level 7",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"tutor\" reads saved misses and options",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"my last miss\" starts the step tutor (steps read aloud)",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "tutor: spoken wrong answer -> kind check + hint 1",
+  "pass": true,
+  "info": "Or say \"I don't know\". | You are closer than you think. | Not yet. B is not it. | That is OK. | Let's look again. | Hint 1 (the idea):"
+ },
+ {
+  "test": "tutor: \"I don't know\" -> hint 2",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "tutor: \"hint\" -> hint 3",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "tutor: spoken right answer -> lock it in",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "tutor: rule said in own words is saved",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"new question\" starts dictation",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "dictated question goes to the AI tutor",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "free speech in the AI tutor is sent as his reply",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"pause\" stops reacting",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "while paused, other commands are ignored",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"resume\" comes back",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "fuzzy \"electronic\" opens Electronics Information",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "\"back\" goes to the last screen",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "listening restarts by itself after silence (onend)",
+  "pass": true,
+  "info": "89->92"
+ },
+ {
+  "test": "recovers from a recognition error and keeps going",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "never listens while the app is speaking",
+  "pass": true,
+  "info": "0"
+ },
+ {
+  "test": "only one tap in the whole voice run",
+  "pass": true,
+  "info": "1"
+ },
+ {
+  "test": "\"stop hands-free\" turns it off",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "touch still works after voice",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "no console errors in the voice run",
+  "pass": true,
+  "info": "[]"
+ },
+ {
+  "test": "auto-resume: hands-free starts by itself when remembered and mic is allowed",
+  "pass": true,
+  "info": ""
+ }
+]
