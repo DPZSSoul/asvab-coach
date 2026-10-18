@@ -1,0 +1,457 @@
+[
+ {
+  "test": "app version 2.3.0",
+  "pass": true,
+  "info": "2.3.0 (bank 2026-10-17b)"
+ },
+ {
+  "test": "weekly: 30-35 questions, all 6 parts, real order",
+  "pass": true,
+  "info": "{'GS': [6, 4.8], 'AR': [6, 22], 'WK': [6, 3.6], 'PC': [4, 10.8], 'MK': [6, 12.4], 'EI': [6, 4]}"
+ },
+ {
+  "test": "weekly: official proportions (CAT counts x 0.4)",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "weekly: same time per question as the real CAT (scaled time pressure)",
+  "pass": true,
+  "info": "{'GS': 0.8, 'AR': 3.667, 'WK': 0.6, 'PC': 2.7, 'MK': 2.067, 'EI': 0.667}"
+ },
+ {
+  "test": "weekly: due on first run, nudge on home",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "weekly: \"Not today\" hides the nudge for today",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "weekly due rule: 2 days ago -> not due",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "weekly due rule: 7+ days ago -> due",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "weekly due rule: chosen weekday and 4+ days -> due; other day -> not",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "weekly screen: counts, minutes, start button",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "weekly part 1 intro: \"Weekly test. Part 1 of 6: General Science\", 6 questions",
+  "pass": true,
+  "info": "Weekly test. Part 1 of 6: General Science"
+ },
+ {
+  "test": "weekly GS clock = 4:48",
+  "pass": true,
+  "info": "4:48"
+ },
+ {
+  "test": "weekly run: each part asked its scaled count",
+  "pass": true,
+  "info": "{'GS': 6, 'AR': 6, 'WK': 6, 'PC': 4, 'MK': 6, 'EI': 6}"
+ },
+ {
+  "test": "weekly report: IT 212 (AR+MK+EI+VE) and 156 (VE+MK+GS) estimates",
+  "pass": true,
+  "info": "Weekly test done. You got 23 of 34. Main IT rule, AR plus MK plus EI plus VE: about 242 of 212. That meets the line. Keep a cushion. Other IT rule, VE plus MK plus GS: about 182 of 156. That meets the line. Keep a cushion. This is your first weekly test. Focus this week: Electronics Information and Arithmetic Reasoning. Estimate only. Confirm with a recruiter."
+ },
+ {
+  "test": "weekly report: points still needed",
+  "pass": true,
+  "info": "Weekly test done. You got 23 of 34. Main IT rule, AR plus MK plus EI plus VE: about 242 of 212. That meets the line. Keep a cushion. Other IT rule, VE plus MK plus GS: about 182 of 156. That meets the line. Keep a cushion. This is your first weekly test. Focus this week: Electronics Information and Arithmetic Reasoning. Estimate only. Confirm with a recruiter."
+ },
+ {
+  "test": "weekly report: 2 focus subjects",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "weekly report: week-over-week chart with dashed goal lines",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "weekly report: \"Estimate only\" label kept",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "weekly report: IT panel and per-part table",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "weekly report read aloud (no hands-free)",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "weekly: no longer due after taking it",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "weekly summary: change since last week, points needed",
+  "pass": true,
+  "info": "Weekly test done. You got 20 of 34. Main IT rule, AR plus MK plus EI plus VE: about 200 of 212. About 12 points still needed. Other IT rule, VE plus MK plus GS: about 150 of 156. About 6 points still needed. The main rule is up 10 points from last time. Focus this week: Arithmetic Reasoning and Electronics Information. Estimate only. Confirm with a recruiter."
+ },
+ {
+  "test": "progress shows the weekly chart (4 weeks, 8 bars)",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "real MEPS run unchanged (15 GS questions, 12 minutes)",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "home: Today's plan tile",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "plan: below the bridge -> AR ladder at his level",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "plan: shows the 3 steps",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "plan: \"Different subject\" picks another one",
+  "pass": true,
+  "info": "{'kind': 'sec', 'sec': 'WK'}"
+ },
+ {
+  "test": "plan step 1: lesson lines on screen, played with highlighting",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "plan lesson highlights the line being read",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "plan step 2: 10 ladder questions, read to him",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "plan step 3: recap with score, the misses, and the answers",
+  "pass": true,
+  "info": "Recap. You got 8 of 10. Miss 1: What is 60 plus 60? The answer is 120. So the answer is 120. Miss 2: Add 6, 3, and 3. The answer is 12. So the answer is 12. That is today's plan. Today: 10 of 10 quest"
+ },
+ {
+  "test": "plan recap mentions streak and daily goal",
+  "pass": true,
+  "info": " answer is 120. Miss 2: Add 6, 3, and 3. The answer is 12. So the answer is 12. That is today's plan. Today: 10 of 10 questions. Daily goal done. Streak: 1 day."
+ },
+ {
+  "test": "plan counts toward the streak: +10 today",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "plan saved as done today",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "plan recap read aloud",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "plan recap is short (about a minute of speech)",
+  "pass": true,
+  "info": "53"
+ },
+ {
+  "test": "plan: past the bridge -> weakest IT subject (EI)",
+  "pass": true,
+  "info": "{'kind': 'sec', 'sec': 'EI'}"
+ },
+ {
+  "test": "plan EI lesson uses an Electronics by ear lesson",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "plan section questions: 10, no timer, no pre-review",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "plan section recap: 9 of 10, 1 miss",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "leaving the plan clears it",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "PC real: 12+ passages of 100-150 words",
+  "pass": true,
+  "info": "[127, 127, 127, 129, 128, 120, 122, 121, 130, 135, 128, 121, 126]"
+ },
+ {
+  "test": "PC real: 24+ questions, 1-3 per passage, all with explanations and 4 choices",
+  "pass": true,
+  "info": "{'R01': 3, 'R02': 3, 'R03': 2, 'R04': 2, 'R05': 3, 'R06': 2, 'R07': 3, 'R08': 2, 'R09': 2, 'R10': 2, 'R11': 2, 'R12': 3, 'R13': 2}"
+ },
+ {
+  "test": "PC real: official mix (main idea, detail, inference, vocab in context, purpose, sequence)",
+  "pass": true,
+  "info": "{'tone', 'inference', 'main-idea', 'vocab', 'purpose', 'sequence', 'detail'}"
+ },
+ {
+  "test": "PC real: existing PC bank unchanged and separate",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "PC practice screen has the real-test card (locked, Try it anyway)",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "PC real locked under 10 answers",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "PC real locked at 60%",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "PC real unlocks at 75%",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "PC real \"Try it anyway\" unlocks by choice",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "PC real set: 4 passages",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "PC real: question shown before the passage, big read-along text",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "read-aloud mode: reads the question first, then the passage",
+  "pass": true,
+  "info": "Question. The passage is mainly about Now the passage. Before a technician repairs a machine, its power must be shut off and locked out."
+ },
+ {
+  "test": "read-aloud mode: read-along highlighting in the passage",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "PC real set done: log saved, history counts toward PC",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "PC real \"Practice again\" returns to the real passages",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "PC real rotates to passages he has not seen",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "own mode: Guide me button and big text",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "own mode: Guide me moves a silent highlight through the passage",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "Stop guide clears it",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "own mode: reads the question and choices, not the passage",
+  "pass": true,
+  "info": "Question. In the passage, the word \"urgency\" most nearly means Now read the passage on the screen. Then pick an answer. A. a kind of password B. a feeling of calm C. a large reward D. a need to act qu"
+ },
+ {
+  "test": "electronics by ear: 8 lessons on the 8 topics",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "EI lessons use the mental pictures (pressure, flow, narrow pipe, triangle, lanes, P = V x I)",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "every EI lesson ends with spoken checks (\"Say the number\")",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "EI section links Electronics by ear",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "EI link opens the lesson list",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "EI lesson page: steps and quick checks",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "EI lesson plays by ear: check, think pause, then the answer",
+  "pass": true,
+  "info": " it? Say the number. The answer is 12 ohms. Cover R. You see V over I. 120 divided by 10 is 12 ohms. That is the lesson."
+ },
+ {
+  "test": "Audio lessons include 8 EI lessons and 9 test-day tips",
+  "pass": true,
+  "info": "46"
+ },
+ {
+  "test": "go audio/ei jumps to the first EI lesson",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "go audio/tips jumps to the first tip",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "home: Test-day tips tile",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "Test-day tips list: 9 tips",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "tips cover every requested topic",
+  "pass": true,
+  "info": "[]"
+ },
+ {
+  "test": "tip page cites its sources",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "SOURCES.md cites officialasvab.com pages for every tip source key",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "settings: daily reminder card (toggle, time, weekly day)",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "turning it on asks for notification permission and saves the time",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "due reminder shows a notification (Notifications API)",
+  "pass": true,
+  "info": "[['ASVAB Coach', 'Time to study. You did 0 of 10 today. Ten minutes keeps your streak.', 'sw']]"
+ },
+ {
+  "test": "only one notification per day",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "fallback banner on the home screen when due",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "banner can be dismissed for the day",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "no reminder once the 10-a-day goal is met (goal stays 10)",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "no banner before the chosen time",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "spoken times parse",
+  "pass": true,
+  "info": "['19:00', '18:30', '19:00', '09:00', '12:00', '17:00']"
+ },
+ {
+  "test": "service worker: periodic sync reminder + notification click opens the plan",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "reminder state shared with the service worker",
+  "pass": true,
+  "info": "{'on': True, 'time': '23:59', 'goalDate': '', 'notified': '2026-10-18'}"
+ },
+ {
+  "test": "notifications denied -> no notification, banner fallback",
+  "pass": true,
+  "info": ""
+ },
+ {
+  "test": "single-file asvab-coach.html includes all 2.3 screens (file://)",
+  "pass": true,
+  "info": "[]"
+ },
+ {
+  "test": "no console errors in the features run",
+  "pass": true,
+  "info": "[]"
+ }
+]

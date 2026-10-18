@@ -32,17 +32,17 @@
  {
   "test": "\"start\" begins a voice session and reads the question",
   "pass": true,
-  "info": "Question. What is 4.763 rounded to the nearest tenth? | A. 5.0 | B. 4.7 | C. 4.76 | D. 4.8 | Your answer?"
+  "info": "Question. Expand: (x minus 4) squared | A. x squared minus 4x plus 16 | B. x squared minus 8x plus 16 | C. x squared minus 16 | D. x squared plus 16 | Your answer?"
  },
  {
   "test": "NATO answer + feedback + confidence prompt",
   "pass": true,
-  "info": "B. 4.7 | C. 4.76 | D. 4.8 | Your answer? | Right! The hundredths digit is 6, so round the 7 up to 8. | How sure were you?"
+  "info": "B. x squared minus 8x plus 16 | C. x squared minus 16 | D. x squared plus 16 | Your answer? | Right! (x minus 4)(x minus 4) equals x squared minus 4x minus 4x plus 16 equals x squared minus 8x plus 16. | How sure were you?"
  },
  {
   "test": "confidence by voice, then waits for \"next\"",
   "pass": true,
-  "info": "Right! The hundredths digit is 6, so round the 7 up to 8. | How sure were you? | Say sure, shaky, or guessed. | Nice. You knew it. | This topic just needs reps. | Say next, or explain."
+  "info": "Right! (x minus 4)(x minus 4) equals x squared minus 4x minus 4x plus 16 equals x squared minus 8x plus 16. | How sure were you? | Say sure, shaky, or guessed. | Nice. You knew it. | This topic just needs reps. | Say next, or explain."
  },
  {
   "test": "\"next\" moves on",
@@ -107,12 +107,12 @@
  {
   "test": "pre-session review is read aloud and \"skip review\" starts",
   "pass": true,
-  "info": "Question. abundant most nearly means: | A. dirty | B. rare | C. salty | D. plentiful | Your answer?"
+  "info": "Question. rapid most nearly means: | A. painful | B. doubtful | C. quick | D. partial | Your answer?"
  },
  {
-  "test": "lone letter heard as \"the\" is accepted",
+  "test": "lone letter heard as \"see\" is accepted",
   "pass": true,
-  "info": "B. rare | C. salty | D. plentiful | Your answer? | Right! Abundant means plentiful. | How sure were you?"
+  "info": "B. doubtful | C. quick | D. partial | Your answer? | Right! Rapid means quick. | How sure were you?"
  },
  {
   "test": "stray \"hey\" at the confidence prompt -> one short re-prompt",
@@ -125,24 +125,24 @@
   "info": ""
  },
  {
-  "test": "letter with a period / sound-alike \"a.\" is accepted",
+  "test": "letter with a period / sound-alike \"sea\" is accepted",
   "pass": true,
-  "info": "B. foreign | C. very shiny | D. fake | Your answer? | Right! Ancient means very old. | How sure were you?"
+  "info": "B. brief | C. hopeless | D. bright | Your answer? | Right! Bleak means hopeless. | How sure were you?"
  },
  {
-  "test": "second recognition alternative is used (\"kate||b\")",
+  "test": "second recognition alternative is used (\"kate||d\")",
   "pass": true,
-  "info": "B. get | C. sell | D. test | Your answer? | Right! Acquire means get. | How sure were you?"
+  "info": "B. ignore | C. solve fast | D. think about | Your answer? | Right! Ponder means think about. | How sure were you?"
  },
  {
-  "test": "interim-only result is used (\"bee\")",
+  "test": "interim-only result is used (\"ay\")",
   "pass": true,
-  "info": "B. hide | C. find | D. admit | Your answer? | Right! Conceal means hide. | How sure were you?"
+  "info": "B. broken | C. fragile | D. valuable | Your answer? | Right! Obsolete means outdated. | How sure were you?"
  },
  {
-  "test": "ordinal \"third\" is accepted",
+  "test": "ordinal \"first\" is accepted",
   "pass": true,
-  "info": "B. difficult | C. ordinary | D. exciting | Your answer? | Right! Mundane means ordinary. | How sure were you?"
+  "info": "B. busy | C. angry | D. noisy | Your answer? | Right! Tranquil means peaceful. | How sure were you?"
  },
  {
   "test": "empty transcript -> short re-prompt (not the whole question)",
@@ -157,17 +157,17 @@
  {
   "test": "second miss says what it heard and reads the choices once",
   "pass": true,
-  "info": "Say Alpha, Bravo, Charlie, or Delta, or say the answer. | I heard \"banana split\". | That is not one of the choices. | A. review. | B. decline. | C. accept. | D. repeat. | Say the letter or the answer."
+  "info": "Say Alpha, Bravo, Charlie, or Delta, or say the answer. | I heard \"banana split\". | That is not one of the choices. | A. tall. | B. plain. | C. strong. | D. small. | Say the letter or the answer."
  },
  {
   "test": "third miss stays quiet: it never loops",
   "pass": true,
-  "info": "That is not one of the choices. | A. review. | B. decline. | C. accept. | D. repeat. | Say the letter or the answer."
+  "info": "That is not one of the choices. | A. tall. | B. plain. | C. strong. | D. small. | Say the letter or the answer."
  },
  {
   "test": "\"letter X\" then works",
   "pass": true,
-  "info": "B. decline. | C. accept. | D. repeat. | Say the letter or the answer. | Right! Refuse means decline. | How sure were you?"
+  "info": "B. plain. | C. strong. | D. small. | Say the letter or the answer. | Right! Sturdy means strong. | How sure were you?"
  },
  {
   "test": "\"what did you hear\" reads the transcript log",
@@ -207,7 +207,7 @@
  {
   "test": "MEPS: time left is announced at intervals (5 minutes)",
   "pass": true,
-  "info": "A. oxygen | B. nitrogen | C. hydrogen | D. carbon dioxide | Your answer? | Time left: 4 minutes and 59 seconds."
+  "info": "A. the tilt of Earth's axis | B. clouds | C. Earth's distance from the Sun | D. the Moon's pull | Your answer? | Time left: 4 minutes and 59 seconds."
  },
  {
   "test": "leaving MEPS asks to confirm; \"no\" stays",
@@ -282,7 +282,7 @@
  {
   "test": "spoken answers (\"three fourths\", \"3/4\", \"um ...\") pass level 4 and move to 5",
   "pass": true,
-  "info": "[{'v': 3, 'level': 5, 'placed': False, 'passed': {'4': True}, 'tries': {'4': 0}, 'best': {'4': 10}, 'log': [{'date': '2026-10-18T16:03:31.914Z', 'level': 4, 'right': 10, 'total': 10}]}, 'So the answer is 1 fifth. | Say next to see your score, explain again slower, or another one like this. | You got 10 of 10. | You passed level 4! | Next: level 5, Halves and Quarters. | Say start for level 5, lesson, or home.']"
+  "info": "[{'v': 3, 'level': 5, 'placed': False, 'passed': {'4': True}, 'tries': {'4': 0}, 'best': {'4': 10}, 'log': [{'date': '2026-10-18T16:58:35.470Z', 'level': 4, 'right': 10, 'total': 10}]}, 'So the answer is 1 fifth. | Say next to see your score, explain again slower, or another one like this. | You got 10 of 10. | You passed level 4! | Next: level 5, Halves and Quarters. | Say start for level 5, lesson, or home.']"
  },
  {
   "test": "\"what level am I\" now says level 5",
@@ -317,12 +317,12 @@
  {
   "test": "drill: 8 of 10 by voice",
   "pass": true,
-  "info": "Right. | 5 times 7? | Right. | 9 times 8? | Right. | You got 8 of 10."
+  "info": "Right. | 9 times 11? | Right. | 8 times 7? | Right. | You got 8 of 10."
  },
  {
   "test": "drill: 10 fast -> the timer gets a little faster",
   "pass": true,
-  "info": "6 times 9? | Right. | 10 times 8? | Right. | You got 10 of 10. | Nice speed. The timer is now 9.5 seconds."
+  "info": "11 times 12? | Right. | 2 times 7? | Right. | You got 10 of 10. | Nice speed. The timer is now 9.5 seconds."
  },
  {
   "test": "\"vocab by ear\" says a word, meaning and hook, then asks",
@@ -347,7 +347,7 @@
  {
   "test": "\"play\" starts at his level and keeps talking with no answers needed",
   "pass": true,
-  "info": "Audio lessons. 29 parts. | Now: Level 5: | Halves and Quarters. | Say play to start. | Level 5: Halves and Quarters. | Halves and quarters."
+  "info": "Audio lessons. 46 parts. | Now: Level 5: | Halves and Quarters. | Say play to start. | Level 5: Halves and Quarters. | Halves and quarters."
  },
  {
   "test": "background talk does not navigate away",
@@ -402,7 +402,7 @@
  {
   "test": "tutor: spoken wrong answer -> kind check + hint 1",
   "pass": true,
-  "info": "Or say \"I don't know\". | Good effort. Keep going. | Not yet. B is not it. | That is OK. | Let's look again. | Hint 1 (the idea):"
+  "info": "Or say \"I don't know\". | Mistakes help your brain learn. | Not yet. A is not it. | That is OK. | Let's look again. | Hint 1 (the idea):"
  },
  {
   "test": "tutor: \"I don't know\" -> hint 2",

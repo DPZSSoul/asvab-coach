@@ -67,7 +67,7 @@
  {
   "test": "spaced repetition: missed -> box 1, due in ~5 min",
   "pass": true,
-  "info": "{'box': 1, 'right': 0, 'wrong': 1, 'due': 1792339419739, 'seen': 1792339119739}"
+  "info": "{'box': 1, 'right': 0, 'wrong': 1, 'due': 1792342659743, 'seen': 1792342359743}"
  },
  {
   "test": "topic marked for re-learn",
@@ -82,7 +82,7 @@
  {
   "test": "score tracker attempt saved",
   "pass": true,
-  "info": "{'AR': [{'date': '2026-10-18T15:58:42.639Z', 'correct': 4, 'total': 5, 'pct': 80, 'mode': 'practice'}]}"
+  "info": "{'AR': [{'date': '2026-10-18T16:52:42.624Z', 'correct': 4, 'total': 5, 'pct': 80, 'mode': 'practice'}]}"
  },
  {
   "test": "spaced repetition: sure-right -> box 2, due ~1 day",
@@ -177,7 +177,7 @@
  {
   "test": "hands-free: reads, hears \"repeat\", NATO answer, confidence, \"next\"",
   "pass": true,
-  "info": "{'qid': 'GS-013', 'correct': True, 'guess': 0, 'topic': 'gs-chemistry', 'conf': 'sure'}"
+  "info": "{'qid': 'GS-007', 'correct': True, 'guess': 0, 'topic': 'gs-chemistry', 'conf': 'sure'}"
  },
  {
   "test": "hands-free speaks right/wrong with reason and asks confidence",
@@ -227,7 +227,7 @@
  {
   "test": "ladder: 7 of 10 does not pass (needs 8)",
   "pass": true,
-  "info": "{'v': 3, 'level': 5, 'placed': True, 'passed': {'1': True, '2': True, '3': True, '4': True}, 'tries': {'5': 1}, 'best': {'5': 7}, 'log': [{'date': '2026-10-18T15:59:17.886Z', 'level': 5, 'right': 7, 'total': 10}]}"
+  "info": "{'v': 3, 'level': 5, 'placed': True, 'passed': {'1': True, '2': True, '3': True, '4': True}, 'tries': {'5': 1}, 'best': {'5': 7}, 'log': [{'date': '2026-10-18T16:53:17.789Z', 'level': 5, 'right': 7, 'total': 10}]}"
  },
  {
   "test": "ladder: the retry uses a new set (set B)",
@@ -237,7 +237,7 @@
  {
   "test": "ladder: second miss in a row sends him back one level",
   "pass": true,
-  "info": "{'v': 3, 'level': 4, 'placed': True, 'passed': {'1': True, '2': True, '3': True, '4': True}, 'tries': {'5': 0}, 'best': {'5': 7}, 'log': [{'date': '2026-10-18T15:59:17.886Z', 'level': 5, 'right': 7, 'total': 10}, {'date': '2026-10-18T15:59:18.551Z', 'level': 5, 'right': 7, 'total': 10}]}"
+  "info": "{'v': 3, 'level': 4, 'placed': True, 'passed': {'1': True, '2': True, '3': True, '4': True}, 'tries': {'5': 0}, 'best': {'5': 7}, 'log': [{'date': '2026-10-18T16:53:17.789Z', 'level': 5, 'right': 7, 'total': 10}, {'date': '2026-10-18T16:53:18.455Z', 'level': 5, 'right': 7, 'total': 10}]}"
  },
  {
   "test": "\"Another one like this\" adds an extra, uncounted question",
@@ -247,7 +247,7 @@
  {
   "test": "ladder: 8+ of 10 passes and moves up",
   "pass": true,
-  "info": "{'v': 3, 'level': 5, 'placed': True, 'passed': {'1': True, '2': True, '3': True, '4': True}, 'tries': {'4': 0, '5': 0}, 'best': {'4': 10, '5': 7}, 'log': [{'date': '2026-10-18T15:59:17.886Z', 'level': 5, 'right': 7, 'total': 10}, {'date': '2026-10-18T15:59:18.551Z', 'level': 5, 'right': 7, 'total': 10}, {'date': '2026-10-18T15:59:19.287Z', 'level': 4, 'right': 10, 'total': 10}]}"
+  "info": "{'v': 3, 'level': 5, 'placed': True, 'passed': {'1': True, '2': True, '3': True, '4': True}, 'tries': {'4': 0, '5': 0}, 'best': {'4': 10, '5': 7}, 'log': [{'date': '2026-10-18T16:53:17.789Z', 'level': 5, 'right': 7, 'total': 10}, {'date': '2026-10-18T16:53:18.455Z', 'level': 5, 'right': 7, 'total': 10}, {'date': '2026-10-18T16:53:19.205Z', 'level': 4, 'right': 10, 'total': 10}]}"
  },
  {
   "test": "track: 27 levels x 4 sets x 10 + 27 placement; levels 1-26 spoken answers, 27 = A-D bridge",
@@ -292,7 +292,7 @@
  {
   "test": "Settings shows the voice debug log (transcript + other guesses)",
   "pass": true,
-  "info": "15:59:19 question: \"hey\" [a | eh]\n15:59:16 afterconf: \"next\"\n15:59:13 feedback: \"sure\"\n15:59:10 question: \"alpha\"\n15:59:"
+  "info": "16:53:19 question: \"hey\" [a | eh]\n16:53:16 afterconf: \"next\"\n16:53:13 feedback: \"sure\"\n16:53:10 question: \"alpha\"\n16:53:"
  },
  {
   "test": "voice debug log can be cleared",
@@ -415,9 +415,9 @@
   "info": ""
  },
  {
-  "test": "service worker version bumped (asvab-coach-v4, network-first)",
+  "test": "service worker version bumped (asvab-coach-v5, network-first)",
   "pass": true,
-  "info": "['asvab-coach-v4']"
+  "info": "['asvab-state', 'asvab-coach-v5']"
  },
  {
   "test": "manifest valid with icons",
