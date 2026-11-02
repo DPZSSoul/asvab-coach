@@ -89,9 +89,10 @@ function ladRender(){
   const counted = LR.qs.filter(x => !x.extra).length; const pos = LR.qs.slice(0, LR.i + 1).filter(x => !x.extra).length;
   app().innerHTML = `<h1>${esc(LR.label)}: ${q.extra ? 'extra practice' : `question ${pos} of ${counted}`}</h1>${questionHTML(q)}
     ${ladIsSay(q) ? '<p class="say-hint">Say the answer, like "3 fourths" or "12". Or tap it.</p>' : ''}
-    <div class="row" id="ladTools"><button class="small" id="ladHint">Hint</button><button class="small" onclick="go('ladder')">End</button></div><div id="hintBox"></div><div id="fb"></div>`;
+    <div class="row" id="ladTools"><button class="small" id="ladHint">Hint</button><button class="small" id="stuckBtn">I'm stuck: go step by step</button><button class="small" onclick="go('ladder')">End</button></div><div id="hintBox"></div><div id="fb"></div>`;
   $$('.choice').forEach(b => b.onclick = () => ladAnswer(+b.dataset.i));
   $('#ladHint').onclick = () => ladHint();
+  $('#stuckBtn').onclick = () => startBreakdown(q, 'ladq');
   if (HF.on) HF.enter('ladq'); else if (settings.autoRead || LR.byEar) ladReadQ(q);
 }
 // spoken questions are read as a question only; the 4 choices are for tapping (A, B, C, D are read at the bridge level)
@@ -122,7 +123,7 @@ function ladAnswerSaid(raw){
 function ladAnswer(i, raw, note){
   if (!LR || LR.answered) return; LR.answered = true; const q = LR.qs[LR.i]; const ok = i === q.answer; markChoices(q, i);
   if (!q.extra){ if (ok) LR.right++; LR.results.push({ ok, level:q.level, id:q.id, guess:i, said: raw || '' }); }
-  bumpDaily(1);
+  bumpDaily(1); if (typeof arLog === 'function') arLog(q, i, ok, q.extra ? 'ladder-extra' : 'ladder', raw);
   const keyTxt = ladIsSay(q) ? q.sayAnswer : `${LET[q.answer]}: ${q.choices[q.answer]}`;
   const head = ok ? 'Right!' : `${note ? note + ' ' : ''}Not yet. The answer is ${dot(keyTxt)}`;
   const why = speakable(head + ' ' + (q.steps || [q.explanation]).join(' '));
@@ -168,11 +169,15 @@ function ladEnd(){
   }
   ladSave(st);
   if (typeof planHook === 'function' && planHook('lad', r)){ LR = null; return; }
+  const items = r.results.map(x => { const q = r.qs.find(z => z.id === x.id) || {}; return { q, ok:x.ok, yours: x.guess != null && x.guess >= 0 ? q.choices[x.guess] : (x.said || 'no answer'), right: arAnswerText(q) }; });
   const sum = speakable(msg); const finished = !!st.passed[NLEV] && r.n === NLEV && r.right >= LADDER.mastery;
   app().innerHTML = `<h1>${r.n ? 'Set done' : 'Placement done'}</h1>
     <div class="card"><div class="row"><div class="big-word" style="flex:1" id="ladSum">${sum.html}</div>${sayBtn('#' + sum.id)}</div></div>
+    ${items.length ? arRecapHTML(items) : ''}
     <div class="row">${finished ? `<button class="primary" id="ladRealGo">Real Arithmetic Reasoning practice</button>` : `<button class="primary" id="ladGo">Go to level ${st.level}</button><button id="ladLes">Lesson for level ${st.level}</button>`}<button onclick="go('home')">Home</button></div>`;
   if (finished) $('#ladRealGo').onclick = () => go('practice', 'AR');
   else { $('#ladGo').onclick = () => go('ladder', String(st.level)); $('#ladLes').onclick = () => go('ladlesson', String(st.level)); }
+  arRecapWire(items);
   LR = null; if (HF.on) HF.enter('laddone', { msg, level:st.level, finished });
+  else Speech.speakEl($('#ladSum')).then(() => { if ($('#recap')) Speech.speakEl($('#recap')); });
 }

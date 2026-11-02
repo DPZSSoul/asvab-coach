@@ -92,3 +92,9 @@ body.dark .lad-pre{background:#222}
 .read-big{ font-size:1.6em; line-height:1.9; letter-spacing:0.04em; word-spacing:0.18em; }
 button.link{ background:none; border:none; text-decoration:underline; color:inherit; padding:2px; min-height:0; font-size:1em; }
 .vlog{font-size:1rem;max-height:20rem;overflow:auto;padding-left:1.5rem}.vlog li{margin:.2rem 0;word-break:break-word}
+/* v2.6.0: recap, history, tucked-away sections */
+ul.recap{ padding-left:1.2em; margin:.4em 0; } ul.recap li{ margin:.3em 0; }
+details.more{ border:3px solid var(--line); border-radius:14px; padding:6px 16px; margin:16px 0; background:var(--card); }
+details.more > summary{ font-weight:bold; font-size:1.05rem; cursor:pointer; min-height:48px; display:flex; align-items:center; }
+.hist-item .stem{ margin:.4em 0; }
+#bdCtl input{ flex:0 1 220px; }

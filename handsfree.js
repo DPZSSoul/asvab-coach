@@ -124,6 +124,10 @@ const HF = {
     if (this.dictation){ await this.dictation.onText(t, raw); return; }
     // an exact answer text ("faster", "steel") beats any command word
     if (this.ctx && this.ctx.choices){ const ch = this.ctx.choices(); if (ch){ const i = ch.map(normalize).indexOf(t); if (i >= 0){ this.ctx.pick(i); return; } } }
+    // stuck phrases ("I don't know", "help", "I'm confused") on a problem slow down into micro-steps, no button needed
+    if (typeof STUCK_CTX !== 'undefined' && STUCK_CTX.includes(this.ctxName) && this.ctxName !== 'breakdown' && isStuck(raw || t)){
+      if (this.ctxName === 'chat' && CHAT){ chatSend(raw || "I don't know."); return; }
+      if (arStuck(this.ctxName)) return; }
     // some screens own words that are also global commands ("explain again slower")
     if (this.ctx && this.ctx.priority && this.ctx.handle){ const done = await this.ctx.handle(t, all, raw, this.arg); if (done) return; }
     // global commands first
@@ -172,6 +176,7 @@ const HF = {
     if (anyOf(t, ['error log', 'my misses', 'review misses', 'misses', 'mistakes', 'review my misses', 'missed questions', 'review'])) return to('review');
     if (anyOf(t, ['ai coach', 'math coach', 'coach me', 'talk to the coach', 'ai tutor'])) return to('coach');
     if (anyOf(t, ['tutor', 'tutor me', 'teacher', 'help me learn'])) return to('tutor');
+    if (anyOf(t, ['history', 'my history', 'answer history', 'past answers', 'retry wrong ones', 'wrong ones'])) return to('history', /wrong/.test(t) ? 'wrong' : undefined);
     if (anyOf(t, ['settings', 'options menu'])) return to('settings');
     if (anyOf(t, ['audio lessons', 'audio lesson', 'listen mode', 'listen only', 'podcast', 'audio mode'])) return to('audio');
     if (anyOf(t, ['speed drills', 'speed drill', 'drills', 'drill', 'mental math', 'math facts'])) return to('drill');
@@ -257,7 +262,7 @@ const VCTX = {
       if ($('#remindBanner')){ await Speech.say(`Study reminder. ${DAILY_GOAL - s.todayCount} more questions keep your streak.`); if (!alive()) return; }
       if ($('#weeklyNudge')){ await Speech.say('Your weekly test is due. Say weekly test to start it.'); if (!alive()) return; }
       await Speech.say(itPlanText(false)); if (!alive()) return;
-      await Speech.say("Say today's plan for 10 minutes of study. Or say a section name, weekly test, test day tips, math ladder, MEPS, progress, or help.");
+      await Speech.say("Say math ladder, today's plan, history, or weekly test. Say help for more.");
     },
   },
   practice: {
@@ -673,4 +678,4 @@ Object.assign(VCTX, {
 });
 
 Object.assign(VCTX, EXTRA_VCTX);
-boot();
+// boot() runs at the end of ar.js (loaded last)

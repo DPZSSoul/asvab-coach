@@ -2,7 +2,7 @@
 'use strict';
 const BANK = window.ASVAB_BANK;
 const SECTIONS = BANK.sections;               // {AR:'Arithmetic Reasoning', ...}
-const APP_VERSION = '2.5.0 (bank '+BANK.version+')';
+const APP_VERSION = '2.6.0 (bank '+BANK.version+')';
 const SEC_ORDER = ['AR','WK','PC','MK','GS','EI'];
 const MEPS_ORDER = ['GS','AR','WK','PC','MK','EI'];   // real CAT-ASVAB order (officialasvab.com)
 const CAT = BANK.cat;                          // {GS:[15,12], ...} questions, minutes (officialasvab.com, no tryout items)
@@ -406,7 +406,7 @@ async function llmChat(messages, { json=false, temperature=0.4, maxTokens=1200, 
 }
 const BREAKDOWN_NOTE = 'He is stuck right now. Do not give the answer. Give only the smallest first step, in one or two short sentences. End with one quick check question. Then stop and wait.';
 // "I'm stuck" detection on the normalized speech transcript (also used for typed replies)
-const STUCK_RE = /\b(i (do ?n.?t|dont|do not) (know|understand|get it|get this|follow)|dunno|dono|i ?d ?k|no (idea|clue)|(i.?m |i am )?not sure|(i.?m |im |i am )lost|stuck|confused|confusing|help me|what do you mean|i (can.?t|cannot|cant) (do|figure|get)|makes? no sense|doesn.?t make sense|say (that|it) again slower|huh)\b/;
+const STUCK_RE = /\b(i (do ?n.?t|dont|do not) (know|understand|get it|get this|follow)|dunno|dono|i ?d ?k|no (idea|clue)|(i.?m |i am )?not sure|(i.?m |im |i am )lost|stuck|confused|confusing|help|help me|lost me|not getting it|what do you mean|i (can.?t|cannot|cant) (do|figure|get)|makes? no sense|doesn.?t make sense|say (that|it) again slower|huh)\b/;
 function isStuck(text){ const t = String(text || '').toLowerCase().replace(/['\u2019]/g, '').replace(/[^a-z ]/g, ' ').replace(/\s+/g, ' ').trim(); return !!t && STUCK_RE.test(t); }
 const TUTOR_SYSTEM = () => `You are a patient ASVAB tutor for a Navy recruit aiming at the IT rating. He has a dyslexia-like reading disability.
 Follow these tutor rules exactly. They are the most important part of your job.
@@ -494,42 +494,42 @@ function itFocusHTML(){
 }
 SCREENS.home = () => {
   const s = streakInfo(); const errs = Store.get('errors', []);
-  app().innerHTML = `<h1>Hi. Ready to study?</h1>
+  app().innerHTML = `<h1>Hi. Ready for math?</h1>
   ${reminderBannerHTML()}${weeklyNudgeHTML()}
   <div class="card hf-card">${HF.on ? `<p class="big-word">Hands-free is on. Just talk. Say "help".</p><button class="small" id="hfStopBig">Stop hands-free</button>`
     : `<button class="hf-start" id="hfStartBig">Start hands-free</button><p>One tap. Then the whole app works by voice. It reads everything and listens for you.</p><button class="small" id="voiceBtn" onclick="go('settings','voice')">Voice: change or test</button>${Voice.why() ? `<p class="bad-text">${esc(Voice.why())}</p>` : ''}`}</div>
   <div class="card"><div class="big-word">Today: ${s.todayCount} of ${DAILY_GOAL} questions</div>
     <div class="bar" aria-hidden="true"><div style="width:${Math.min(100, s.todayCount*10)}%"></div></div>
     <p>${s.goalMet ? 'Goal done for today. Great work.' : `Do ${DAILY_GOAL - s.todayCount} more to keep your streak.`} Streak: ${s.streak} day${s.streak===1?'':'s'}.</p></div>
+  <h2>Math (Arithmetic Reasoning)</h2>
   <div class="grid">
-    <button class="tile primary" id="planTile" onclick="go('plan','new')">Today's plan<small>10 minutes: a lesson, 10 questions, a recap</small></button>
-    <button class="tile" id="weeklyTile" onclick="go('weekly')">Weekly test<small>${weeklyTotal()} questions. Your score goal: 212</small></button>
-    <button class="tile" id="tipsTile" onclick="go('earset','tips')">Test-day tips<small>Short spoken tips for MEPS</small></button>
-  </div>
-  ${itFocusHTML()}
-  <h2>Practice a section</h2>
-  <div class="grid">${SEC_ORDER.map(k => k === 'AR' && !arDone()
-      ? `<button class="tile" id="arTile" onclick="go('practice','AR')">${SECTIONS[k]}<small>Catch-up level ${ladState().level} of ${NLEV}: ${esc(ladLevel(ladState().level).title)}</small></button>`
-      : `<button class="tile" onclick="go('practice','${k}')">${SECTIONS[k]}<small>Level ${level(k)} of 3 | ${dueList(k).length} due</small></button>`).join('')}</div>
-  <h2>Learn by ear</h2>
-  <div class="grid">
-    <button class="tile primary" onclick="go('audio')">Audio lessons<small>Listen only. Like a podcast for work.</small></button>
+    <button class="tile primary" id="arTile" onclick="go('practice','AR')">${arDone() ? 'Math practice' : 'Math ladder'}<small>${arDone() ? 'Real test-level questions' : `Level ${ladState().level} of ${NLEV}: ${esc(ladLevel(ladState().level).title)}`}</small></button>
+    <button class="tile" id="planTile" onclick="go('plan','new')">Today's plan<small>10 minutes: lesson, questions, recap</small></button>
+    <button class="tile" id="histTile" onclick="go('history')">History<small>${arHist().length} answered | ${arHist().filter(e => !e.ok).length} wrong</small></button>
+    <button class="tile" onclick="go('coach')">AI math coach<small>Talk it through, one step at a time</small></button>
+    <button class="tile" onclick="go('audio')">Audio lessons<small>Listen only, like a podcast</small></button>
     <button class="tile" onclick="go('drill')">Speed drills<small>Quick mental math out loud</small></button>
+    <button class="tile" id="weeklyTile" onclick="go('weekly')">Weekly test<small>${weeklyTotal()} questions. Goal: 212</small></button>
+    <button class="tile" onclick="go('tutor')">Tutor<small>Help on one question</small></button>
+  </div>
+  <p>Stuck on a question? Just say "I'm stuck" or "I don't know". I go one small step at a time.</p>
+  <details class="more"><summary>Other subjects and tools</summary>
+  ${itFocusHTML()}
+  <h2>Other subjects</h2>
+  <div class="grid">${SEC_ORDER.filter(k => k !== 'AR').map(k => `<button class="tile" onclick="go('practice','${k}')">${SECTIONS[k]}<small>Level ${level(k)} of 3 | ${dueList(k).length} due</small></button>`).join('')}</div>
+  <h2>More tools</h2>
+  <div class="grid">
+    <button class="tile" id="tipsTile" onclick="go('earset','tips')">Test-day tips<small>Short spoken tips for MEPS</small></button>
     <button class="tile" onclick="go('vocab')">Vocab by ear<small>Hear a word. Say what it means.</small></button>
     <button class="tile" onclick="go('readalong')">Read along<small>Big text. Read it out loud.</small></button>
-    <button class="tile" id="eiEarTile" onclick="go('earset','ei')">Electronics by ear<small>Water in a pipe, Ohm's law, and more</small></button>
-  </div>
-  <h2>More</h2>
-  <div class="grid">
-    <button class="tile primary" onclick="go('ladder')">Math ladder<small>${esc(ladderStatusText().replace('In Arithmetic Reasoning you are on ', 'Arithmetic Reasoning catch-up: '))}</small></button>
-    <button class="tile" onclick="go('handsfree')">Hands-free practice<small>It reads. You answer out loud.</small></button>
-    <button class="tile primary" onclick="go('coach')">AI math coach<small>Arithmetic, by voice, one step at a time.</small></button>
-    <button class="tile" onclick="go('tutor')">Tutor<small>Get help on a question.</small></button>
-    <button class="tile" onclick="go('review')">My misses<small>${errs.length} saved</small></button>
+    <button class="tile" id="eiEarTile" onclick="go('earset','ei')">Electronics by ear<small>Spoken lessons</small></button>
+    <button class="tile" onclick="go('handsfree')">Hands-free practice<small>Pick a subject by voice</small></button>
+    <button class="tile" onclick="go('review')">My misses<small>${errs.length} saved, all subjects</small></button>
     <button class="tile" onclick="go('progress')">My progress<small>Scores and topics</small></button>
     <button class="tile" onclick="go('meps')">MEPS practice test<small>6 parts, real time limits</small></button>
-    <button class="tile" onclick="go('settings')">Settings<small>Voice, AI key, backup</small></button>
   </div>
+  </details>
+  <div class="row"><button class="small" onclick="go('settings')">Settings: voice, AI coach, backup</button></div>
   <p><small>App version ${esc(APP_VERSION)}</small></p>`;
   $$('[data-focus]').forEach(b => b.onclick = () => go('practice', b.dataset.focus));
   const hs = $('#hfStartBig'); if (hs) hs.onclick = () => { HF.start(); if (HF.on) SCREENS.home(); };
@@ -600,11 +600,12 @@ function renderQ(){
     ${S.timerOn ? '<div class="bar" id="tbar"><div style="width:100%"></div></div>' : ''}
     ${HF.on ? `<div class="card" id="hfBox"><strong>Hands-free is on.</strong> Say A, B, C, or D. Or the answer. Say "repeat", "hint", "read the passage", or "skip".<div class="row"><button class="small" id="hfPauseBtn">Pause voice</button></div></div>` : ''}
     ${questionHTML(q, { meta: `<span class="pill">Level ${q.difficulty}</span>` })}
-    <div class="row" id="qTools"><button class="small" id="hintBtn">Hint</button><button class="small" id="skipQ">Skip</button><button class="small" onclick="go('home')">End</button></div>
+    <div class="row" id="qTools"><button class="small" id="hintBtn">Hint</button>${q.section === 'AR' || q.mode === 'say' ? '<button class="small" id="stuckBtn">I\'m stuck: go step by step</button>' : ''}<button class="small" id="skipQ">Skip</button><button class="small" onclick="go('home')">End</button></div>
     <div id="hintBox"></div><div id="fb"></div>`;
   $$('.choice').forEach(b => b.onclick = () => answer(+b.dataset.i));
   $('#hintBtn').onclick = () => showHint(q);
   $('#skipQ').onclick = () => nextQ();
+  const sb = $('#stuckBtn'); if (sb) sb.onclick = () => startBreakdown(q, 'question');
   if (HF.on){ $('#hfPauseBtn').onclick = () => HF.pause(); }
   if (S.timerOn){ const t0 = Date.now(), total = S.per; S.timer = setInterval(() => {
       S.left = total - (Date.now()-t0)/1000; const el = $('#tmr'), bar = $('#tbar');
@@ -623,7 +624,7 @@ function showHint(q){ const h = hintTexts(q); if (S.hints >= h.length){ toast('N
 function answer(i){
   if (!S || S.answered) return; S.answered = true; if (S.timer) clearInterval(S.timer); Voice.stop();
   const q = S.qs[S.i]; const correct = i === q.answer; markChoices(q, i);
-  S.results.push({ qid:q.id, correct, guess:i, topic:q.topic }); bumpDaily(1);
+  S.results.push({ qid:q.id, correct, guess:i, topic:q.topic }); bumpDaily(1); if (typeof arLog === 'function') arLog(q, i, correct, S.mode);
   if (!correct) logError(q, i, S.mode);
   const lvMsg = adaptRecord(q.section, correct);
   const head = correct ? 'Right!' : (i == null ? `Time ran out. The answer is ${LET[q.answer]}: ${dot(q.choices[q.answer])}` : `Not yet. The answer is ${LET[q.answer]}: ${dot(q.choices[q.answer])}`);
@@ -659,15 +660,20 @@ function endSession(){
   if (done) saveAttempt(s.sec, right, done, s.mode);
   if (s.mode === 'pcreal') pcrDone(s, right, done);
   if (typeof planHook === 'function' && planHook('sec', s)){ S = null; return; }
+  const qOf = id => s.qs.find(x => x.id === id) || qById(id);
   const misses = s.results.filter(r => !r.correct);
+  const items = s.results.map(r => { const q = qOf(r.qid); return { q, ok:r.correct, yours: r.guess == null ? 'no answer' : q.choices[r.guess], right: arAnswerText(q) }; });
   const sum = speakable(`You got ${right} out of ${done}. ${right === done && done ? 'Perfect set!' : 'Good effort. Every miss teaches you something.'}`);
   app().innerHTML = `<h1>Set done</h1><div class="card"><div class="row"><div class="big-word" style="flex:1" id="setSum">${sum.html}</div>${sayBtn('#'+sum.id)}</div>
-    <p>Level now: ${level(s.sec)} of 3.</p></div>
-    ${misses.length ? `<h2>Your misses</h2>` + misses.map(r => { const q = qById(r.qid); return `<div class="card"><div class="stem">${esc(q.stem)}</div><p>Right answer: <span class="ok-text">${esc(q.choices[q.answer])}</span></p><button class="small" data-t="${esc(q.id)}">Tutor me</button></div>`; }).join('') : ''}
-    <div class="row"><button class="primary" onclick="${s.mode === 'pcreal' ? "go('pcreal')" : `go('practice','${s.sec}')`}">Practice again</button><button onclick="go('progress')">My progress</button><button onclick="go('home')">Home</button></div>`;
-  $$('[data-t]').forEach(b => b.onclick = () => { const q = qById(b.dataset.t); go('tutor'); startBankTutor(q); });
+    ${s.mode === 'retry' ? '' : `<p>Level now: ${level(s.sec)} of 3.</p>`}</div>
+    ${done ? arRecapHTML(items) : ''}
+    ${misses.length ? `<h2>Your misses</h2>` + misses.map(r => { const q = qOf(r.qid); return `<div class="card"><div class="stem">${esc(q.stem)}</div><p>Right answer: <span class="ok-text">${esc(q.choices[q.answer])}</span></p><button class="small" data-t="${esc(q.id)}">Tutor me</button></div>`; }).join('') : ''}
+    <div class="row"><button class="primary" onclick="${s.mode === 'pcreal' ? "go('pcreal')" : s.mode === 'retry' ? "go('history','wrong')" : `go('practice','${s.sec}')`}">${s.mode === 'retry' ? 'Back to history' : 'Practice again'}</button><button onclick="go('history')">History</button><button onclick="go('home')">Home</button></div>`;
+  arRecapWire(items);
+  $$('[data-t]').forEach(b => b.onclick = () => { const q = qOf(b.dataset.t); go('tutor'); startBankTutor(q); });
   S = null;
   if (HF.on) HF.enter('done', { sec:s.sec, pcreal: s.mode === 'pcreal' });
+  else Speech.speakEl($('#setSum')).then(() => { if ($('#recap')) Speech.speakEl($('#recap')); });
 }
 
 /* ---------------- hands-free loop ---------------- */
@@ -742,7 +748,7 @@ function tutorButtons(){
   if (T.solved){ b.innerHTML = `<button class="primary" id="tSimilar">Try a similar one</button><button onclick="go('tutor')">Back to tutor</button><button onclick="go('home')">Home</button>`;
     $('#tSimilar').onclick = () => { const pool = sectionPool(T.q.section).filter(x => x.topic === T.q.topic && x.id !== T.q.id); startBankTutor(pool.length ? pick(pool) : pick(sectionPool(T.q.section))); }; return; }
   b.innerHTML = `<button id="tIdk">I don't know</button><button id="tHint">${T.hints < 3 ? 'Give me a hint' : 'No more hints'}</button><button id="tShow">Show the answer</button><button id="tAI" class="hidden">Ask the AI tutor</button>`;
-  $('#tIdk').onclick = () => { tutorSay("I don't know", 'me'); nextHint(); };
+  $('#tIdk').onclick = () => { tutorSay("I don't know", 'me'); if (arIsAR(T.q) && !$('#bdBox')) startBreakdown(T.q, 'banktutor'); else nextHint(); };
   $('#tHint').onclick = () => { if (T.hints < 3) nextHint(); else tutorSay('You have all 3 hints. Try it now. Or tap "Show the answer".'); };
   $('#tShow').onclick = () => { tutorSay('Show me the answer.', 'me');
     if (T.hints < 3){ tutorSay('I hear you. Let me give you a hint first. You are close.'); nextHint(); } else reveal(); };
@@ -795,7 +801,7 @@ let CHAT = null;
 SCREENS.coach = async () => {
   Speech.stop(); CHAT = null;
   app().innerHTML = `<h1>AI math coach</h1><p>Arithmetic Reasoning, one step at a time. Just talk.</p><div id="coachMsg"><p>Checking the AI coach...</p></div>`;
-  if (!(await llmReady())){ $('#coachMsg').innerHTML = AI_NOTICE(); return; }
+  if (!(await llmReady())){ $('#coachMsg').innerHTML = `<div class="card"><p>The AI coach is not set up. You can still get help on every question.</p><p>Say "I'm stuck" or "I don't know" on any math question. I go one small step at a time.</p><button class="primary" id="offlineGo">Practice math with step-by-step help</button></div>` + AI_NOTICE(); $('#offlineGo').onclick = () => arDone() ? startSession('AR', 10, { skipReview:true }) : go('ladder'); return; }
   startChat(null, null, null, { mode:'coach' });
 };
 function startChat(question, mine, bankQ, opts = {}){
@@ -823,7 +829,8 @@ async function chatSend(text){
     if (CHAT.breakdown && text && !isStuck(text) && /^\s*(yes|yep|right|correct|that.?s (right|it|correct)|good|great|nice|perfect|exactly)\b/i.test(reply)) CHAT.breakdown = false;   // he got the step right
     tutorSay(reply); }
   catch(e){ wait.remove(); CHAT.messages.pop();
-    if (CHAT.bankQ && (CHAT.breakdown || e.notSetUp || e.offline)){ tutorSay('The AI coach is not answering. Let me use my own hints.'); const q = CHAT.bankQ; CHAT = null; startBankTutor(q); nextHint(); return; }
+    if (CHAT.bankQ && (CHAT.breakdown || e.notSetUp || e.offline)){ tutorSay('The AI coach is not answering. Let me use my own hints.'); const q = CHAT.bankQ; CHAT = null; startBankTutor(q); if (arIsAR(q)) startBreakdown(q, 'banktutor'); else nextHint(); return; }
+    if (CHAT.mode === 'coach' && (e.notSetUp || e.offline)){ tutorSay('The AI coach is not answering. Use Practice with step-by-step help on the Home screen. Say I am stuck on any question.'); }
     tutorSay(e.notSetUp ? AI_NOT_SET : 'Sorry. The AI coach did not answer. ' + e.message); }
   $$('#chatSend,#chatIdk,#chatHint').forEach(b => b.disabled = false);
 }
@@ -936,7 +943,7 @@ function mepsNextQ(){
 function mepsAnswer(i){
   const q = M.q; const ok = i === q.answer; M.done++; M.res[M.sec].answered++; if (ok) M.res[M.sec].right++;
   M.diff = Math.max(1, Math.min(3, M.diff + (ok ? 1 : -1)));
-  M.log.push({ q, i, ok }); bumpDaily(1); srsUpdate(q.id, ok, ok ? 'shaky' : null); if (!ok) logError(q, i, M.kind || 'meps');
+  M.log.push({ q, i, ok }); bumpDaily(1); if (typeof arLog === 'function') arLog(q, i, ok, M.kind || 'meps'); srsUpdate(q.id, ok, ok ? 'shaky' : null); if (!ok) logError(q, i, M.kind || 'meps');
   mepsNextQ();
 }
 function mepsFinishPart(){
@@ -1148,7 +1155,7 @@ SCREENS.settings = (arg) => {
   <div class="card"><h2>Clean up</h2><div class="row"><button id="clearCustom">Delete AI questions (${custom.length})</button><button id="resetAll">Reset all progress</button></div></div>
   <p>Questions are original ASVAB-style practice items, not real ASVAB questions. App version ${esc(APP_VERSION)}.</p>`;
   const drawLog = () => { const el = $('#vlog'); if (!el) return; const rows = VOICE_LOG.slice(-40).reverse();
-    el.innerHTML = rows.length ? rows.map(x => `<li><b>${esc(x.at.slice(11, 19))}</b> ${esc(x.ctx || '')}: ${x.text ? '"' + esc(x.text) + '"' : '<i>(' + esc(x.error || 'nothing') + ')</i>'}${x.alts && x.alts.length > 1 ? ' [' + esc(x.alts.slice(1).join(' | ')) + ']' : ''}${x.echo ? ' (own voice, ignored)' : ''}</li>`).join('') : '<li>Nothing yet. Turn on hands-free and say something.</li>'; };
+    el.innerHTML = rows.length ? rows.map(x => `<li><b>${esc(x.at.slice(11, 19))}</b> ${esc(x.ctx || '')}: ${x.text ? '"' + esc(x.text) + '"' : '(' + esc(x.error || 'nothing') + ')'}${x.alts && x.alts.length > 1 ? ' [' + esc(x.alts.slice(1).join(' | ')) + ']' : ''}${x.echo ? ' (own voice, ignored)' : ''}</li>`).join('') : '<li>Nothing yet. Turn on hands-free and say something.</li>'; };
   drawLog(); $('#vlogRefresh').onclick = drawLog; remSettingsWire();
   $('#vlogClear').onclick = () => { VOICE_LOG.length = 0; try { localStorage.removeItem('asvab.voicelog'); } catch(e){} drawLog(); };
   $('#vlogCopy').onclick = () => { const t = JSON.stringify(VOICE_LOG.slice(-40), null, 1); (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(() => toast('Log copied.'), () => toast('Could not copy.')); };

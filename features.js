@@ -169,8 +169,8 @@ function planQuestions(){
 function planHook(kind, r){
   if (!PLAN || PLAN.stage !== 'qs') return false;
   let items;
-  if (kind === 'sec') items = r.results.map(x => { const q = qById(x.qid); return { ok:x.correct, stem:q.stem, ans: q.choices[q.answer], why: firstSentence(q.explanation) }; });
-  else items = r.results.map(x => { const q = r.qs.find(z => z.id === x.id) || {}; return { ok:x.ok, stem: q.say || q.stem || '', ans: q.mode === 'say' ? q.sayAnswer : (q.choices || [])[q.answer], why: (q.steps || [q.explanation || '']).slice(-1)[0] || '' }; });
+  if (kind === 'sec') items = r.results.map(x => { const q = r.qs.find(z => z.id === x.qid) || qById(x.qid); return { q, ok:x.correct, yours: x.guess == null ? 'no answer' : q.choices[x.guess], right: q.choices[q.answer], stem:q.stem, ans: q.choices[q.answer], why: firstSentence(q.explanation) }; });
+  else items = r.results.map(x => { const q = r.qs.find(z => z.id === x.id) || {}; return { q, ok:x.ok, yours: x.guess != null && x.guess >= 0 ? q.choices[x.guess] : (x.said || 'no answer'), right: q.mode === 'say' ? q.sayAnswer : (q.choices || [])[q.answer], stem: q.say || q.stem || '', ans: q.mode === 'say' ? q.sayAnswer : (q.choices || [])[q.answer], why: (q.steps || [q.explanation || '']).slice(-1)[0] || '' }; });
   planRecap(items, kind === 'lad' ? r : null); return true;
 }
 const clip = (s, n = 180) => { s = String(s || '').replace(/\s+/g, ' ').trim(); return s.length > n ? s.slice(0, n).replace(/\s\S*$/, '') + '...' : s; };
@@ -179,8 +179,7 @@ function planRecap(items, lad){
   const d = plansDone(); d[today()] = { date:new Date().toISOString(), pick:PLAN.pick, right, n }; Store.set('plans', d);
   const s = streakInfo();
   const lines = [`Recap. You got ${right} of ${n}.`]
-    .concat(miss.length ? miss.slice(0, 4).map((m, k) => `Miss ${k + 1}: ${clip(m.stem)} The answer is ${dot(m.ans)} ${clip(m.why, 140)}`) : ['No misses. Great work.'])
-    .concat(miss.length > 4 ? [`${miss.length - 4} more are saved in My misses.`] : [])
+    .concat(arRecapLines(items).slice(miss.length ? 0 : 2))
     .concat([`That is today's plan. Today: ${s.todayCount} of ${DAILY_GOAL} questions. ${s.goalMet ? 'Daily goal done.' : `${DAILY_GOAL - s.todayCount} more for your daily goal.`} Streak: ${s.streak} day${s.streak === 1 ? '' : 's'}.`]);
   const sp = speakable(lines.join(' '));
   PLAN.stage = 'recap';
