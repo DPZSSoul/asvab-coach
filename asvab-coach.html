@@ -260,7 +260,7 @@ if (typeof module !== 'undefined') module.exports = MS;
 'use strict';
 const BANK = window.ASVAB_BANK;
 const SECTIONS = BANK.sections;               // {AR:'Arithmetic Reasoning', ...}
-const APP_VERSION = '2.4.0 (bank '+BANK.version+')';
+const APP_VERSION = '2.5.0 (bank '+BANK.version+')';
 const SEC_ORDER = ['AR','WK','PC','MK','GS','EI'];
 const MEPS_ORDER = ['GS','AR','WK','PC','MK','EI'];   // real CAT-ASVAB order (officialasvab.com)
 const CAT = BANK.cat;                          // {GS:[15,12], ...} questions, minutes (officialasvab.com, no tryout items)
@@ -286,7 +286,7 @@ const Store = {
   set(k, v){ try{ localStorage.setItem(KEY+k, JSON.stringify(v)); }catch(e){ toast('Could not save. Storage is full or blocked.'); } },
   keys(){ return Object.keys(localStorage).filter(k => k.startsWith(KEY)).map(k => k.slice(KEY.length)); }
 };
-const DEFAULT_SETTINGS = { rate:0.9, voiceURI:'', readAlong:true, timerOn:true, dark:false, apiKey:'', elKey:'', elVoice:'', apiBase:'https://api.openai.com/v1', model:'gpt-4o-mini', autoRead:false, hfAuto:null, hfWake:false, remindOn:false, remindTime:'18:00', weeklyDay:0 };
+const DEFAULT_SETTINGS = { rate:0.9, voiceURI:'', readAlong:true, timerOn:true, dark:false, apiKey:'', elKey:'', elVoice:'', apiBase:'https://api.openai.com/v1', model:'gpt-4o-mini', proxyUrl:'', autoRead:false, hfAuto:null, hfWake:false, remindOn:false, remindTime:'18:00', weeklyDay:0 };
 let settings = Object.assign({}, DEFAULT_SETTINGS, Store.get('settings', {}));
 function saveSettings(){ Store.set('settings', settings); document.body.classList.toggle('dark', !!settings.dark); }
 
@@ -447,7 +447,7 @@ const Speech = {
     return new Promise(async resolve => {
       let url; try { url = await this.elAudio(text); } catch(e){ if (alive()){ this.elFailUntil = Date.now() + 5*60*1000; console.warn('ElevenLabs failed, using device voice', e); } resolve(alive() ? false : true); return; }
       if (!alive()){ URL.revokeObjectURL(url); resolve(true); return; }
-      const a = new Audio(url); this.audio = a; a.playbackRate = Math.max(0.5, Math.min(2, (Number(settings.rate) || 0.9) / 0.9));
+      const a = new Audio(url); this.audio = a; a.playbackRate = Math.max(0.5, Math.min(2, (Number(settings.rate) || 0.9) * (this.mul || 1) / 0.9));
       let fin = false; const end = ok => { if (fin) return; fin = true; clearInterval(w); if (this.audio === a) this.audio = null; URL.revokeObjectURL(url); resolve(ok); };
       a.ontimeupdate = () => { if (a.duration && onTime) onTime(a.currentTime / a.duration); };
       a.onended = () => end(true); a.onerror = () => { this.elFailUntil = Date.now() + 5*60*1000; end(false); };
@@ -458,6 +458,8 @@ const Speech = {
   // speak plain text (no highlight)
   say(text){ const span = document.createElement('div'); span.innerHTML = wordsHTML(text); return this.speakSpans($$('.w', span), ''); },
   // speak a DOM element that contains .w spans, with highlight
+  mul: 1,   // tutor replies use a slower rate (0.85x) with pauses between sentences
+  async speakSlow(el){ if (!el) return; this.mul = 0.85; const my = this.seq + 1; try { await this.speakEl(el); } finally { if (this.seq <= my) this.mul = 1; } },
   speakEl(el, prefix=''){ if (!el) return Promise.resolve(); return this.speakSpans($$('.w', el), prefix); },
   async speakSpans(spans, prefix=''){
     if (!this.ok && !this.elReady()){ toast('This browser cannot read aloud.'); return; }
@@ -470,6 +472,7 @@ const Speech = {
     if (!chunks.length && prefix) chunks.push([]);
     for (let ci=0; ci<chunks.length; ci++){
       if (!alive()) return;
+      if (ci && (this.mul || 1) < 1){ await sleep(450); if (!alive()) return; }   // natural pause between tutor steps
       await this.speakChunk(spans, chunks[ci], ci===0 ? prefix : '', alive);
     }
     spans.forEach(s => s.classList.remove('hl'));
@@ -494,7 +497,7 @@ const Speech = {
       idxs.forEach((i,k) => { const w = spans[i].textContent; const sw = sayable(w, k?spans[idxs[k-1]].textContent:'', k<idxs.length-1?spans[idxs[k+1]].textContent:'');
         starts.push(text.length); text += sw + ' '; });
       const u = new SpeechSynthesisUtterance(text.trim()); const v = this.voice(); if (v){ u.voice = v; u.lang = v.lang; } else u.lang = 'en-US';
-      u.rate = Number(settings.rate) || 0.9;
+      u.rate = Math.max(0.6, (Number(settings.rate) || 0.9) * (this.mul || 1));
       let gotBoundary = false, timers = [], last = -1, finished = false;
       const mark = k => { if (!settings.readAlong || !alive()) return; if (last >= 0 && spans[idxs[last]]) spans[idxs[last]].classList.remove('hl');
         if (spans[idxs[k]]){ spans[idxs[k]].classList.add('hl'); last = k; } };
@@ -614,30 +617,55 @@ function parseVoice(alts, choices){
 }
 
 /* ---------------- LLM (OpenAI-compatible) ---------------- */
-// Path 1: his own key in Settings (kept only in this browser's localStorage) -> call the endpoint directly.
-// Path 2: no key -> use the same-origin proxy /api/chat (server.py reads OPENAI_API_KEY from the environment).
-let proxyState = null;
+// Default path: the hosted AI coach proxy (proxy/worker.js). It holds the API key as a server secret and adds
+// the Arithmetic Reasoning coach system prompt itself; the browser never has a key.
+// Advanced fallback: his own key in Settings (kept only in this browser) -> call the endpoint directly.
+// Local dev: server.py's same-origin api/chat.
+const AI_PROXY_URL = '';   // paste your deployed proxy URL here (see proxy/README.md), e.g. https://asvab-coach-proxy.NAME.workers.dev
+const proxyUrl = () => String(settings.proxyUrl || AI_PROXY_URL || '').replace(/\/+$/, '');
+let proxyState = null, localProxy = null;
 async function proxyAvailable(){
   if (proxyState !== null) return proxyState;
   if (!/^https?:$/.test(location.protocol)) return (proxyState = false);
-  try { const r = await fetch('api/health', { cache:'no-store' }); const j = r.ok ? await r.json() : null; proxyState = !!(j && j.proxy && j.configured); }
-  catch(e){ proxyState = false; }
-  return proxyState;
+  const tryOne = async (u) => { try { const r = await fetch(u, { cache:'no-store' }); const j = r.ok ? await r.json() : null; return !!(j && j.proxy && j.configured); } catch(e){ return false; } };
+  if (proxyUrl() && await tryOne(proxyUrl())){ localProxy = false; return (proxyState = true); }
+  if (/^(localhost|127\.0\.0\.1)$/.test(location.hostname) && await tryOne('api/health')){ localProxy = true; return (proxyState = true); }
+  return (proxyState = false);
 }
 async function llmReady(){ return !!settings.apiKey || await proxyAvailable(); }
-async function llmChat(messages, { json=false, temperature=0.4, maxTokens=1200 } = {}){
-  const body = { model: settings.model || 'gpt-4o-mini', messages, temperature, max_tokens: maxTokens };
-  if (json) body.response_format = { type:'json_object' };
-  let url, headers = { 'Content-Type':'application/json' };
-  if (settings.apiKey){ url = (settings.apiBase || 'https://api.openai.com/v1').replace(/\/+$/,'') + '/chat/completions'; headers.Authorization = 'Bearer ' + settings.apiKey; }
-  else if (await proxyAvailable()){ url = 'api/chat'; }
-  else throw new Error('No AI connection. Add your API key in Settings, or run server.py with OPENAI_API_KEY set.');
-  let r = await fetch(url, { method:'POST', headers, body: JSON.stringify(body) });
-  if (!r.ok && json && r.status === 400){ delete body.response_format; r = await fetch(url, { method:'POST', headers, body: JSON.stringify(body) }); }
-  if (!r.ok){ let t = ''; try{ t = (await r.text()).slice(0,300); }catch(e){} throw new Error(`AI request failed (${r.status}). ${t}`); }
+const AI_NOT_SET = 'The AI coach is not set up yet. The offline tutor still works.';
+// mode: 'coach' (AR coach), 'tutor' (a pasted or missed question), 'breakdown' (he is stuck), 'write' (new questions), 'test'
+async function llmChat(messages, { json=false, temperature=0.4, maxTokens=1200, mode='tutor' } = {}){
+  let url, headers = { 'Content-Type':'application/json' }, body;
+  if (settings.apiKey){
+    url = (settings.apiBase || 'https://api.openai.com/v1').replace(/\/+$/,'') + '/chat/completions'; headers.Authorization = 'Bearer ' + settings.apiKey;
+    let msgs = messages;
+    if (mode !== 'write' && !(msgs[0] && msgs[0].role === 'system')) msgs = [{ role:'system', content: TUTOR_SYSTEM() }].concat(msgs);
+    if (mode === 'breakdown') msgs = msgs.concat([{ role:'system', content: BREAKDOWN_NOTE }]);
+    body = { model: settings.model || 'gpt-4o-mini', messages: msgs, temperature, max_tokens: maxTokens };
+    if (json) body.response_format = { type:'json_object' };
+  } else if (await proxyAvailable()){
+    url = localProxy ? 'api/chat' : proxyUrl();
+    const msgs = localProxy ? messages : messages.filter(m => m.role !== 'system');   // the hosted proxy sets its own system prompt
+    body = localProxy ? { messages: msgs, temperature, max_tokens: maxTokens } : { mode, json, messages: msgs, temperature, max_tokens: maxTokens };
+    if (localProxy && json) body.response_format = { type:'json_object' };
+  }
+  else { const e = new Error(AI_NOT_SET); e.notSetUp = true; throw e; }
+  let r;
+  try { r = await fetch(url, { method:'POST', headers, body: JSON.stringify(body) });
+    if (!r.ok && json && r.status === 400 && body.response_format){ delete body.response_format; r = await fetch(url, { method:'POST', headers, body: JSON.stringify(body) }); } }
+  catch(e){ const x = new Error('I could not reach the AI coach. Check your internet.'); x.offline = true; throw x; }
+  if (!r.ok){ let t = ''; try{ t = (await r.json()).error || ''; }catch(e){}
+    if (r.status === 503){ proxyState = null; const e = new Error(AI_NOT_SET); e.notSetUp = true; throw e; }
+    if (r.status === 429) throw new Error('The AI coach needs a short break. Try again in a minute.');
+    throw new Error(`The AI coach had a problem (${r.status}). ${String(t).slice(0,200)}`); }
   const j = await r.json(); const c = j.choices && j.choices[0] && j.choices[0].message && j.choices[0].message.content;
   if (!c) throw new Error('AI sent an empty reply.'); return c;
 }
+const BREAKDOWN_NOTE = 'He is stuck right now. Do not give the answer. Give only the smallest first step, in one or two short sentences. End with one quick check question. Then stop and wait.';
+// "I'm stuck" detection on the normalized speech transcript (also used for typed replies)
+const STUCK_RE = /\b(i (do ?n.?t|dont|do not) (know|understand|get it|get this|follow)|dunno|dono|i ?d ?k|no (idea|clue)|(i.?m |i am )?not sure|(i.?m |im |i am )lost|stuck|confused|confusing|help me|what do you mean|i (can.?t|cannot|cant) (do|figure|get)|makes? no sense|doesn.?t make sense|say (that|it) again slower|huh)\b/;
+function isStuck(text){ const t = String(text || '').toLowerCase().replace(/['\u2019]/g, '').replace(/[^a-z ]/g, ' ').replace(/\s+/g, ' ').trim(); return !!t && STUCK_RE.test(t); }
 const TUTOR_SYSTEM = () => `You are a patient ASVAB tutor for a Navy recruit aiming at the IT rating. He has a dyslexia-like reading disability.
 Follow these tutor rules exactly. They are the most important part of your job.
 
@@ -695,7 +723,7 @@ function praise(){ return pick(['Nice try. You showed your work.','Good. You did
 /* ---------------- router ---------------- */
 let S = null;      // current practice session
 let M = null;      // current MEPS run
-function cleanup(){ Speech.stop(); Voice.stop(); if (S && S.timer) clearInterval(S.timer); if (S) S.hf = false; if (M && M.timer) clearInterval(M.timer); if (typeof LR !== 'undefined') LR = null; }
+function cleanup(){ Speech.stop(); Voice.stop(); if (S && S.timer) clearInterval(S.timer); if (S) S.hf = false; if (M && M.timer) clearInterval(M.timer); if (typeof LR !== 'undefined') LR = null; if (CHAT) CHAT.live = false; }
 function go(name, arg){
   if (M && M.running && name !== 'meps-run' && !confirm(M.kind === 'weekly' ? 'Leave the weekly test? Your run will end.' : 'Leave the MEPS test? Your run will end.')) return;
   if (M && name !== 'meps-run') M.running = false;
@@ -753,6 +781,7 @@ SCREENS.home = () => {
   <div class="grid">
     <button class="tile primary" onclick="go('ladder')">Math ladder<small>${esc(ladderStatusText().replace('In Arithmetic Reasoning you are on ', 'Arithmetic Reasoning catch-up: '))}</small></button>
     <button class="tile" onclick="go('handsfree')">Hands-free practice<small>It reads. You answer out loud.</small></button>
+    <button class="tile primary" onclick="go('coach')">AI math coach<small>Arithmetic, by voice, one step at a time.</small></button>
     <button class="tile" onclick="go('tutor')">Tutor<small>Get help on a question.</small></button>
     <button class="tile" onclick="go('review')">My misses<small>${errs.length} saved</small></button>
     <button class="tile" onclick="go('progress')">My progress<small>Scores and topics</small></button>
@@ -919,6 +948,7 @@ let T = null;
 SCREENS.tutor = () => {
   const errs = Store.get('errors', []).slice(0, 8);
   app().innerHTML = `<h1>Tutor</h1><p>I will help you step by step. You do the thinking. I give hints.</p>
+  <div class="row"><button class="primary" onclick="go('coach')">Talk with the AI math coach</button></div>
   <h2>Pick a question you missed</h2>
   ${errs.length ? errs.map(e => `<button class="tile" style="width:100%;margin:6px 0" data-e="${esc(e.id)}">${esc(e.stem.length > 90 ? e.stem.slice(0,90)+'...' : e.stem)}<small>${esc(SECTIONS[e.section])} | ${new Date(e.date).toLocaleDateString()}</small></button>`).join('') : '<p>No misses yet.</p>'}
   <div class="row"><button onclick="go('review')">See all misses</button></div>
@@ -956,12 +986,13 @@ function startBankTutor(q, firstGuess){
 function renderTutorQ(){ $('#tq').innerHTML = questionHTML(T.q);
   $$('#tq .choice').forEach(b => { const i = +b.dataset.i; if (T.wrong.has(i)) { b.classList.add('wrong'); b.disabled = true; } b.onclick = () => tutorTry(i); });
   if (T.solved) markChoices(T.q, T.q.answer); }
+let TQ = Promise.resolve();   // tutor replies are read one after another
 function tutorSay(text, who='bot'){
   const s = speakable(text); const div = document.createElement('div'); div.className = 'msg ' + who;
   div.innerHTML = who === 'bot' ? `<div class="row" style="align-items:flex-start;margin:0"><div style="flex:1">${s.html}</div>${sayBtn('#'+s.id)}</div>` : s.html;
   $('#tchat').appendChild(div); div.scrollIntoView({ behavior:'smooth', block:'nearest' });
-  if (who === 'bot' && HF.on){ const el = document.getElementById(s.id); HF.tq = (HF.tq || Promise.resolve()).then(() => el.isConnected && HF.on ? HF.run(() => Speech.speakEl(el)) : null); }
-  else if (who === 'bot' && settings.autoRead) Speech.speakEl(document.getElementById(s.id));
+  if (who === 'bot' && HF.on){ const el = document.getElementById(s.id); HF.tq = (HF.tq || Promise.resolve()).then(() => el.isConnected && HF.on ? HF.run(() => Speech.speakSlow(el)) : null); }
+  else if (who === 'bot' && (settings.autoRead || (CHAT && CHAT.live && $('#chatIn')))){ const el = document.getElementById(s.id); TQ = TQ.then(() => el.isConnected ? Speech.speakSlow(el) : null); }
   return div;
 }
 function tutorButtons(){
@@ -1013,17 +1044,26 @@ async function startPasteTutor(text, mine){
   if (!text){ toast('Type or paste a question first.'); return; }
   const match = findBankMatch(text);
   if (match){ startBankTutor(match); toast('Found this question in the bank. Tutor works offline.'); return; }
-  if (!(await llmReady())){ $('#pasteMsg').innerHTML = `<div class="notice"><p>The AI tutor needs a connection.</p><p>Add your API key in Settings. Or run server.py with a key.</p><button onclick="go('settings')">Go to Settings</button></div>`; return; }
+  if (!(await llmReady())){ $('#pasteMsg').innerHTML = AI_NOTICE(); return; }
   startChat(text, mine);
 }
+const AI_NOTICE = () => `<div class="notice"><p>${esc(AI_NOT_SET)}</p><p>You can still use the Math ladder and the offline tutor on missed questions.</p><button onclick="go('ladder')">Math ladder</button> <button onclick="go('settings')">Settings</button></div>`;
 let CHAT = null;
-function startChat(question, mine, bankQ){
-  CHAT = { messages: [ { role:'system', content: TUTOR_SYSTEM() },
-    { role:'user', content: `Here is a question I got wrong.\n\n${question}\n\n${mine ? 'My answer was: ' + mine : 'I am not sure how to do it.'}${bankQ ? '\n(Answer key for you only, do not reveal early: ' + bankQ.choices[bankQ.answer] + '. Steps: ' + bankQ.steps.join(' ') + ')' : ''}\nPlease help me step by step.` } ] };
-  app().innerHTML = `<h1>AI tutor</h1><div class="card passage"><div class="stem" style="white-space:pre-wrap">${esc(question)}</div></div><div id="tchat" class="chat"></div>
+// AI coach for Arithmetic Reasoning: the proxy's server-side prompt drives the lesson
+SCREENS.coach = async () => {
+  Speech.stop(); CHAT = null;
+  app().innerHTML = `<h1>AI math coach</h1><p>Arithmetic Reasoning, one step at a time. Just talk.</p><div id="coachMsg"><p>Checking the AI coach...</p></div>`;
+  if (!(await llmReady())){ $('#coachMsg').innerHTML = AI_NOTICE(); return; }
+  startChat(null, null, null, { mode:'coach' });
+};
+function startChat(question, mine, bankQ, opts = {}){
+  const coach = opts.mode === 'coach';
+  CHAT = { mode: coach ? 'coach' : 'tutor', bankQ: bankQ || null, breakdown: false, live: true, messages: [ { role:'system', content: TUTOR_SYSTEM() },
+    coach ? { role:'user', content: 'Hi coach. Please start my Arithmetic Reasoning practice. Start easy. Ask me one question.' } : { role:'user', content: `Here is a question I got wrong.\n\n${question}\n\n${mine ? 'My answer was: ' + mine : 'I am not sure how to do it.'}${bankQ ? '\n(Answer key for you only, do not reveal early: ' + bankQ.choices[bankQ.answer] + '. Steps: ' + bankQ.steps.join(' ') + ')' : ''}\nPlease help me step by step.` } ] };
+  app().innerHTML = `<h1>${coach ? 'AI math coach' : 'AI tutor'}</h1>${coach ? '<p>Arithmetic Reasoning. Say "I am stuck" any time.</p>' : `<div class="card passage"><div class="stem" style="white-space:pre-wrap">${esc(question)}</div></div>`}<div id="tchat" class="chat"></div>
     <div class="card"><label for="chatIn">Your reply</label><textarea id="chatIn" style="min-height:90px"></textarea>
     ${HF.on ? '<p>Hands-free: just talk. I send what you say.</p>' : ''}<div class="row"><button id="chatMic">Speak</button><button class="primary" id="chatSend">Send</button><button id="chatIdk">I don't know</button><button id="chatHint">Hint please</button></div><div class="listen-status"></div></div>`;
-  $('#chatMic').onclick = () => dictate($('#chatIn'));
+  $('#chatMic').onclick = async () => { await dictate($('#chatIn')); const v = $('#chatIn').value.trim(); if (v){ $('#chatIn').value = ''; chatSend(v); } };   // speak, then it sends by itself
   $('#chatSend').onclick = () => { const v = $('#chatIn').value.trim(); if (v){ $('#chatIn').value = ''; chatSend(v); } };
   $('#chatIdk').onclick = () => chatSend("I don't know.");
   $('#chatHint').onclick = () => chatSend('Can I have the next hint?');
@@ -1031,11 +1071,18 @@ function startChat(question, mine, bankQ){
   chatSend(null);
 }
 async function chatSend(text){
-  if (text){ CHAT.messages.push({ role:'user', content:text }); tutorSay(text, 'me'); }
+  if (!CHAT) return;
+  if (text){ if (isStuck(text)) CHAT.breakdown = true;   // stuck phrase -> breakdown mode, no button needed
+    CHAT.messages.push({ role:'user', content: CHAT.breakdown && isStuck(text) ? text + ' (I am stuck. Give me only the smallest first step.)' : text }); tutorSay(text, 'me'); }
   const wait = tutorSay('Thinking...'); $$('#chatSend,#chatIdk,#chatHint').forEach(b => b.disabled = true);
-  try { const reply = (await llmChat(CHAT.messages, { temperature:0.5, maxTokens:400 })).replace(/[*_#`]/g, '');
-    CHAT.messages.push({ role:'assistant', content: reply }); wait.remove(); tutorSay(reply); }
-  catch(e){ wait.remove(); tutorSay('Sorry. The AI tutor did not answer.\n' + e.message); }
+  const mode = CHAT.breakdown ? 'breakdown' : CHAT.mode;
+  try { const reply = (await llmChat(CHAT.messages, { temperature:0.5, maxTokens:400, mode })).replace(/[*_#`]/g, '');
+    CHAT.messages.push({ role:'assistant', content: reply }); wait.remove();
+    if (CHAT.breakdown && text && !isStuck(text) && /^\s*(yes|yep|right|correct|that.?s (right|it|correct)|good|great|nice|perfect|exactly)\b/i.test(reply)) CHAT.breakdown = false;   // he got the step right
+    tutorSay(reply); }
+  catch(e){ wait.remove(); CHAT.messages.pop();
+    if (CHAT.bankQ && (CHAT.breakdown || e.notSetUp || e.offline)){ tutorSay('The AI coach is not answering. Let me use my own hints.'); const q = CHAT.bankQ; CHAT = null; startBankTutor(q); nextHint(); return; }
+    tutorSay(e.notSetUp ? AI_NOT_SET : 'Sorry. The AI coach did not answer. ' + e.message); }
   $$('#chatSend,#chatIdk,#chatHint').forEach(b => b.disabled = false);
 }
 
@@ -1292,7 +1339,7 @@ Return JSON only: {"questions":[ ... ]}
 Examples: ${JSON.stringify(ex)}`;
   out.innerHTML = '<p>Writing questions. This can take 20 seconds...</p>';
   try {
-    const txt = await llmChat([{ role:'system', content:'You write original ASVAB practice questions. You return strict JSON only.' }, { role:'user', content: prompt }], { json:true, temperature:0.7, maxTokens:3000 });
+    const txt = await llmChat([{ role:'system', content:'You write original ASVAB practice questions. You return strict JSON only.' }, { role:'user', content: prompt }], { json:true, temperature:0.7, maxTokens:3000, mode:'write' });
     let data; try { data = JSON.parse(txt.replace(/^```(json)?|```$/g, '').trim()); } catch(e){ throw new Error('AI did not return valid JSON.'); }
     const arr = Array.isArray(data) ? data : (data.questions || []);
     const existing = new Set(allQuestions().map(q => normalize(q.stem) + '|' + normalize(q.passage || '')));
@@ -1344,12 +1391,16 @@ SCREENS.settings = (arg) => {
   <div class="card"><h2>Screen</h2>
     <div class="toggle"><input type="checkbox" id="dark" ${settings.dark?'checked':''}><label for="dark" style="margin:0">Dark, high contrast</label></div>
     <div class="toggle"><input type="checkbox" id="timerSet" ${settings.timerOn?'checked':''}><label for="timerSet" style="margin:0">Timer on in practice</label></div></div>
-  <div class="card"><h2>AI (for new questions and the pasted-question tutor)</h2>
+  <div class="card"><h2>AI coach</h2>
+    <p>The AI coach runs on a small server. No key is needed here.</p>
+    <label for="proxyUrl">AI coach server address (leave empty for the default)</label><input type="url" id="proxyUrl" value="${esc(settings.proxyUrl || '')}" placeholder="${esc(AI_PROXY_URL || 'https://asvab-coach-proxy.NAME.workers.dev')}">
+    <details><summary>Advanced: use my own API key instead</summary>
     <p>Your key stays only in this browser. It is never put in a backup file.</p>
     <label for="apiBase">API address (OpenAI-compatible)</label><input type="url" id="apiBase" value="${esc(settings.apiBase)}">
     <label for="model">Model</label><input type="text" id="model" value="${esc(settings.model)}">
     <label for="apiKey">API key</label><input type="password" id="apiKey" value="${esc(settings.apiKey)}" autocomplete="off" placeholder="sk-...">
-    <div class="row"><button class="primary" id="saveAI">Save</button><button id="testAI">Test AI</button><button id="clearKey">Remove key</button></div><div id="aiOut"></div></div>
+    <div class="row"><button id="clearKey">Remove key</button></div></details>
+    <div class="row"><button class="primary" id="saveAI">Save</button><button id="testAI">Test AI</button></div><div id="aiOut"></div></div>
   <div class="card"><h2>Backup</h2><p>Save everything to a file: the questions, AI questions (${custom.length}), and your progress.</p>
     <div class="row"><button class="primary" id="exportBtn">Download question bank</button><label class="btn" for="importFile" style="margin:0;display:inline-flex;align-items:center">Import a backup</label><input type="file" id="importFile" accept="application/json,.json" class="hidden"></div><div id="ioOut"></div></div>
   <div class="card"><h2>Clean up</h2><div class="row"><button id="clearCustom">Delete AI questions (${custom.length})</button><button id="resetAll">Reset all progress</button></div></div>
@@ -1366,9 +1417,9 @@ SCREENS.settings = (arg) => {
   $('#clearEl').onclick = () => { settings.elKey = ''; $('#elKey').value = ''; saveSettings(); toast('Key removed.'); };
   if (arg === 'voice'){ const vc = $('#voiceCard'); if (vc && vc.scrollIntoView) vc.scrollIntoView(); }
   [['readAlong','readAlong'],['autoRead','autoRead'],['dark','dark'],['timerSet','timerOn'],['hfAuto','hfAuto'],['hfWake','hfWake']].forEach(([id,k]) => $('#'+id).onchange = e => { settings[k] = e.target.checked; saveSettings(); });
-  $('#saveAI').onclick = () => { settings.apiBase = $('#apiBase').value.trim() || DEFAULT_SETTINGS.apiBase; settings.model = $('#model').value.trim() || DEFAULT_SETTINGS.model; settings.apiKey = $('#apiKey').value.trim(); saveSettings(); toast('Saved.'); };
+  $('#saveAI').onclick = () => { settings.apiBase = $('#apiBase').value.trim() || DEFAULT_SETTINGS.apiBase; settings.model = $('#model').value.trim() || DEFAULT_SETTINGS.model; settings.apiKey = $('#apiKey').value.trim(); settings.proxyUrl = $('#proxyUrl').value.trim(); proxyState = null; saveSettings(); toast('Saved.'); };
   $('#clearKey').onclick = () => { settings.apiKey = ''; $('#apiKey').value = ''; saveSettings(); toast('Key removed.'); };
-  $('#testAI').onclick = async () => { $('#saveAI').click(); $('#aiOut').textContent = 'Testing...'; try { const r = await llmChat([{ role:'user', content:'Reply with the single word: ready' }], { maxTokens:5 }); $('#aiOut').innerHTML = `<p class="ok-text">AI works. It said: ${esc(r)}</p>`; } catch(e){ $('#aiOut').innerHTML = `<p class="bad-text">${esc(e.message)}</p>`; } };
+  $('#testAI').onclick = async () => { $('#saveAI').click(); $('#aiOut').textContent = 'Testing...'; try { const r = await llmChat([{ role:'user', content:'Reply with the single word: ready' }], { maxTokens:5, mode:'test' }); $('#aiOut').innerHTML = `<p class="ok-text">AI works. It said: ${esc(r)}</p>`; } catch(e){ $('#aiOut').innerHTML = e.notSetUp ? AI_NOTICE() : `<p class="bad-text">${esc(e.message)}</p>`; } };
   $('#exportBtn').onclick = exportAll;
   $('#importFile').onchange = e => { const f = e.target.files[0]; if (f) importAll(f); };
   $('#clearCustom').onclick = () => { if (confirm('Delete all AI-made questions?')){ Store.set('custom', []); go('settings'); } };
@@ -2487,6 +2538,7 @@ const HF = {
     if (anyOf(t, ['meps', 'meps mode', 'practice test', 'full test', 'mock test', 'meps test', 'maps mode', 'meeps'])) return to('meps');
     if (anyOf(t, ['progress', 'my progress', 'my scores', 'scores', 'score report', 'line score', 'line scores'])) return to('progress');
     if (anyOf(t, ['error log', 'my misses', 'review misses', 'misses', 'mistakes', 'review my misses', 'missed questions', 'review'])) return to('review');
+    if (anyOf(t, ['ai coach', 'math coach', 'coach me', 'talk to the coach', 'ai tutor'])) return to('coach');
     if (anyOf(t, ['tutor', 'tutor me', 'teacher', 'help me learn'])) return to('tutor');
     if (anyOf(t, ['settings', 'options menu'])) return to('settings');
     if (anyOf(t, ['audio lessons', 'audio lesson', 'listen mode', 'listen only', 'podcast', 'audio mode'])) return to('audio');
@@ -2680,11 +2732,11 @@ const VCTX = {
     choices: () => T && !T.solved ? T.q.choices : null, pick: i => { if (!T.wrong.has(i)) tutorTry(i); },
     help: 'Say your answer, like A or Bravo. Or say I don\'t know, hint, show the answer, read the question, or try a similar one.',
     async intro(){ /* the tutor messages are read as they appear */ },
-    async handle(t, all){
+    async handle(t, all, raw){
       if (!T) return false;
       if ($('#rule') && !T.ruleDone){ if (anyOf(t, ['skip', 'next', 'similar', 'try a similar one'])) { $('#ruleOk').click(); T.ruleDone = true; } else { $('#rule').value = t.replace(/^(my rule is|the rule is)\s*/, ''); $('#ruleOk').click(); T.ruleDone = true; return true; } }
       if (T.solved && anyOf(t, ['similar', 'try a similar one', 'another one', 'another', 'next', 'yes'])){ $('#tSimilar') && $('#tSimilar').click(); return true; }
-      if (anyOf(t, ["i don't know", 'i dont know', 'no idea', 'not sure', 'dunno'])){ const b = $('#tIdk'); if (b) b.click(); return true; }
+      if (isStuck(raw || t) || anyOf(t, ["i don't know", 'i dont know', 'no idea', 'not sure', 'dunno'])){ const b = $('#tIdk'); if (b) b.click(); return true; }   // stuck -> smallest hint, no button
       if (/\b(hint|clue)\b/.test(t)){ const b = $('#tHint'); if (b) b.click(); return true; }
       if (anyOf(t, ['show the answer', 'show me the answer', 'tell me the answer', 'what is the answer', 'give up'])){ const b = $('#tShow'); if (b) b.click(); return true; }
       if (anyOf(t, ['read the question', 'read it', 'question'])){ HF.run(() => readQuestionAloud(T.q)); return true; }
@@ -2692,13 +2744,14 @@ const VCTX = {
       return false;
     },
   },
+  coach: { help: 'Wait a moment. The AI coach is starting.', async intro(){}, async handle(){ return false; } },
   chat: {
-    help: 'Just talk. I send what you say to the tutor. Say hint, or I don\'t know.',
+    help: 'Just talk. I send what you say to the coach. Say I am stuck, or hint, any time.',
     async intro(){},
     async handle(t, all, raw){
       if (!CHAT) return false;
+      if (isStuck(raw || t)){ chatSend(raw || "I don't know."); return true; }   // chatSend switches to breakdown mode
       if (/\b(hint|clue)\b/.test(t)){ chatSend('Can I have the next hint?'); return true; }
-      if (anyOf(t, ["i don't know", 'i dont know', 'no idea'])){ chatSend("I don't know."); return true; }
       if (/^(home|back|help|go home|main menu|progress|meps)\b/.test(t)) return false;
       chatSend(raw); return true;
     },

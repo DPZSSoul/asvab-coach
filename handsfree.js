@@ -170,6 +170,7 @@ const HF = {
     if (anyOf(t, ['meps', 'meps mode', 'practice test', 'full test', 'mock test', 'meps test', 'maps mode', 'meeps'])) return to('meps');
     if (anyOf(t, ['progress', 'my progress', 'my scores', 'scores', 'score report', 'line score', 'line scores'])) return to('progress');
     if (anyOf(t, ['error log', 'my misses', 'review misses', 'misses', 'mistakes', 'review my misses', 'missed questions', 'review'])) return to('review');
+    if (anyOf(t, ['ai coach', 'math coach', 'coach me', 'talk to the coach', 'ai tutor'])) return to('coach');
     if (anyOf(t, ['tutor', 'tutor me', 'teacher', 'help me learn'])) return to('tutor');
     if (anyOf(t, ['settings', 'options menu'])) return to('settings');
     if (anyOf(t, ['audio lessons', 'audio lesson', 'listen mode', 'listen only', 'podcast', 'audio mode'])) return to('audio');
@@ -363,11 +364,11 @@ const VCTX = {
     choices: () => T && !T.solved ? T.q.choices : null, pick: i => { if (!T.wrong.has(i)) tutorTry(i); },
     help: 'Say your answer, like A or Bravo. Or say I don\'t know, hint, show the answer, read the question, or try a similar one.',
     async intro(){ /* the tutor messages are read as they appear */ },
-    async handle(t, all){
+    async handle(t, all, raw){
       if (!T) return false;
       if ($('#rule') && !T.ruleDone){ if (anyOf(t, ['skip', 'next', 'similar', 'try a similar one'])) { $('#ruleOk').click(); T.ruleDone = true; } else { $('#rule').value = t.replace(/^(my rule is|the rule is)\s*/, ''); $('#ruleOk').click(); T.ruleDone = true; return true; } }
       if (T.solved && anyOf(t, ['similar', 'try a similar one', 'another one', 'another', 'next', 'yes'])){ $('#tSimilar') && $('#tSimilar').click(); return true; }
-      if (anyOf(t, ["i don't know", 'i dont know', 'no idea', 'not sure', 'dunno'])){ const b = $('#tIdk'); if (b) b.click(); return true; }
+      if (isStuck(raw || t) || anyOf(t, ["i don't know", 'i dont know', 'no idea', 'not sure', 'dunno'])){ const b = $('#tIdk'); if (b) b.click(); return true; }   // stuck -> smallest hint, no button
       if (/\b(hint|clue)\b/.test(t)){ const b = $('#tHint'); if (b) b.click(); return true; }
       if (anyOf(t, ['show the answer', 'show me the answer', 'tell me the answer', 'what is the answer', 'give up'])){ const b = $('#tShow'); if (b) b.click(); return true; }
       if (anyOf(t, ['read the question', 'read it', 'question'])){ HF.run(() => readQuestionAloud(T.q)); return true; }
@@ -375,13 +376,14 @@ const VCTX = {
       return false;
     },
   },
+  coach: { help: 'Wait a moment. The AI coach is starting.', async intro(){}, async handle(){ return false; } },
   chat: {
-    help: 'Just talk. I send what you say to the tutor. Say hint, or I don\'t know.',
+    help: 'Just talk. I send what you say to the coach. Say I am stuck, or hint, any time.',
     async intro(){},
     async handle(t, all, raw){
       if (!CHAT) return false;
+      if (isStuck(raw || t)){ chatSend(raw || "I don't know."); return true; }   // chatSend switches to breakdown mode
       if (/\b(hint|clue)\b/.test(t)){ chatSend('Can I have the next hint?'); return true; }
-      if (anyOf(t, ["i don't know", 'i dont know', 'no idea'])){ chatSend("I don't know."); return true; }
       if (/^(home|back|help|go home|main menu|progress|meps)\b/.test(t)) return false;
       chatSend(raw); return true;
     },
