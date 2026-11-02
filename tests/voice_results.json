@@ -11,7 +11,7 @@
  },
  {
   "test": "home is read aloud: streak, IT focus plan, available commands",
-  "pass": true,
+  "pass": false,
   "info": ""
  },
  {
@@ -20,7 +20,7 @@
   "info": ""
  },
  {
-  "test": "unknown speech -> short \"did not get that\" line (no command words to echo)",
+  "test": "unknown speech on home -> says what it heard + the home commands",
   "pass": true,
   "info": ""
  },
@@ -32,17 +32,17 @@
  {
   "test": "\"start\" begins a voice session and reads the question",
   "pass": true,
-  "info": "6x minus 4 equals 20 | A. 24 | B. 16 | C. 4 | D. 2.67 | Your answer?"
+  "info": "5x minus 4 equals 2x plus 11 | A. 7 | B. 4 | C. 5 | D. 3 | Your answer?"
  },
  {
   "test": "NATO answer + feedback + confidence prompt",
   "pass": true,
-  "info": "C. 4 | D. 2.67 | Your answer? | Right! Add 4: | 6x equals 24. | How sure were you?"
+  "info": "C. 5 | D. 3 | Your answer? | Right! Subtract 2x: | 3x minus 4 equals 11. | How sure were you?"
  },
  {
   "test": "confidence by voice, then waits for \"next\"",
   "pass": true,
-  "info": "6x equals 24. | How sure were you? | Say sure, shaky, or guessed. | Nice. You knew it. | This topic just needs reps. | Say next, or explain."
+  "info": "3x minus 4 equals 11. | How sure were you? | Say sure, shaky, or guessed. | Nice. You knew it. | This topic just needs reps. | Say next, or explain."
  },
  {
   "test": "\"next\" moves on",
@@ -57,7 +57,7 @@
  {
   "test": "answer by saying the choice text (wrong on purpose)",
   "pass": true,
-  "info": "1.5"
+  "info": "70"
  },
  {
   "test": "\"explain\" reads the steps",
@@ -87,7 +87,7 @@
  {
   "test": "\"end practice\" + \"yes\" ends the set and reads the score",
   "pass": true,
-  "info": "Your answer? | End this set? | Say yes or no. | You got 1 out of 2. | Good effort. Every miss teaches you something. | Say practice again, progress, or home."
+  "info": "Here is what to fix. | Number 1. You said 70. | The right answer is 35. | Area equals 1 half times 14 times 5 equals 35. | Say history to retry them. | Say practice again, retry, history, or home."
  },
  {
   "test": "\"progress\" reads the IT line-score panel",
@@ -107,12 +107,12 @@
  {
   "test": "pre-session review is read aloud and \"skip review\" starts",
   "pass": true,
-  "info": "Question. novice most nearly means: | A. beginner | B. judge | C. stranger | D. expert | Your answer?"
+  "info": "Question. abundant most nearly means: | A. dirty | B. rare | C. salty | D. plentiful | Your answer?"
  },
  {
-  "test": "lone letter heard as \"hey\" is accepted",
+  "test": "lone letter heard as \"the\" is accepted",
   "pass": true,
-  "info": "B. judge | C. stranger | D. expert | Your answer? | Right! Novice means beginner. | How sure were you?"
+  "info": "B. rare | C. salty | D. plentiful | Your answer? | Right! Abundant means plentiful. | How sure were you?"
  },
  {
   "test": "stray \"hey\" at the confidence prompt -> one short re-prompt",
@@ -125,24 +125,24 @@
   "info": ""
  },
  {
-  "test": "letter with a period / sound-alike \"a.\" is accepted",
+  "test": "letter with a period / sound-alike \"sea\" is accepted",
+  "pass": true,
+  "info": "B. quick | C. careful | D. proud | Your answer? | Right! Meticulous means careful. | How sure were you?"
+ },
+ {
+  "test": "second recognition alternative is used (\"kate||d\")",
+  "pass": true,
+  "info": "B. careless | C. nervous | D. hardworking | Your answer? | Right! Diligent means hardworking. | How sure were you?"
+ },
+ {
+  "test": "interim-only result is used (\"c\")",
+  "pass": true,
+  "info": "B. difficult | C. ordinary | D. exciting | Your answer? | Right! Mundane means ordinary. | How sure were you?"
+ },
+ {
+  "test": "ordinal \"first\" is accepted",
   "pass": true,
   "info": "B. unable | C. careless | D. lazy | Your answer? | Right! Proficient means skilled. | How sure were you?"
- },
- {
-  "test": "second recognition alternative is used (\"kate||b\")",
-  "pass": true,
-  "info": "B. unwilling | C. able | D. ready | Your answer? | Right! Reluctant means unwilling. | How sure were you?"
- },
- {
-  "test": "interim-only result is used (\"delta\")",
-  "pass": true,
-  "info": "B. rare | C. salty | D. plentiful | Your answer? | Right! Abundant means plentiful. | How sure were you?"
- },
- {
-  "test": "ordinal \"third\" is accepted",
-  "pass": true,
-  "info": "B. waste | C. refill | D. discover | Your answer? | Right! Replenish means refill. | How sure were you?"
  },
  {
   "test": "empty transcript -> short re-prompt (not the whole question)",
@@ -157,17 +157,17 @@
  {
   "test": "second miss says what it heard and reads the choices once",
   "pass": true,
-  "info": "Say Alpha, Bravo, Charlie, or Delta, or say the answer. | I heard \"banana split\". | That is not one of the choices. | A. wealthy. | B. careless. | C. nervous. | D. hardworking. | Say the letter or the answer."
+  "info": "Say Alpha, Bravo, Charlie, or Delta, or say the answer. | I heard \"banana split\". | That is not one of the choices. | A. change. | B. confirm. | C. hide. | D. doubt. | Say the letter or the answer."
  },
  {
   "test": "third miss stays quiet: it never loops",
   "pass": true,
-  "info": "That is not one of the choices. | A. wealthy. | B. careless. | C. nervous. | D. hardworking. | Say the letter or the answer."
+  "info": "That is not one of the choices. | A. change. | B. confirm. | C. hide. | D. doubt. | Say the letter or the answer."
  },
  {
   "test": "\"letter X\" then works",
   "pass": true,
-  "info": "B. careless. | C. nervous. | D. hardworking. | Say the letter or the answer. | Right! Diligent means hardworking. | How sure were you?"
+  "info": "B. confirm. | C. hide. | D. doubt. | Say the letter or the answer. | Right! Verify means confirm. | How sure were you?"
  },
  {
   "test": "\"what did you hear\" reads the transcript log",
@@ -207,7 +207,7 @@
  {
   "test": "MEPS: time left is announced at intervals (5 minutes)",
   "pass": true,
-  "info": "A. speed | B. distance | C. brightness | D. time | Your answer? | Time left: 4 minutes and 59 seconds."
+  "info": "A. become clear and dry | B. have no wind | C. turn stormy | D. stay the same for weeks | Your answer? | Time left: 4 minutes and 59 seconds."
  },
  {
   "test": "leaving MEPS asks to confirm; \"no\" stays",
@@ -216,7 +216,7 @@
  },
  {
   "test": "\"yes\" quits MEPS",
-  "pass": true,
+  "pass": false,
   "info": ""
  },
  {
@@ -282,7 +282,7 @@
  {
   "test": "spoken answers (\"three fourths\", \"3/4\", \"um ...\") pass level 4 and move to 5",
   "pass": true,
-  "info": "[{'v': 3, 'level': 5, 'placed': False, 'passed': {'4': True}, 'tries': {'4': 0}, 'best': {'4': 10}, 'log': [{'date': '2026-10-18T16:48:44.801Z', 'level': 4, 'right': 10, 'total': 10}]}, 'So the answer is 1 fifth. | Say next to see your score, explain again slower, or another one like this. | You got 10 of 10. | You passed level 4! | Next: level 5, Halves and Quarters. | Say start for level 5, lesson, or home.']"
+  "info": "[{'v': 3, 'level': 5, 'placed': False, 'passed': {'4': True}, 'tries': {'4': 0}, 'best': {'4': 10}, 'log': [{'date': '2026-11-02T20:27:34.754Z', 'level': 4, 'right': 10, 'total': 10}]}, 'You got 10 of 10. | You passed level 4! | Next: level 5, Halves and Quarters. | You got all 10 right. | Nice work. | Say start for level 5, lesson, retry, or home.']"
  },
  {
   "test": "\"what level am I\" now says level 5",
@@ -317,12 +317,12 @@
  {
   "test": "drill: 8 of 10 by voice",
   "pass": true,
-  "info": "Right. | 9 times 12? | Right. | 3 times 9? | Right. | You got 8 of 10."
+  "info": "Right. | 8 times 6? | Right. | 5 times 12? | Right. | You got 8 of 10."
  },
  {
   "test": "drill: 10 fast -> the timer gets a little faster",
   "pass": true,
-  "info": "3 times 11? | Right. | 8 times 2? | Right. | You got 10 of 10. | Nice speed. The timer is now 9.5 seconds."
+  "info": "3 times 11? | Right. | 2 times 5? | Right. | You got 10 of 10. | Nice speed. The timer is now 9.5 seconds."
  },
  {
   "test": "\"vocab by ear\" says a word, meaning and hook, then asks",
@@ -402,7 +402,7 @@
  {
   "test": "tutor: spoken wrong answer -> kind check + hint 1",
   "pass": true,
-  "info": "Or say \"I don't know\". | Mistakes help your brain learn. | Not yet. B is not it. | That is OK. | Let's look again. | Hint 1 (the idea):"
+  "info": "Or say \"I don't know\". | Mistakes help your brain learn. | Not yet. A is not it. | That is OK. | Let's look again. | Hint 1 (the idea):"
  },
  {
   "test": "tutor: \"I don't know\" -> hint 2",
@@ -461,13 +461,13 @@
  },
  {
   "test": "\"back\" goes to the last screen",
-  "pass": true,
+  "pass": false,
   "info": ""
  },
  {
   "test": "listening restarts by itself after silence (onend)",
   "pass": true,
-  "info": "175->178"
+  "info": "285->287"
  },
  {
   "test": "recovers from a recognition error and keeps going",
@@ -496,8 +496,8 @@
  },
  {
   "test": "no console errors in the voice run",
-  "pass": true,
-  "info": "[]"
+  "pass": false,
+  "info": "[\"Access to fetch at 'https://asvab-coach-proxy.dpzssoul.workers.dev/' from origin 'http://localhost:8765' has been blocked by CORS policy: The 'Access-Control-Allow-Origin' header has a value 'null' that is not equal to the supplied origin. Have the server send the header with a valid value.\", 'Failed to load resource: net::ERR_FAILED']"
  },
  {
   "test": "auto-resume: hands-free starts by itself when remembered and mic is allowed",

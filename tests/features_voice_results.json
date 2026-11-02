@@ -1,8 +1,8 @@
 [
  {
   "test": "home reads the weekly nudge and today's plan",
-  "pass": true,
-  "info": "Then Paragraph Comprehension. | Not enough data yet. | Do 10 or more. | This is an estimate only. | Confirm with a recruiter. | Say today's plan for 10 minutes of study."
+  "pass": false,
+  "info": "This is an estimate only. | Confirm with a recruiter. | Say math ladder, today's plan, history, or weekly test. | Say help for more. | I am still listening. | Say help to hear what you can say."
  },
  {
   "test": "\"weekly test\" opens it and reads counts",
@@ -81,8 +81,8 @@
  },
  {
   "test": "recap read aloud: score, the miss, streak",
-  "pass": true,
-  "info": "Daily goal done. | Streak: 1 day. | Say home, progress, or another plan."
+  "pass": false,
+  "info": "Say home, progress, or another plan. | I am still listening. | Say help to hear what you can say."
  },
  {
   "test": "\"real test passages\" (locked) offers try it anyway",

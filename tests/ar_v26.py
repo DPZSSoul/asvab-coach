@@ -59,6 +59,23 @@ with sync_playwright() as pw:
     p.evaluate("window.__heard.push('back to the question')"); time.sleep(5)
     ok('back to question context', p.evaluate("HF.ctxName") == 'question')
     p.evaluate("void HF.stop()")
+    # v2.6.1: sound-alike voice routing on home
+    ok('canon arithmetic latter', p.evaluate("voiceCanon('Arithmetic latter.')") == 'math ladder')
+    ok('canon keeps letter b', p.evaluate("voiceCanon('letter B')") == 'letter b')
+    ok('canon level three', p.evaluate("voiceCanon('level three')") == 'level 3')
+    p.evaluate("go('home')"); time.sleep(0.5); p.evaluate("void HF.start()"); time.sleep(1.5); p.evaluate("window.__heard.push('no')"); time.sleep(3)
+    def home_say(phrase):
+        p.evaluate("go('home')"); p.wait_for_function("HF.ctxName === 'home'"); m = p.evaluate("window.__spoken.length")
+        try: p.wait_for_function("m => window.__spoken.slice(m).join(' ').includes('Say help for more')", arg=m, timeout=15000)
+        except Exception: pass
+        m = p.evaluate("window.__spoken.length"); p.evaluate("t => window.__heard.push(t)", phrase); time.sleep(3); return m
+    for phrase, want in [('arithmetic ladder', 'ladder'), ('arithmetic latter', 'ladder'), ('math letter', 'ladder'), ('level three', 'ladder/3'), ("todays plan", 'plan'), ('history||his tree', 'history'), ('blah||math ladders', 'ladder'), ('speed drill', 'drill')]:
+        home_say(phrase); h = p.evaluate("location.hash.slice(1)")
+        ok(f'voice "{phrase}" -> {want}', h.startswith(want), h + ' | ' + p.evaluate("(document.getElementById('hfHeard')||{}).textContent||''"))
+    m = home_say('purple monkey')
+    ok('unknown on home speaks heard + options', any('I heard purple monkey' in x for x in p.evaluate('m => window.__spoken.slice(m)', m)), str(p.evaluate('window.__spoken')[-2:]))
+    ok('heard line shown', 'Heard: "purple monkey"' in p.evaluate("document.getElementById('hfHeard').textContent"))
+    p.evaluate("void HF.stop(false)")
     # coach offline
     p.route('**/*workers.dev*/**', lambda r: r.abort()); time.sleep(2); p.goto(BASE + "index.html"); time.sleep(2); p.evaluate("void go('coach')"); time.sleep(1); print(p.evaluate("location.hash")); 
     try: p.wait_for_function("!!(document.querySelector('#offlineGo') || document.querySelector('#chatIn'))", timeout=20000)

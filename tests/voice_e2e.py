@@ -42,7 +42,7 @@ with sync_playwright() as pw:
     ok('voice yes/no answers the remember question', say('no', 'Tap Start hands-free next time') and p.evaluate('settings.hfAuto') is False)
     ok('home is read aloud: streak, IT focus plan, available commands', heard('Streak') and heard('IT focus for today') and heard('Say a section name'))
     ok('help lists commands', say('help', 'You can always say: home, back, repeat'))
-    ok('unknown speech -> short "did not get that" line (no command words to echo)', say('purple monkey dishwasher', "Sorry, I did not get that"))
+    ok('unknown speech on home -> says what it heard + the home commands', say('purple monkey dishwasher', "I heard purple monkey dishwasher. Say math ladder"))
     # ---- section -> answer -> next ----
     ok('fuzzy section name "math knowlege" opens Math Knowledge', say('math knowlege', 'Say start to begin') and 'Knowledge' in p.inner_text('h1'))
     say('five questions', '5 questions')

@@ -15,6 +15,45 @@ function fuzzyHas(t, phrase){
   }
   return false;
 }
+/* v2.6.1: voice command clean-up. Sound-alikes and number words become the words the router knows. */
+const HF_NUM_WORDS = { one:1, won:1, two:2, too:2, to:2, three:3, tree:3, four:4, for:4, fore:4, five:5, six:6, seven:7, eight:8, ate:8, nine:9, ten:10, eleven:11, twelve:12, thirteen:13, fourteen:14, fifteen:15, sixteen:16, seventeen:17, eighteen:18, nineteen:19, twenty:20 };
+const VOICE_ALIASES = [
+  [/\b(the )?(ladders|laddie|ladda)\b/g, 'ladder'], [/\bthe ladder\b/g, 'ladder'],
+  // "letter" is also an answer word ("letter b"), so only after math or arithmetic
+  [/\b(math|maths|arithmetic|arithmetics|arithmatic|mass|meth) (latter|letter|lad|lather|leather|later)\b/g, '$1 ladder'],
+  [/\b(arithmetics|arithmetic|arithmatic|maths|mass|meth)\b(?= ladder)/g, 'math'],
+  [/\bmath ladder\b/g, 'math ladder'],
+  [/\b(to day s|to days|today s|todays|today|2 days|two days|to day)( plan| plans| plane)\b/g, 'todays plan'],
+  [/\btodays plans\b/g, 'todays plan'],
+  [/\b(histories|histry|history s|his story)\b/g, 'history'],
+  [/\b(weekly tests|weakly test|weekly tess|weekly text|week lee test|weekly testing|weakly tests)\b/g, 'weekly test'],
+];
+function voiceCanon(s){
+  let t = normalize(s).replace(/\.$/, '');
+  // "level three" / "level for" -> "level 3": only right after "level", so answers like "two" stay as they are
+  t = t.replace(/\blevel (\w+)\b/g, (m, w) => HF_NUM_WORDS[w] != null ? 'level ' + HF_NUM_WORDS[w] : m);
+  for (const [re, to] of VOICE_ALIASES) t = t.replace(re, to);
+  return t.replace(/\s+/g, ' ').trim();
+}
+// token similarity 0..1 between a heard phrase and a command (each command word must find a close heard word)
+function phraseSim(t, cmd){
+  const tw = t.split(' ').filter(Boolean), cw = cmd.split(' ').filter(Boolean); if (!tw.length || !cw.length) return 0;
+  let sum = 0; for (const w of cw){ let b = 0; for (const x of tw){ const d = lev(x, w); b = Math.max(b, 1 - d / Math.max(x.length, w.length)); } sum += b; }
+  const extra = Math.max(0, tw.length - cw.length) * 0.08;   // long background talk scores lower
+  return sum / cw.length - extra;
+}
+const FUZZY_MIN = 0.78;
+function bestCommand(alts, cmds){ let best = null;
+  for (const t of alts) for (const c of cmds){ const sc = phraseSim(t, c.say); if (sc >= FUZZY_MIN && (!best || sc > best.score)) best = { cmd:c, score:sc, heard:t }; }
+  return best; }
+// the commands on the home screen, plus every visible tile label
+function homeCommands(){
+  const base = [['math ladder', () => go('ladder')], ['todays plan', () => go('plan', 'new')], ['history', () => go('history')], ['weekly test', () => go('weekly')]].map(([say, run]) => ({ say, label:say, run }));
+  const tiles = [...document.querySelectorAll('#app button.tile, main button.tile, button.tile')].filter(b => b.offsetParent !== null || b.closest('details'));
+  for (const b of tiles){ const lab = (b.childNodes[0] && b.childNodes[0].textContent || '').trim(); const say = voiceCanon(lab); if (say && !base.some(c => c.say === say)) base.push({ say, label:lab, run:() => b.click() }); }
+  return base;
+}
+function showMatch(heard, matched){ const hv = document.getElementById('hfHeard'); if (!hv) return; hv.textContent = `Heard: "${heard}"` + (matched ? ` → ${matched}` : ''); }
 const anyOf = (t, list) => list.some(p => fuzzyHas(t, p.replace(/'/g, '')));
 const SECTION_WORDS = {
   AR: ['arithmetic reasoning', 'arithmetic', 'math word problems'],
@@ -107,10 +146,13 @@ const HF = {
     this.on = false; document.body.classList.remove('hf-on'); renderHfBar(); toast(msg); Speech.say(msg + ' You can still tap the buttons.');
   },
   async handle(alts, raw){
-    const all = alts.map(normalize).filter(Boolean); if (!all.length) return;
+    const all = [...new Set(alts.map(voiceCanon).filter(Boolean))]; if (!all.length) return;
     let t = all[0];
-    if (!(this.ctx && this.ctx.noEcho && this.ctx.noEcho()) && isEcho(t)){ VOICE_LOG.length && (VOICE_LOG[VOICE_LOG.length - 1].echo = true); return; }   // it heard itself
-    this.heard = raw; const hv = document.getElementById('hfHeard'); if (hv) hv.textContent = raw ? `I heard: "${raw}"` : '';
+    const onQuestion = !!(this.ctx && this.ctx.choices && this.ctx.choices());
+    // a clear command in any alternative wins over a garbled first guess (never on a question screen, where answers come first)
+    if (!onQuestion){ const cmdAlt = all.find(x => /\b(math ladder|ladder|todays plan|history|weekly test)\b/.test(x)); if (cmdAlt) t = cmdAlt; }
+    if (!(this.ctx && this.ctx.noEcho && this.ctx.noEcho()) && isEcho(normalize(alts[0] || ''))){ VOICE_LOG.length && (VOICE_LOG[VOICE_LOG.length - 1].echo = true); return; }   // it heard itself
+    this.heard = raw; showMatch(raw || t, '');
     if (settings.hfWake){ const w = all.find(x => /^(hey )?coach\b/.test(x)); if (!w && !this.pending && !this.dictation) return; if (w) t = w.replace(/^(hey )?coach\b\s*/, ''); if (!t) { await this.say('Yes?'); return; } }
     if (this.paused){ if (anyOf(t, ['resume', 'start listening', 'wake up', 'continue', 'i am back', 'im back', 'unpause'])) this.resume(); return; }
     if (this.pending){
@@ -140,7 +182,14 @@ const HF = {
     if (/\bwhat level am i\b|\bmy level\b|\bwhat level\b|\bwhich level\b/.test(t)){ await this.say(levelReport()); return; }
     if (this.ctx && this.ctx.handle){ const done = await this.ctx.handle(t, all, raw, this.arg); if (done) return; }
     if (/\b(repeat|again|say that again|what was that|say it again|one more time)\b/.test(t)){ this.enter(this.ctxName, this.arg); return; }
-    if (!(this.ctx && this.ctx.strictNav && t.split(' ').length > 3) && await this.nav(t)) return;   // in listen-only mode, long background talk never navigates
+    if (!(this.ctx && this.ctx.strictNav && t.split(' ').length > 3)){   // in listen-only mode, long background talk never navigates
+      const before = location.hash;
+      if (await this.nav(t)){ showMatch(raw || t, location.hash.slice(1) || 'home'); return; }
+      if (!onQuestion) for (const a of all.slice(1)) if (await this.nav(a)){ showMatch(raw || a, location.hash.slice(1) || before); return; }
+      // fuzzy: on home only (and never on a question), match the heard words to a command or a tile label
+      if (!onQuestion && this.ctxName === 'home'){ const b = bestCommand(all, homeCommands()); if (b){ showMatch(raw || t, b.cmd.label); b.cmd.run(); return; } }
+    }
+    if (!onQuestion && this.ctxName === 'home'){ showMatch(raw || t, 'no match'); await this.say(`I heard ${raw || t}. Say math ladder, today's plan, history, or weekly test.`); return; }
     if (this.ctx && this.ctx.choices && this.ctx.choices()){ await this.missed(raw); return; }
     if (this.ctx && this.ctx.onMiss){ await this.ctx.onMiss(raw, this.arg); return; }
     await this.say("Sorry, I did not get that. Say help to hear what you can say.");

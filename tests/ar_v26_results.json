@@ -85,6 +85,71 @@
   ""
  ],
  [
+  "canon arithmetic latter",
+  true,
+  ""
+ ],
+ [
+  "canon keeps letter b",
+  true,
+  ""
+ ],
+ [
+  "canon level three",
+  true,
+  ""
+ ],
+ [
+  "voice \"arithmetic ladder\" -> ladder",
+  true,
+  "ladder | Heard: \"arithmetic ladder\" \u2192 ladder"
+ ],
+ [
+  "voice \"arithmetic latter\" -> ladder",
+  true,
+  "ladder | Heard: \"arithmetic latter\" \u2192 ladder"
+ ],
+ [
+  "voice \"math letter\" -> ladder",
+  true,
+  "ladder | Heard: \"math letter\" \u2192 ladder"
+ ],
+ [
+  "voice \"level three\" -> ladder/3",
+  true,
+  "ladder/3 | Heard: \"level three\" \u2192 ladder/3"
+ ],
+ [
+  "voice \"todays plan\" -> plan",
+  true,
+  "plan/new | Heard: \"todays plan\" \u2192 plan/new"
+ ],
+ [
+  "voice \"history||his tree\" -> history",
+  true,
+  "history | Heard: \"history\" \u2192 history"
+ ],
+ [
+  "voice \"blah||math ladders\" -> ladder",
+  true,
+  "ladder | Heard: \"blah\" \u2192 ladder"
+ ],
+ [
+  "voice \"speed drill\" -> drill",
+  true,
+  "drill | Heard: \"speed drill\" \u2192 drill"
+ ],
+ [
+  "unknown on home speaks heard + options",
+  true,
+  "['I heard purple monkey.', \"Say math ladder, today's plan, history, or weekly test.\"]"
+ ],
+ [
+  "heard line shown",
+  true,
+  ""
+ ],
+ [
   "coach screen: offline fallback or chat",
   true,
   ""
