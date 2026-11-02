@@ -363,7 +363,7 @@ function parseVoice(alts, choices){
 // the Arithmetic Reasoning coach system prompt itself; the browser never has a key.
 // Advanced fallback: his own key in Settings (kept only in this browser) -> call the endpoint directly.
 // Local dev: server.py's same-origin api/chat.
-const AI_PROXY_URL = '';   // paste your deployed proxy URL here (see proxy/README.md), e.g. https://asvab-coach-proxy.NAME.workers.dev
+const AI_PROXY_URL = 'https://asvab-coach-proxy.dpzssoul.workers.dev';   // paste your deployed proxy URL here (see proxy/README.md), e.g. https://asvab-coach-proxy.NAME.workers.dev
 const proxyUrl = () => String(settings.proxyUrl || AI_PROXY_URL || '').replace(/\/+$/, '');
 let proxyState = null, localProxy = null;
 async function proxyAvailable(){
