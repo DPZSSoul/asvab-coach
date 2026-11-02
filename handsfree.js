@@ -76,7 +76,7 @@ const HF = {
     if (this.looping) return; this.looping = true;
     try {
       while (this.on){
-        if (this.talking > 0 || (Speech.ok && (speechSynthesis.speaking || speechSynthesis.pending))){ this.quietSince = 0; await sleep(120); continue; }
+        if (this.talking > 0 || Speech.busy()){ this.quietSince = 0; await sleep(120); continue; }
         if (Date.now() - (Speech.lastEnd || 0) < ECHO_GAP_MS){ await sleep(80); continue; }
         this.setStage('listening');
         const lo = this.ctx && this.ctx.listen ? this.ctx.listen(this.arg) : null;   // a screen can ask for a longer or continuous listen
