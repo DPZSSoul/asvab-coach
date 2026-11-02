@@ -1,0 +1,97 @@
+[
+ [
+  "home shows math first",
+  true,
+  ""
+ ],
+ [
+  "no italics tags",
+  true,
+  ""
+ ],
+ [
+  "isStuck phrases",
+  true,
+  ""
+ ],
+ [
+  "isStuck negatives",
+  true,
+  ""
+ ],
+ [
+  "percent tens trick first",
+  true,
+  "Use the tens trick. Think of 20 as tens. How many tens are in 20?"
+ ],
+ [
+  "no step text contains the answer (bank)",
+  true,
+  ""
+ ],
+ [
+  "recap shown",
+  true,
+  "Recap\nRead\nYou missed 1. Here is what to fix.\nNumber 1. You said 8.\nThe right answer is 10.\n1 quart = 2 pints.\nSay histo"
+ ],
+ [
+  "recap lines under 12 words",
+  true,
+  "['You missed 1. Here is what to fix.', 'Number 1. You said 8.', 'The right answer is 10.', '1 quart = 2 pints.', 'Say history to retry them.']"
+ ],
+ [
+  "recap spoken",
+  true,
+  ""
+ ],
+ [
+  "history stored 2",
+  true,
+  ""
+ ],
+ [
+  "history wrong filter",
+  true,
+  ""
+ ],
+ [
+  "retry starts",
+  true,
+  ""
+ ],
+ [
+  "ladder answer in history",
+  true,
+  ""
+ ],
+ [
+  "voice stuck -> breakdown (ladder)",
+  true,
+  "What is 10% of 30?"
+ ],
+ [
+  "voice advances a step",
+  true,
+  "1->1"
+ ],
+ [
+  "voice \"help\" on question -> breakdown",
+  true,
+  ""
+ ],
+ [
+  "back to question context",
+  true,
+  ""
+ ],
+ [
+  "coach screen: offline fallback or chat",
+  true,
+  ""
+ ],
+ [
+  "no console errors",
+  true,
+  ""
+ ]
+]

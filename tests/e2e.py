@@ -21,10 +21,10 @@ with sync_playwright() as pw:
     errors = []
     p = new_page(ctx, errors)
     p.goto(BASE + 'index.html'); p.wait_for_selector('h1')
-    ok('home loads', 'Ready to study' in p.inner_text('h1'))
+    ok('home loads', 'Ready for math' in p.inner_text('h1'))
     ok('home has one big Start hands-free control', p.locator('#hfStartBig').count() == 1)
-    ok('six section tiles incl. Electronics Information', all(p.locator(f"button.tile:has-text('{n}')").count() for n in ['Arithmetic Reasoning','Word Knowledge','Paragraph Comprehension','Math Knowledge','General Science','Electronics Information']))
-    ok('home IT focus plan lists all 6 IT-formula subtests', p.locator('#itFocus li[data-sec]').count() == 6 and '212' in p.inner_text('#itFocus') and p.locator('#itFocus [data-focus]').count() == 2)
+    ok('six section tiles incl. Electronics Information', p.locator('#arTile').count() == 1 and all(p.locator(f"button.tile:has-text('{n}')").count() for n in ['Word Knowledge','Paragraph Comprehension','Math Knowledge','General Science','Electronics Information']))
+    ok('home IT focus plan lists all 6 IT-formula subtests', p.locator('#itFocus li[data-sec]').count() == 6 and '212' in p.text_content('#itFocus') and p.locator('#itFocus [data-focus]').count() == 2)
     ok('bank: EI section has 60+ questions, every section 50+', p.evaluate("Object.keys(BANK.sections).every(k => sectionPool(k).length >= 50) && sectionPool('EI').length >= 60"), p.evaluate("Object.fromEntries(Object.keys(BANK.sections).map(k=>[k,sectionPool(k).length]))"))
     p.evaluate("go('practice','EI')"); p.click('#startBtn')
     if p.locator('#skipBtn').count(): p.click('#skipBtn')
@@ -189,7 +189,7 @@ with sync_playwright() as pw:
     # finishing the last level unlocks the real questions
     p.evaluate("(() => { const s = ladState(); s.passed[27] = true; s.level = 27; ladSave(s); })()"); p.evaluate("go('practice','AR')")
     ok('after the bridge level is passed, AR uses the real questions (adaptive practice)', p.locator('#startBtn').count() == 1 and p.locator('#arBack').count() == 1 and '#practice/AR' in p.url)
-    p.evaluate("go('home')"); ok('home AR tile shows the normal level once the track is done', 'of 3' in p.inner_text("button.tile:has-text('Arithmetic Reasoning')"))
+    p.evaluate("go('home')"); ok('home AR tile shows the normal level once the track is done', 'Math practice' in p.inner_text('#arTile'))
     p.evaluate("localStorage.removeItem('asvab.ladder')")
     # ---- learn by ear (touch) ----
     for scr in ['audio', 'drill', 'vocab', 'readalong']:
@@ -239,7 +239,7 @@ with sync_playwright() as pw:
     ok('progress IT panel: progress per rule, focus, AFQT, recruiter label', '= 185' in pr and 'Need about 27 more points' in pr and '= 165' in pr and 'Meets the line' in pr and 'Focus: Electronics Information' in pr and 'AFQT = 2 x VE + AR + MK' in pr and 'Estimate only, confirm with a recruiter' in pr, pr[:300].replace('\n',' '))
     p.evaluate("go('home')")
     ok('home IT focus ranks weakest IT subtest first (EI) with a practice button', p.locator('#itFocus li[data-sec]').first.get_attribute('data-sec') == 'EI' and p.locator('#itFocus [data-focus]').first.get_attribute('data-focus') == 'EI')
-    p.click('#itFocus [data-focus="EI"]'); ok('IT focus button opens that practice', 'Electronics Information' in p.inner_text('h1'))
+    p.evaluate("document.querySelector('details.more').open = true"); p.click('#itFocus [data-focus="EI"]'); ok('IT focus button opens that practice', 'Electronics Information' in p.inner_text('h1'))
 
     # ---- AI generation (mocked OpenAI-compatible endpoint, direct key path) ----
     calls = []
@@ -280,13 +280,13 @@ with sync_playwright() as pw:
     p.goto(BASE + 'index.html'); p.wait_for_function('navigator.serviceWorker && navigator.serviceWorker.controller || false', timeout=8000) if p.evaluate("navigator.serviceWorker.ready.then(()=>true)") else None
     p.reload(); p.wait_for_selector('h1'); ctl = p.evaluate('!!navigator.serviceWorker.controller')
     ctx.set_offline(True); p.reload(); p.wait_for_selector('h1')
-    ok('service worker controls page and app loads offline', ctl and 'Ready to study' in p.inner_text('h1'))
+    ok('service worker controls page and app loads offline', ctl and 'Ready for math' in p.inner_text('h1'))
     p.evaluate("go('practice','MK')"); p.click('#startBtn')
     if p.locator('#skipBtn').count(): p.click('#skipBtn')
     ok('practice works offline', p.locator('.choice').count() == 4)
     ctx.set_offline(False)
     swt = p.evaluate("fetch('sw.js',{cache:'no-store'}).then(r=>r.text())"); keys = p.evaluate('caches.keys()')
-    ok('service worker version bumped (asvab-coach-v5, network-first)', "asvab-coach-v5" in swt and 'network-first' in swt and 'asvab-coach-v5' in keys and 'asvab-coach-v4' not in keys, keys)
+    ok('service worker version bumped (asvab-coach-v8, network-first)', "asvab-coach-v8" in swt and 'network-first' in swt and 'asvab-coach-v8' in keys and 'asvab-coach-v4' not in keys, keys)
     man = p.evaluate("fetch('manifest.webmanifest').then(r=>r.json())"); ok('manifest valid with icons', man['name'] == 'ASVAB Coach' and len(man['icons']) == 2)
 
     # ---- single self-contained file over file:// ----
