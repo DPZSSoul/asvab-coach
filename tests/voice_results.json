@@ -107,12 +107,12 @@
  {
   "test": "pre-session review is read aloud and \"skip review\" starts",
   "pass": true,
-  "info": "Question. abundant most nearly means: | A. dirty | B. rare | C. salty | D. plentiful | Your answer?"
+  "info": "Question. verify most nearly means: | A. change | B. confirm | C. hide | D. doubt | Your answer?"
  },
  {
-  "test": "lone letter heard as \"the\" is accepted",
+  "test": "lone letter heard as \"bee\" is accepted",
   "pass": true,
-  "info": "B. rare | C. salty | D. plentiful | Your answer? | Right! Abundant means plentiful. | How sure were you?"
+  "info": "B. confirm | C. hide | D. doubt | Your answer? | Right! Verify means confirm. | How sure were you?"
  },
  {
   "test": "stray \"hey\" at the confidence prompt -> one short re-prompt",
@@ -125,24 +125,24 @@
   "info": ""
  },
  {
-  "test": "letter with a period / sound-alike \"sea\" is accepted",
+  "test": "letter with a period / sound-alike \"a.\" is accepted",
   "pass": true,
-  "info": "B. quick | C. careful | D. proud | Your answer? | Right! Meticulous means careful. | How sure were you?"
+  "info": "B. very loud | C. similar | D. soft | Your answer? | Right! Distinct means clearly different. | How sure were you?"
  },
  {
   "test": "second recognition alternative is used (\"kate||d\")",
   "pass": true,
-  "info": "B. careless | C. nervous | D. hardworking | Your answer? | Right! Diligent means hardworking. | How sure were you?"
+  "info": "B. angry | C. hungry | D. tired | Your answer? | Right! Weary means tired. | How sure were you?"
  },
  {
   "test": "interim-only result is used (\"c\")",
   "pass": true,
-  "info": "B. difficult | C. ordinary | D. exciting | Your answer? | Right! Mundane means ordinary. | How sure were you?"
+  "info": "B. rude | C. thrifty | D. greedy | Your answer? | Right! Frugal means thrifty. | How sure were you?"
  },
  {
-  "test": "ordinal \"first\" is accepted",
+  "test": "ordinal \"second\" is accepted",
   "pass": true,
-  "info": "B. unable | C. careless | D. lazy | Your answer? | Right! Proficient means skilled. | How sure were you?"
+  "info": "B. unwilling | C. able | D. ready | Your answer? | Right! Reluctant means unwilling. | How sure were you?"
  },
  {
   "test": "empty transcript -> short re-prompt (not the whole question)",
@@ -157,17 +157,17 @@
  {
   "test": "second miss says what it heard and reads the choices once",
   "pass": true,
-  "info": "Say Alpha, Bravo, Charlie, or Delta, or say the answer. | I heard \"banana split\". | That is not one of the choices. | A. change. | B. confirm. | C. hide. | D. doubt. | Say the letter or the answer."
+  "info": "Say Alpha, Bravo, Charlie, or Delta, or say the answer. | I heard \"banana split\". | That is not one of the choices. | A. enough. | B. late. | C. little. | D. free. | Say the letter or the answer."
  },
  {
   "test": "third miss stays quiet: it never loops",
   "pass": true,
-  "info": "That is not one of the choices. | A. change. | B. confirm. | C. hide. | D. doubt. | Say the letter or the answer."
+  "info": "That is not one of the choices. | A. enough. | B. late. | C. little. | D. free. | Say the letter or the answer."
  },
  {
   "test": "\"letter X\" then works",
   "pass": true,
-  "info": "B. confirm. | C. hide. | D. doubt. | Say the letter or the answer. | Right! Verify means confirm. | How sure were you?"
+  "info": "B. late. | C. little. | D. free. | Say the letter or the answer. | Right! Ample means enough. | How sure were you?"
  },
  {
   "test": "\"what did you hear\" reads the transcript log",
@@ -207,7 +207,7 @@
  {
   "test": "MEPS: time left is announced at intervals (5 minutes)",
   "pass": true,
-  "info": "A. become clear and dry | B. have no wind | C. turn stormy | D. stay the same for weeks | Your answer? | Time left: 4 minutes and 59 seconds."
+  "info": "A. air | B. water | C. steel | D. a vacuum | Your answer? | Time left: 4 minutes and 59 seconds."
  },
  {
   "test": "leaving MEPS asks to confirm; \"no\" stays",
@@ -282,7 +282,7 @@
  {
   "test": "spoken answers (\"three fourths\", \"3/4\", \"um ...\") pass level 4 and move to 5",
   "pass": true,
-  "info": "[{'v': 3, 'level': 5, 'placed': False, 'passed': {'4': True}, 'tries': {'4': 0}, 'best': {'4': 10}, 'log': [{'date': '2026-11-02T20:27:34.754Z', 'level': 4, 'right': 10, 'total': 10}]}, 'You got 10 of 10. | You passed level 4! | Next: level 5, Halves and Quarters. | You got all 10 right. | Nice work. | Say start for level 5, lesson, retry, or home.']"
+  "info": "[{'v': 3, 'level': 5, 'placed': False, 'passed': {'4': True}, 'tries': {'4': 0}, 'best': {'4': 10}, 'log': [{'date': '2026-11-03T08:46:26.363Z', 'level': 4, 'right': 10, 'total': 10}]}, 'You got 10 of 10. | You passed level 4! | Next: level 5, Halves and Quarters. | You got all 10 right. | Nice work. | Say start for level 5, lesson, retry, or home.']"
  },
  {
   "test": "\"what level am I\" now says level 5",
@@ -317,12 +317,12 @@
  {
   "test": "drill: 8 of 10 by voice",
   "pass": true,
-  "info": "Right. | 8 times 6? | Right. | 5 times 12? | Right. | You got 8 of 10."
+  "info": "Right. | 2 times 2? | Right. | 10 times 3? | Right. | You got 8 of 10."
  },
  {
   "test": "drill: 10 fast -> the timer gets a little faster",
   "pass": true,
-  "info": "3 times 11? | Right. | 2 times 5? | Right. | You got 10 of 10. | Nice speed. The timer is now 9.5 seconds."
+  "info": "11 times 10? | Right. | 2 times 9? | Right. | You got 10 of 10. | Nice speed. The timer is now 9.5 seconds."
  },
  {
   "test": "\"vocab by ear\" says a word, meaning and hook, then asks",
@@ -357,7 +357,7 @@
  {
   "test": "\"next lesson\" jumps ahead",
   "pass": true,
-  "info": "A quarter means cut into 4 equal parts. | Picture a dollar. | Half a dollar is 50 cents. | A quarter is 25 cents. | abundant. | abundant means more than enough; plenty."
+  "info": "A quarter means cut into 4 equal parts. | Picture a dollar. | Half a dollar is 50 cents. | A quarter is 25 cents. | adjacent. | adjacent means next to."
  },
  {
   "test": "\"pause\" pauses, \"resume\" goes on",
@@ -402,7 +402,7 @@
  {
   "test": "tutor: spoken wrong answer -> kind check + hint 1",
   "pass": true,
-  "info": "Or say \"I don't know\". | Mistakes help your brain learn. | Not yet. A is not it. | That is OK. | Let's look again. | Hint 1 (the idea):"
+  "info": "Or say \"I don't know\". | You are thinking like a technician. | Not yet. B is not it. | That is OK. | Let's look again. | Hint 1 (the idea):"
  },
  {
   "test": "tutor: \"I don't know\" -> hint 2",

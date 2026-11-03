@@ -1,0 +1,122 @@
+[
+ [
+  "version 2.7.0",
+  true,
+  ""
+ ],
+ [
+  "no italics tags",
+  true,
+  ""
+ ],
+ [
+  "home start card has Test mic + lock note",
+  true,
+  ""
+ ],
+ [
+  "mic chip shown in bar",
+  true,
+  "Mic: Listening"
+ ],
+ [
+  "suspend: flags, timer stopped, snapshot saved",
+  true,
+  "{'ctxName': 'question', 'hash': '#home'}"
+ ],
+ [
+  "timer frozen while hidden",
+  true,
+  "218 -> 218"
+ ],
+ [
+  "hands-free still on while hidden",
+  true,
+  ""
+ ],
+ [
+  "wake: welcome back + same question re-read",
+  true,
+  "Welcome back. Here is question 2 again: Question. A shirt costs $40. It is on sale for 20 percent off. What is the sale price? A. $38.00 B. "
+ ],
+ [
+  "wake: timer restarts from saved left",
+  true,
+  "218 216 215"
+ ],
+ [
+  "errors while hidden keep hands-free on",
+  true,
+  "paused"
+ ],
+ [
+  "network error: chip Offline, hands-free stays on",
+  true,
+  "Mic: Offline"
+ ],
+ [
+  "chip states",
+  true,
+  "['Mic: Listening', 'Mic: Heard nothing', 'Mic: Blocked', 'Mic: No mic', 'Mic: Offline', 'Mic: Browser unsupported']"
+ ],
+ [
+  "cold boot: same question, hands-free on, welcome",
+  true,
+  "Welcome back. Here is question 3 again: Question. Three pencils cost $0.90. At that price, how much do 10 pencils cost? "
+ ],
+ [
+  "cold boot: timer from saved left",
+  true,
+  "218.5 -> 215.5"
+ ],
+ [
+  "snapshot cleared after restore",
+  true,
+  ""
+ ],
+ [
+  "old snapshot ignored",
+  true,
+  ""
+ ],
+ [
+  "audio lessons: no wake lock in hands-free",
+  true,
+  ""
+ ],
+ [
+  "settings mic card + headset note",
+  true,
+  ""
+ ],
+ [
+  "test mic runs getUserMedia then a listen",
+  true,
+  "I heard nothing. Speak louder or move closer to the mic."
+ ],
+ [
+  "mic kinds",
+  true,
+  ""
+ ],
+ [
+  "mic help text",
+  true,
+  ""
+ ],
+ [
+  "no permission: tap button + question visible",
+  true,
+  ""
+ ],
+ [
+  "tap continues on same question with hint",
+  true,
+  "[True, 1, 1, 98.499]"
+ ],
+ [
+  "no console errors",
+  true,
+  ""
+ ]
+]

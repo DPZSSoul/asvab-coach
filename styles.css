@@ -98,3 +98,10 @@ details.more{ border:3px solid var(--line); border-radius:14px; padding:6px 16px
 details.more > summary{ font-weight:bold; font-size:1.05rem; cursor:pointer; min-height:48px; display:flex; align-items:center; }
 .hist-item .stem{ margin:.4em 0; }
 #bdCtl input{ flex:0 1 220px; }
+/* v2.7.0 mic chip, mic test, tap to continue */
+.mic-chip{font-weight:700;padding:2px 10px;border-radius:12px;border:2px solid #111;background:#fff}
+.mic-chip.ok{background:#c8f7c5}.mic-chip.warn{background:#ffe9a8}.mic-chip.bad{background:#ffc2c2}
+.mic-test .meter{height:14px;border:2px solid currentColor;border-radius:7px;overflow:hidden;margin:8px 0}
+.mic-test .mt-level{height:100%;background:#1a7f37;transition:width .08s}
+.hf-continue{position:fixed;left:0;right:0;bottom:0;z-index:90;background:rgba(0,58,140,.97);color:#fff;padding:16px;text-align:center}
+.hf-continue .hf-start{width:100%;font-size:1.6rem;min-height:80px}

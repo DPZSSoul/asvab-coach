@@ -115,17 +115,24 @@ const HF = {
     if (this.looping) return; this.looping = true;
     try {
       while (this.on){
+        if (this.suspended || document.hidden){ this.setMic('paused'); await this.waitVisible(); continue; }   // v2.7.0: screen off -> wait, never give up
         if (this.talking > 0 || Speech.busy()){ this.quietSince = 0; await sleep(120); continue; }
         if (Date.now() - (Speech.lastEnd || 0) < ECHO_GAP_MS){ await sleep(80); continue; }
         this.setStage('listening');
         const lo = this.ctx && this.ctx.listen ? this.ctx.listen(this.arg) : null;   // a screen can ask for a longer or continuous listen
         const lms = this.ctx && this.ctx.listenMs ? (typeof this.ctx.listenMs === 'function' ? this.ctx.listenMs(this.arg) : this.ctx.listenMs) : 0;
-        const t0 = Date.now(); this.listenGap = t0 - (Speech.lastEnd || 0);
+        const t0 = Date.now(); this.listenGap = t0 - (Speech.lastEnd || 0); const ep0 = this.epoch; this.setMic('listening');
         const r = await Voice.listen(this.dictation ? 20000 : (lo && lo.ms) || lms || 12000, lo || {});
         this.quickReply = (Date.now() - t0) < 1200;   // a person needs longer than this to hear, answer, and be recognized
         if (!this.on) break;
         if (this.talking > 0) continue;              // the app started talking: ignore this turn
         if (r.error){
+          // v2.7.0: errors that come while the screen is off (or right as it turns off) are the lock, not a blocked mic
+          if (document.hidden || this.suspended || this.epoch !== ep0){ continue; }
+          this.setMic(r.error);
+          if (r.error === 'network'){ this.netFails = (this.netFails || 0) + 1; const wait = Math.min(8000, 1000 * 2 ** (this.netFails - 1));
+            if (this.netFails === 1 || this.netFails % 5 === 0) toast('Voice needs the internet. Trying again.'); await sleep(wait); continue; }
+          if (r.error === 'not-allowed' || r.error === 'service-not-allowed'){ const st = await micPermState(); if (st !== 'denied' && ++this.startFails <= 3){ await sleep(800); continue; } }
           if (FATAL_MIC.includes(r.error)){ this.micBlocked(r.error); break; }
           if (r.error === 'start-failed'){ if (++this.startFails > 8){ this.micBlocked(r.error); break; } await sleep(400); continue; }
           this.startFails = 0;
@@ -133,7 +140,7 @@ const HF = {
           if (r.error === 'no-speech' || r.error === 'aborted'){ if (r.error === 'no-speech' && ++this.silent % 8 === 0 && !this.paused && !this.dictation) await this.say('I am still listening. Say help to hear what you can say.'); continue; }
           await sleep(500); continue;                 // network or other: try again
         }
-        this.startFails = 0; this.silent = 0; this.lastMs = r.ms || 0;
+        this.startFails = 0; this.silent = 0; this.netFails = 0; this.lastMs = r.ms || 0; this.setMic(r.empty ? 'no-speech' : 'heard');
         if (r.empty){ if (this.ctx && this.ctx.choices && this.ctx.choices() && !this.pending && !this.paused) this.missed('', r); continue; }
         // do not await: a command may ask a yes/no question, and this loop must keep listening for the reply
         this.handle(r.alts && r.alts.length ? r.alts : [r.text], r.text || '').catch(e => console.warn('hands-free:', e));
@@ -143,7 +150,7 @@ const HF = {
   },
   micBlocked(err){
     const msg = err === 'audio-capture' ? 'I cannot find a microphone.' : (Voice.why() || 'The microphone is blocked. Allow the mic for this site, then tap Start hands-free.');
-    this.on = false; document.body.classList.remove('hf-on'); renderHfBar(); toast(msg); Speech.say(msg + ' You can still tap the buttons.');
+    this.setMic(err); this.on = false; document.body.classList.remove('hf-on'); renderHfBar(); toast(msg); Speech.say(msg + ' You can still tap the buttons.');
   },
   async handle(alts, raw){
     const all = [...new Set(alts.map(voiceCanon).filter(Boolean))]; if (!all.length) return;
@@ -287,10 +294,10 @@ function renderHfBar(){
   if (!bar){ bar = document.createElement('div'); bar.id = 'hfBar'; bar.setAttribute('role', 'status'); const h = document.querySelector('header.top'); (h || document.body).insertAdjacentElement('afterend', bar); }
   if (!HF.on){ bar.className = 'hf-bar off'; bar.innerHTML = ''; return; }
   bar.className = 'hf-bar';
-  bar.innerHTML = `<span class="listen-dot"></span><strong>Hands-free</strong> <span id="hfState"></span> <span id="hfHeard"></span>
+  bar.innerHTML = `<span class="listen-dot"></span><strong>Hands-free</strong> <span id="hfState"></span> <span id="micChip" class="mic-chip"></span> <span id="hfHeard"></span>
     <button class="small" id="hfPauseTop">${HF.paused ? 'Resume' : 'Pause'}</button><button class="small" id="hfStopTop">Stop hands-free</button>`;
   $('#hfPauseTop').onclick = () => HF.paused ? HF.resume() : HF.pause(); $('#hfStopTop').onclick = () => HF.stop();
-  HF.setStage(HF.stage);
+  HF.setStage(HF.stage); HF.setMic(HF.mic || 'listening');
 }
 // speech engines that need a tap first (autoplay rules): show one big "tap anywhere" layer
 Speech.onBlocked = () => {

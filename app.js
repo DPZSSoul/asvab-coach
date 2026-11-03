@@ -2,7 +2,7 @@
 'use strict';
 const BANK = window.ASVAB_BANK;
 const SECTIONS = BANK.sections;               // {AR:'Arithmetic Reasoning', ...}
-const APP_VERSION = '2.6.1 (bank '+BANK.version+')';
+const APP_VERSION = '2.7.0 (bank '+BANK.version+')';
 const SEC_ORDER = ['AR','WK','PC','MK','GS','EI'];
 const MEPS_ORDER = ['GS','AR','WK','PC','MK','EI'];   // real CAT-ASVAB order (officialasvab.com)
 const CAT = BANK.cat;                          // {GS:[15,12], ...} questions, minutes (officialasvab.com, no tryout items)
@@ -594,7 +594,7 @@ let opts_skipReview = false;
 
 function renderQ(){
   if (!S) return; Speech.stop(); Voice.stop(); if (S.timer) clearInterval(S.timer);
-  const q = S.qs[S.i]; S.answered = false; S.conf = null; S.hints = 0; S.left = S.per;
+  const q = S.qs[S.i]; S.answered = false; S.conf = null; S.hints = 0; S.left = S.resumeLeft != null ? S.resumeLeft : S.per; delete S.resumeLeft;
   app().innerHTML = `<div class="row" style="justify-content:space-between"><h1 style="margin:0">Question ${S.i+1} of ${S.qs.length}</h1>
       ${S.timerOn ? `<span class="timer" id="tmr" aria-label="Time left">${fmtTime(S.left)}</span>` : '<span class="pill">No timer</span>'}</div>
     ${S.timerOn ? '<div class="bar" id="tbar"><div style="width:100%"></div></div>' : ''}
@@ -607,16 +607,20 @@ function renderQ(){
   $('#skipQ').onclick = () => nextQ();
   const sb = $('#stuckBtn'); if (sb) sb.onclick = () => startBreakdown(q, 'question');
   if (HF.on){ $('#hfPauseBtn').onclick = () => HF.pause(); }
-  if (S.timerOn){ const t0 = Date.now(), total = S.per; S.timer = setInterval(() => {
-      S.left = total - (Date.now()-t0)/1000; const el = $('#tmr'), bar = $('#tbar');
-      if (el) el.textContent = fmtTime(S.left); if (bar){ bar.firstElementChild.style.width = Math.max(0, 100*S.left/total) + '%'; bar.classList.toggle('low', S.left < total*0.2); }
-      if (S.left <= 0){ clearInterval(S.timer); if (!S.answered){ toast('Time is up.'); answer(null); } } }, 250); }
+  qTimerStart();
   if (S.pcMode) pcrDecorate();
   if (HF.on) HF.enter('question');
   else if (S.pcMode === 'aloud') pcrRead(q);
   else if (S.pcMode === 'own'){ if (settings.autoRead) pcrRead(q); }
   else if (settings.autoRead || S.byEar) readQuestionAloud(q);
 }
+// v2.7.0: the question timer runs from S.left, so a pause (screen off) can stop it and pick up later with the same time left
+function qTimerStart(){
+  if (!S || !S.timerOn) return; if (S.timer) clearInterval(S.timer);
+  const t0 = Date.now(), start = S.left, total = S.per; S.timer = setInterval(() => {
+      S.left = start - (Date.now()-t0)/1000; const el = $('#tmr'), bar = $('#tbar');
+      if (el) el.textContent = fmtTime(S.left); if (bar){ bar.firstElementChild.style.width = Math.max(0, 100*S.left/total) + '%'; bar.classList.toggle('low', S.left < total*0.2); }
+      if (S.left <= 0){ clearInterval(S.timer); if (!S.answered){ toast('Time is up.'); answer(null); } } }, 250); }
 function hintTexts(q){ const L = LESSONS[q.topic] || {}; return [ 'Hint 1 (the idea): ' + (L.idea || 'Read the question again. What does it ask?'), 'Hint 2 (the first step): ' + (q.steps.find(s => !/^(The idea|Topic|Answer)/.test(s)) || q.steps[0]) ]; }
 function showHint(q){ const h = hintTexts(q); if (S.hints >= h.length){ toast('No more hints here. Try the Tutor for more help.'); return; }
   const s = speakable(h[S.hints++]); $('#hintBox').insertAdjacentHTML('beforeend', `<div class="card"><div class="row" style="align-items:flex-start"><div style="flex:1">${s.html}</div>${sayBtn('#'+s.id)}</div></div>`);

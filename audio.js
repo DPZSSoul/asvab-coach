@@ -172,7 +172,7 @@ async function alLine(alive){
   if (AL.j >= seg.lines.length){ AL.i = (AL.i + 1) % AL.list.length; AL.j = 0; seg = AL.list[AL.i]; await Speech.say('Next: ' + seg.title + '.'); if (!alive()) return false; }
   const ln = seg.lines[AL.j++]; alShow(); await Speech.say(ln.say); AL.pauseMs = ln.pause || 600; return true;
 }
-async function alStart(){ AL.playing = true; alShow(); keepAwake(true);
+async function alStart(){ AL.playing = true; alShow(); if (!HF.on) keepAwake(true);   // v2.7.0: no wake lock in hands-free, so the screen can turn off
   if (HF.on){ HF.enter('audio'); return; }
   const my = ++AL.run; const alive = () => AL && AL.playing && AL.run === my && location.hash.startsWith('#audio');
   while (alive()){ if (!(await alLine(alive))) break; await sleep(AL.pauseMs); } }

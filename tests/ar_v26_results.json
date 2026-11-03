@@ -32,12 +32,12 @@
  [
   "recap shown",
   true,
-  "Recap\nRead\nYou missed 1. Here is what to fix.\nNumber 1. You said 8.\nThe right answer is 10.\n1 quart = 2 pints.\nSay histo"
+  "Recap\nRead\nYou missed 1. Here is what to fix.\nNumber 1. You said 36.\nThe right answer is 108.\n1 yard = 36 inches.\nSay hi"
  ],
  [
   "recap lines under 12 words",
   true,
-  "['You missed 1. Here is what to fix.', 'Number 1. You said 8.', 'The right answer is 10.', '1 quart = 2 pints.', 'Say history to retry them.']"
+  "['You missed 1. Here is what to fix.', 'Number 1. You said 36.', 'The right answer is 108.', '1 yard = 36 inches.', 'Say history to retry them.']"
  ],
  [
   "recap spoken",

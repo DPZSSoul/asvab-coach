@@ -282,3 +282,4 @@ VCTX.history = {
   const lh = ld.handle; ld.handle = async function(t, all, raw, info){ if (anyOf(t, ['retry', 'retry them', 'retry the ones i missed', 'redo'])){ const b = $('#recapRetry'); if (b){ b.click(); return true; } } return lh.call(this, t, all, raw, info); };
 })();
 boot();
+if (typeof hfRestore === 'function') hfRestore();
