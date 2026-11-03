@@ -105,3 +105,6 @@ details.more > summary{ font-weight:bold; font-size:1.05rem; cursor:pointer; min
 .mic-test .mt-level{height:100%;background:#1a7f37;transition:width .08s}
 .hf-continue{position:fixed;left:0;right:0;bottom:0;z-index:90;background:rgba(0,58,140,.97);color:#fff;padding:16px;text-align:center}
 .hf-continue .hf-start{width:100%;font-size:1.6rem;min-height:80px}
+
+/* v2.7.1 hands-free debug line */
+.hf-dbg{opacity:.7;font-size:.75em;margin-left:.4em}

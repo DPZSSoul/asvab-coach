@@ -2,7 +2,7 @@
 'use strict';
 const BANK = window.ASVAB_BANK;
 const SECTIONS = BANK.sections;               // {AR:'Arithmetic Reasoning', ...}
-const APP_VERSION = '2.7.0 (bank '+BANK.version+')';
+const APP_VERSION = '2.7.1 (bank '+BANK.version+')';
 const SEC_ORDER = ['AR','WK','PC','MK','GS','EI'];
 const MEPS_ORDER = ['GS','AR','WK','PC','MK','EI'];   // real CAT-ASVAB order (officialasvab.com)
 const CAT = BANK.cat;                          // {GS:[15,12], ...} questions, minutes (officialasvab.com, no tryout items)
@@ -295,12 +295,14 @@ const Voice = {
       try { this.stop(); } catch(e){}
       const r = new SR(); this.rec = r; r.lang = 'en-US'; r.interimResults = true; r.maxAlternatives = 5; r.continuous = !!opts.continuous;
       let done = false, interim = [], finals = [], lastErr = null; const t0 = Date.now();
-      const finish = v => { if (done) return; done = true; clearTimeout(t); setListening(false); v.ms = Date.now() - t0; voiceLog(v); resolve(v); };
+      const ev = (n, d) => { try { this.onEvent && this.onEvent(n, d); } catch(e){} };   // v2.7.1: visible debug line
+      const finish = v => { if (done) return; done = true; clearTimeout(t); setListening(false); v.ms = Date.now() - t0; voiceLog(v); ev('done', v.error || (v.empty ? 'empty' : v.text)); resolve(v); };
+      r.onstart = () => ev('start');
       const result = () => { const alts = [...new Set(finals.concat(interim).map(x => String(x || '').trim()).filter(Boolean))];
         return alts.length ? { text: opts.continuous ? finals.join(' ') || interim.join(' ') : alts[0], alts, interim: interim.slice() } : { text:'', alts:[], empty:true }; };
       let idle = null; const bump = () => { if (!opts.continuous) return; clearTimeout(idle); idle = setTimeout(() => { try { r.stop(); } catch(e){} }, opts.idleMs || 6000); };
       r.onresult = e => {
-        let fin = false; interim = []; bump();
+        let fin = false; interim = []; bump(); ev('result');
         for (let i = e.resultIndex || 0; i < e.results.length; i++){ const res = e.results[i];
           const isFinal = res.isFinal !== false;   // fakes and old engines send plain arrays: treat them as final
           for (let k = 0; k < res.length; k++){ const x = res[k] && res[k].transcript; if (x == null) continue; if (isFinal) finals.push(x); else interim.push(x); }
@@ -308,10 +310,10 @@ const Voice = {
         if (fin && !opts.continuous) finish(result());
         if (opts.continuous && /\b(i am done|im done|i'm done)\s*\.?$/i.test(finals.join(' '))) { try { r.stop(); } catch(e){} }
       };
-      r.onerror = e => { lastErr = e.error || 'error'; if (lastErr === 'no-speech' && (finals.length || interim.length)) return; if (!opts.continuous || FATAL_MIC_ERRS.includes(lastErr)) finish({ error: lastErr, alts: interim.slice() }); };
-      r.onend = () => { const v = result(); finish(v.empty && !opts.continuous ? { error: lastErr || 'no-speech' } : v); };
+      r.onerror = e => { lastErr = e.error || 'error'; ev('error', lastErr); if (lastErr === 'no-speech' && (finals.length || interim.length)) return; if (!opts.continuous || FATAL_MIC_ERRS.includes(lastErr)) finish({ error: lastErr, alts: interim.slice() }); };
+      r.onend = () => { ev('end'); const v = result(); finish(v.empty && !opts.continuous ? { error: lastErr || 'no-speech' } : v); };
       const t = setTimeout(() => { try{ r.stop(); }catch(e){} }, ms);
-      try { r.start(); setListening(true); } catch(e){ finish({ error: 'start-failed' }); }
+      try { r.start(); setListening(true); ev('start-call'); } catch(e){ ev('error', 'start-failed'); finish({ error: 'start-failed' }); }
     });
   },
   stop(){ if (this.rec){ try{ this.rec.abort(); }catch(e){} this.rec = null; } setListening(false); }

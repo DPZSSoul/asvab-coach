@@ -78,7 +78,9 @@ const HF = {
   async start(opts = {}){
     const why = Voice.why();
     if (why){ toast(why); if (!opts.quiet) Speech.say(why); renderHfBar(); return false; }
-    this.on = true; this.paused = false; this.silent = 0; this.startFails = 0; document.body.classList.add('hf-on'); renderHfBar();
+    if (!document.hidden){ this.suspended = false; }   // v2.7.1: a stale screen-off flag must not block a fresh start
+    try { Voice.stop(); } catch(e){}                   // v2.7.1: close any Test mic recognizer first
+    this.on = true; this.paused = false; this.silent = 0; this.startFails = 0; this.aborts = 0; document.body.classList.add('hf-on'); renderHfBar();
     this.loop();
     const name = (location.hash.slice(1) || 'home').split('/')[0];
     if (opts.fromSession) return true;
@@ -116,13 +118,20 @@ const HF = {
     try {
       while (this.on){
         if (this.suspended || document.hidden){ this.setMic('paused'); await this.waitVisible(); continue; }   // v2.7.0: screen off -> wait, never give up
-        if (this.talking > 0 || Speech.busy()){ this.quietSince = 0; await sleep(120); continue; }
+        if (this.talking > 0){ this.busySince = 0; await sleep(120); continue; }
+        // v2.7.1: Android Chrome can leave speechSynthesis.speaking stuck true after an utterance ends. Never wait on it forever.
+        if (Speech.busy()){ this.busySince = this.busySince || Date.now(); if (Date.now() - this.busySince < 4000){ await sleep(120); continue; }
+          try { speechSynthesis.cancel(); } catch(e){} Speech.lastEnd = Date.now(); this.dbg('tts stuck, cancelled'); }
+        this.busySince = 0;
+        // v2.7.1: Android aborts (or fails with audio-capture) a recognizer started during or right after speech. Wait a bit after the voice ends.
         if (Date.now() - (Speech.lastEnd || 0) < ECHO_GAP_MS){ await sleep(80); continue; }
         this.setStage('listening');
         const lo = this.ctx && this.ctx.listen ? this.ctx.listen(this.arg) : null;   // a screen can ask for a longer or continuous listen
         const lms = this.ctx && this.ctx.listenMs ? (typeof this.ctx.listenMs === 'function' ? this.ctx.listenMs(this.arg) : this.ctx.listenMs) : 0;
         const t0 = Date.now(); this.listenGap = t0 - (Speech.lastEnd || 0); const ep0 = this.epoch; this.setMic('listening');
+        // v2.7.1: same proven one-shot setup as Test mic (continuous off) except the read-along screen, which asks for it
         const r = await Voice.listen(this.dictation ? 20000 : (lo && lo.ms) || lms || 12000, lo || {});
+        this.showResult(r);
         this.quickReply = (Date.now() - t0) < 1200;   // a person needs longer than this to hear, answer, and be recognized
         if (!this.on) break;
         if (this.talking > 0) continue;              // the app started talking: ignore this turn
@@ -132,15 +141,20 @@ const HF = {
           this.setMic(r.error);
           if (r.error === 'network'){ this.netFails = (this.netFails || 0) + 1; const wait = Math.min(8000, 1000 * 2 ** (this.netFails - 1));
             if (this.netFails === 1 || this.netFails % 5 === 0) toast('Voice needs the internet. Trying again.'); await sleep(wait); continue; }
-          if (r.error === 'not-allowed' || r.error === 'service-not-allowed'){ const st = await micPermState(); if (st !== 'denied' && ++this.startFails <= 3){ await sleep(800); continue; } }
+          // v2.7.1: Android Chrome reports not-allowed / audio-capture when the mic is briefly busy (speech just ended, another
+          // recognizer closing). Only give up when permission is really denied, or after many failures in a row.
+          if (r.error === 'not-allowed' || r.error === 'service-not-allowed' || r.error === 'audio-capture'){
+            const st = await micPermState(); this.startFails++;
+            if (st !== 'denied' && this.startFails <= 8){ await sleep(Math.min(3000, 400 * this.startFails)); continue; } }
           if (FATAL_MIC.includes(r.error)){ this.micBlocked(r.error); break; }
           if (r.error === 'start-failed'){ if (++this.startFails > 8){ this.micBlocked(r.error); break; } await sleep(400); continue; }
-          this.startFails = 0;
+          this.startFails = 0; if (r.error !== 'aborted') this.aborts = 0;
           if (r.error === 'no-speech' && this.ctx && this.ctx.onSilence && !this.paused){ this.ctx.onSilence(this.arg); continue; }
-          if (r.error === 'no-speech' || r.error === 'aborted'){ if (r.error === 'no-speech' && ++this.silent % 8 === 0 && !this.paused && !this.dictation) await this.say('I am still listening. Say help to hear what you can say.'); continue; }
+          if (r.error === 'aborted'){ this.aborts = (this.aborts || 0) + 1; await sleep(Math.min(1500, 300 * this.aborts)); continue; }   // v2.7.1: Android abort -> short wait, restart
+          if (r.error === 'no-speech'){ if (r.error === 'no-speech' && ++this.silent % 8 === 0 && !this.paused && !this.dictation) await this.say('I am still listening. Say help to hear what you can say.'); continue; }
           await sleep(500); continue;                 // network or other: try again
         }
-        this.startFails = 0; this.silent = 0; this.netFails = 0; this.lastMs = r.ms || 0; this.setMic(r.empty ? 'no-speech' : 'heard');
+        this.startFails = 0; this.aborts = 0; this.silent = 0; this.netFails = 0; this.lastMs = r.ms || 0; this.setMic(r.empty ? 'no-speech' : 'heard');
         if (r.empty){ if (this.ctx && this.ctx.choices && this.ctx.choices() && !this.pending && !this.paused) this.missed('', r); continue; }
         // do not await: a command may ask a yes/no question, and this loop must keep listening for the reply
         this.handle(r.alts && r.alts.length ? r.alts : [r.text], r.text || '').catch(e => console.warn('hands-free:', e));
@@ -148,6 +162,12 @@ const HF = {
       }
     } finally { this.looping = false; this.setStage(''); }
   },
+  // v2.7.1: always show what the mic did, so a silent failure is visible on the phone
+  dbg(t){ this.lastEv = t; const el = document.getElementById('hfDbg'); if (el) el.textContent = 'last: ' + t; },
+  showResult(r){ const el = document.getElementById('hfHeard');
+    if (r.error){ if (r.error !== 'aborted' || !this.talking) this.setMic(r.error); if (el) el.textContent = 'Heard: (' + r.error + ')'; }
+    else if (r.empty){ if (el) el.textContent = 'Heard: (nothing)'; }
+    else if (el) el.textContent = 'Heard: "' + (r.text || '') + '"'; },
   micBlocked(err){
     const msg = err === 'audio-capture' ? 'I cannot find a microphone.' : (Voice.why() || 'The microphone is blocked. Allow the mic for this site, then tap Start hands-free.');
     this.setMic(err); this.on = false; document.body.classList.remove('hf-on'); renderHfBar(); toast(msg); Speech.say(msg + ' You can still tap the buttons.');
@@ -260,7 +280,8 @@ const HF = {
   },
 };
 let NAV_STACK = [];
-const ECHO_GAP_MS = 450;
+Voice.onEvent = (n, d) => { if (HF.on) HF.dbg(d ? n + ' ' + String(d).slice(0, 40) : n); };
+const ECHO_GAP_MS = 500;   // v2.7.1: was 450; Android needs ~300-500 ms after speech before the mic opens
 // did the mic just catch the app's own voice? (a phrase of 2+ words that the app said in the last few seconds)
 // did the mic just catch the tail of the app's own voice? Only a result that comes right after the app stopped talking,
 // within a few seconds, and that repeats 2+ words of the very last thing the app said.
@@ -294,7 +315,7 @@ function renderHfBar(){
   if (!bar){ bar = document.createElement('div'); bar.id = 'hfBar'; bar.setAttribute('role', 'status'); const h = document.querySelector('header.top'); (h || document.body).insertAdjacentElement('afterend', bar); }
   if (!HF.on){ bar.className = 'hf-bar off'; bar.innerHTML = ''; return; }
   bar.className = 'hf-bar';
-  bar.innerHTML = `<span class="listen-dot"></span><strong>Hands-free</strong> <span id="hfState"></span> <span id="micChip" class="mic-chip"></span> <span id="hfHeard"></span>
+  bar.innerHTML = `<span class="listen-dot"></span><strong>Hands-free</strong> <span id="hfState"></span> <span id="micChip" class="mic-chip"></span> <span id="hfHeard"></span> <small id="hfDbg" class="hf-dbg">${esc(HF.lastEv ? 'last: ' + HF.lastEv : 'last: -')}</small>
     <button class="small" id="hfPauseTop">${HF.paused ? 'Resume' : 'Pause'}</button><button class="small" id="hfStopTop">Stop hands-free</button>`;
   $('#hfPauseTop').onclick = () => HF.paused ? HF.resume() : HF.pause(); $('#hfStopTop').onclick = () => HF.stop();
   HF.setStage(HF.stage); HF.setMic(HF.mic || 'listening');

@@ -1,6 +1,6 @@
 [
  [
-  "version 2.7.0",
+  "version 2.7.x",
   true,
   ""
  ],
@@ -37,7 +37,7 @@
  [
   "wake: welcome back + same question re-read",
   true,
-  "Welcome back. Here is question 2 again: Question. A shirt costs $40. It is on sale for 20 percent off. What is the sale price? A. $38.00 B. "
+  "Welcome back. Here is question 2 again: Question. A bus leaves at 9:15 AM. It drives 150 miles at 50 mph. When does it arrive? A. 1:15 PM B."
  ],
  [
   "wake: timer restarts from saved left",
@@ -62,7 +62,7 @@
  [
   "cold boot: same question, hands-free on, welcome",
   true,
-  "Welcome back. Here is question 3 again: Question. Three pencils cost $0.90. At that price, how much do 10 pencils cost? "
+  "Welcome back. Here is question 3 again: Question. A car drives at 55 miles per hour for 4 hours. How far does it go? A. "
  ],
  [
   "cold boot: timer from saved left",
@@ -112,7 +112,7 @@
  [
   "tap continues on same question with hint",
   true,
-  "[True, 1, 1, 98.499]"
+  "[True, 1, 1, 98.5]"
  ],
  [
   "no console errors",

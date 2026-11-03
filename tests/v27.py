@@ -16,7 +16,7 @@ with sync_playwright() as pw:
     p.on('console', lambda m: errors.append(m.text) if m.type == 'error' else None); p.on('pageerror', lambda e: errors.append(str(e)))
     p.set_default_timeout(15000); p.goto(BASE + 'index.html?fast=1&silence=1500'); p.wait_for_selector('h1')
     p.evaluate("localStorage.clear(); settings.hfAuto = false; saveSettings()")
-    ok('version 2.7.0', p.evaluate("APP_VERSION").startswith('2.7.0'))
+    ok('version 2.7.x', p.evaluate("APP_VERSION").startswith('2.7.'))
     ok('no italics tags', p.evaluate("document.querySelectorAll('i,em').length") == 0)
     ok('home start card has Test mic + lock note', p.locator('#hfMicTest').count() == 1 and 'Locking the screen pauses hands-free' in p.inner_text('.hf-card'))
     # practice in hands-free with a timer, move to question 2

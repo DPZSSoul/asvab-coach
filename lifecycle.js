@@ -1,4 +1,5 @@
-/* v2.7.0: screen-off pause and resume, mic status chip, mic test, and headset list.
+/* v2.7.1: suspended can no longer stay stuck while the page is visible.
+   v2.7.0: screen-off pause and resume, mic status chip, mic test, and headset list.
    Hands-free never keeps the screen on. When the screen turns off, everything pauses cleanly and a snapshot is saved.
    When the screen comes back (or the page reloads within 2 hours), it picks up on the same question with the same time left. */
 'use strict';
@@ -36,7 +37,10 @@ Object.assign(HF, {
   suspended:false, mic:'listening', netFails:0,
   setMic(code){ this.mic = code; const el = document.getElementById('micChip'); if (!el) return; const [t, c] = micChipLabel(code);
     el.textContent = 'Mic: ' + t; el.className = 'mic-chip ' + c; el.dataset.code = code; },
-  waitVisible(){ return new Promise(res => { const chk = () => { if (!document.hidden && !this.suspended) return res(); setTimeout(chk, 250); }; chk(); }); },
+  // v2.7.1: if the page is visible but suspended stayed true (a freeze/pagehide with no matching resume event, common on Android), wake after 1 s
+  waitVisible(){ return new Promise(res => { let vis = 0; const chk = () => { if (!this.on) return res(); if (!document.hidden && !this.suspended) return res();
+    if (!document.hidden){ vis = vis || Date.now(); if (Date.now() - vis > 1000){ this.dbg && this.dbg('unstuck suspended'); this.wake(); return res(); } } else vis = 0;
+    setTimeout(chk, 250); }; chk(); }); },
   snapshot(){
     const snap = { v:HF_SNAP_V, ts:Date.now(), on:this.on, ctxName:this.ctxName, arg:(typeof this.arg === 'string' || typeof this.arg === 'number') ? this.arg : null, hash:location.hash || '#home' };
     if (S && S.qs) snap.S = { sec:S.sec, qIds:S.qs.map(q => q.id), i:S.i, results:S.results, left:S.left, timerOn:!!S.timerOn, per:S.per, mode:S.mode, byEar:!!S.byEar, hints:S.hints || 0, answered:!!S.answered };

@@ -1,0 +1,107 @@
+[
+ [
+  "[aborted] version 2.7.1",
+  true,
+  ""
+ ],
+ [
+  "[aborted] test mic transcribes",
+  true,
+  ""
+ ],
+ [
+  "[aborted] hands-free stays on after Android mic errors",
+  true,
+  "[True, 'paused', None, 0]"
+ ],
+ [
+  "[aborted] not stuck suspended",
+  false,
+  ""
+ ],
+ [
+  "[aborted] says \"history\" -> heard and acted",
+  false,
+  "['#home', '', None]"
+ ],
+ [
+  "[aborted] debug line visible",
+  false,
+  ""
+ ],
+ [
+  "[aborted] no page errors",
+  true,
+  ""
+ ],
+ [
+  "[audio-capture] version 2.7.1",
+  true,
+  ""
+ ],
+ [
+  "[audio-capture] test mic transcribes",
+  true,
+  ""
+ ],
+ [
+  "[audio-capture] hands-free stays on after Android mic errors",
+  true,
+  "[True, 'paused', None, 0]"
+ ],
+ [
+  "[audio-capture] not stuck suspended",
+  false,
+  ""
+ ],
+ [
+  "[audio-capture] says \"history\" -> heard and acted",
+  false,
+  "['#home', '', None]"
+ ],
+ [
+  "[audio-capture] debug line visible",
+  false,
+  ""
+ ],
+ [
+  "[audio-capture] no page errors",
+  true,
+  ""
+ ],
+ [
+  "[not-allowed] version 2.7.1",
+  true,
+  ""
+ ],
+ [
+  "[not-allowed] test mic transcribes",
+  true,
+  ""
+ ],
+ [
+  "[not-allowed] hands-free stays on after Android mic errors",
+  true,
+  "[True, 'paused', None, 0]"
+ ],
+ [
+  "[not-allowed] not stuck suspended",
+  false,
+  ""
+ ],
+ [
+  "[not-allowed] says \"history\" -> heard and acted",
+  false,
+  "['#home', '', None]"
+ ],
+ [
+  "[not-allowed] debug line visible",
+  false,
+  ""
+ ],
+ [
+  "[not-allowed] no page errors",
+  true,
+  ""
+ ]
+]

@@ -32,17 +32,17 @@
  {
   "test": "\"start\" begins a voice session and reads the question",
   "pass": true,
-  "info": "5x minus 4 equals 2x plus 11 | A. 7 | B. 4 | C. 5 | D. 3 | Your answer?"
+  "info": "Question. What is 4.763 rounded to the nearest tenth? | A. 5.0 | B. 4.7 | C. 4.76 | D. 4.8 | Your answer?"
  },
  {
   "test": "NATO answer + feedback + confidence prompt",
   "pass": true,
-  "info": "C. 5 | D. 3 | Your answer? | Right! Subtract 2x: | 3x minus 4 equals 11. | How sure were you?"
+  "info": "B. 4.7 | C. 4.76 | D. 4.8 | Your answer? | Right! The hundredths digit is 6, so round the 7 up to 8. | How sure were you?"
  },
  {
   "test": "confidence by voice, then waits for \"next\"",
   "pass": true,
-  "info": "3x minus 4 equals 11. | How sure were you? | Say sure, shaky, or guessed. | Nice. You knew it. | This topic just needs reps. | Say next, or explain."
+  "info": "Right! The hundredths digit is 6, so round the 7 up to 8. | How sure were you? | Say sure, shaky, or guessed. | Nice. You knew it. | This topic just needs reps. | Say next, or explain."
  },
  {
   "test": "\"next\" moves on",
@@ -57,7 +57,7 @@
  {
   "test": "answer by saying the choice text (wrong on purpose)",
   "pass": true,
-  "info": "70"
+  "info": "5x^3"
  },
  {
   "test": "\"explain\" reads the steps",
@@ -87,7 +87,7 @@
  {
   "test": "\"end practice\" + \"yes\" ends the set and reads the score",
   "pass": true,
-  "info": "Here is what to fix. | Number 1. You said 70. | The right answer is 35. | Area equals 1 half times 14 times 5 equals 35. | Say history to retry them. | Say practice again, retry, history, or home."
+  "info": "Here is what to fix. | Number 1. You said 5x cubed. | The right answer is 6x cubed. | Multiply numbers: 2 times 3 equals 6. | Say history to retry them. | Say practice again, retry, history, or home."
  },
  {
   "test": "\"progress\" reads the IT line-score panel",
@@ -107,12 +107,12 @@
  {
   "test": "pre-session review is read aloud and \"skip review\" starts",
   "pass": true,
-  "info": "Question. verify most nearly means: | A. change | B. confirm | C. hide | D. doubt | Your answer?"
+  "info": "Here, fragile most nearly means: | A. expensive | B. very heavy | C. easily broken | D. clear | Your answer?"
  },
  {
-  "test": "lone letter heard as \"bee\" is accepted",
+  "test": "lone letter heard as \"see\" is accepted",
   "pass": true,
-  "info": "B. confirm | C. hide | D. doubt | Your answer? | Right! Verify means confirm. | How sure were you?"
+  "info": "B. very heavy | C. easily broken | D. clear | Your answer? | Right! Fragile means easily broken. | How sure were you?"
  },
  {
   "test": "stray \"hey\" at the confidence prompt -> one short re-prompt",
@@ -125,24 +125,24 @@
   "info": ""
  },
  {
-  "test": "letter with a period / sound-alike \"a.\" is accepted",
+  "test": "letter with a period / sound-alike \"be\" is accepted",
   "pass": true,
-  "info": "B. very loud | C. similar | D. soft | Your answer? | Right! Distinct means clearly different. | How sure were you?"
+  "info": "B. correct | C. quick | D. rough | Your answer? | Right! Accurate means correct. | How sure were you?"
  },
  {
-  "test": "second recognition alternative is used (\"kate||d\")",
+  "test": "second recognition alternative is used (\"kate||eh\")",
   "pass": true,
-  "info": "B. angry | C. hungry | D. tired | Your answer? | Right! Weary means tired. | How sure were you?"
+  "info": "B. reward | C. journey | D. answer | Your answer? | Right! Dilemma means problem. | How sure were you?"
  },
  {
   "test": "interim-only result is used (\"c\")",
   "pass": true,
-  "info": "B. rude | C. thrifty | D. greedy | Your answer? | Right! Frugal means thrifty. | How sure were you?"
+  "info": "B. brief | C. hopeless | D. bright | Your answer? | Right! Bleak means hopeless. | How sure were you?"
  },
  {
-  "test": "ordinal \"second\" is accepted",
+  "test": "ordinal \"third\" is accepted",
   "pass": true,
-  "info": "B. unwilling | C. able | D. ready | Your answer? | Right! Reluctant means unwilling. | How sure were you?"
+  "info": "B. rude | C. thrifty | D. greedy | Your answer? | Right! Frugal means thrifty. | How sure were you?"
  },
  {
   "test": "empty transcript -> short re-prompt (not the whole question)",
@@ -157,17 +157,17 @@
  {
   "test": "second miss says what it heard and reads the choices once",
   "pass": true,
-  "info": "Say Alpha, Bravo, Charlie, or Delta, or say the answer. | I heard \"banana split\". | That is not one of the choices. | A. enough. | B. late. | C. little. | D. free. | Say the letter or the answer."
+  "info": "Say Alpha, Bravo, Charlie, or Delta, or say the answer. | I heard \"banana split\". | That is not one of the choices. | A. eager. | B. unwilling. | C. able. | D. ready. | Say the letter or the answer."
  },
  {
   "test": "third miss stays quiet: it never loops",
   "pass": true,
-  "info": "That is not one of the choices. | A. enough. | B. late. | C. little. | D. free. | Say the letter or the answer."
+  "info": "That is not one of the choices. | A. eager. | B. unwilling. | C. able. | D. ready. | Say the letter or the answer."
  },
  {
   "test": "\"letter X\" then works",
   "pass": true,
-  "info": "B. late. | C. little. | D. free. | Say the letter or the answer. | Right! Ample means enough. | How sure were you?"
+  "info": "B. unwilling. | C. able. | D. ready. | Say the letter or the answer. | Right! Reluctant means unwilling. | How sure were you?"
  },
  {
   "test": "\"what did you hear\" reads the transcript log",
@@ -207,7 +207,7 @@
  {
   "test": "MEPS: time left is announced at intervals (5 minutes)",
   "pass": true,
-  "info": "A. air | B. water | C. steel | D. a vacuum | Your answer? | Time left: 4 minutes and 59 seconds."
+  "info": "A. position | B. motion | C. chemical bonds | D. heat only | Your answer? | Time left: 4 minutes and 59 seconds."
  },
  {
   "test": "leaving MEPS asks to confirm; \"no\" stays",
@@ -282,7 +282,7 @@
  {
   "test": "spoken answers (\"three fourths\", \"3/4\", \"um ...\") pass level 4 and move to 5",
   "pass": true,
-  "info": "[{'v': 3, 'level': 5, 'placed': False, 'passed': {'4': True}, 'tries': {'4': 0}, 'best': {'4': 10}, 'log': [{'date': '2026-11-03T08:46:26.363Z', 'level': 4, 'right': 10, 'total': 10}]}, 'You got 10 of 10. | You passed level 4! | Next: level 5, Halves and Quarters. | You got all 10 right. | Nice work. | Say start for level 5, lesson, retry, or home.']"
+  "info": "[{'v': 3, 'level': 5, 'placed': False, 'passed': {'4': True}, 'tries': {'4': 0}, 'best': {'4': 10}, 'log': [{'date': '2026-11-03T09:50:11.712Z', 'level': 4, 'right': 10, 'total': 10}]}, 'You got 10 of 10. | You passed level 4! | Next: level 5, Halves and Quarters. | You got all 10 right. | Nice work. | Say start for level 5, lesson, retry, or home.']"
  },
  {
   "test": "\"what level am I\" now says level 5",
@@ -317,12 +317,12 @@
  {
   "test": "drill: 8 of 10 by voice",
   "pass": true,
-  "info": "Right. | 2 times 2? | Right. | 10 times 3? | Right. | You got 8 of 10."
+  "info": "Right. | 5 times 3? | Right. | 11 times 4? | Right. | You got 8 of 10."
  },
  {
   "test": "drill: 10 fast -> the timer gets a little faster",
   "pass": true,
-  "info": "11 times 10? | Right. | 2 times 9? | Right. | You got 10 of 10. | Nice speed. The timer is now 9.5 seconds."
+  "info": "7 times 2? | Right. | 5 times 11? | Right. | You got 10 of 10. | Nice speed. The timer is now 9.5 seconds."
  },
  {
   "test": "\"vocab by ear\" says a word, meaning and hook, then asks",
@@ -357,7 +357,7 @@
  {
   "test": "\"next lesson\" jumps ahead",
   "pass": true,
-  "info": "A quarter means cut into 4 equal parts. | Picture a dollar. | Half a dollar is 50 cents. | A quarter is 25 cents. | adjacent. | adjacent means next to."
+  "info": "A quarter means cut into 4 equal parts. | Picture a dollar. | Half a dollar is 50 cents. | A quarter is 25 cents. | abundant. | abundant means more than enough; plenty."
  },
  {
   "test": "\"pause\" pauses, \"resume\" goes on",
@@ -402,7 +402,7 @@
  {
   "test": "tutor: spoken wrong answer -> kind check + hint 1",
   "pass": true,
-  "info": "Or say \"I don't know\". | You are thinking like a technician. | Not yet. B is not it. | That is OK. | Let's look again. | Hint 1 (the idea):"
+  "info": "Or say \"I don't know\". | You are closer than you think. | Not yet. A is not it. | That is OK. | Let's look again. | Hint 1 (the idea):"
  },
  {
   "test": "tutor: \"I don't know\" -> hint 2",
